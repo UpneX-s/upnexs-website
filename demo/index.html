@@ -372,6 +372,61 @@
   }
   #nextBtn.no-pulse { animation: none; }
 
+  /* Scenario dropdown (prominent, at top) */
+  .scenario-select-wrap {
+    position: relative;
+  }
+  .scenario-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 16px 50px 16px 18px;
+    background: rgba(16, 185, 129, 0.08);
+    border: 2px solid rgba(16, 185, 129, 0.45);
+    border-radius: 14px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+  }
+  .scenario-select:hover {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: #10B981;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px -8px rgba(16, 185, 129, 0.4);
+  }
+  .scenario-select:focus {
+    outline: none;
+    border-color: #10B981;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+  }
+  .scenario-select option {
+    background: #0A0A0A;
+    color: #fff;
+    padding: 12px;
+    font-weight: 500;
+  }
+  .scenario-select-arrow {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #10B981;
+    transition: transform 0.2s ease;
+  }
+  /* Subtle attention pulse on dropdown for first 6s */
+  .scenario-select-wrap.attention .scenario-select {
+    animation: dropdownAttention 2s ease-in-out 3;
+  }
+  @keyframes dropdownAttention {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.18); }
+  }
+
   /* Urgency tags */
   .urgency-pill {
     display: inline-flex; align-items: center; gap: 6px;
@@ -439,9 +494,29 @@
       <div class="lg:col-span-7">
         <div class="demo-card p-5 sm:p-7">
 
-          <!-- Header -->
+          <!-- STEP A: Pick a scenario (dropdown) — FIRST THING USER SEES -->
+          <div class="mb-7">
+            <label class="block font-mono text-xs text-mint-400 uppercase tracking-[0.2em] mb-2.5" for="scenarioSelect">
+              🎯 Pick a tenant request 👇
+            </label>
+            <div class="scenario-select-wrap">
+              <select id="scenarioSelect" class="scenario-select" aria-label="Pick a tenant scenario">
+                <option value="ac">🥵 AC broken — Apt 112 · 2:18 PM</option>
+                <option value="leak">💧 Sink leaking — Apt 304 · 11:42 PM</option>
+                <option value="lockout">🔑 Locked out — Apt 207 · 9:30 AM</option>
+                <option value="bulb">💡 Light bulb out — Apt 415 · 4:05 PM</option>
+              </select>
+              <svg class="scenario-select-arrow" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
+            </div>
+            <p class="mt-2 text-xs text-mint-100/40">Change the dropdown anytime to try a different scenario.</p>
+          </div>
+
+          <!-- Divider -->
+          <div class="border-t border-white/10 -mx-5 sm:-mx-7 mb-6"></div>
+
+          <!-- STEP B: Walkthrough header -->
           <div class="flex items-center justify-between mb-3">
-            <div class="font-mono text-xs text-mint-400 uppercase tracking-[0.2em]">▶ Walkthrough · 5 steps</div>
+            <div class="font-mono text-xs text-mint-400 uppercase tracking-[0.2em]">▶ Watch AI handle it</div>
             <div class="font-mono text-xs text-mint-100/50" id="stepCounter">Step 1 of 5</div>
           </div>
 
@@ -541,17 +616,6 @@
             <button id="nextBtn" class="btn-primary inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full text-base">
               <span id="nextBtnText">Next: Watch AI read it →</span>
             </button>
-          </div>
-
-          <!-- Scenario picker (subtle, at bottom) -->
-          <div class="mt-6 pt-5 border-t border-white/5">
-            <div class="text-mint-100/50 text-xs mb-2.5 uppercase tracking-wider font-mono">Try a different tenant scenario:</div>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="scenarioPicker">
-              <button class="demo-tab-mini active" data-scenario="ac">🥵 AC out</button>
-              <button class="demo-tab-mini" data-scenario="leak">💧 Sink leak</button>
-              <button class="demo-tab-mini" data-scenario="lockout">🔑 Lockout</button>
-              <button class="demo-tab-mini" data-scenario="bulb">💡 Light bulb</button>
-            </div>
           </div>
         </div>
       </div>
@@ -1080,13 +1144,13 @@ function renderStep() {
   document.getElementById('nextBtnText').textContent = nextLabels[state.step - 1];
   document.getElementById('nextBtn').dataset.action = (state.step === state.totalSteps) ? 'cta' : 'next';
 
-  // Active scenario in picker
-  document.querySelectorAll('.demo-tab-mini').forEach(b => b.classList.toggle('active', b.dataset.scenario === state.scenario));
+  // Sync dropdown value to state
+  const dd = document.getElementById('scenarioSelect');
+  if (dd && dd.value !== state.scenario) dd.value = state.scenario;
 }
 
 // Wire next/back
 document.getElementById('nextBtn').addEventListener('click', (e) => {
-  // Stop the pulse on the Next button once they've clicked at least once
   if (!state.hasInteracted) {
     e.currentTarget.classList.add('no-pulse');
     state.hasInteracted = true;
@@ -1107,16 +1171,23 @@ document.getElementById('backBtn').addEventListener('click', () => {
   if (state.step > 1) { state.step--; renderStep(); }
 });
 
-document.querySelectorAll('.demo-tab-mini').forEach(btn => {
-  btn.addEventListener('click', () => {
-    state.scenario = btn.dataset.scenario;
-    state.step = 1;
-    renderStep();
-  });
+// Dropdown — change scenario + reset walkthrough to Step 1
+document.getElementById('scenarioSelect').addEventListener('change', (e) => {
+  state.scenario = e.target.value;
+  state.step = 1;
+  // Stop the attention pulse once they engage
+  const wrap = document.querySelector('.scenario-select-wrap');
+  if (wrap) wrap.classList.remove('attention');
+  renderStep();
 });
 
-// Initial render
+// Initial render + attention pulse on dropdown
 renderStep();
+const ddWrap = document.querySelector('.scenario-select-wrap');
+if (ddWrap) {
+  ddWrap.classList.add('attention');
+  setTimeout(() => ddWrap.classList.remove('attention'), 7000);
+}
 
 // ============== SCROLL REVEAL ==============
 const observer = new IntersectionObserver((entries) => {
