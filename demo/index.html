@@ -312,6 +312,83 @@
   @media (max-width: 640px) {
     .shape { filter: blur(50px); }
   }
+
+  /* ========= WIZARD DEMO STYLES ========= */
+  .demo-step { animation: stepFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes stepFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .demo-tab-mini {
+    padding: 10px 12px; border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(209, 250, 229, 0.75);
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .demo-tab-mini:hover {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.35);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .demo-tab-mini.active {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(16, 185, 129, 0.5);
+    color: #fff;
+    box-shadow: 0 6px 16px -6px rgba(16, 185, 129, 0.4);
+  }
+
+  /* Investigation check items in step 2 */
+  .check-item {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: rgba(245, 245, 240, 0.9);
+    opacity: 0; transform: translateX(-8px);
+    animation: checkSlideIn 0.4s ease forwards;
+  }
+  .check-item .check-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #10B981;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .check-item .check-icon svg { width: 12px; height: 12px; stroke: #0A0A0A; stroke-width: 4; }
+  @keyframes checkSlideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Big Next button pulse on first load — invites click */
+  #nextBtn {
+    animation: nextPulse 2s ease-in-out infinite;
+  }
+  @keyframes nextPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5), 0 20px 40px -12px rgba(16, 185, 129, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.15), 0 20px 40px -12px rgba(16, 185, 129, 0.5); }
+  }
+  #nextBtn.no-pulse { animation: none; }
+
+  /* Urgency tags */
+  .urgency-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .urgency-pill.urgent {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239,68,68,0.35);
+  }
+  .urgency-pill.routine {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fcd34d;
+    border: 1px solid rgba(245,158,11,0.35);
+  }
 </style>
 </head>
 <body>
@@ -358,89 +435,123 @@
 
     <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
-      <!-- LEFT: DEMO CARD -->
+      <!-- LEFT: GUIDED DEMO WIZARD -->
       <div class="lg:col-span-7">
-        <div class="demo-card p-5 sm:p-6">
+        <div class="demo-card p-5 sm:p-7">
 
-          <!-- Scenario chip row -->
+          <!-- Header -->
           <div class="flex items-center justify-between mb-3">
-            <div class="pointer-hint">
-              <span class="arrow">👇</span>
-              <span>Click a scenario · try it live</span>
-            </div>
-            <div class="font-mono text-[10px] text-mint-100/40 uppercase tracking-[0.15em]">4 scenarios</div>
+            <div class="font-mono text-xs text-mint-400 uppercase tracking-[0.2em]">▶ Walkthrough · 5 steps</div>
+            <div class="font-mono text-xs text-mint-100/50" id="stepCounter">Step 1 of 5</div>
           </div>
-          <div class="grid grid-cols-2 gap-2 mb-6" id="scenarioList">
-            <button class="demo-tab active" data-scenario="leak">
-              <span class="tab-emoji">💧</span>
-              <div class="flex-1 min-w-0">
-                <div class="truncate">Sink leaking</div>
-                <div class="tab-status">11:42 PM · Apt 304</div>
+
+          <!-- Progress segments -->
+          <div class="flex items-center gap-1.5 mb-7" id="progressDots">
+            <div class="h-1 flex-1 rounded-full bg-mint-500 transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
+          </div>
+
+          <!-- Step content area -->
+          <div class="min-h-[320px] mb-6">
+
+            <!-- STEP 1: Tenant texts -->
+            <div class="demo-step" data-step="1">
+              <h3 class="text-white text-2xl font-bold mb-2">1. Your tenant texts in.</h3>
+              <p class="text-mint-100/60 text-sm mb-5">Real tenants don't write paragraphs — they fire off short, casual messages. Here's a typical one:</p>
+              <div class="tenant-bubble max-w-md">
+                <div class="font-mono text-xs text-mint-300/60 mb-2" id="step1Meta">Apt 112 · 2:18 PM</div>
+                <div class="text-base text-white" id="step1Msg">AC broken 🥵 95° in here</div>
               </div>
+              <div class="mt-5 text-xs text-mint-100/40 italic">↑ That's it. That's the whole message. Now watch what the AI does with it.</div>
+            </div>
+
+            <!-- STEP 2: AI investigates -->
+            <div class="demo-step hidden" data-step="2">
+              <h3 class="text-white text-2xl font-bold mb-2">2. AI reads it · pulls context.</h3>
+              <p class="text-mint-100/60 text-sm mb-5">In under a second, the agent investigates everything it needs to act:</p>
+              <div class="space-y-2.5 mb-5" id="step2Checks"></div>
+              <div id="step2Result"></div>
+            </div>
+
+            <!-- STEP 3: Vendor picked + dispatched -->
+            <div class="demo-step hidden" data-step="3">
+              <h3 class="text-white text-2xl font-bold mb-2">3. Right vendor · dispatched.</h3>
+              <p class="text-mint-100/60 text-sm mb-5">From your approved vendor list — scored by rating, distance, response time, cost.</p>
+              <div class="bg-white/5 border border-mint-500/20 rounded-2xl p-4 mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-11 h-11 rounded-full bg-mint-500/20 flex items-center justify-center text-xl flex-shrink-0">🔧</div>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-bold text-white" id="step3Vendor">CoolPro HVAC</div>
+                    <div class="text-xs text-mint-100/60" id="step3VendorMeta">4.8★ · 24-hr emergency · 1.2mi away</div>
+                  </div>
+                  <div class="text-mint-400 text-xs font-mono font-bold">DISPATCHED</div>
+                </div>
+              </div>
+              <div class="text-xs font-mono text-mint-100/40 mb-2 uppercase tracking-wider">SMS sent to vendor</div>
+              <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 text-sm text-blue-100/90" id="step3Sms"></div>
+            </div>
+
+            <!-- STEP 4: Reply to tenant -->
+            <div class="demo-step hidden" data-step="4">
+              <h3 class="text-white text-2xl font-bold mb-2">4. AI replies — in your brand voice.</h3>
+              <p class="text-mint-100/60 text-sm mb-5">Calm, specific, with next steps. No tenant is up at 2am stressing — they got an answer in 14 seconds.</p>
+              <div class="bg-mint-500/15 border border-mint-500/30 rounded-2xl rounded-tl-sm p-4 max-w-md">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-mint-500 flex items-center justify-center text-ink-800 font-black text-xs">U</div>
+                  <div class="font-mono text-xs text-mint-300/70" id="step4Meta">UpneX AI · 2:18 PM</div>
+                </div>
+                <div class="text-base text-white leading-relaxed" id="step4Reply"></div>
+              </div>
+            </div>
+
+            <!-- STEP 5: Work order + summary -->
+            <div class="demo-step hidden" data-step="5">
+              <h3 class="text-white text-2xl font-bold mb-2">5. Logged in your PM platform.</h3>
+              <p class="text-mint-100/60 text-sm mb-5">Synced to AppFolio / Buildium / wherever you live. Audit trail intact. Owner alerted. You stayed asleep.</p>
+              <div class="bg-gradient-to-br from-mint-500/20 to-mint-500/5 border border-mint-500/30 rounded-2xl p-5">
+                <div class="text-mint-300 font-mono text-[10px] uppercase tracking-[0.2em] mb-1">Work order created</div>
+                <div class="text-white font-bold text-3xl mb-1" id="step5WoId">WO-4837</div>
+                <div class="text-mint-100/70 text-sm mb-4" id="step5WoMeta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
+                <div class="border-t border-white/10 pt-3 space-y-1.5">
+                  <div class="flex justify-between text-xs">
+                    <span class="text-mint-100/60">Time: message → dispatched</span>
+                    <span class="text-mint-300 font-mono font-bold" id="step5Time">14 seconds</span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-mint-100/60">Human intervention</span>
+                    <span class="text-mint-300 font-mono font-bold">Zero</span>
+                  </div>
+                  <div class="flex justify-between text-xs">
+                    <span class="text-mint-100/60">Tenant satisfaction</span>
+                    <span class="text-mint-300 font-mono font-bold">⭐⭐⭐⭐⭐</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Big Next button + Back -->
+          <div class="flex items-center justify-between gap-3 pt-5 border-t border-white/5">
+            <button id="backBtn" class="text-mint-100/40 hover:text-white text-sm font-semibold transition px-4 py-2 invisible">
+              ← Back
             </button>
-            <button class="demo-tab" data-scenario="ac">
-              <span class="try-badge">Try me</span>
-              <span class="tab-emoji">❄️</span>
-              <div class="flex-1 min-w-0">
-                <div class="truncate">AC out, 95°F</div>
-                <div class="tab-status">2:18 PM · Unit 112</div>
-              </div>
-            </button>
-            <button class="demo-tab" data-scenario="lockout">
-              <span class="tab-emoji">🔑</span>
-              <div class="flex-1 min-w-0">
-                <div class="truncate">Tenant locked out</div>
-                <div class="tab-status">9:30 AM · Apt 207</div>
-              </div>
-            </button>
-            <button class="demo-tab" data-scenario="bulb">
-              <span class="tab-emoji">💡</span>
-              <div class="flex-1 min-w-0">
-                <div class="truncate">Kitchen light out</div>
-                <div class="tab-status">4:05 PM · Apt 415</div>
-              </div>
+            <button id="nextBtn" class="btn-primary inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full text-base">
+              <span id="nextBtnText">Next: Watch AI read it →</span>
             </button>
           </div>
 
-          <!-- Tenant message + timeline (2-col on sm+) -->
-          <div class="grid sm:grid-cols-2 gap-5 mb-5">
-            <div>
-              <div class="font-mono text-xs text-mint-400 uppercase tracking-[0.2em] mb-2">02 · Tenant message</div>
-              <div class="tenant-bubble" id="tenantBubble">
-                <div class="font-mono text-xs text-mint-300/60 mb-1.5" id="tenantMeta">Apt 304 · 11:42 PM</div>
-                <div id="tenantText" class="tenant-cursor text-sm"></div>
-              </div>
+          <!-- Scenario picker (subtle, at bottom) -->
+          <div class="mt-6 pt-5 border-t border-white/5">
+            <div class="text-mint-100/50 text-xs mb-2.5 uppercase tracking-wider font-mono">Try a different tenant scenario:</div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="scenarioPicker">
+              <button class="demo-tab-mini active" data-scenario="ac">🥵 AC out</button>
+              <button class="demo-tab-mini" data-scenario="leak">💧 Sink leak</button>
+              <button class="demo-tab-mini" data-scenario="lockout">🔑 Lockout</button>
+              <button class="demo-tab-mini" data-scenario="bulb">💡 Light bulb</button>
             </div>
-            <div>
-              <div class="font-mono text-xs text-mint-400 uppercase tracking-[0.2em] mb-2 flex items-center gap-2">
-                <span>03 · Agent timeline</span>
-                <span class="live-dot"></span>
-              </div>
-              <div class="space-y-1" id="timeline"></div>
-            </div>
-          </div>
-
-          <!-- Outputs -->
-          <div class="font-mono text-xs text-mint-400 uppercase tracking-[0.2em] mb-2">04 · Agent output</div>
-          <div class="grid sm:grid-cols-2 gap-3">
-            <div class="output-card" id="replyCard">
-              <div class="label">Reply sent</div>
-              <div class="body text-sm" id="replyText"></div>
-            </div>
-            <div class="output-card wo-card" id="woCard">
-              <div class="label">Work order</div>
-              <div class="wo-id" id="woId">—</div>
-              <div class="text-xs text-mint-300/80 mt-1.5" id="woMeta"></div>
-            </div>
-          </div>
-
-          <!-- Demo footer -->
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-center justify-between gap-3">
-            <button id="replayBtn" class="btn-ghost inline-flex items-center gap-2 font-semibold px-4 py-2 rounded-xl text-xs">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-              Replay
-            </button>
-            <div class="text-mint-100/50 text-xs">→ One agent, one scenario. Imagine all 4 on your portfolio.</div>
           </div>
         </div>
       </div>
@@ -838,192 +949,174 @@
 </div>
 
 <script>
-// ============== SCENARIO DATA ==============
+// ============== SCENARIO DATA (realistic short tenant messages) ==============
 const scenarios = {
-  leak: {
-    tenantMeta: 'Apt 304 · 11:42 PM',
-    tenantText: "Water leaking under the sink in Apt 304. Cabinet is flooded. Please help — pipes are dripping fast.",
-    steps: [
-      { t: '00:00', label: 'Message received from Apt 304' },
-      { t: '00:03', label: 'Classifying urgency', tag: { text: 'URGENT', cls: 'urgent' } },
-      { t: '00:07', label: 'Vendor selected', detail: 'Acme Plumbing · top-rated · 4.9★' },
-      { t: '00:11', label: 'SMS dispatched to vendor', detail: 'ETA 45 min · confirmed' },
-      { t: '00:14', label: 'Tenant reply drafted & sent' },
-      { t: '00:17', label: 'Work order WO-4821 created' },
-      { t: '00:19', label: 'Synced to PM platform · Owner notified' }
-    ],
-    reply: "Got it — I'm dispatching Acme Plumbing now, ETA 45 min. In the meantime, here's the water shut-off valve guide in your portal. I've logged Work Order #4821 and notified the owner. Stay safe!",
-    wo: { id: 'WO-4821', meta: 'Unit 304 · URGENT · Vendor dispatched · ETA 45 min' }
-  },
   ac: {
-    tenantMeta: 'Unit 112 · 2:18 PM',
-    tenantText: "AC is completely out in unit 112. It's 95°F in here and my kid is sick. We need someone today.",
-    steps: [
-      { t: '00:00', label: 'Message received from Unit 112' },
-      { t: '00:03', label: 'Classifying urgency', tag: { text: 'URGENT', cls: 'urgent' } },
-      { t: '00:06', label: 'Health risk flagged · vulnerable tenant' },
-      { t: '00:09', label: 'Vendor selected', detail: 'CoolPro HVAC · 24-hr emergency' },
-      { t: '00:12', label: 'SMS dispatched to vendor', detail: 'ETA 2 hrs · after-hours auth requested' },
-      { t: '00:15', label: 'Tenant reply drafted & sent' },
-      { t: '00:18', label: 'Work order WO-4837 created · Owner alerted' }
+    apt: 'Apt 112', time: '2:18 PM',
+    msg: 'AC broken 🥵 95° in here',
+    checks: [
+      'Read message · 0.2s',
+      'Weather pulled: 95°F today ☀️',
+      'Lease checked: family + infant noted',
+      'History: 2nd HVAC issue this month'
     ],
-    reply: "I hear you — health risk noted. I'm dispatching CoolPro HVAC for emergency service, ETA 2 hours. I've also pinged the owner to authorize after-hours rates. Work order #4837 logged. Stay cool — message me if anything changes.",
-    wo: { id: 'WO-4837', meta: 'Unit 112 · URGENT · Health priority · ETA 2 hrs' }
+    urgency: { text: '🚨 URGENT — health risk', cls: 'urgent' },
+    vendor: { name: 'CoolPro HVAC', meta: '4.8★ · 24-hr emergency · 1.2mi away' },
+    sms: '"Hi CoolPro — urgent: AC out at Unit 112, family w/ infant inside. Owner pre-approved after-hours rate. Need ETA. Full address sent separately."',
+    reply: "On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours rate approved. Work order #4837 logged. Stay cool — message me if anything changes 💚",
+    wo: { id: 'WO-4837', meta: 'Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs', secs: '14 seconds' }
+  },
+  leak: {
+    apt: 'Apt 304', time: '11:42 PM',
+    msg: 'sink leaking bad pls help',
+    checks: [
+      'Read message · 0.2s',
+      'Last maintenance: garbage disposal, 3mo ago',
+      'Lease verified: tenant in good standing',
+      'Severity: water damage risk flagged'
+    ],
+    urgency: { text: '🚨 URGENT — property damage risk', cls: 'urgent' },
+    vendor: { name: 'Acme Plumbing', meta: '4.9★ · 24/7 emergency · 2.0mi away' },
+    sms: '"Hi Acme — urgent: sink leak, Apt 304, active water damage risk. Need someone in 45min. Full address sent separately."',
+    reply: "Got it — Acme Plumbing on the way, ETA 45min. Here's the shut-off valve guide in your portal. Work order #4821 logged. Stay safe — message back if it gets worse 💚",
+    wo: { id: 'WO-4821', meta: 'Apt 304 · URGENT · Acme Plumbing · ETA 45min', secs: '12 seconds' }
   },
   lockout: {
-    tenantMeta: 'Apt 207 · 9:30 AM',
-    tenantText: "I'm locked out of Apt 207. Left my keys inside. Can you help me get back in?",
-    steps: [
-      { t: '00:00', label: 'Message received from Apt 207' },
-      { t: '00:03', label: 'Classifying urgency', tag: { text: 'URGENT', cls: 'urgent' } },
-      { t: '00:06', label: 'Identity verified · Lease active' },
-      { t: '00:09', label: 'Vendor selected', detail: 'SafeKey Locksmith · nearest' },
-      { t: '00:12', label: 'SMS dispatched · $85 fee per lease' },
-      { t: '00:14', label: 'Tenant reply drafted & sent' },
-      { t: '00:16', label: 'Work order WO-4842 created' }
+    apt: 'Apt 207', time: '9:30 AM',
+    msg: 'locked out 207',
+    checks: [
+      'Read message · 0.2s',
+      'Identity verified via phone match',
+      'Lease check: active, no fees owed',
+      'Fee policy: $85 lockout per Section 6.1'
     ],
-    reply: "I've verified your lease and dispatched SafeKey Locksmith — ETA 30 min. The $85 lockout fee will be added to your account per your lease (Section 6.1). Work order #4842 logged. Hang tight, help is on the way!",
-    wo: { id: 'WO-4842', meta: 'Apt 207 · URGENT · Vendor en route · ETA 30 min' }
+    urgency: { text: '🚨 URGENT — tenant access', cls: 'urgent' },
+    vendor: { name: 'SafeKey Locksmith', meta: '4.7★ · 30min radius · $85 standard' },
+    sms: '"Hi SafeKey — lockout at Apt 207. Tenant identity verified. Standard $85 fee. Need ETA. Address sent separately."',
+    reply: "Lease verified — SafeKey Locksmith on the way, ETA 30min. $85 lockout fee added to your account per Section 6.1. Work order #4842 logged. Hang tight!",
+    wo: { id: 'WO-4842', meta: 'Apt 207 · URGENT · SafeKey · ETA 30min', secs: '11 seconds' }
   },
   bulb: {
-    tenantMeta: 'Apt 415 · 4:05 PM',
-    tenantText: "The kitchen light is out in apt 415. Can you send someone to fix it?",
-    steps: [
-      { t: '00:00', label: 'Message received from Apt 415' },
-      { t: '00:03', label: 'Classifying urgency', tag: { text: 'ROUTINE', cls: 'routine' } },
-      { t: '00:06', label: 'Lease check · tenant-replaceable item' },
-      { t: '00:09', label: 'Self-help video selected from library' },
-      { t: '00:12', label: 'Tenant reply drafted & sent' },
-      { t: '00:14', label: 'Auto-closed', tag: { text: 'RESOLVED', cls: 'resolved' } }
+    apt: 'Apt 415', time: '4:05 PM',
+    msg: 'kitchen light out',
+    checks: [
+      'Read message · 0.2s',
+      'Lease check: bulbs are tenant-replaceable',
+      'Self-help video found in library',
+      'Auto-classified as routine'
     ],
-    reply: "Quick win — kitchen bulbs are listed as tenant-replaceable in your lease (Section 4.2). Here's a 30-second video on how to swap it. If it's not the bulb, just reply 'still broken' and I'll send someone out today.",
-    wo: { id: 'WO-CLOSED', meta: 'Apt 415 · Self-resolved · 0 vendor cost' }
+    urgency: { text: '✓ ROUTINE — self-resolvable', cls: 'routine' },
+    vendor: { name: 'No vendor needed', meta: 'Self-help video sent · auto-close enabled' },
+    sms: '(No dispatch — tenant self-resolve recommended. $0 cost.)',
+    reply: "Kitchen bulbs are tenant-replaceable per lease Section 4.2. Here's a 30-second swap video in your portal. Reply 'still broken' and I'll send someone same-day at no charge!",
+    wo: { id: 'AUTO-CLOSED', meta: 'Apt 415 · Self-resolved · $0 vendor cost', secs: '8 seconds' }
   }
 };
 
-// ============== DEMO RUNNER ==============
-let currentRun = null;
-let activeScenario = 'leak';
+const nextLabels = [
+  'Next: Watch AI investigate →',
+  'Next: See vendor picked →',
+  'Next: See tenant reply →',
+  'Next: See it logged →',
+  '✨ Run this on MY portfolio →'
+];
 
-function clearDemo() {
-  if (currentRun) {
-    currentRun.aborted = true;
-    currentRun.timeouts.forEach(t => clearTimeout(t));
+let state = { scenario: 'ac', step: 1, totalSteps: 5, hasInteracted: false };
+
+function renderStep() {
+  const s = scenarios[state.scenario];
+
+  // Progress bar segments
+  document.querySelectorAll('#progressDots > div').forEach((d, i) => {
+    if (i < state.step) { d.classList.remove('bg-white/10'); d.classList.add('bg-mint-500'); }
+    else { d.classList.remove('bg-mint-500'); d.classList.add('bg-white/10'); }
+  });
+
+  // Step counter
+  document.getElementById('stepCounter').textContent = `Step ${state.step} of ${state.totalSteps}`;
+
+  // Show only current step, re-trigger animation
+  document.querySelectorAll('.demo-step').forEach(el => el.classList.add('hidden'));
+  const cur = document.querySelector(`.demo-step[data-step="${state.step}"]`);
+  cur.classList.remove('hidden');
+  cur.style.animation = 'none';
+  void cur.offsetWidth;
+  cur.style.animation = '';
+
+  // Populate step content
+  if (state.step === 1) {
+    document.getElementById('step1Meta').textContent = `${s.apt} · ${s.time}`;
+    document.getElementById('step1Msg').textContent = s.msg;
+  } else if (state.step === 2) {
+    const checksEl = document.getElementById('step2Checks');
+    checksEl.innerHTML = '';
+    s.checks.forEach((c, i) => {
+      const item = document.createElement('div');
+      item.className = 'check-item';
+      item.style.animationDelay = `${i * 200}ms`;
+      item.innerHTML = `<div class="check-icon"><svg fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>${c}</span>`;
+      checksEl.appendChild(item);
+    });
+    const resultEl = document.getElementById('step2Result');
+    resultEl.innerHTML = `<div class="urgency-pill ${s.urgency.cls}" style="opacity:0; transition: opacity 0.4s ease;">${s.urgency.text}</div>`;
+    setTimeout(() => { resultEl.querySelector('.urgency-pill').style.opacity = '1'; }, s.checks.length * 200 + 200);
+  } else if (state.step === 3) {
+    document.getElementById('step3Vendor').textContent = s.vendor.name;
+    document.getElementById('step3VendorMeta').textContent = s.vendor.meta;
+    document.getElementById('step3Sms').textContent = s.sms;
+  } else if (state.step === 4) {
+    document.getElementById('step4Meta').textContent = `UpneX AI · ${s.time}`;
+    document.getElementById('step4Reply').textContent = s.reply;
+  } else if (state.step === 5) {
+    document.getElementById('step5WoId').textContent = s.wo.id;
+    document.getElementById('step5WoMeta').textContent = s.wo.meta;
+    document.getElementById('step5Time').textContent = s.wo.secs;
   }
-  document.getElementById('tenantText').textContent = '';
-  document.getElementById('tenantText').classList.add('tenant-cursor');
-  document.getElementById('timeline').innerHTML = '';
-  document.getElementById('replyCard').classList.remove('visible');
-  document.getElementById('woCard').classList.remove('visible');
-  document.getElementById('replyText').textContent = '';
-  document.getElementById('woId').textContent = '—';
-  document.getElementById('woMeta').textContent = '';
+
+  // Back button visibility
+  document.getElementById('backBtn').classList.toggle('invisible', state.step === 1);
+
+  // Next button label + behavior
+  document.getElementById('nextBtnText').textContent = nextLabels[state.step - 1];
+  document.getElementById('nextBtn').dataset.action = (state.step === state.totalSteps) ? 'cta' : 'next';
+
+  // Active scenario in picker
+  document.querySelectorAll('.demo-tab-mini').forEach(b => b.classList.toggle('active', b.dataset.scenario === state.scenario));
 }
 
-function runScenario(key) {
-  clearDemo();
-  activeScenario = key;
-  const s = scenarios[key];
-  document.getElementById('tenantMeta').textContent = s.tenantMeta;
-
-  const run = { aborted: false, timeouts: [] };
-  currentRun = run;
-  const schedule = (delay, fn) => { run.timeouts.push(setTimeout(() => { if (!run.aborted) fn(); }, delay)); };
-
-  // 1. Type out tenant message
-  const tenantEl = document.getElementById('tenantText');
-  let i = 0;
-  function typeChar() {
-    if (run.aborted) return;
-    if (i <= s.tenantText.length) {
-      tenantEl.textContent = s.tenantText.slice(0, i);
-      i++;
-      schedule(28, typeChar);
-    } else {
-      tenantEl.classList.remove('tenant-cursor');
-      schedule(400, runSteps);
-    }
+// Wire next/back
+document.getElementById('nextBtn').addEventListener('click', (e) => {
+  // Stop the pulse on the Next button once they've clicked at least once
+  if (!state.hasInteracted) {
+    e.currentTarget.classList.add('no-pulse');
+    state.hasInteracted = true;
   }
-  typeChar();
-
-  // 2. Run timeline steps
-  function runSteps() {
-    const timelineEl = document.getElementById('timeline');
-    s.steps.forEach((step, idx) => {
-      const stepDelay = idx * 650;
-      schedule(stepDelay, () => {
-        const el = document.createElement('div');
-        el.className = 'timeline-step active';
-        el.dataset.idx = idx;
-        const tagHtml = step.tag ? `<span class="step-tag ${step.tag.cls}">${step.tag.text}</span>` : '';
-        const detailHtml = step.detail ? `<div class="text-xs text-mint-300/60 mt-0.5">${step.detail}</div>` : '';
-        el.innerHTML = `
-          <div class="step-time">${step.t}</div>
-          <div class="step-icon"><div class="spinner"></div></div>
-          <div class="flex-1"><span class="step-text">${step.label}${tagHtml}</span>${detailHtml}</div>
-        `;
-        timelineEl.appendChild(el);
-        // Force reflow + reveal
-        requestAnimationFrame(() => el.classList.add('visible'));
-
-        // Mark previous as done
-        const prev = timelineEl.querySelector(`[data-idx="${idx - 1}"]`);
-        if (prev) {
-          prev.classList.remove('active');
-          prev.classList.add('done');
-          const icon = prev.querySelector('.step-icon');
-          icon.innerHTML = '<div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>';
-        }
-      });
-    });
-
-    // Mark last step done after all
-    schedule(s.steps.length * 650 + 200, () => {
-      const last = document.querySelector(`[data-idx="${s.steps.length - 1}"]`);
-      if (last) {
-        last.classList.remove('active');
-        last.classList.add('done');
-        last.querySelector('.step-icon').innerHTML = '<div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>';
-      }
-    });
-
-    // 3. Show reply card
-    schedule(s.steps.length * 650 + 500, () => {
-      document.getElementById('replyText').textContent = s.reply;
-      document.getElementById('replyCard').classList.add('visible');
-    });
-
-    // 4. Show work order card
-    schedule(s.steps.length * 650 + 1100, () => {
-      document.getElementById('woId').textContent = s.wo.id;
-      document.getElementById('woMeta').textContent = s.wo.meta;
-      document.getElementById('woCard').classList.add('visible');
-    });
+  if (e.currentTarget.dataset.action === 'cta') {
+    document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      const nameInput = document.querySelector('input[name="name"]');
+      if (nameInput) nameInput.focus();
+    }, 600);
+  } else if (state.step < state.totalSteps) {
+    state.step++;
+    renderStep();
   }
-}
+});
 
-// Wire up scenario buttons
-document.querySelectorAll('.demo-tab').forEach(btn => {
+document.getElementById('backBtn').addEventListener('click', () => {
+  if (state.step > 1) { state.step--; renderStep(); }
+});
+
+document.querySelectorAll('.demo-tab-mini').forEach(btn => {
   btn.addEventListener('click', () => {
-    // Mark all as discovered — kills the pulse + hides "Try me" badge
-    document.querySelectorAll('.demo-tab').forEach(b => {
-      b.classList.remove('active');
-      b.classList.add('discovered');
-    });
-    btn.classList.add('active');
-    // Hide pointer hint once they've engaged
-    const hint = document.querySelector('.pointer-hint');
-    if (hint) hint.style.opacity = '0.4';
-    runScenario(btn.dataset.scenario);
+    state.scenario = btn.dataset.scenario;
+    state.step = 1;
+    renderStep();
   });
 });
 
-document.getElementById('replayBtn').addEventListener('click', () => runScenario(activeScenario));
-
-// Auto-run first scenario on load
-window.addEventListener('load', () => {
-  setTimeout(() => runScenario('leak'), 600);
-});
+// Initial render
+renderStep();
 
 // ============== SCROLL REVEAL ==============
 const observer = new IntersectionObserver((entries) => {
