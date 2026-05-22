@@ -6,6 +6,7 @@
 <title>UpneX — Try an AI Property Management Agent</title>
 <meta name="description" content="Property management, run by AI. Walk through a real tenant request in 5 steps — then book your free pilot." />
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -194,6 +195,17 @@
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* Spinner — for form submit state */
+  .spinner-lg {
+    width: 44px; height: 44px;
+    border: 3px solid #F5F5F7;
+    border-top-color: #0071E3;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* Investigation check items */
   .check-item {
@@ -492,37 +504,28 @@
             </form>
           </div>
 
-          <!-- Step 2: Calendar -->
-          <div id="formStep2" class="hidden">
-            <div class="flex items-center gap-3 mb-5">
-              <div class="w-10 h-10 rounded-full bg-ablue-tint flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-ablue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+          <!-- Step 2: Sending + redirect to Google Calendar -->
+          <div id="formStep2" class="hidden text-center py-10">
+
+            <!-- Sending state -->
+            <div id="sendingState">
+              <div class="spinner-lg mb-6"></div>
+              <h3 class="text-xl font-semibold mb-2">Sending your info…</h3>
+              <p class="text-muted">Just a sec — Hari will get this right away.</p>
+            </div>
+
+            <!-- Success / redirecting state -->
+            <div id="successState" class="hidden">
+              <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-ablue-tint flex items-center justify-center">
+                <svg class="w-9 h-9 text-ablue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
               </div>
-              <div>
-                <div class="font-semibold text-ink">Got it<span id="capturedName"></span>.</div>
-                <div class="text-sm text-muted">Pick a 30-min slot with Hari.</div>
+              <h3 class="text-xl font-semibold mb-2">Got it<span id="capturedName"></span>!</h3>
+              <p class="text-muted mb-6">Taking you to schedule your call…</p>
+              <div class="text-xs text-muted">
+                Not redirecting?
+                <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="link-blue font-medium ml-1">Open booker manually →</a>
               </div>
             </div>
-
-            <div class="rounded-2xl overflow-hidden border border-fog bg-mist" style="min-height: 540px;">
-              <iframe
-                src="https://calendar.app.google/2juqXrLWWE2q441z6"
-                width="100%"
-                height="540"
-                frameborder="0"
-                scrolling="auto"
-                loading="lazy"
-                style="border: 0; display: block; min-height: 540px;">
-              </iframe>
-            </div>
-
-            <div class="mt-3 text-center text-sm text-muted">
-              Booker not loading? <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="link-blue font-medium ml-1">Open in a new tab →</a>
-            </div>
-
-            <button type="button" id="backToForm" class="mt-4 w-full text-center text-sm text-muted hover:text-ink transition">
-              ← Edit my details
-            </button>
           </div>
         </div>
 
@@ -817,6 +820,28 @@
 </div>
 
 <script>
+// ============== EMAILJS CONFIG ==============
+// Sign up free at https://www.emailjs.com (200 emails/month on free tier)
+// Setup steps:
+//   1. Add an email service (Gmail recommended) → copy the SERVICE_ID
+//   2. Create an Email Template using these variables:
+//        {{from_name}}, {{from_email}}, {{phone}}, {{portfolio}}, {{timestamp}}, {{subject}}, {{message}}
+//      Set the template's "To Email" field to: software@upnexs.com
+//      Copy the TEMPLATE_ID after saving
+//   3. Go to Account → API Keys → copy the Public Key
+//   4. Replace the three placeholders below
+const EMAILJS_CONFIG = {
+  publicKey:  'YOUR_PUBLIC_KEY_HERE',   // Account → API Keys
+  serviceId:  'YOUR_SERVICE_ID_HERE',   // Email Services
+  templateId: 'YOUR_TEMPLATE_ID_HERE',  // Email Templates
+};
+const CALENDAR_URL = 'https://calendar.app.google/2juqXrLWWE2q441z6';
+
+// Init EmailJS (no-op if SDK didn't load)
+if (window.emailjs && EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY_HERE') {
+  emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+}
+
 // ============== SCENARIO DATA ==============
 const scenarios = {
   ac: {
@@ -1012,41 +1037,88 @@ const counterObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
 
-// ============== FORM → CALENDAR ==============
+// ============== FORM → EMAIL → CALENDAR REDIRECT ==============
 const form = document.getElementById('leadForm');
 const step1 = document.getElementById('formStep1');
 const step2 = document.getElementById('formStep2');
 const stepDot1 = document.getElementById('stepDot1');
 const stepDot2 = document.getElementById('stepDot2');
 const stepBar = document.getElementById('stepBar');
+const sendingState = document.getElementById('sendingState');
+const successState = document.getElementById('successState');
 
-function goToStep2(data) {
-  document.getElementById('capturedName').textContent = data.name ? `, ${data.name.split(' ')[0]}` : '';
-  step1.classList.add('hidden');
-  step2.classList.remove('hidden');
+function advanceProgress() {
   stepDot1.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
   stepDot2.classList.remove('bg-fog', 'text-muted');
   stepDot2.classList.add('bg-ablue', 'text-white');
   stepBar.style.width = '100%';
+  step1.classList.add('hidden');
+  step2.classList.remove('hidden');
 }
 
-function goToStep1() {
-  step2.classList.add('hidden');
-  step1.classList.remove('hidden');
-  stepDot1.textContent = '1';
-  stepDot2.classList.add('bg-fog', 'text-muted');
-  stepDot2.classList.remove('bg-ablue', 'text-white');
-  stepBar.style.width = '0%';
+// Send lead via EmailJS. Returns a promise that ALWAYS resolves
+// (never rejects) so the redirect proceeds even if email fails.
+function sendLeadEmail(data) {
+  return new Promise((resolve) => {
+    const configured =
+      window.emailjs &&
+      EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY_HERE' &&
+      EMAILJS_CONFIG.serviceId !== 'YOUR_SERVICE_ID_HERE' &&
+      EMAILJS_CONFIG.templateId !== 'YOUR_TEMPLATE_ID_HERE';
+
+    if (!configured) {
+      console.warn('[UpneX] EmailJS not configured — skipping email send. Lead data:', data);
+      return resolve(false);
+    }
+
+    const timestamp = new Date().toLocaleString();
+    const params = {
+      from_name: data.name,
+      from_email: data.email,
+      phone: data.phone,
+      portfolio: data.portfolio,
+      timestamp: timestamp,
+      subject: `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
+      message:
+        `New lead from upnexs.com landing page:\n\n` +
+        `Name: ${data.name}\n` +
+        `Email: ${data.email}\n` +
+        `Phone: ${data.phone}\n` +
+        `Portfolio Size: ${data.portfolio}\n` +
+        `Submitted: ${timestamp}`,
+    };
+
+    emailjs
+      .send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params)
+      .then(() => { console.log('[UpneX] Lead email sent ✓'); resolve(true); })
+      .catch((err) => { console.error('[UpneX] EmailJS send failed:', err); resolve(false); });
+  });
 }
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(form));
-  console.log('Lead captured:', data);
-  goToStep2(data);
-});
+  console.log('[UpneX] Lead captured:', data);
 
-document.getElementById('backToForm').addEventListener('click', goToStep1);
+  // Move UI to Step 2 — show "Sending…"
+  document.getElementById('capturedName').textContent = data.name ? `, ${data.name.split(' ')[0]}` : '';
+  advanceProgress();
+  sendingState.classList.remove('hidden');
+  successState.classList.add('hidden');
+
+  // Fire the email + a 2s minimum hold for UX
+  const emailPromise = sendLeadEmail(data);
+  const holdPromise = new Promise((r) => setTimeout(r, 2000));
+
+  Promise.all([emailPromise, holdPromise]).then(() => {
+    // Swap to success → then redirect after a brief moment
+    sendingState.classList.add('hidden');
+    successState.classList.remove('hidden');
+    setTimeout(() => {
+      window.location.href = CALENDAR_URL;
+    }, 1200);
+  });
+});
 
 // ============== STICKY CTA ==============
 const stickyCta = document.getElementById('stickyCta');
