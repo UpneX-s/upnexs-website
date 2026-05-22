@@ -3,33 +3,30 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>UpneX — Try an AI Property Management Agent. Live.</title>
-<meta name="description" content="Pick a real tenant scenario. Watch the UpneX Maintenance Triage Agent handle it in real time — urgency classification, vendor dispatch, tenant reply, work order, all autonomous." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<title>UpneX — Try an AI Property Management Agent</title>
+<meta name="description" content="Property management, run by AI. Walk through a real tenant request in 5 steps — then book your free pilot." />
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
-          ink: {
-            DEFAULT: '#0A0A0A',
-            900: '#000000', 800: '#0A0A0A', 700: '#171717', 600: '#262626', 500: '#404040',
-          },
-          mint: {
-            DEFAULT: '#10B981',
-            600: '#059669', 500: '#10B981', 400: '#34D399', 300: '#6EE7B7', 200: '#A7F3D0', 100: '#D1FAE5',
-          },
-          cream: {
-            DEFAULT: '#F5F5F0',
-            100: '#FAFAF7', 200: '#F5F5F0', 300: '#EEEEE8',
+          ink: '#1D1D1F',            // Apple text black
+          paper: '#FFFFFF',
+          fog: '#F5F5F7',            // Apple section gray
+          mist: '#FAFAFC',           // Slight warm white
+          muted: '#86868B',          // Apple secondary text
+          dim: '#6E6E73',
+          line: '#D2D2D7',           // Apple subtle border
+          ablue: {
+            DEFAULT: '#0071E3',
+            hover: '#0077ED',
+            tint: '#E8F0FE',
           },
         },
         fontFamily: {
-          sans: ['Inter', 'system-ui', 'sans-serif'],
-          mono: ['JetBrains Mono', 'monospace'],
+          sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+          mono: ['"SF Mono"', 'Menlo', 'Monaco', '"Courier New"', 'monospace'],
         },
       },
     },
@@ -38,630 +35,447 @@
 <style>
   * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', system-ui, sans-serif; color: #0A0A0A; background: #0A0A0A; overflow-x: hidden; }
-
-  /* Hero backdrop */
-  .hero-bg {
-    background:
-      radial-gradient(ellipse 60% 50% at 20% 0%, rgba(16, 185, 129, 0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 60% at 90% 60%, rgba(52, 211, 153, 0.12) 0%, transparent 60%),
-      linear-gradient(180deg, #000000 0%, #0A0A0A 100%);
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #1D1D1F;
+    background: #FFFFFF;
+    overflow-x: hidden;
+    letter-spacing: -0.003em;
   }
 
-  .shape { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-  .shape-1 { top: 5%; left: -8%; width: 380px; height: 380px; background: #10B981; opacity: 0.18; animation: float 20s ease-in-out infinite; }
-  .shape-2 { top: 40%; right: -8%; width: 460px; height: 460px; background: #34D399; opacity: 0.10; animation: float 26s ease-in-out infinite reverse; }
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -40px) scale(1.05); }
-    66% { transform: translate(-20px, 30px) scale(0.95); }
+  /* ============ TYPOGRAPHY ============ */
+  .display-xl {
+    font-size: clamp(44px, 7vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 600;
   }
-
-  .grid-overlay {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-    pointer-events: none;
+  .display-lg {
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.1;
+    letter-spacing: -0.022em;
+    font-weight: 600;
   }
-
-  /* Scroll reveal */
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-
-  /* Buttons */
-  .btn-primary {
-    background: #10B981; color: #0A0A0A;
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5), 0 20px 40px -12px rgba(16, 185, 129, 0.4);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  .display-md {
+    font-size: clamp(28px, 3.5vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 600;
   }
-  .btn-primary:hover { transform: translateY(-2px); background: #34D399; box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.18), 0 25px 50px -12px rgba(16, 185, 129, 0.5); }
-  .btn-primary:active { transform: translateY(0); }
-  .btn-ghost { background: transparent; color: #D1FAE5; border: 1px solid rgba(255,255,255,0.15); transition: all 0.25s ease; }
-  .btn-ghost:hover { background: rgba(255,255,255,0.05); border-color: rgba(16,185,129,0.5); color: #fff; }
+  .body-lg { font-size: 19px; line-height: 1.55; color: #6E6E73; }
+  .body { font-size: 17px; line-height: 1.5; color: #6E6E73; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #0071E3; }
 
-  .live-dot { position: relative; display: inline-block; width: 8px; height: 8px; background: #10B981; border-radius: 50%; }
-  .live-dot::after {
-    content: ''; position: absolute; inset: -4px; border-radius: 50%;
-    background: #10B981; opacity: 0.4;
-    animation: pulse 2s ease-out infinite;
-  }
-  @keyframes pulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.5); opacity: 0; } }
-
-  .display { letter-spacing: -0.035em; line-height: 0.95; }
-
-  /* DEMO STYLES ================================================ */
-  .demo-card {
-    background: rgba(10, 10, 10, 0.7);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 24px;
-    backdrop-filter: blur(12px);
-  }
-  .demo-tab {
-    padding: 14px 18px; border-radius: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    color: rgba(209, 250, 229, 0.85);
-    font-weight: 500; font-size: 14px; text-align: left;
+  /* ============ BUTTONS ============ */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 28px;
+    border-radius: 980px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.2s ease;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex; align-items: center; gap: 10px;
-    position: relative;
+    line-height: 1;
+    white-space: nowrap;
   }
-  .demo-tab:hover {
-    background: rgba(16, 185, 129, 0.12);
-    border-color: rgba(16, 185, 129, 0.5);
-    color: #fff;
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 12px 30px -8px rgba(16, 185, 129, 0.35);
-  }
-  .demo-tab.active {
-    background: rgba(16, 185, 129, 0.2);
-    border-color: #10B981;
-    color: #fff;
-    box-shadow: 0 8px 24px -6px rgba(16, 185, 129, 0.5), inset 0 0 0 1px rgba(16, 185, 129, 0.3);
-  }
-  .demo-tab.active::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 50%;
-    transform: translate(-50%, -50%);
-    width: 6px; height: 60%;
-    background: #10B981;
-    border-radius: 4px;
-    box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
-  }
-  /* Pulsing glow on un-clicked tabs to invite interaction */
-  .demo-tab:not(.active):not(.discovered) {
-    animation: chipPulse 2.4s ease-in-out infinite;
-  }
-  @keyframes chipPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); border-color: rgba(255,255,255,0.06); }
-    50% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18); border-color: rgba(16, 185, 129, 0.5); }
-  }
-  .demo-tab .tab-emoji { font-size: 22px; }
-  .demo-tab .tab-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
+  .btn-blue { background: #0071E3; color: #FFFFFF; }
+  .btn-blue:hover { background: #0077ED; }
+  .btn-black { background: #1D1D1F; color: #FFFFFF; }
+  .btn-black:hover { background: #000000; }
+  .btn-white { background: #FFFFFF; color: #1D1D1F; }
+  .btn-white:hover { background: #F5F5F7; }
+  .btn-ghost-light { background: transparent; color: #0071E3; }
+  .btn-ghost-light:hover { color: #0077ED; }
+  .btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.25); }
+  .btn-ghost-dark:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.4); }
+  .btn-lg { padding: 16px 36px; font-size: 17px; }
 
-  /* "TRY" badge on top inactive chip */
-  .try-badge {
-    position: absolute;
-    top: -8px; right: -8px;
-    background: #10B981;
-    color: #0A0A0A;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 999px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    pointer-events: none;
-    animation: tryBounce 1.4s ease-in-out infinite;
-    box-shadow: 0 4px 12px -2px rgba(16, 185, 129, 0.6);
-    z-index: 2;
-  }
-  @keyframes tryBounce {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-3px) scale(1.08); }
-  }
-  .demo-tab.discovered .try-badge { display: none; }
+  /* ============ LINKS ============ */
+  .link-blue { color: #0071E3; text-decoration: none; }
+  .link-blue:hover { text-decoration: underline; }
 
-  /* Pointer hint label */
-  .pointer-hint {
-    display: inline-flex; align-items: center; gap: 6px;
-    color: #10B981;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
+  /* ============ NAV ============ */
+  .nav-link { color: #1D1D1F; font-size: 14px; font-weight: 400; transition: color 0.15s; }
+  .nav-link:hover { color: #0071E3; }
+
+  /* ============ CARDS ============ */
+  .card-soft {
+    background: #FFFFFF;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s, transform 0.3s;
   }
-  .pointer-hint .arrow {
-    display: inline-block;
-    animation: arrowBob 1.4s ease-in-out infinite;
+  .card-soft:hover {
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
   }
-  @keyframes arrowBob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(4px); }
+  .card-flat {
+    background: #FFFFFF;
+    border-radius: 24px;
+    border: 1px solid #F5F5F7;
   }
 
-  /* Tenant message bubble */
-  .tenant-bubble {
-    background: rgba(255,255,255,0.06);
-    border-radius: 18px 18px 18px 4px;
-    padding: 16px 20px;
-    color: #F5F5F0;
-    min-height: 80px;
-    position: relative;
+  /* ============ INPUTS ============ */
+  .input {
+    width: 100%;
+    padding: 14px 18px;
+    background: #FFFFFF;
+    border: 1.5px solid #D2D2D7;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #1D1D1F;
+    transition: border 0.2s, box-shadow 0.2s;
+    font-family: inherit;
   }
-  .tenant-cursor::after {
-    content: '|';
-    animation: blink 0.8s steps(1) infinite;
-    color: #10B981;
-    margin-left: 2px;
+  .input:focus {
+    outline: none;
+    border-color: #0071E3;
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
   }
-  @keyframes blink { 50% { opacity: 0; } }
+  .input::placeholder { color: #86868B; }
+  select.input { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23636366' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; padding-right: 44px; }
 
-  /* Timeline step */
-  .timeline-step {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 10px 12px;
-    border-radius: 10px;
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .timeline-step.visible { opacity: 1; transform: translateX(0); }
-  .timeline-step.active { background: rgba(16, 185, 129, 0.08); }
-  .timeline-step .step-icon {
-    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-top: 2px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .timeline-step.active .step-icon { border-color: rgba(16, 185, 129, 0.5); }
-  .timeline-step.done .step-icon { background: #10B981; border-color: #10B981; }
-  .timeline-step .step-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(209,250,229,0.4); margin-top: 4px; }
-  .timeline-step .step-text { color: rgba(245,245,240,0.85); font-size: 14px; }
-  .timeline-step .step-tag {
-    display: inline-block; padding: 2px 8px; border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-    margin-left: 6px; vertical-align: middle;
-  }
-  .step-tag.urgent { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
-  .step-tag.routine { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
-  .step-tag.resolved { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); }
-  .spinner {
-    width: 12px; height: 12px;
-    border: 2px solid rgba(16,185,129,0.3); border-top-color: #10B981;
-    border-radius: 50%; animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .check {
-    width: 12px; height: 12px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .check svg { width: 10px; height: 10px; stroke: #0A0A0A; stroke-width: 4; }
+  /* ============ SCROLL REVEAL ============ */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.08s; }
+  .reveal-d2 { transition-delay: 0.16s; }
+  .reveal-d3 { transition-delay: 0.24s; }
 
-  /* Output card */
-  .output-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(16,185,129,0.2);
-    border-radius: 16px;
-    padding: 16px 18px;
-    opacity: 0; transform: translateY(12px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .output-card.visible { opacity: 1; transform: translateY(0); }
-  .output-card .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: #6ee7b7; margin-bottom: 8px; }
-  .output-card .body { color: #F5F5F0; font-size: 14px; line-height: 1.5; }
-  .wo-card { background: linear-gradient(155deg, #064E3B 0%, #022C22 100%); border-color: rgba(16,185,129,0.4); }
-  .wo-card .label { color: #6ee7b7; }
-  .wo-card .wo-id { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; color: #fff; }
-
-  /* Marquee */
-  .marquee { display: flex; gap: 4rem; animation: marquee 35s linear infinite; white-space: nowrap; }
-  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-  /* State pills */
-  .state-pill {
-    display: inline-block; padding: 4px 12px; border-radius: 6px;
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    color: #10B981; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
-    letter-spacing: 0.05em;
+  /* ============ DEMO CARD (white on light gray) ============ */
+  .demo-shell {
+    background: #FFFFFF;
+    border-radius: 28px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
   }
 
-  /* Card hover for case studies */
-  .card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(10, 10, 10, 0.08); }
-  .card:hover { transform: translateY(-6px); border-color: rgba(16, 185, 129, 0.4); box-shadow: 0 30px 60px -20px rgba(16, 185, 129, 0.18); }
+  /* Scenario dropdown — clean Apple style */
+  .scenario-select-wrap { position: relative; }
+  .scenario-select {
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    width: 100%;
+    padding: 16px 50px 16px 18px;
+    background: #FFFFFF;
+    border: 1.5px solid #1D1D1F;
+    border-radius: 14px;
+    color: #1D1D1F;
+    font-size: 16px; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .scenario-select:hover { background: #FAFAFC; }
+  .scenario-select:focus { outline: none; border-color: #0071E3; box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12); }
+  .scenario-select option { background: #FFFFFF; color: #1D1D1F; padding: 12px; font-weight: 500; }
+  .scenario-select-arrow { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #1D1D1F; }
 
-  /* Form input */
-  .form-input { transition: all 0.2s ease; border: 2px solid rgba(10, 10, 10, 0.12); }
-  .form-input:focus { outline: none; border-color: #10B981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12); }
-
-  /* Gradient mint text */
-  .gradient-text {
-    background: linear-gradient(180deg, #34D399 0%, #10B981 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  /* iMessage-style bubbles */
+  .bubble-tenant {
+    background: #F5F5F7;
+    border-radius: 22px 22px 22px 6px;
+    padding: 14px 18px;
+    color: #1D1D1F;
+    font-size: 16px;
+    line-height: 1.4;
+    max-width: 100%;
+  }
+  .bubble-agent {
+    background: #0071E3;
+    color: #FFFFFF;
+    border-radius: 22px 22px 6px 22px;
+    padding: 14px 18px;
+    font-size: 16px;
+    line-height: 1.4;
   }
 
-  /* Pricing card */
-  .pricing-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-  .pricing-card:hover { transform: translateY(-8px); }
-  .pricing-card.featured {
-    background: linear-gradient(160deg, #0A0A0A 0%, #171717 100%);
-    color: white; border: 1px solid rgba(16, 185, 129, 0.3);
-  }
-
-  /* Sticky mobile CTA */
-  .sticky-cta {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
-    padding: 12px 16px; background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px); border-top: 1px solid rgba(16, 185, 129, 0.2);
-    transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .sticky-cta.visible { transform: translateY(0); }
-  @media (min-width: 768px) { .sticky-cta { display: none !important; } }
-
-  @media (max-width: 640px) {
-    .shape { filter: blur(50px); }
-  }
-
-  /* ========= WIZARD DEMO STYLES ========= */
+  /* Demo step transitions */
   .demo-step { animation: stepFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
   @keyframes stepFadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .demo-tab-mini {
-    padding: 10px 12px; border-radius: 10px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: rgba(209, 250, 229, 0.75);
-    font-size: 13px; font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
-    white-space: nowrap;
-  }
-  .demo-tab-mini:hover {
-    background: rgba(16, 185, 129, 0.1);
-    border-color: rgba(16, 185, 129, 0.35);
-    color: #fff;
-    transform: translateY(-1px);
-  }
-  .demo-tab-mini.active {
-    background: rgba(16, 185, 129, 0.18);
-    border-color: rgba(16, 185, 129, 0.5);
-    color: #fff;
-    box-shadow: 0 6px 16px -6px rgba(16, 185, 129, 0.4);
-  }
-
-  /* Investigation check items in step 2 */
+  /* Investigation check items */
   .check-item {
     display: flex; align-items: center; gap: 12px;
-    font-size: 14px; color: rgba(245, 245, 240, 0.9);
+    font-size: 15px; color: #1D1D1F;
     opacity: 0; transform: translateX(-8px);
     animation: checkSlideIn 0.4s ease forwards;
   }
   .check-item .check-icon {
     width: 22px; height: 22px; border-radius: 50%;
-    background: #10B981;
+    background: #1D1D1F;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .check-item .check-icon svg { width: 12px; height: 12px; stroke: #0A0A0A; stroke-width: 4; }
-  @keyframes checkSlideIn {
-    to { opacity: 1; transform: translateX(0); }
-  }
+  .check-item .check-icon svg { width: 12px; height: 12px; stroke: #FFFFFF; stroke-width: 4; }
+  @keyframes checkSlideIn { to { opacity: 1; transform: translateX(0); } }
 
-  /* Big Next button pulse on first load — invites click */
-  #nextBtn {
-    animation: nextPulse 2s ease-in-out infinite;
-  }
-  @keyframes nextPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5), 0 20px 40px -12px rgba(16, 185, 129, 0.4); }
-    50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.15), 0 20px 40px -12px rgba(16, 185, 129, 0.5); }
-  }
-  #nextBtn.no-pulse { animation: none; }
-
-  /* Scenario dropdown (prominent, at top) */
-  .scenario-select-wrap {
-    position: relative;
-  }
-  .scenario-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 100%;
-    padding: 16px 50px 16px 18px;
-    background: rgba(16, 185, 129, 0.08);
-    border: 2px solid rgba(16, 185, 129, 0.45);
-    border-radius: 14px;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    font-family: inherit;
-  }
-  .scenario-select:hover {
-    background: rgba(16, 185, 129, 0.15);
-    border-color: #10B981;
-    transform: translateY(-1px);
-    box-shadow: 0 10px 30px -8px rgba(16, 185, 129, 0.4);
-  }
-  .scenario-select:focus {
-    outline: none;
-    border-color: #10B981;
-    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
-  }
-  .scenario-select option {
-    background: #0A0A0A;
-    color: #fff;
-    padding: 12px;
-    font-weight: 500;
-  }
-  .scenario-select-arrow {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #10B981;
-    transition: transform 0.2s ease;
-  }
-  /* Subtle attention pulse on dropdown for first 6s */
-  .scenario-select-wrap.attention .scenario-select {
-    animation: dropdownAttention 2s ease-in-out 3;
-  }
-  @keyframes dropdownAttention {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.18); }
-  }
-
-  /* Urgency tags */
+  /* Urgency pill */
   .urgency-pill {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 12px; border-radius: 999px;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 7px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 600;
   }
-  .urgency-pill.urgent {
-    background: rgba(239, 68, 68, 0.15);
-    color: #fca5a5;
-    border: 1px solid rgba(239,68,68,0.35);
+  .urgency-pill.urgent { background: #FFE5E5; color: #C40C0C; }
+  .urgency-pill.routine { background: #FFF4E0; color: #AA6500; }
+
+  /* Marquee */
+  .marquee { display: flex; gap: 4rem; animation: marquee 40s linear infinite; white-space: nowrap; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* State chips (Apple-flat) */
+  .state-pill {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: #F5F5F7;
+    color: #1D1D1F;
+    font-size: 13px; font-weight: 500;
+    font-family: "SF Mono", Menlo, monospace;
   }
-  .urgency-pill.routine {
-    background: rgba(245, 158, 11, 0.15);
-    color: #fcd34d;
-    border: 1px solid rgba(245,158,11,0.35);
+
+  /* Pricing card (featured) */
+  .pricing-featured {
+    background: #1D1D1F;
+    color: #FFFFFF;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   }
+
+  /* Sticky mobile CTA */
+  .sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-top: 1px solid #F5F5F7;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sticky-cta.visible { transform: translateY(0); }
+  @media (min-width: 768px) { .sticky-cta { display: none !important; } }
+
+  /* Live dot */
+  .live-dot { position: relative; display: inline-block; width: 8px; height: 8px; background: #34C759; border-radius: 50%; }
+  .live-dot::after {
+    content: ''; position: absolute; inset: -4px; border-radius: 50%;
+    background: #34C759; opacity: 0.4;
+    animation: pulse 2s ease-out infinite;
+  }
+  @keyframes pulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.5); opacity: 0; } }
+
+  /* Section labels */
+  .section-rule { width: 40px; height: 2px; background: #0071E3; margin-bottom: 24px; }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ink-800/80 border-b border-white/5">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-2 text-white font-extrabold text-xl tracking-tight">
-      <span class="live-dot"></span> UpneX
-    </a>
-    <div class="hidden md:flex items-center gap-8 text-sm text-mint-100/70">
-      <a href="#demo" class="hover:text-white transition">Try the demo</a>
-      <a href="#results" class="hover:text-white transition">Results</a>
-      <a href="#pricing" class="hover:text-white transition">Pricing</a>
+<!-- ============ NAVBAR ============ -->
+<nav class="fixed top-0 inset-x-0 z-50 bg-white/85 backdrop-blur border-b border-fog">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 h-14 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2 text-ink font-semibold text-lg tracking-tight">UpneX</a>
+    <div class="hidden md:flex items-center gap-9">
+      <a href="#demo" class="nav-link">Demo</a>
+      <a href="#what" class="nav-link">What we do</a>
+      <a href="#results" class="nav-link">Results</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
     </div>
-    <a href="#book" class="bg-mint-500 text-ink-800 font-semibold px-4 py-2 rounded-full text-sm hover:bg-mint-400 transition">
-      Book a Call →
+    <a href="#book" class="btn btn-black text-sm" style="padding: 8px 18px;">
+      Book a Call
     </a>
   </div>
 </nav>
 
-<!-- HERO: DEMO + FORM SIDE-BY-SIDE -->
-<section id="demo" class="relative hero-bg pt-24 pb-16 sm:pt-28 sm:pb-20 overflow-hidden">
-  <div class="grid-overlay"></div>
-  <div class="shape shape-1"></div>
-  <div class="shape shape-2"></div>
+<!-- ============ HERO ============ -->
+<section id="demo" class="bg-ink text-white pt-32 pb-24 sm:pt-40 sm:pb-32">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
 
-  <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
-
-    <!-- Hero copy -->
-    <div class="max-w-3xl mb-10">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-mint-500/10 border border-mint-500/30 text-mint-300 text-xs font-medium mb-5">
+    <!-- Top headline -->
+    <div class="max-w-4xl mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/8 border border-white/10 text-white/80 text-xs font-medium mb-7">
         <span class="live-dot"></span>
-        Live interactive demo · No signup
+        Interactive demo · No signup required
       </div>
-      <h1 class="display text-white font-extrabold text-[36px] sm:text-[48px] lg:text-[58px] mb-4">
-        Try a UpneX agent.<br />
-        <span class="gradient-text">Then book your pilot.</span>
+      <h1 class="display-xl mb-6">
+        Property management.<br />
+        <span class="text-white/55">Run by AI.</span>
       </h1>
-      <p class="text-mint-100/70 text-base sm:text-lg leading-relaxed max-w-2xl">
-        Pick a tenant scenario on the left. Watch our <span class="text-white font-semibold">Maintenance Triage Agent</span> handle it in real time. Fill the form on the right to run this on your own portfolio.
+      <p class="text-white/70 text-xl sm:text-2xl leading-snug max-w-2xl font-light">
+        Try a UpneX agent. Walk through a real tenant request in 5 steps. Then book your free 15-day pilot.
       </p>
     </div>
 
-    <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+    <!-- Demo + Form split -->
+    <div class="grid lg:grid-cols-12 gap-8 items-start">
 
-      <!-- LEFT: GUIDED DEMO WIZARD -->
+      <!-- LEFT: Demo card -->
       <div class="lg:col-span-7">
-        <div class="demo-card p-5 sm:p-7">
+        <div class="demo-shell p-6 sm:p-8 text-ink">
 
-          <!-- STEP A: Pick a scenario (dropdown) — FIRST THING USER SEES -->
+          <!-- Scenario dropdown -->
           <div class="mb-7">
-            <label class="block font-mono text-xs text-mint-400 uppercase tracking-[0.2em] mb-2.5" for="scenarioSelect">
-              🎯 Pick a tenant request 👇
+            <label class="block text-xs font-semibold uppercase tracking-wider text-ablue mb-2.5" for="scenarioSelect">
+              Pick a tenant request
             </label>
             <div class="scenario-select-wrap">
               <select id="scenarioSelect" class="scenario-select" aria-label="Pick a tenant scenario">
-                <option value="ac">🥵 AC broken — Apt 112 · 2:18 PM</option>
-                <option value="leak">💧 Sink leaking — Apt 304 · 11:42 PM</option>
-                <option value="lockout">🔑 Locked out — Apt 207 · 9:30 AM</option>
-                <option value="bulb">💡 Light bulb out — Apt 415 · 4:05 PM</option>
+                <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
+                <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
+                <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
+                <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
               </select>
-              <svg class="scenario-select-arrow" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" /></svg>
+              <svg class="scenario-select-arrow" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
             </div>
-            <p class="mt-2 text-xs text-mint-100/40">Change the dropdown anytime to try a different scenario.</p>
+            <p class="mt-2 text-xs text-muted">Change anytime to try a different scenario.</p>
           </div>
 
           <!-- Divider -->
-          <div class="border-t border-white/10 -mx-5 sm:-mx-7 mb-6"></div>
+          <div class="border-t border-fog -mx-6 sm:-mx-8 mb-7"></div>
 
-          <!-- STEP B: Walkthrough header -->
+          <!-- Walkthrough header -->
           <div class="flex items-center justify-between mb-3">
-            <div class="font-mono text-xs text-mint-400 uppercase tracking-[0.2em]">▶ Watch AI handle it</div>
-            <div class="font-mono text-xs text-mint-100/50" id="stepCounter">Step 1 of 5</div>
+            <div class="text-xs font-semibold uppercase tracking-wider text-muted">Watch AI handle it</div>
+            <div class="text-xs font-mono text-muted" id="stepCounter">Step 1 of 5</div>
           </div>
 
           <!-- Progress segments -->
-          <div class="flex items-center gap-1.5 mb-7" id="progressDots">
-            <div class="h-1 flex-1 rounded-full bg-mint-500 transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-white/10 transition-all duration-500"></div>
+          <div class="flex items-center gap-1.5 mb-8" id="progressDots">
+            <div class="h-1 flex-1 rounded-full bg-ink transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
+            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
           </div>
 
-          <!-- Step content area -->
-          <div class="min-h-[320px] mb-6">
+          <!-- Step content -->
+          <div class="min-h-[340px] mb-7">
 
-            <!-- STEP 1: Tenant texts -->
+            <!-- STEP 1 -->
             <div class="demo-step" data-step="1">
-              <h3 class="text-white text-2xl font-bold mb-2">1. Your tenant texts in.</h3>
-              <p class="text-mint-100/60 text-sm mb-5">Real tenants don't write paragraphs — they fire off short, casual messages. Here's a typical one:</p>
-              <div class="tenant-bubble max-w-md">
-                <div class="font-mono text-xs text-mint-300/60 mb-2" id="step1Meta">Apt 112 · 2:18 PM</div>
-                <div class="text-base text-white" id="step1Msg">AC broken 🥵 95° in here</div>
+              <h3 class="text-2xl font-semibold mb-2">Your tenant texts in.</h3>
+              <p class="body mb-6">Real tenants don't write paragraphs. They fire off short, casual messages. Here's a typical one:</p>
+              <div class="max-w-md">
+                <div class="text-xs font-mono text-muted mb-2" id="step1Meta">Apt 112 · 2:18 PM</div>
+                <div class="bubble-tenant" id="step1Msg">AC broken 🥵 95° in here</div>
               </div>
-              <div class="mt-5 text-xs text-mint-100/40 italic">↑ That's it. That's the whole message. Now watch what the AI does with it.</div>
+              <p class="text-sm text-muted mt-5">↑ That's the whole message. Now watch what the AI does.</p>
             </div>
 
-            <!-- STEP 2: AI investigates -->
+            <!-- STEP 2 -->
             <div class="demo-step hidden" data-step="2">
-              <h3 class="text-white text-2xl font-bold mb-2">2. AI reads it · pulls context.</h3>
-              <p class="text-mint-100/60 text-sm mb-5">In under a second, the agent investigates everything it needs to act:</p>
-              <div class="space-y-2.5 mb-5" id="step2Checks"></div>
+              <h3 class="text-2xl font-semibold mb-2">AI reads it. Pulls context.</h3>
+              <p class="body mb-6">In under a second, the agent investigates everything it needs:</p>
+              <div class="space-y-3 mb-6" id="step2Checks"></div>
               <div id="step2Result"></div>
             </div>
 
-            <!-- STEP 3: Vendor picked + dispatched -->
+            <!-- STEP 3 -->
             <div class="demo-step hidden" data-step="3">
-              <h3 class="text-white text-2xl font-bold mb-2">3. Right vendor · dispatched.</h3>
-              <p class="text-mint-100/60 text-sm mb-5">From your approved vendor list — scored by rating, distance, response time, cost.</p>
-              <div class="bg-white/5 border border-mint-500/20 rounded-2xl p-4 mb-4">
+              <h3 class="text-2xl font-semibold mb-2">Picks the right vendor. Dispatches.</h3>
+              <p class="body mb-6">From your approved vendor list — scored by rating, distance, response time, and cost.</p>
+              <div class="bg-fog rounded-2xl p-4 mb-4">
                 <div class="flex items-center gap-3">
-                  <div class="w-11 h-11 rounded-full bg-mint-500/20 flex items-center justify-center text-xl flex-shrink-0">🔧</div>
+                  <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center text-xl flex-shrink-0 shadow-sm">🔧</div>
                   <div class="flex-1 min-w-0">
-                    <div class="font-bold text-white" id="step3Vendor">CoolPro HVAC</div>
-                    <div class="text-xs text-mint-100/60" id="step3VendorMeta">4.8★ · 24-hr emergency · 1.2mi away</div>
+                    <div class="font-semibold text-ink" id="step3Vendor">CoolPro HVAC</div>
+                    <div class="text-sm text-muted" id="step3VendorMeta">4.8★ · 24-hr emergency · 1.2mi away</div>
                   </div>
-                  <div class="text-mint-400 text-xs font-mono font-bold">DISPATCHED</div>
+                  <div class="text-ablue text-xs font-semibold uppercase tracking-wider">Dispatched</div>
                 </div>
               </div>
-              <div class="text-xs font-mono text-mint-100/40 mb-2 uppercase tracking-wider">SMS sent to vendor</div>
-              <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 text-sm text-blue-100/90" id="step3Sms"></div>
+              <div class="text-xs font-mono text-muted mb-2 uppercase tracking-wider">SMS sent to vendor</div>
+              <div class="bg-ablue-tint rounded-2xl p-4 text-sm text-ink/85" id="step3Sms"></div>
             </div>
 
-            <!-- STEP 4: Reply to tenant -->
+            <!-- STEP 4 -->
             <div class="demo-step hidden" data-step="4">
-              <h3 class="text-white text-2xl font-bold mb-2">4. AI replies — in your brand voice.</h3>
-              <p class="text-mint-100/60 text-sm mb-5">Calm, specific, with next steps. No tenant is up at 2am stressing — they got an answer in 14 seconds.</p>
-              <div class="bg-mint-500/15 border border-mint-500/30 rounded-2xl rounded-tl-sm p-4 max-w-md">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-6 h-6 rounded-full bg-mint-500 flex items-center justify-center text-ink-800 font-black text-xs">U</div>
-                  <div class="font-mono text-xs text-mint-300/70" id="step4Meta">UpneX AI · 2:18 PM</div>
-                </div>
-                <div class="text-base text-white leading-relaxed" id="step4Reply"></div>
+              <h3 class="text-2xl font-semibold mb-2">Replies — in your brand voice.</h3>
+              <p class="body mb-6">Calm, specific, with next steps. No tenant is up at 2am stressing — they got an answer in 14 seconds.</p>
+              <div class="max-w-md ml-auto">
+                <div class="text-xs font-mono text-muted mb-2 text-right" id="step4Meta">UpneX AI · 2:18 PM</div>
+                <div class="bubble-agent" id="step4Reply"></div>
               </div>
             </div>
 
-            <!-- STEP 5: Work order + summary -->
+            <!-- STEP 5 -->
             <div class="demo-step hidden" data-step="5">
-              <h3 class="text-white text-2xl font-bold mb-2">5. Logged in your PM platform.</h3>
-              <p class="text-mint-100/60 text-sm mb-5">Synced to AppFolio / Buildium / wherever you live. Audit trail intact. Owner alerted. You stayed asleep.</p>
-              <div class="bg-gradient-to-br from-mint-500/20 to-mint-500/5 border border-mint-500/30 rounded-2xl p-5">
-                <div class="text-mint-300 font-mono text-[10px] uppercase tracking-[0.2em] mb-1">Work order created</div>
-                <div class="text-white font-bold text-3xl mb-1" id="step5WoId">WO-4837</div>
-                <div class="text-mint-100/70 text-sm mb-4" id="step5WoMeta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
-                <div class="border-t border-white/10 pt-3 space-y-1.5">
-                  <div class="flex justify-between text-xs">
-                    <span class="text-mint-100/60">Time: message → dispatched</span>
-                    <span class="text-mint-300 font-mono font-bold" id="step5Time">14 seconds</span>
+              <h3 class="text-2xl font-semibold mb-2">Logged in your PM platform.</h3>
+              <p class="body mb-6">Synced to AppFolio / Buildium / wherever you live. Audit trail intact. Owner alerted. You stayed asleep.</p>
+              <div class="bg-ink text-white rounded-2xl p-6">
+                <div class="text-white/50 text-[11px] uppercase tracking-[0.18em] mb-1">Work order created</div>
+                <div class="font-semibold text-3xl mb-1" id="step5WoId">WO-4837</div>
+                <div class="text-white/70 text-sm mb-5" id="step5WoMeta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
+                <div class="border-t border-white/15 pt-4 space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-white/60">Time: message → dispatched</span>
+                    <span class="font-mono font-semibold" id="step5Time">14 seconds</span>
                   </div>
-                  <div class="flex justify-between text-xs">
-                    <span class="text-mint-100/60">Human intervention</span>
-                    <span class="text-mint-300 font-mono font-bold">Zero</span>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-white/60">Human intervention</span>
+                    <span class="font-mono font-semibold">Zero</span>
                   </div>
-                  <div class="flex justify-between text-xs">
-                    <span class="text-mint-100/60">Tenant satisfaction</span>
-                    <span class="text-mint-300 font-mono font-bold">⭐⭐⭐⭐⭐</span>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-white/60">Tenant satisfaction</span>
+                    <span class="font-mono font-semibold">★★★★★</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Big Next button + Back -->
-          <div class="flex items-center justify-between gap-3 pt-5 border-t border-white/5">
-            <button id="backBtn" class="text-mint-100/40 hover:text-white text-sm font-semibold transition px-4 py-2 invisible">
+          <!-- Back + Next -->
+          <div class="flex items-center justify-between gap-3 pt-5 border-t border-fog">
+            <button id="backBtn" class="text-muted hover:text-ink text-sm font-medium transition px-2 py-2 invisible">
               ← Back
             </button>
-            <button id="nextBtn" class="btn-primary inline-flex items-center gap-2 font-bold px-7 py-4 rounded-full text-base">
-              <span id="nextBtnText">Next: Watch AI read it →</span>
+            <button id="nextBtn" class="btn btn-blue btn-lg">
+              <span id="nextBtnText">Next: Watch AI read it</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: FORM CARD -->
+      <!-- RIGHT: Form card -->
       <div class="lg:col-span-5 lg:sticky lg:top-24">
-        <div id="formCard" class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl shadow-mint-500/20 border border-white/10">
+        <div id="formCard" class="bg-white text-ink rounded-3xl p-7 sm:p-9 shadow-xl">
 
           <!-- Step progress -->
-          <div class="flex items-center justify-between mb-6 px-1">
-            <div class="flex items-center gap-2 text-xs">
-              <span id="stepDot1" class="w-6 h-6 rounded-full bg-mint-500 text-ink-800 font-bold flex items-center justify-center">1</span>
-              <span class="font-semibold text-ink-800">Your info</span>
+          <div class="flex items-center justify-between mb-7 text-sm">
+            <div class="flex items-center gap-2">
+              <span id="stepDot1" class="w-6 h-6 rounded-full bg-ablue text-white font-semibold flex items-center justify-center text-xs">1</span>
+              <span class="font-medium text-ink">Your info</span>
             </div>
-            <div class="flex-1 mx-3 h-px bg-ink-800/10 relative">
-              <div id="stepBar" class="absolute inset-y-0 left-0 bg-mint-500 transition-all duration-500" style="width: 0%;"></div>
+            <div class="flex-1 mx-3 h-px bg-fog relative">
+              <div id="stepBar" class="absolute inset-y-0 left-0 bg-ablue transition-all duration-500" style="width: 0%;"></div>
             </div>
-            <div class="flex items-center gap-2 text-xs">
-              <span id="stepDot2" class="w-6 h-6 rounded-full bg-ink-800/10 text-ink-500 font-bold flex items-center justify-center">2</span>
-              <span class="text-ink-500">Book a time</span>
+            <div class="flex items-center gap-2">
+              <span id="stepDot2" class="w-6 h-6 rounded-full bg-fog text-muted font-semibold flex items-center justify-center text-xs">2</span>
+              <span class="text-muted">Book a time</span>
             </div>
           </div>
 
           <!-- Step 1: Form -->
           <div id="formStep1">
-            <h3 class="text-2xl sm:text-3xl font-extrabold text-ink-800 mb-1">Get Your Free Pilot</h3>
-            <p class="text-sm text-ink-500 mb-5">15 days · $0 cost · No credit card</p>
-            <p class="text-xs text-ink-500 mb-4"><span class="text-mint-600">*</span> Indicates a required field</p>
+            <h3 class="display-md mb-2">Get Your Free Pilot</h3>
+            <p class="body mb-6 text-base">15 days · $0 cost · No credit card</p>
 
             <form id="leadForm" class="space-y-4">
               <div>
-                <label class="block text-sm font-semibold mb-1.5 text-ink-800">Your Name <span class="text-mint-600">*</span></label>
-                <input type="text" name="name" required class="form-input w-full px-4 py-3 rounded-xl text-base" placeholder="Hari Sundaram" />
+                <label class="block text-sm font-medium mb-1.5 text-ink">Your Name</label>
+                <input type="text" name="name" required class="input" placeholder="Hari Sundaram" />
               </div>
               <div>
-                <label class="block text-sm font-semibold mb-1.5 text-ink-800">Work Email <span class="text-mint-600">*</span></label>
-                <input type="email" name="email" required class="form-input w-full px-4 py-3 rounded-xl text-base" placeholder="hari@yourpm.com" />
+                <label class="block text-sm font-medium mb-1.5 text-ink">Work Email</label>
+                <input type="email" name="email" required class="input" placeholder="hari@yourpm.com" />
               </div>
               <div>
-                <label class="block text-sm font-semibold mb-1.5 text-ink-800">Phone <span class="text-mint-600">*</span></label>
-                <input type="tel" name="phone" required class="form-input w-full px-4 py-3 rounded-xl text-base" placeholder="(512) 555-0142" />
+                <label class="block text-sm font-medium mb-1.5 text-ink">Phone</label>
+                <input type="tel" name="phone" required class="input" placeholder="(512) 555-0142" />
               </div>
               <div>
-                <label class="block text-sm font-semibold mb-1.5 text-ink-800">Portfolio Size <span class="text-mint-600">*</span></label>
-                <select name="portfolio" required class="form-input w-full px-4 py-3 rounded-xl text-base bg-white">
-                  <option value="">Select range...</option>
+                <label class="block text-sm font-medium mb-1.5 text-ink">Portfolio Size</label>
+                <select name="portfolio" required class="input">
+                  <option value="">Select range…</option>
                   <option value="0-200">0–200 units</option>
                   <option value="201-500">201–500 units</option>
                   <option value="501-1000">501–1,000 units</option>
@@ -670,27 +484,27 @@
                 </select>
               </div>
 
-              <button type="submit" class="btn-primary w-full font-bold px-6 py-3.5 rounded-full text-base flex items-center justify-center gap-2 mt-2">
-                Next → Pick a time
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <button type="submit" class="btn btn-black btn-lg w-full mt-2">
+                Next: Pick a time
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </button>
-              <p class="text-xs text-ink-500 text-center">Your info stays private. No spam, no sales pitch.</p>
+              <p class="text-xs text-muted text-center">Your info stays private. No spam.</p>
             </form>
           </div>
 
           <!-- Step 2: Calendar -->
           <div id="formStep2" class="hidden">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-full bg-mint-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-mint-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-10 h-10 rounded-full bg-ablue-tint flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-ablue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
               </div>
               <div>
-                <div class="font-bold text-ink-800">Got it<span id="capturedName"></span>!</div>
-                <div class="text-xs text-ink-500">Now pick a 30-min slot with Hari.</div>
+                <div class="font-semibold text-ink">Got it<span id="capturedName"></span>.</div>
+                <div class="text-sm text-muted">Pick a 30-min slot with Hari.</div>
               </div>
             </div>
 
-            <div class="rounded-2xl overflow-hidden border border-ink-800/10 bg-cream-100" style="min-height: 540px;">
+            <div class="rounded-2xl overflow-hidden border border-fog bg-mist" style="min-height: 540px;">
               <iframe
                 src="https://calendar.app.google/2juqXrLWWE2q441z6"
                 width="100%"
@@ -702,332 +516,322 @@
               </iframe>
             </div>
 
-            <div class="mt-3 text-center text-xs text-ink-500">
-              Booker not loading?
-              <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="text-mint-600 font-semibold underline ml-1">Open in a new tab →</a>
+            <div class="mt-3 text-center text-sm text-muted">
+              Booker not loading? <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="link-blue font-medium ml-1">Open in a new tab →</a>
             </div>
 
-            <button type="button" id="backToForm" class="mt-3 w-full text-center text-xs text-ink-500 hover:text-ink-800 transition">
+            <button type="button" id="backToForm" class="mt-4 w-full text-center text-sm text-muted hover:text-ink transition">
               ← Edit my details
             </button>
           </div>
         </div>
 
-        <!-- Trust strip under form -->
-        <div class="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-mint-100/50 text-xs">
-          <span class="flex items-center gap-1.5"><span class="text-mint-400">✓</span> $0 cost</span>
-          <span class="flex items-center gap-1.5"><span class="text-mint-400">✓</span> Live in 7 days</span>
-          <span class="flex items-center gap-1.5"><span class="text-mint-400">✓</span> No commitment</span>
+        <!-- Trust strip -->
+        <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-white/55 text-sm">
+          <span class="flex items-center gap-1.5"><span class="text-ablue">✓</span> $0 cost</span>
+          <span class="flex items-center gap-1.5"><span class="text-ablue">✓</span> Live in 7 days</span>
+          <span class="flex items-center gap-1.5"><span class="text-ablue">✓</span> No commitment</span>
         </div>
       </div>
-
     </div>
 
     <!-- Stats strip -->
-    <div class="grid grid-cols-3 gap-6 max-w-3xl mx-auto mt-14 pt-8 border-t border-white/10">
+    <div class="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-24 pt-10 border-t border-white/10">
       <div class="text-center">
-        <div class="text-white font-extrabold text-2xl sm:text-3xl"><span class="counter" data-target="3500">0</span><span class="text-mint-400">+</span></div>
-        <div class="text-mint-100/50 text-[10px] sm:text-xs uppercase tracking-wider mt-1">Units managed</div>
+        <div class="font-semibold text-3xl sm:text-4xl"><span class="counter" data-target="3500">0</span><span class="text-white/40">+</span></div>
+        <div class="text-white/50 text-xs uppercase tracking-wider mt-2">Units managed</div>
       </div>
       <div class="text-center border-x border-white/10">
-        <div class="text-white font-extrabold text-2xl sm:text-3xl"><span class="counter" data-target="45">0</span></div>
-        <div class="text-mint-100/50 text-[10px] sm:text-xs uppercase tracking-wider mt-1">Custom AI agents</div>
+        <div class="font-semibold text-3xl sm:text-4xl"><span class="counter" data-target="45">0</span></div>
+        <div class="text-white/50 text-xs uppercase tracking-wider mt-2">Custom AI agents</div>
       </div>
       <div class="text-center">
-        <div class="text-white font-extrabold text-2xl sm:text-3xl"><span class="counter" data-target="12">0</span></div>
-        <div class="text-mint-100/50 text-[10px] sm:text-xs uppercase tracking-wider mt-1">US states</div>
+        <div class="font-semibold text-3xl sm:text-4xl"><span class="counter" data-target="12">0</span></div>
+        <div class="text-white/50 text-xs uppercase tracking-wider mt-2">US states</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- INTEGRATIONS + STATES -->
-<section class="bg-ink-800 py-8 border-t border-white/5 overflow-hidden">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <p class="text-center text-mint-100/40 text-xs uppercase tracking-[0.3em] mb-6">Plays nicely with your stack</p>
-    <div class="marquee text-mint-100/40 text-xl sm:text-2xl font-bold tracking-tight">
-      <span>AppFolio</span><span class="text-mint-500/30">◆</span>
-      <span>Buildium</span><span class="text-mint-500/30">◆</span>
-      <span>Rent Manager</span><span class="text-mint-500/30">◆</span>
-      <span>DoorLoop</span><span class="text-mint-500/30">◆</span>
-      <span>Innago</span><span class="text-mint-500/30">◆</span>
-      <span>Monday.com</span><span class="text-mint-500/30">◆</span>
-      <span>Google Workspace</span><span class="text-mint-500/30">◆</span>
-      <span>Zoho</span><span class="text-mint-500/30">◆</span>
-      <span>Custom APIs</span><span class="text-mint-500/30">◆</span>
-      <span>AppFolio</span><span class="text-mint-500/30">◆</span>
-      <span>Buildium</span><span class="text-mint-500/30">◆</span>
-      <span>Rent Manager</span><span class="text-mint-500/30">◆</span>
-      <span>DoorLoop</span><span class="text-mint-500/30">◆</span>
-      <span>Innago</span><span class="text-mint-500/30">◆</span>
-      <span>Monday.com</span><span class="text-mint-500/30">◆</span>
-      <span>Google Workspace</span><span class="text-mint-500/30">◆</span>
-      <span>Zoho</span><span class="text-mint-500/30">◆</span>
-      <span>Custom APIs</span><span class="text-mint-500/30">◆</span>
+<!-- ============ INTEGRATIONS STRIP ============ -->
+<section class="bg-white py-16 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+    <p class="text-center text-muted text-xs uppercase tracking-[0.25em] mb-8">Plays nicely with your stack</p>
+    <div class="marquee text-muted text-xl sm:text-2xl font-medium">
+      <span>AppFolio</span><span class="text-line">·</span>
+      <span>Buildium</span><span class="text-line">·</span>
+      <span>Rent Manager</span><span class="text-line">·</span>
+      <span>DoorLoop</span><span class="text-line">·</span>
+      <span>Innago</span><span class="text-line">·</span>
+      <span>Monday.com</span><span class="text-line">·</span>
+      <span>Google Workspace</span><span class="text-line">·</span>
+      <span>Zoho</span><span class="text-line">·</span>
+      <span>Custom APIs</span><span class="text-line">·</span>
+      <span>AppFolio</span><span class="text-line">·</span>
+      <span>Buildium</span><span class="text-line">·</span>
+      <span>Rent Manager</span><span class="text-line">·</span>
+      <span>DoorLoop</span><span class="text-line">·</span>
+      <span>Innago</span><span class="text-line">·</span>
+      <span>Monday.com</span><span class="text-line">·</span>
+      <span>Google Workspace</span><span class="text-line">·</span>
+      <span>Zoho</span><span class="text-line">·</span>
+      <span>Custom APIs</span><span class="text-line">·</span>
     </div>
   </div>
 </section>
 
-<section class="bg-ink-800 py-6 border-t border-white/5">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-    <span class="text-mint-100/40 text-xs uppercase tracking-[0.25em] font-mono mr-2">Active in</span>
+<!-- ============ STATES ============ -->
+<section class="bg-white pb-12">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-wrap items-center justify-center gap-2">
+    <span class="text-muted text-xs uppercase tracking-[0.2em] font-mono mr-3">Active in</span>
     <span class="state-pill">OH</span><span class="state-pill">NJ</span><span class="state-pill">NY</span><span class="state-pill">FL</span><span class="state-pill">TN</span><span class="state-pill">NC</span><span class="state-pill">SC</span><span class="state-pill">AR</span><span class="state-pill">WA</span><span class="state-pill">TX</span><span class="state-pill">PA</span><span class="state-pill">GA</span>
   </div>
 </section>
 
-<!-- WHAT WE DO (other agents) -->
-<section class="py-24 sm:py-28 bg-cream-100">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="max-w-3xl mb-12 reveal">
-      <span class="inline-block text-xs font-mono font-semibold uppercase tracking-[0.25em] text-mint-600 mb-3">— Our agents</span>
-      <h2 class="display text-4xl sm:text-5xl font-extrabold mb-4">You just tried one.<br />There are <span class="text-mint-600">three more.</span></h2>
-      <p class="text-lg text-ink-500 leading-relaxed">
-        Maintenance triage is one of four agents we build. Combined, they run your entire PM back-office — no VAs, no headcount adds.
-      </p>
-    </div>
-
-    <div class="grid sm:grid-cols-2 gap-5">
-
-      <div class="card reveal bg-white p-7 rounded-2xl relative">
-        <div class="absolute top-5 right-5 text-xs font-mono uppercase tracking-wider text-mint-600 bg-mint-100 px-2 py-1 rounded-full">↑ Demoed above</div>
-        <div class="w-11 h-11 rounded-xl bg-ink-800 flex items-center justify-center mb-4 text-mint-400 text-xl">🔧</div>
-        <h3 class="text-xl font-bold mb-2">Maintenance Triage</h3>
-        <p class="text-ink-500 text-sm leading-relaxed">Work order intake, emergency flagging, vendor dispatch, tenant updates — all without a human in the loop.</p>
-      </div>
-
-      <div class="card reveal reveal-delay-1 bg-white p-7 rounded-2xl">
-        <div class="w-11 h-11 rounded-xl bg-ink-800 flex items-center justify-center mb-4 text-mint-400 text-xl">🏠</div>
-        <h3 class="text-xl font-bold mb-2">Leasing & Screening</h3>
-        <p class="text-ink-500 text-sm leading-relaxed">Lead intake, qualification, showing coordination, applicant scoring 0–100 in under 60 seconds.</p>
-      </div>
-
-      <div class="card reveal reveal-delay-2 bg-white p-7 rounded-2xl">
-        <div class="w-11 h-11 rounded-xl bg-ink-800 flex items-center justify-center mb-4 text-mint-400 text-xl">📈</div>
-        <h3 class="text-xl font-bold mb-2">BD & Owner Acquisition</h3>
-        <p class="text-ink-500 text-sm leading-relaxed">Finds self-managing landlords in your target markets, enriches contacts, runs personalized outreach sequences.</p>
-      </div>
-
-      <div class="card reveal bg-white p-7 rounded-2xl">
-        <div class="w-11 h-11 rounded-xl bg-ink-800 flex items-center justify-center mb-4 text-mint-400 text-xl">💬</div>
-        <h3 class="text-xl font-bold mb-2">Tenant Comms & Back-Office</h3>
-        <p class="text-ink-500 text-sm leading-relaxed">Inbox management, rent collection, lease renewals, owner reporting, utilities transfers, compliance docs.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="py-24 sm:py-28 bg-ink-800 relative overflow-hidden">
-  <div class="absolute inset-0 grid-overlay"></div>
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-mint-500/8 rounded-full blur-3xl pointer-events-none"></div>
-
-  <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+<!-- ============ WHAT WE DO ============ -->
+<section id="what" class="bg-fog py-28 sm:py-32">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
     <div class="max-w-3xl mb-16 reveal">
-      <span class="inline-block text-xs font-mono font-semibold uppercase tracking-[0.25em] text-mint-400 mb-3">— The process</span>
-      <h2 class="display text-white text-4xl sm:text-5xl font-extrabold mb-4">First agent live in <span class="gradient-text">7 days.</span></h2>
-      <p class="text-mint-100/60 text-lg leading-relaxed">From kickoff to your first AI agent running autonomously. Full multi-agent stack deploys in 3 weeks.</p>
+      <div class="section-rule"></div>
+      <div class="eyebrow mb-4">Our agents</div>
+      <h2 class="display-lg mb-5">Four agents.<br />One team running your back-office.</h2>
+      <p class="body-lg max-w-2xl">You just walked through one. Combined, they run leasing, maintenance, BD outreach, and tenant comms — no VAs, no headcount adds.</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="reveal bg-ink-700/50 border border-mint-500/15 rounded-2xl p-7">
-        <div class="font-mono text-xs text-mint-400 mb-3">Phase 01 · Day 1</div>
-        <h3 class="text-white text-xl font-bold mb-2">Discovery</h3>
-        <p class="text-mint-100/60 text-sm leading-relaxed">30–45 min call to capture your workflow, target markets, existing tools, and #1 pain point. That's all we need.</p>
+    <div class="grid sm:grid-cols-2 gap-6">
+
+      <div class="card-soft reveal p-8 relative">
+        <span class="absolute top-6 right-6 text-xs font-semibold uppercase tracking-wider text-ablue bg-ablue-tint px-2.5 py-1 rounded-full">Demoed above</span>
+        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">🔧</div>
+        <h3 class="text-2xl font-semibold mb-2">Maintenance Triage</h3>
+        <p class="body">Work order intake, emergency flagging, vendor dispatch, tenant updates — all without a human in the loop.</p>
       </div>
-      <div class="reveal reveal-delay-1 bg-ink-700/50 border border-mint-500/30 rounded-2xl p-7">
-        <div class="font-mono text-xs text-mint-400 mb-3">Phase 02 · Days 2–6</div>
-        <h3 class="text-white text-xl font-bold mb-2">Build, Deploy & Test</h3>
-        <p class="text-mint-100/60 text-sm leading-relaxed">Custom agents built from scratch — no templates. Deployed in a controlled environment, calibrated, integrations verified.</p>
+
+      <div class="card-soft reveal reveal-d1 p-8">
+        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">🏠</div>
+        <h3 class="text-2xl font-semibold mb-2">Leasing & Screening</h3>
+        <p class="body">Lead intake, qualification, showing coordination. Applicant scoring 0–100 in under 60 seconds.</p>
       </div>
-      <div class="reveal reveal-delay-2 bg-ink-700/50 border border-mint-500/15 rounded-2xl p-7">
-        <div class="font-mono text-xs text-mint-400 mb-3">Phase 03 · Day 7+</div>
-        <h3 class="text-white text-xl font-bold mb-2">Agents Go Live</h3>
-        <p class="text-mint-100/60 text-sm leading-relaxed">Agents run autonomously, 24/7. Daily briefing of warm leads, flagged items, completed tasks. We monitor & optimize.</p>
+
+      <div class="card-soft reveal reveal-d2 p-8">
+        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">📈</div>
+        <h3 class="text-2xl font-semibold mb-2">BD & Owner Acquisition</h3>
+        <p class="body">Finds self-managing landlords in your markets, enriches contacts, runs personalized outreach sequences.</p>
+      </div>
+
+      <div class="card-soft reveal reveal-d3 p-8">
+        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">💬</div>
+        <h3 class="text-2xl font-semibold mb-2">Tenant Comms & Back-Office</h3>
+        <p class="body">Inbox management, rent collection, lease renewals, owner reporting, utilities, compliance docs.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CASE STUDIES -->
-<section id="results" class="py-24 sm:py-28 bg-cream-100">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+<!-- ============ PROCESS ============ -->
+<section class="bg-white py-28 sm:py-32">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
     <div class="max-w-3xl mb-16 reveal">
-      <span class="inline-block text-xs font-mono font-semibold uppercase tracking-[0.25em] text-mint-600 mb-3">— Proven results</span>
-      <h2 class="display text-4xl sm:text-5xl font-extrabold mb-4">Our clients grow fast.</h2>
-      <p class="text-lg text-ink-500 leading-relaxed">Three snapshots of what AI-powered PM operations look like in the wild. Real portfolios, real growth, all currently live.</p>
+      <div class="section-rule"></div>
+      <div class="eyebrow mb-4">The process</div>
+      <h2 class="display-lg mb-5">First agent live in <span class="text-ablue">7 days.</span></h2>
+      <p class="body-lg max-w-2xl">From kickoff to autonomous agent. Full multi-agent stack deploys in 3 weeks.</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="reveal bg-white rounded-2xl p-6 card">
-        <div class="font-mono text-xs text-mint-600 mb-2">CASE 01 · LS PROPERTIES — PA</div>
-        <div class="text-3xl font-extrabold mb-1">150 → 225</div>
-        <div class="text-mint-600 font-bold text-lg mb-4">+50% portfolio</div>
-        <p class="text-ink-500 text-sm leading-relaxed mb-4">Plateaued at 150 units. Leasing, maintenance, tenant comms all bottlenecked. Deployed 3 agents — grew 50% without adding headcount.</p>
-        <div class="bg-ink-800 rounded-xl p-4 font-mono text-xs">
-          <div class="flex justify-between text-mint-100/60 mb-1"><span>Growth</span><span class="text-mint-400 font-bold">+50% →</span></div>
-          <div class="flex justify-between text-mint-100/60 mb-1"><span>Headcount</span><span class="text-mint-400 font-bold">Zero added</span></div>
-          <div class="flex justify-between text-mint-100/60"><span>Agents</span><span class="text-mint-400 font-bold">3 live</span></div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="reveal card-flat p-8">
+        <div class="text-xs font-mono text-muted mb-4">PHASE 01 · DAY 1</div>
+        <div class="text-5xl font-semibold mb-5 text-ablue">01</div>
+        <h3 class="text-xl font-semibold mb-2">Discovery</h3>
+        <p class="body text-base">A 30–45 min call to capture your workflow, target markets, existing tools, and #1 pain point. That's all we need.</p>
+      </div>
+      <div class="reveal reveal-d1 card-flat p-8">
+        <div class="text-xs font-mono text-muted mb-4">PHASE 02 · DAYS 2–6</div>
+        <div class="text-5xl font-semibold mb-5 text-ablue">02</div>
+        <h3 class="text-xl font-semibold mb-2">Build, Deploy & Test</h3>
+        <p class="body text-base">Custom agents built from scratch — no templates. Deployed in a controlled environment, calibrated, integrations verified.</p>
+      </div>
+      <div class="reveal reveal-d2 card-flat p-8">
+        <div class="text-xs font-mono text-muted mb-4">PHASE 03 · DAY 7+</div>
+        <div class="text-5xl font-semibold mb-5 text-ablue">03</div>
+        <h3 class="text-xl font-semibold mb-2">Agents Go Live</h3>
+        <p class="body text-base">Agents run autonomously, 24/7. Daily briefing of warm leads, flagged items, completed tasks. We monitor and optimize.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS / CASE STUDIES ============ -->
+<section id="results" class="bg-fog py-28 sm:py-32">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+    <div class="max-w-3xl mb-16 reveal">
+      <div class="section-rule"></div>
+      <div class="eyebrow mb-4">Proven results</div>
+      <h2 class="display-lg mb-5">Our clients grow fast.</h2>
+      <p class="body-lg max-w-2xl">Three snapshots of what AI-powered PM operations look like in the wild. Real portfolios, real growth, all currently live.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <div class="reveal card-soft p-8">
+        <div class="text-xs font-mono text-muted mb-3">CASE 01 · LS PROPERTIES · PA</div>
+        <div class="display-md mb-2">150 → 225</div>
+        <div class="text-ablue font-semibold text-lg mb-5">+50% portfolio</div>
+        <p class="body text-base mb-6">Plateaued at 150 units. Leasing, maintenance, tenant comms all bottlenecked. Deployed 3 agents — grew 50% without adding headcount.</p>
+        <div class="bg-ink text-white rounded-xl p-4 text-sm space-y-1.5 font-mono">
+          <div class="flex justify-between"><span class="text-white/60">Growth</span><span class="font-semibold">+50%</span></div>
+          <div class="flex justify-between"><span class="text-white/60">Headcount</span><span class="font-semibold">Zero added</span></div>
+          <div class="flex justify-between"><span class="text-white/60">Agents</span><span class="font-semibold">3 live</span></div>
         </div>
       </div>
 
-      <div class="reveal reveal-delay-1 bg-white rounded-2xl p-6 card">
-        <div class="font-mono text-xs text-mint-600 mb-2">CASE 02 · TX POD — TEXAS</div>
-        <div class="text-3xl font-extrabold mb-1">100 → 175</div>
-        <div class="text-mint-600 font-bold text-lg mb-4">+75% in 6 months</div>
-        <p class="text-ink-500 text-sm leading-relaxed mb-4">Manual BD was capping new doors. Deployed BD prospector + outreach bot — 75% growth in 6 months, all from AI-sourced owner leads.</p>
-        <div class="bg-ink-800 rounded-xl p-4 font-mono text-xs">
-          <div class="flex justify-between text-mint-100/60 mb-1"><span>Time to result</span><span class="text-mint-400 font-bold">6 months</span></div>
-          <div class="flex justify-between text-mint-100/60 mb-1"><span>Growth rate</span><span class="text-mint-400 font-bold">+75%</span></div>
-          <div class="flex justify-between text-mint-100/60"><span>BD outreach</span><span class="text-mint-400 font-bold">24/7 auto</span></div>
+      <div class="reveal reveal-d1 card-soft p-8">
+        <div class="text-xs font-mono text-muted mb-3">CASE 02 · TX POD · TEXAS</div>
+        <div class="display-md mb-2">100 → 175</div>
+        <div class="text-ablue font-semibold text-lg mb-5">+75% in 6 months</div>
+        <p class="body text-base mb-6">Manual BD was capping new doors. Deployed BD prospector + outreach bot — 75% growth in 6 months, all from AI-sourced leads.</p>
+        <div class="bg-ink text-white rounded-xl p-4 text-sm space-y-1.5 font-mono">
+          <div class="flex justify-between"><span class="text-white/60">Time to result</span><span class="font-semibold">6 months</span></div>
+          <div class="flex justify-between"><span class="text-white/60">Growth rate</span><span class="font-semibold">+75%</span></div>
+          <div class="flex justify-between"><span class="text-white/60">BD outreach</span><span class="font-semibold">24/7 auto</span></div>
         </div>
       </div>
 
-      <div class="reveal reveal-delay-2 bg-white rounded-2xl p-6 card">
-        <div class="font-mono text-xs text-mint-600 mb-2">CASE 03 · RAUT PROPERTIES</div>
-        <div class="text-3xl font-extrabold mb-1">2 → 35</div>
-        <div class="text-mint-600 font-bold text-lg mb-4">+1,650% growth</div>
-        <p class="text-ink-500 text-sm leading-relaxed mb-4">Started as 2-unit owner-operator. AI-run acquisition + ops scaled to 35 units across multiple markets — zero manual ops overhead.</p>
-        <div class="bg-ink-800 rounded-xl p-4 font-mono text-xs">
-          <div class="flex justify-between text-mint-100/60 mb-1"><span>Portfolio</span><span class="text-mint-400 font-bold">2 → 35</span></div>
-          <div class="flex justify-between text-mint-100/60 mb-1"><span>Markets</span><span class="text-mint-400 font-bold">Multiple</span></div>
-          <div class="flex justify-between text-mint-100/60"><span>Ops</span><span class="text-mint-400 font-bold">AI-run</span></div>
+      <div class="reveal reveal-d2 card-soft p-8">
+        <div class="text-xs font-mono text-muted mb-3">CASE 03 · RAUT PROPERTIES</div>
+        <div class="display-md mb-2">2 → 35</div>
+        <div class="text-ablue font-semibold text-lg mb-5">+1,650% growth</div>
+        <p class="body text-base mb-6">Started as 2-unit owner-operator. AI-run acquisition + ops scaled to 35 units across multiple markets — zero manual overhead.</p>
+        <div class="bg-ink text-white rounded-xl p-4 text-sm space-y-1.5 font-mono">
+          <div class="flex justify-between"><span class="text-white/60">Portfolio</span><span class="font-semibold">2 → 35</span></div>
+          <div class="flex justify-between"><span class="text-white/60">Markets</span><span class="font-semibold">Multiple</span></div>
+          <div class="flex justify-between"><span class="text-white/60">Ops</span><span class="font-semibold">AI-run</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<section id="pricing" class="py-24 sm:py-28 bg-white">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="max-w-3xl mb-12 reveal">
-      <span class="inline-block text-xs font-mono font-semibold uppercase tracking-[0.25em] text-mint-600 mb-3">— Pricing</span>
-      <h2 class="display text-4xl sm:text-5xl font-extrabold mb-4">Flat per-unit.<br />No surprises.</h2>
-      <p class="text-lg text-ink-500 leading-relaxed">Pay for outcomes, not hours. Transparent monthly pricing that scales with your portfolio.</p>
+<!-- ============ PRICING ============ -->
+<section id="pricing" class="bg-white py-28 sm:py-32">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+    <div class="max-w-3xl mb-16 reveal">
+      <div class="section-rule"></div>
+      <div class="eyebrow mb-4">Pricing</div>
+      <h2 class="display-lg mb-5">Flat per-unit.<br />No surprises.</h2>
+      <p class="body-lg max-w-2xl">Pay for outcomes, not hours. Transparent monthly pricing that scales with your portfolio.</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5">
+    <div class="grid md:grid-cols-3 gap-6">
 
-      <div class="pricing-card reveal bg-cream-100 rounded-2xl p-7 border border-ink-800/5">
-        <div class="font-mono text-xs uppercase tracking-wider text-mint-600 mb-2">AI Ops Only</div>
-        <div class="mb-1"><span class="text-4xl font-black">$10</span><span class="text-ink-500 text-base">/unit/month</span></div>
-        <p class="text-xs text-ink-500 mb-5">0–200 units · tiers down to $6</p>
-        <ul class="space-y-2 mb-6 text-ink-700 text-sm">
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> Unlimited AI agents</li>
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> 24/7 autonomous operation</li>
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> 15–20 hrs/mo tuning</li>
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> All units — occupied & vacant</li>
+      <div class="reveal card-flat p-8">
+        <div class="text-xs font-mono uppercase tracking-wider text-muted mb-3">AI Ops Only</div>
+        <div class="mb-1"><span class="text-5xl font-semibold">$10</span><span class="text-muted text-lg ml-1">/unit/month</span></div>
+        <p class="text-sm text-muted mb-7">0–200 units · tiers down to $6</p>
+        <ul class="space-y-3 mb-8 text-ink">
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Unlimited AI agents</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>24/7 autonomous operation</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>15–20 hrs/mo tuning</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>All units — occupied & vacant</span></li>
         </ul>
-        <a href="#book" class="block text-center font-semibold py-2.5 rounded-full bg-ink-800/5 text-ink-800 hover:bg-ink-800/10 transition text-sm">Book a Discovery Call →</a>
+        <a href="#book" class="btn btn-ghost-light w-full" style="border: 1.5px solid #1D1D1F; color: #1D1D1F;">
+          Book a Call
+        </a>
       </div>
 
-      <div class="pricing-card featured reveal reveal-delay-1 rounded-2xl p-7 relative overflow-hidden">
-        <div class="absolute top-4 right-4 text-xs font-bold uppercase tracking-wider bg-mint-500 text-ink-800 px-2.5 py-0.5 rounded-full">Popular</div>
-        <div class="font-mono text-xs uppercase tracking-wider text-mint-400 mb-2">AI Ops + VA</div>
-        <div class="mb-1"><span class="text-4xl font-black text-white">$13</span><span class="text-mint-100/70 text-base">/unit/month</span></div>
-        <p class="text-xs text-mint-100/60 mb-5">0–200 units · tiers down to $9</p>
-        <ul class="space-y-2 mb-6 text-mint-100/90 text-sm">
-          <li class="flex items-start gap-2"><span class="text-mint-400 font-bold mt-0.5">✓</span> Everything in AI Ops Only</li>
-          <li class="flex items-start gap-2"><span class="text-mint-400 font-bold mt-0.5">✓</span> Dedicated VA support</li>
-          <li class="flex items-start gap-2"><span class="text-mint-400 font-bold mt-0.5">✓</span> Full PM operations lifecycle</li>
-          <li class="flex items-start gap-2"><span class="text-mint-400 font-bold mt-0.5">✓</span> Owner reporting & financial ops</li>
-          <li class="flex items-start gap-2"><span class="text-mint-400 font-bold mt-0.5">✓</span> Same cost as one traditional VA</li>
+      <div class="reveal reveal-d1 pricing-featured rounded-3xl p-8 relative">
+        <div class="absolute top-6 right-6 text-xs font-semibold uppercase tracking-wider bg-ablue text-white px-2.5 py-1 rounded-full">Popular</div>
+        <div class="text-xs font-mono uppercase tracking-wider text-white/55 mb-3">AI Ops + VA</div>
+        <div class="mb-1"><span class="text-5xl font-semibold">$13</span><span class="text-white/65 text-lg ml-1">/unit/month</span></div>
+        <p class="text-sm text-white/55 mb-7">0–200 units · tiers down to $9</p>
+        <ul class="space-y-3 mb-8 text-white/90">
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Everything in AI Ops Only</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Dedicated VA support</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Full PM operations lifecycle</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Owner reporting & financial ops</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Same cost as one traditional VA</span></li>
         </ul>
-        <a href="#book" class="block text-center font-bold py-2.5 rounded-full bg-mint-500 text-ink-800 hover:bg-mint-400 transition text-sm">Start Free 15-Day Pilot →</a>
+        <a href="#book" class="btn btn-blue w-full">Start Free 15-Day Pilot</a>
       </div>
 
-      <div class="pricing-card reveal reveal-delay-2 bg-cream-100 rounded-2xl p-7 border border-ink-800/5">
-        <div class="font-mono text-xs uppercase tracking-wider text-mint-600 mb-2">BD AI</div>
-        <div class="mb-1"><span class="text-4xl font-black">Custom</span></div>
-        <p class="text-xs text-ink-500 mb-5">Owner acquisition & outreach</p>
-        <ul class="space-y-2 mb-6 text-ink-700 text-sm">
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> 2 custom BD agents</li>
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> Owner prospecting in your markets</li>
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> Enrichment + outreach sequences</li>
-          <li class="flex items-start gap-2"><span class="text-mint-600 font-bold mt-0.5">✓</span> Warm replies flagged · CRM sync</li>
+      <div class="reveal reveal-d2 card-flat p-8">
+        <div class="text-xs font-mono uppercase tracking-wider text-muted mb-3">BD AI</div>
+        <div class="mb-1"><span class="text-5xl font-semibold">Custom</span></div>
+        <p class="text-sm text-muted mb-7">Owner acquisition & outreach</p>
+        <ul class="space-y-3 mb-8 text-ink">
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>2 custom BD agents</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Owner prospecting in your markets</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Enrichment + outreach sequences</span></li>
+          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Warm replies flagged · CRM sync</span></li>
         </ul>
-        <a href="#book" class="block text-center font-semibold py-2.5 rounded-full bg-ink-800/5 text-ink-800 hover:bg-ink-800/10 transition text-sm">Get a Custom Quote →</a>
+        <a href="#book" class="btn w-full" style="border: 1.5px solid #1D1D1F; color: #1D1D1F;">Get a Custom Quote</a>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA STRIP -->
-<section id="book" class="py-16 sm:py-20 bg-ink-800 relative overflow-hidden">
-  <div class="absolute inset-0 grid-overlay opacity-40"></div>
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-mint-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-  <div class="relative max-w-3xl mx-auto px-5 sm:px-8 text-center">
-    <h2 class="display text-white text-3xl sm:text-5xl font-extrabold mb-4">
-      Still here? <span class="gradient-text">Book your pilot.</span>
-    </h2>
-    <p class="text-mint-100/70 mb-8 text-base sm:text-lg max-w-xl mx-auto">
-      Jump back up to the form and pick a time with Hari. 30 minutes, no prep, no pressure.
-    </p>
-    <a href="#demo" class="btn-primary inline-flex items-center gap-2 font-bold px-8 py-4 rounded-full">
-      Take Me to the Form →
-    </a>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-mint-100/50 text-sm">
-      <span class="flex items-center gap-2"><span class="text-mint-400">✓</span> 15-day free pilot · $0 cost</span>
-      <span class="flex items-center gap-2"><span class="text-mint-400">✓</span> First agent live in 7 days</span>
-      <span class="flex items-center gap-2"><span class="text-mint-400">✓</span> No commitment</span>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="bg-ink-900 border-t border-white/10 py-12">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+<!-- ============ FINAL CTA ============ -->
+<section id="book" class="bg-ink text-white py-28 sm:py-32">
+  <div class="max-w-3xl mx-auto px-6 sm:px-8 text-center">
+    <h2 class="display-lg mb-5">Still here? <span class="text-white/55">Book your pilot.</span></h2>
+    <p class="text-white/70 text-xl font-light mb-10 max-w-xl mx-auto">Jump back to the form and pick a time. 30 minutes, no prep, no pressure.</p>
+    <a href="#demo" class="btn btn-blue btn-lg">Take Me to the Form</a>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-white/55 text-sm">
+      <span>✓ 15-day free pilot · $0 cost</span>
+      <span>✓ First agent live in 7 days</span>
+      <span>✓ No commitment</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-ink border-t border-white/10 py-14">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
       <div class="max-w-sm">
-        <div class="flex items-center gap-2 mb-3">
-          <span class="live-dot"></span>
-          <span class="text-white font-extrabold text-xl">UpneX</span>
-        </div>
-        <p class="text-mint-100/40 text-sm leading-relaxed">AI-powered property management back-office. Operated from India, aligned to US hours.</p>
+        <div class="text-white font-semibold text-lg mb-2">UpneX</div>
+        <p class="text-white/55 text-sm leading-relaxed">AI-powered property management back-office. Operated from India, aligned to US hours.</p>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-2 gap-8 text-sm">
+      <div class="grid grid-cols-2 gap-12 text-sm">
         <div>
-          <div class="text-mint-100/40 font-mono text-xs uppercase tracking-wider mb-3">Contact</div>
-          <ul class="space-y-2 text-mint-100/70">
+          <div class="text-white/40 text-xs uppercase tracking-wider mb-3">Contact</div>
+          <ul class="space-y-2 text-white/70">
             <li><a href="mailto:hari@upnexs.com" class="hover:text-white transition">hari@upnexs.com</a></li>
             <li><a href="https://wa.me/13303385146" target="_blank" rel="noopener" class="hover:text-white transition">+1 (330) 338-5146</a></li>
           </ul>
         </div>
         <div>
-          <div class="text-mint-100/40 font-mono text-xs uppercase tracking-wider mb-3">US Office</div>
-          <p class="text-mint-100/70">PO Box 350<br />Metuchen, NJ 08840</p>
+          <div class="text-white/40 text-xs uppercase tracking-wider mb-3">US Office</div>
+          <p class="text-white/70">PO Box 350<br />Metuchen, NJ 08840</p>
         </div>
       </div>
     </div>
-    <div class="mt-10 pt-6 border-t border-white/5 text-mint-100/30 text-xs">© 2026 UpneX Solutions OPC Pvt. Ltd. All rights reserved.</div>
+    <div class="mt-12 pt-6 border-t border-white/10 text-white/35 text-xs">© 2026 UpneX Solutions OPC Pvt. Ltd. All rights reserved.</div>
   </div>
 </footer>
 
-<!-- Sticky mobile CTA -->
+<!-- ============ STICKY MOBILE CTA ============ -->
 <div id="stickyCta" class="sticky-cta">
-  <a href="#book" class="btn-primary w-full inline-flex items-center justify-center gap-2 font-bold px-5 py-3 rounded-full text-sm">
-    Book Your Free Pilot →
-  </a>
+  <a href="#book" class="btn btn-black w-full">Book Your Free Pilot →</a>
 </div>
 
 <script>
-// ============== SCENARIO DATA (realistic short tenant messages) ==============
+// ============== SCENARIO DATA ==============
 const scenarios = {
   ac: {
     apt: 'Apt 112', time: '2:18 PM',
     msg: 'AC broken 🥵 95° in here',
     checks: [
       'Read message · 0.2s',
-      'Weather pulled: 95°F today ☀️',
+      'Weather pulled: 95°F today',
       'Lease checked: family + infant noted',
       'History: 2nd HVAC issue this month'
     ],
-    urgency: { text: '🚨 URGENT — health risk', cls: 'urgent' },
+    urgency: { text: 'URGENT — health risk', cls: 'urgent' },
     vendor: { name: 'CoolPro HVAC', meta: '4.8★ · 24-hr emergency · 1.2mi away' },
     sms: '"Hi CoolPro — urgent: AC out at Unit 112, family w/ infant inside. Owner pre-approved after-hours rate. Need ETA. Full address sent separately."',
-    reply: "On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours rate approved. Work order #4837 logged. Stay cool — message me if anything changes 💚",
+    reply: "On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours rate approved. Work order #4837 logged. Stay cool — message me if anything changes.",
     wo: { id: 'WO-4837', meta: 'Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs', secs: '14 seconds' }
   },
   leak: {
@@ -1039,10 +843,10 @@ const scenarios = {
       'Lease verified: tenant in good standing',
       'Severity: water damage risk flagged'
     ],
-    urgency: { text: '🚨 URGENT — property damage risk', cls: 'urgent' },
+    urgency: { text: 'URGENT — property damage risk', cls: 'urgent' },
     vendor: { name: 'Acme Plumbing', meta: '4.9★ · 24/7 emergency · 2.0mi away' },
     sms: '"Hi Acme — urgent: sink leak, Apt 304, active water damage risk. Need someone in 45min. Full address sent separately."',
-    reply: "Got it — Acme Plumbing on the way, ETA 45min. Here's the shut-off valve guide in your portal. Work order #4821 logged. Stay safe — message back if it gets worse 💚",
+    reply: "Got it — Acme Plumbing on the way, ETA 45min. Here's the shut-off valve guide in your portal. Work order #4821 logged. Stay safe — message back if it gets worse.",
     wo: { id: 'WO-4821', meta: 'Apt 304 · URGENT · Acme Plumbing · ETA 45min', secs: '12 seconds' }
   },
   lockout: {
@@ -1054,7 +858,7 @@ const scenarios = {
       'Lease check: active, no fees owed',
       'Fee policy: $85 lockout per Section 6.1'
     ],
-    urgency: { text: '🚨 URGENT — tenant access', cls: 'urgent' },
+    urgency: { text: 'URGENT — tenant access', cls: 'urgent' },
     vendor: { name: 'SafeKey Locksmith', meta: '4.7★ · 30min radius · $85 standard' },
     sms: '"Hi SafeKey — lockout at Apt 207. Tenant identity verified. Standard $85 fee. Need ETA. Address sent separately."',
     reply: "Lease verified — SafeKey Locksmith on the way, ETA 30min. $85 lockout fee added to your account per Section 6.1. Work order #4842 logged. Hang tight!",
@@ -1069,37 +873,36 @@ const scenarios = {
       'Self-help video found in library',
       'Auto-classified as routine'
     ],
-    urgency: { text: '✓ ROUTINE — self-resolvable', cls: 'routine' },
+    urgency: { text: 'ROUTINE — self-resolvable', cls: 'routine' },
     vendor: { name: 'No vendor needed', meta: 'Self-help video sent · auto-close enabled' },
     sms: '(No dispatch — tenant self-resolve recommended. $0 cost.)',
-    reply: "Kitchen bulbs are tenant-replaceable per lease Section 4.2. Here's a 30-second swap video in your portal. Reply 'still broken' and I'll send someone same-day at no charge!",
+    reply: "Kitchen bulbs are tenant-replaceable per lease Section 4.2. Here's a 30-second swap video in your portal. Reply 'still broken' and I'll send someone same-day at no charge.",
     wo: { id: 'AUTO-CLOSED', meta: 'Apt 415 · Self-resolved · $0 vendor cost', secs: '8 seconds' }
   }
 };
 
 const nextLabels = [
-  'Next: Watch AI investigate →',
-  'Next: See vendor picked →',
-  'Next: See tenant reply →',
-  'Next: See it logged →',
-  '✨ Run this on MY portfolio →'
+  'Next: Watch AI investigate',
+  'Next: See vendor picked',
+  'Next: See tenant reply',
+  'Next: See it logged',
+  'Run this on MY portfolio'
 ];
 
-let state = { scenario: 'ac', step: 1, totalSteps: 5, hasInteracted: false };
+let state = { scenario: 'ac', step: 1, totalSteps: 5 };
 
 function renderStep() {
   const s = scenarios[state.scenario];
 
-  // Progress bar segments
+  // Progress bar
   document.querySelectorAll('#progressDots > div').forEach((d, i) => {
-    if (i < state.step) { d.classList.remove('bg-white/10'); d.classList.add('bg-mint-500'); }
-    else { d.classList.remove('bg-mint-500'); d.classList.add('bg-white/10'); }
+    if (i < state.step) { d.classList.remove('bg-fog'); d.classList.add('bg-ink'); }
+    else { d.classList.remove('bg-ink'); d.classList.add('bg-fog'); }
   });
 
-  // Step counter
   document.getElementById('stepCounter').textContent = `Step ${state.step} of ${state.totalSteps}`;
 
-  // Show only current step, re-trigger animation
+  // Show current step
   document.querySelectorAll('.demo-step').forEach(el => el.classList.add('hidden'));
   const cur = document.querySelector(`.demo-step[data-step="${state.step}"]`);
   cur.classList.remove('hidden');
@@ -1107,7 +910,7 @@ function renderStep() {
   void cur.offsetWidth;
   cur.style.animation = '';
 
-  // Populate step content
+  // Populate per step
   if (state.step === 1) {
     document.getElementById('step1Meta').textContent = `${s.apt} · ${s.time}`;
     document.getElementById('step1Msg').textContent = s.msg;
@@ -1137,24 +940,20 @@ function renderStep() {
     document.getElementById('step5Time').textContent = s.wo.secs;
   }
 
-  // Back button visibility
+  // Back visibility
   document.getElementById('backBtn').classList.toggle('invisible', state.step === 1);
 
-  // Next button label + behavior
+  // Next label
   document.getElementById('nextBtnText').textContent = nextLabels[state.step - 1];
   document.getElementById('nextBtn').dataset.action = (state.step === state.totalSteps) ? 'cta' : 'next';
 
-  // Sync dropdown value to state
+  // Sync dropdown
   const dd = document.getElementById('scenarioSelect');
   if (dd && dd.value !== state.scenario) dd.value = state.scenario;
 }
 
-// Wire next/back
+// Next/Back
 document.getElementById('nextBtn').addEventListener('click', (e) => {
-  if (!state.hasInteracted) {
-    e.currentTarget.classList.add('no-pulse');
-    state.hasInteracted = true;
-  }
   if (e.currentTarget.dataset.action === 'cta') {
     document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     setTimeout(() => {
@@ -1171,23 +970,14 @@ document.getElementById('backBtn').addEventListener('click', () => {
   if (state.step > 1) { state.step--; renderStep(); }
 });
 
-// Dropdown — change scenario + reset walkthrough to Step 1
+// Dropdown
 document.getElementById('scenarioSelect').addEventListener('change', (e) => {
   state.scenario = e.target.value;
   state.step = 1;
-  // Stop the attention pulse once they engage
-  const wrap = document.querySelector('.scenario-select-wrap');
-  if (wrap) wrap.classList.remove('attention');
   renderStep();
 });
 
-// Initial render + attention pulse on dropdown
 renderStep();
-const ddWrap = document.querySelector('.scenario-select-wrap');
-if (ddWrap) {
-  ddWrap.classList.add('attention');
-  setTimeout(() => ddWrap.classList.remove('attention'), 7000);
-}
 
 // ============== SCROLL REVEAL ==============
 const observer = new IntersectionObserver((entries) => {
@@ -1200,7 +990,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ============== ANIMATED COUNTERS ==============
+// ============== COUNTERS ==============
 const counterObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1222,7 +1012,7 @@ const counterObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
 
-// ============== FORM → CALENDAR (2-step) ==============
+// ============== FORM → CALENDAR ==============
 const form = document.getElementById('leadForm');
 const step1 = document.getElementById('formStep1');
 const step2 = document.getElementById('formStep2');
@@ -1234,10 +1024,9 @@ function goToStep2(data) {
   document.getElementById('capturedName').textContent = data.name ? `, ${data.name.split(' ')[0]}` : '';
   step1.classList.add('hidden');
   step2.classList.remove('hidden');
-  // Update progress UI
   stepDot1.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-  stepDot2.classList.remove('bg-ink-800/10', 'text-ink-500');
-  stepDot2.classList.add('bg-mint-500', 'text-ink-800');
+  stepDot2.classList.remove('bg-fog', 'text-muted');
+  stepDot2.classList.add('bg-ablue', 'text-white');
   stepBar.style.width = '100%';
 }
 
@@ -1245,8 +1034,8 @@ function goToStep1() {
   step2.classList.add('hidden');
   step1.classList.remove('hidden');
   stepDot1.textContent = '1';
-  stepDot2.classList.add('bg-ink-800/10', 'text-ink-500');
-  stepDot2.classList.remove('bg-mint-500', 'text-ink-800');
+  stepDot2.classList.add('bg-fog', 'text-muted');
+  stepDot2.classList.remove('bg-ablue', 'text-white');
   stepBar.style.width = '0%';
 }
 
