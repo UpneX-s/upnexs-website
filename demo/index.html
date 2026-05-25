@@ -523,8 +523,8 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
             </form>
           </div>
 
-          <!-- Step 2: Sending + redirect to Google Calendar -->
-          <div id="formStep2" class="hidden text-center py-10">
+          <!-- Step 2: Sending → Thank you (booking is a separate optional action) -->
+          <div id="formStep2" class="hidden text-center py-8">
 
             <!-- Sending state -->
             <div id="sendingState">
@@ -533,16 +533,36 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
               <p class="text-muted">Just a sec — our team will get this right away.</p>
             </div>
 
-            <!-- Success / redirecting state -->
+            <!-- Thank you state -->
             <div id="successState" class="hidden">
+              <!-- Primary confirmation -->
               <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-ablue-tint flex items-center justify-center">
                 <svg class="w-9 h-9 text-ablue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
               </div>
-              <h3 class="text-xl font-semibold mb-2">Got it<span id="capturedName"></span>!</h3>
-              <p class="text-muted mb-6">Taking you to schedule your call…</p>
-              <div class="text-xs text-muted">
-                Not redirecting?
-                <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="link-blue font-medium ml-1">Open booker manually →</a>
+              <h3 class="text-2xl font-semibold mb-2">Thank you<span id="capturedName"></span>!</h3>
+              <p class="text-muted mb-1">Your details are in.</p>
+              <p class="text-muted text-sm mb-8">Our team will reach out within 24 hours.</p>
+
+              <!-- "OR" divider -->
+              <div class="relative max-w-xs mx-auto mb-7">
+                <div class="border-t border-fog"></div>
+                <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs font-mono uppercase tracking-wider text-muted">Or skip the wait</span>
+              </div>
+
+              <!-- Separate, optional booking action -->
+              <div class="bg-fog rounded-2xl p-5">
+                <p class="text-base font-semibold text-ink mb-1">Want to talk sooner?</p>
+                <p class="text-sm text-muted mb-4">Book a 30-min call directly with our team.</p>
+                <a id="bookCallBtn" href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-blue btn-lg">
+                  📅  Book a Call Now
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+                <p class="text-xs text-muted mt-3">Opens in a new tab</p>
+              </div>
+
+              <!-- Post-click confirmation -->
+              <div id="bookedConfirm" class="hidden mt-5 text-sm text-ablue font-medium">
+                ✓ Booker opened in a new tab — see you on the call!
               </div>
             </div>
           </div>
@@ -1125,19 +1145,28 @@ form.addEventListener('submit', (e) => {
   sendingState.classList.remove('hidden');
   successState.classList.add('hidden');
 
-  // Fire the email + a 2s minimum hold for UX
+  // Fire the email + 1.5s minimum hold so "Sending…" feels intentional
   const emailPromise = sendLeadEmail(data);
-  const holdPromise = new Promise((r) => setTimeout(r, 2000));
+  const holdPromise = new Promise((r) => setTimeout(r, 1500));
 
   Promise.all([emailPromise, holdPromise]).then(() => {
-    // Swap to success → then redirect after a brief moment
+    // Swap to thank-you state — NO auto-redirect. Booking is a separate action below.
     sendingState.classList.add('hidden');
     successState.classList.remove('hidden');
-    setTimeout(() => {
-      window.location.href = CALENDAR_URL;
-    }, 1200);
   });
 });
+
+// "Book a Call" is a fully separate optional action — confirm to user after click
+const bookCallBtn = document.getElementById('bookCallBtn');
+if (bookCallBtn) {
+  bookCallBtn.addEventListener('click', () => {
+    console.log('[UpneX] Booking link opened in new tab');
+    setTimeout(() => {
+      const confirm = document.getElementById('bookedConfirm');
+      if (confirm) confirm.classList.remove('hidden');
+    }, 600);
+  });
+}
 
 // ============== STICKY CTA ==============
 const stickyCta = document.getElementById('stickyCta');
