@@ -319,22 +319,21 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
   </div>
 </nav>
 
-<!-- ============ HERO ============ -->
-<section id="demo" class="bg-ink text-white pt-32 pb-24 sm:pt-40 sm:pb-32">
+<!-- ============ HERO (compact — fits above the fold) ============ -->
+<section id="demo" class="bg-ink text-white pt-20 pb-16 sm:pt-24 sm:pb-20">
   <div class="max-w-7xl mx-auto px-6 sm:px-8">
 
-    <!-- Top headline -->
-    <div class="max-w-4xl mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/8 border border-white/10 text-white/80 text-xs font-medium mb-7">
+    <!-- Top headline — compact, single line on desktop -->
+    <div class="max-w-4xl mb-8 sm:mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/8 border border-white/10 text-white/80 text-xs font-medium mb-4">
         <span class="live-dot"></span>
         Interactive demo · No signup required
       </div>
-      <h1 class="display-xl mb-6">
-        Property management.<br />
-        <span class="text-white/55">Run by AI.</span>
+      <h1 class="display-lg mb-3">
+        Property management, <span class="text-white/55">run by AI.</span>
       </h1>
-      <p class="text-white/70 text-xl sm:text-2xl leading-snug max-w-2xl font-light">
-        Try a UpneX agent. Walk through a real tenant request in 5 steps. Then book your free 15-day pilot.
+      <p class="text-white/70 text-lg sm:text-xl leading-snug max-w-2xl font-light">
+        Try a live AI agent below. Then book your free 15-day pilot.
       </p>
     </div>
 
@@ -352,10 +351,15 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
             </label>
             <div class="scenario-select-wrap">
               <select id="scenarioSelect" class="scenario-select" aria-label="Pick a tenant scenario">
-                <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
-                <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
-                <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
-                <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
+                <optgroup label="🔧  Maintenance Triage Agent">
+                  <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
+                  <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
+                  <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
+                  <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
+                </optgroup>
+                <optgroup label="🏠  Leasing & Screening Agent">
+                  <option value="application">📋  New lead — 312 Maple St inquiry</option>
+                </optgroup>
               </select>
               <svg class="scenario-select-arrow" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
             </div>
@@ -450,6 +454,23 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
                   <div class="flex justify-between text-sm">
                     <span class="text-white/60">Tenant satisfaction</span>
                     <span class="font-mono font-semibold">★★★★★</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Before/After AI comparison toggle -->
+              <div class="mt-5 pt-5 border-t border-fog">
+                <button id="toggleCompare" class="text-sm font-semibold text-ablue hover:underline flex items-center gap-1.5">
+                  <svg id="compareChevron" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                  See how this would've gone <em class="not-italic font-extrabold">without</em> UpneX
+                </button>
+                <div id="compareBlock" class="hidden mt-5 bg-fog rounded-2xl p-5">
+                  <p class="text-sm font-medium text-ink mb-4" id="compareIntro">How this same scenario would have gone without UpneX:</p>
+                  <ol class="space-y-2.5 mb-5" id="compareTimeline"></ol>
+                  <div class="border-t border-line pt-4 space-y-2 text-sm">
+                    <div class="flex justify-between"><span class="text-muted">Owner time burned</span><span class="font-mono font-semibold text-ink" id="compareOwner">—</span></div>
+                    <div class="flex justify-between"><span class="text-muted">Tenant impact</span><span class="font-mono font-semibold text-ink" id="compareTenant">—</span></div>
+                    <div class="flex justify-between"><span class="text-muted">Likely outcome</span><span class="font-mono font-semibold text-ink" id="compareReviews">—</span></div>
                   </div>
                 </div>
               </div>
@@ -580,20 +601,23 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
       </div>
     </div>
 
-    <!-- Stats strip -->
-    <div class="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-24 pt-10 border-t border-white/10">
-      <div class="text-center">
-        <div class="font-semibold text-3xl sm:text-4xl"><span class="counter" data-target="3500">0</span><span class="text-white/40">+</span></div>
-        <div class="text-white/50 text-xs uppercase tracking-wider mt-2">Units managed</div>
-      </div>
-      <div class="text-center border-x border-white/10">
-        <div class="font-semibold text-3xl sm:text-4xl"><span class="counter" data-target="45">0</span></div>
-        <div class="text-white/50 text-xs uppercase tracking-wider mt-2">Custom AI agents</div>
-      </div>
-      <div class="text-center">
-        <div class="font-semibold text-3xl sm:text-4xl"><span class="counter" data-target="12">0</span></div>
-        <div class="text-white/50 text-xs uppercase tracking-wider mt-2">US states</div>
-      </div>
+  </div>
+</section>
+
+<!-- ============ STATS BAND (own slim section, no longer crowding the hero) ============ -->
+<section class="bg-ink border-t border-white/10 py-8">
+  <div class="max-w-3xl mx-auto px-6 sm:px-8 grid grid-cols-3 gap-8">
+    <div class="text-center">
+      <div class="text-white font-semibold text-2xl sm:text-3xl"><span class="counter" data-target="3500">0</span><span class="text-white/40">+</span></div>
+      <div class="text-white/50 text-[11px] uppercase tracking-wider mt-1">Units managed</div>
+    </div>
+    <div class="text-center border-x border-white/10">
+      <div class="text-white font-semibold text-2xl sm:text-3xl"><span class="counter" data-target="45">0</span></div>
+      <div class="text-white/50 text-[11px] uppercase tracking-wider mt-1">Custom AI agents</div>
+    </div>
+    <div class="text-center">
+      <div class="text-white font-semibold text-2xl sm:text-3xl"><span class="counter" data-target="12">0</span></div>
+      <div class="text-white/50 text-[11px] uppercase tracking-wider mt-1">US states</div>
     </div>
   </div>
 </section>
@@ -945,6 +969,75 @@ const scenarios = {
     sms: '(No dispatch — tenant self-resolve recommended. $0 cost.)',
     reply: "Kitchen bulbs are tenant-replaceable per lease Section 4.2. Here's a 30-second swap video in your portal. Reply 'still broken' and I'll send someone same-day at no charge.",
     wo: { id: 'AUTO-CLOSED', meta: 'Apt 415 · Self-resolved · $0 vendor cost', secs: '8 seconds' }
+  },
+  // ---------- LEASING & SCREENING AGENT ----------
+  application: {
+    apt: 'New lead', time: '10:14 AM',
+    msg: 'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
+    checks: [
+      'Read inquiry · 0.3s',
+      'Income vs rent: $82k ÷ $1,950 = 3.5x ✓ (target 3x)',
+      'Soft credit pulled: 728 FICO ✓',
+      'Prior landlord check: 24 mo, no late payments ✓'
+    ],
+    urgency: { text: 'QUALIFIED — score 88/100', cls: 'routine' },
+    vendor: { name: 'Tour booked · Saturday 11am', meta: 'Calendar synced · application link sent' },
+    sms: '"Hi — pre-screen passed for 312 Maple. Tour booked Sat 11am. Application + lease draft in your inbox. ID + paystub upload required before tour."',
+    reply: "Great news — you pre-qualified for 312 Maple St (score 88/100). Tour booked Saturday at 11am. Check your email for the full application + lease draft. Bring photo ID + 2 recent paystubs to the tour.",
+    wo: { id: 'LEAD-2034', meta: '312 Maple St · Score 88 · Tour Sat 11am', secs: '22 seconds' }
+  }
+};
+
+// ============== "WITHOUT UPNEX" COMPARISONS — drives ROI home ==============
+const withoutUpneX = {
+  ac: {
+    intro: 'How this same AC emergency would have gone without UpneX:',
+    timeline: [
+      ['11:42 PM', 'Tenant calls owner. Owner asleep — voicemail.'],
+      ['12:30 AM', 'Tenant texts furious follow-up. Owner sees in morning.'],
+      ['8:15 AM', 'Owner Googles HVAC vendors, calls 4 — all busy.'],
+      ['11:00 AM', 'Finally books vendor for next-day visit.'],
+      ['Day 2, 2pm', 'Vendor arrives. Tenant suffered 36+ hours with infant.'],
+    ],
+    cost: { owner: '~2 hrs of stressed work', tenant: '36+ hrs without AC', reviews: 'Likely 1-star review' }
+  },
+  leak: {
+    intro: 'Without UpneX, midnight leaks get expensive fast:',
+    timeline: [
+      ['11:42 PM', 'Tenant texts owner. No response.'],
+      ['1:30 AM', 'Cabinet floor warps. Tenant shuts main water valve.'],
+      ['7:00 AM', 'Owner sees text. Calls plumber — soonest slot 2pm.'],
+      ['2:00 PM', 'Plumber arrives. Floor + cabinet replacement needed.'],
+    ],
+    cost: { owner: '~3 hrs + insurance claim', tenant: 'No water for 14 hrs', reviews: 'Damage bill ~$2,400' }
+  },
+  lockout: {
+    intro: 'Lockouts without UpneX = lost morning + angry tenant:',
+    timeline: [
+      ['9:30 AM', 'Tenant calls 4 numbers. Reaches owner on attempt 5.'],
+      ['9:50 AM', 'Owner drives 30 min to bring spare key.'],
+      ['10:30 AM', 'Owner arrives. Tenant late for work.'],
+    ],
+    cost: { owner: '~1.5 hrs lost', tenant: 'Missed a meeting', reviews: 'Lost fee revenue ($85)' }
+  },
+  bulb: {
+    intro: 'Without UpneX, routine asks still pull a vendor truck:',
+    timeline: [
+      ['4:05 PM', 'Tenant submits ticket via portal.'],
+      ['Day 2, 10am', 'Owner dispatches handyman ($95 min).'],
+      ['Day 3, 1pm', 'Handyman replaces bulb. Bills tenant or owner.'],
+    ],
+    cost: { owner: '$95+ truck-roll fee', tenant: 'Dark kitchen for 2 days', reviews: 'Avoidable expense' }
+  },
+  application: {
+    intro: 'Without UpneX, hot leads cool off in 24 hrs:',
+    timeline: [
+      ['10:14 AM', 'Lead emails inquiry. Goes to general inbox.'],
+      ['Next day, 9am', 'Owner sees inquiry, sends generic reply.'],
+      ['Day 3', 'Lead has already toured 2 other properties.'],
+      ['Day 4', 'Lead signed with competitor.'],
+    ],
+    cost: { owner: 'Lost prospect', tenant: 'Bad experience', reviews: '40% of leads die from slow response' }
   }
 };
 
@@ -1005,6 +1098,21 @@ function renderStep() {
     document.getElementById('step5WoId').textContent = s.wo.id;
     document.getElementById('step5WoMeta').textContent = s.wo.meta;
     document.getElementById('step5Time').textContent = s.wo.secs;
+    // Populate "without UpneX" comparison (collapsed by default)
+    const w = withoutUpneX[state.scenario];
+    if (w) {
+      document.getElementById('compareIntro').textContent = w.intro;
+      const tl = document.getElementById('compareTimeline');
+      tl.innerHTML = w.timeline.map(([t, label]) =>
+        `<li class="flex gap-3 text-sm"><span class="text-muted font-mono text-xs whitespace-nowrap mt-0.5 w-20 flex-shrink-0">${t}</span><span class="text-ink">${label}</span></li>`
+      ).join('');
+      document.getElementById('compareOwner').textContent = w.cost.owner;
+      document.getElementById('compareTenant').textContent = w.cost.tenant;
+      document.getElementById('compareReviews').textContent = w.cost.reviews;
+    }
+    // Reset toggle state when entering Step 5
+    document.getElementById('compareBlock').classList.add('hidden');
+    document.getElementById('compareChevron').style.transform = '';
   }
 
   // Back visibility
@@ -1168,6 +1276,18 @@ if (bookCallBtn) {
       const confirm = document.getElementById('bookedConfirm');
       if (confirm) confirm.classList.remove('hidden');
     }, 600);
+  });
+}
+
+// "Without UpneX" comparison toggle (Step 5)
+const toggleCompareBtn = document.getElementById('toggleCompare');
+if (toggleCompareBtn) {
+  toggleCompareBtn.addEventListener('click', () => {
+    const block = document.getElementById('compareBlock');
+    const chev = document.getElementById('compareChevron');
+    const isHidden = block.classList.contains('hidden');
+    block.classList.toggle('hidden');
+    chev.style.transform = isHidden ? 'rotate(90deg)' : '';
   });
 }
 
