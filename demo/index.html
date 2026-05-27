@@ -897,9 +897,9 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
 //   3. Go to Account → API Keys → copy the Public Key
 //   4. Replace the three placeholders below
 const EMAILJS_CONFIG = {
-  publicKey:  'YOUR_PUBLIC_KEY_HERE',   // Account → API Keys
-  serviceId:  'YOUR_SERVICE_ID_HERE',   // Email Services
-  templateId: 'YOUR_TEMPLATE_ID_HERE',  // Email Templates
+  publicKey:  'cQAXNRskNvru4mu4j',      // Account → API Keys
+  serviceId:  'service_vhcikjr',        // Email Services (Gmail)
+  templateId: 'template_ymh1gz9',       // Email Templates (Contact Us)
 };
 const CALENDAR_URL = 'https://calendar.app.google/2juqXrLWWE2q441z6';
 
@@ -1222,20 +1222,29 @@ function sendLeadEmail(data) {
     }
 
     const timestamp = new Date().toLocaleString();
+    const messageBody =
+      `🔔 New lead from upnexs.com/demo/\n\n` +
+      `Name:           ${data.name}\n` +
+      `Email:          ${data.email}\n` +
+      `Phone:          ${data.phone}\n` +
+      `Portfolio Size: ${data.portfolio} units\n` +
+      `Submitted:      ${timestamp}\n\n` +
+      `Reply to this email to respond directly.`;
+
+    // Send BOTH naming styles so the template's variables resolve regardless of which it uses
     const params = {
-      from_name: data.name,
+      // Default EmailJS template variables ({{name}}, {{email}}, {{time}}, {{message}})
+      name:       data.name,
+      email:      data.email,
+      time:       timestamp,
+      message:    messageBody,
+      // Plus the explicit names we use in the subject line
+      from_name:  data.name,
       from_email: data.email,
-      phone: data.phone,
-      portfolio: data.portfolio,
-      timestamp: timestamp,
-      subject: `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
-      message:
-        `New lead from upnexs.com landing page:\n\n` +
-        `Name: ${data.name}\n` +
-        `Email: ${data.email}\n` +
-        `Phone: ${data.phone}\n` +
-        `Portfolio Size: ${data.portfolio}\n` +
-        `Submitted: ${timestamp}`,
+      phone:      data.phone,
+      portfolio:  data.portfolio,
+      timestamp:  timestamp,
+      subject:    `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
     };
 
     emailjs
