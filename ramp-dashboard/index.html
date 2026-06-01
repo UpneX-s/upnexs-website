@@ -3,440 +3,388 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raut Properties — Expense Dashboard</title>
+<title>Raut Properties — Owner Portal</title>
 <style>
+/* ============================================================
+   VARIABLES & RESET
+   ============================================================ */
 :root {
-  --navy:        #1a2e4a;
-  --navy-dark:   #0f1e30;
-  --navy-light:  #243d5c;
-  --blue:        #3b82f6;
-  --blue-light:  #eff6ff;
-  --green:       #10b981;
-  --amber:       #f59e0b;
-  --red:         #ef4444;
-  --purple:      #8b5cf6;
-  --cyan:        #06b6d4;
-  --gray-50:     #f8fafc;
-  --gray-100:    #f1f5f9;
-  --gray-200:    #e2e8f0;
-  --gray-400:    #94a3b8;
-  --gray-500:    #64748b;
-  --gray-700:    #334155;
-  --gray-900:    #0f172a;
-  --white:       #ffffff;
-  --shadow:      0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md:   0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
-  --shadow-lg:   0 10px 25px rgba(0,0,0,0.12), 0 4px 6px rgba(0,0,0,0.06);
-  --radius:      12px;
-  --radius-sm:   8px;
-  --radius-xs:   6px;
+  --sidebar-w: 224px;
+  --topbar-h: 56px;
+  --navy: #1a2e4a;
+  --navy-dark: #0f1e30;
+  --navy-light: #243d5c;
+  --blue: #0066cc;
+  --blue-lt: #e8f2fd;
+  --green: #16a34a;
+  --green-lt: #dcfce7;
+  --amber: #d97706;
+  --amber-lt: #fef3c7;
+  --red: #dc2626;
+  --red-lt: #fee2e2;
+  --purple: #7c3aed;
+  --purple-lt: #ede9fe;
+  --cyan: #0891b2;
+  --cyan-lt: #e0f7fa;
+  --g50: #f8fafc; --g100: #f1f5f9; --g200: #e2e8f0;
+  --g300: #cbd5e1; --g400: #94a3b8; --g500: #64748b;
+  --g600: #475569; --g700: #334155; --g900: #0f172a;
+  --white: #ffffff;
+  --sh: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+  --sh-md: 0 4px 12px rgba(0,0,0,.09), 0 2px 4px rgba(0,0,0,.04);
+  --sh-lg: 0 10px 30px rgba(0,0,0,.13), 0 4px 8px rgba(0,0,0,.06);
+  --r: 10px; --r-sm: 7px; --r-xs: 5px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  background: var(--gray-100);
-  color: var(--gray-900);
-  min-height: 100vh;
-  line-height: 1.5;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--g100);color:var(--g900);height:100%;line-height:1.5;font-size:14px}
 
 /* ============================================================
    AUTH SCREENS
    ============================================================ */
-.auth-screen {
-  position: fixed; inset: 0;
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #1e3a5f 100%);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 2000; padding: 20px;
+.auth-screen{
+  position:fixed;inset:0;
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 55%,#1d3a5e 100%);
+  display:flex;align-items:center;justify-content:center;z-index:2000;padding:20px;
 }
-.auth-card {
-  background: var(--white); border-radius: var(--radius);
-  padding: 40px 36px; width: 100%; max-width: 400px;
-  box-shadow: var(--shadow-lg);
-  animation: slideUp 0.3s ease;
+.auth-card{
+  background:var(--white);border-radius:var(--r);padding:36px 32px;
+  width:100%;max-width:378px;box-shadow:var(--sh-lg);animation:fadeUp .3s ease;
 }
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.auth-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-.auth-brand-icon {
-  width: 38px; height: 38px; background: var(--navy); border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--white); font-size: 18px; flex-shrink: 0;
-}
-.auth-brand-name { font-size: 19px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; }
-.auth-brand-tagline { font-size: 12px; color: var(--gray-500); margin-bottom: 28px; }
-.auth-heading { font-size: 15px; font-weight: 700; color: var(--gray-700); margin-bottom: 20px; }
-.auth-error {
-  background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
-  padding: 10px 13px; border-radius: var(--radius-xs); font-size: 13px;
-  margin-bottom: 14px; display: none;
-}
-.form-group { margin-bottom: 15px; }
-.form-group label {
-  display: block; font-size: 11px; font-weight: 700; color: var(--gray-700);
-  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
-}
-.form-group input {
-  width: 100%; padding: 10px 13px; border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius-xs); font-size: 14px; color: var(--gray-900);
-  transition: border-color 0.15s, box-shadow 0.15s; outline: none;
-  background: var(--white);
-}
-.form-group input:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
-}
-.btn-primary {
-  width: 100%; padding: 11px 16px; background: var(--navy); color: var(--white);
-  border: none; border-radius: var(--radius-xs); font-size: 14px; font-weight: 700;
-  cursor: pointer; margin-top: 6px; letter-spacing: 0.2px;
-  transition: background 0.15s, transform 0.1s;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
-.btn-primary:hover { background: var(--navy-light); }
-.btn-primary:active { transform: scale(0.99); }
-.auth-footer { text-align: center; margin-top: 22px; }
-.ramp-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534;
-  padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
-}
-.auth-legal { font-size: 11px; color: var(--gray-400); margin-top: 6px; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.auth-brand{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.auth-brand-icon{width:34px;height:34px;background:var(--navy);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+.auth-brand-name{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.3px}
+.auth-tagline{font-size:11.5px;color:var(--g500);margin-bottom:24px}
+.auth-heading{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:17px}
+.auth-err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:9px 12px;border-radius:var(--r-xs);font-size:12px;margin-bottom:12px;display:none}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:10px;font-weight:700;color:var(--g700);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.fg input{width:100%;padding:9px 12px;border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:13.5px;color:var(--g900);outline:none;transition:border-color .15s,box-shadow .15s;background:#fff}
+.fg input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,102,204,.11)}
+.btn-auth{width:100%;padding:10px 16px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-xs);font-size:13px;font-weight:700;cursor:pointer;margin-top:4px;transition:background .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-auth:hover{background:var(--navy-light)}
+.btn-auth:active{transform:scale(.99)}
+.auth-footer{text-align:center;margin-top:18px}
+.ramp-badge{display:inline-flex;align-items:center;gap:5px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700}
+.auth-legal{font-size:10.5px;color:var(--g400);margin-top:5px}
 
-/* PIN Screen */
-.pin-dots {
-  display: flex; gap: 10px; justify-content: center; margin-bottom: 26px;
-}
-.pin-dot {
-  width: 14px; height: 14px; border-radius: 50%;
-  background: var(--gray-200); transition: background 0.2s, transform 0.15s;
-}
-.pin-dot.filled { background: var(--navy); transform: scale(1.15); }
-.pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.pin-key {
-  padding: 15px 10px; background: var(--gray-50); border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius-xs); font-size: 20px; font-weight: 700; color: var(--gray-900);
-  cursor: pointer; text-align: center; transition: all 0.1s; user-select: none;
-}
-.pin-key:hover { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
-.pin-key:active { transform: scale(0.94); background: var(--navy); color: var(--white); border-color: var(--navy); }
-.pin-key.del { font-size: 16px; color: var(--gray-500); font-weight: 600; }
-.pin-key.empty { background: transparent; border-color: transparent; cursor: default; pointer-events: none; }
+/* PIN */
+.pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:22px}
+.pin-dot{width:13px;height:13px;border-radius:50%;background:var(--g200);transition:background .2s,transform .15s}
+.pin-dot.filled{background:var(--navy);transform:scale(1.15)}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.pin-key{padding:13px 10px;background:var(--g50);border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:18px;font-weight:700;color:var(--g900);cursor:pointer;text-align:center;transition:all .1s;user-select:none}
+.pin-key:hover{background:var(--blue-lt);border-color:var(--blue);color:var(--blue)}
+.pin-key:active{transform:scale(.93);background:var(--navy);color:#fff;border-color:var(--navy)}
+.pin-key.del{font-size:14px;color:var(--g500);font-weight:600}
+.pin-key.empty{background:transparent;border-color:transparent;cursor:default;pointer-events:none}
 
 /* ============================================================
-   DASHBOARD SHELL
+   APP SHELL
    ============================================================ */
-#screen-dashboard { display: none; }
+#app{display:none;height:100vh;overflow:hidden}
+.app-layout{display:flex;height:100%}
 
-.dash-header {
-  background: var(--navy);
-  color: var(--white);
-  padding: 0 24px;
-  height: 62px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+/* SIDEBAR */
+.sidebar{
+  width:var(--sidebar-w);background:var(--navy);color:#fff;
+  display:flex;flex-direction:column;flex-shrink:0;height:100%;
+  overflow-y:auto;position:relative;z-index:10;
 }
-.hdr-left { display: flex; align-items: center; gap: 14px; }
-.hdr-logo {
-  width: 34px; height: 34px; background: rgba(255,255,255,0.15);
-  border-radius: 8px; display: flex; align-items: center;
-  justify-content: center; font-size: 16px;
-}
-.hdr-title { font-size: 15px; font-weight: 800; letter-spacing: -0.2px; }
-.hdr-sub { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 1px; }
-.hdr-right { display: flex; align-items: center; gap: 12px; }
-.hdr-badge {
-  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 20px; padding: 4px 11px; font-size: 11px; color: rgba(255,255,255,0.75);
-  display: flex; align-items: center; gap: 4px; white-space: nowrap;
-}
-.btn-logout {
-  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.85); padding: 7px 15px; border-radius: var(--radius-xs);
-  font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.15s;
-}
-.btn-logout:hover { background: rgba(255,255,255,0.2); }
+.sb-logo{padding:16px 14px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:9px}
+.sb-logo-icon{width:30px;height:30px;background:rgba(255,255,255,.14);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.sb-logo-name{font-size:13px;font-weight:800;letter-spacing:-.2px}
+.sb-logo-sub{font-size:10px;color:rgba(255,255,255,.42);margin-top:1px}
+.sb-nav{flex:1;padding:10px 6px}
+.nav-sec-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.8px;padding:10px 10px 4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;transition:background .14s,color .14s;user-select:none;margin-bottom:1px}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.88)}
+.nav-item.active{background:rgba(255,255,255,.11);color:#fff}
+.nav-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.11);padding:1px 6px;border-radius:9px;font-size:10px;font-weight:700;color:rgba(255,255,255,.65)}
+.sb-user{padding:11px 14px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:9px}
+.sb-avatar{width:28px;height:28px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.sb-user-info{flex:1;line-height:1.2;min-width:0}
+.sb-user-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-user-role{font-size:10px;color:rgba(255,255,255,.4)}
+.btn-signout{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:16px;padding:3px;transition:color .15s;line-height:1}
+.btn-signout:hover{color:rgba(255,255,255,.75)}
 
-.sample-banner {
-  background: #fffbeb; border-bottom: 1px solid #fde68a;
-  padding: 9px 24px; font-size: 12px; color: #78350f;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.sample-banner strong { font-weight: 700; }
+/* MAIN AREA */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 
-.dash-body { padding: 24px; max-width: 1440px; margin: 0 auto; }
+/* TOP BAR */
+.topbar{height:var(--topbar-h);background:#fff;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.topbar-left{display:flex;align-items:center;gap:9px}
+.hamburger{display:none;background:none;border:none;color:var(--g700);font-size:20px;cursor:pointer;padding:3px;line-height:1}
+.topbar-title{font-size:14.5px;font-weight:800;color:var(--g900)}
+.topbar-sub{font-size:10.5px;color:var(--g400);margin-top:1px}
+.topbar-right{display:flex;align-items:center;gap:7px}
+.df-wrap{display:flex;background:var(--g100);border-radius:7px;padding:3px;gap:2px}
+.df-btn{padding:4px 9px;border:none;background:none;border-radius:5px;font-size:11px;font-weight:600;color:var(--g500);cursor:pointer;transition:background .12s,color .12s;white-space:nowrap}
+.df-btn.active{background:#fff;color:var(--navy);box-shadow:0 1px 3px rgba(0,0,0,.09)}
+.btn-export{display:flex;align-items:center;gap:5px;padding:6px 12px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-sm);font-size:11.5px;font-weight:700;cursor:pointer;transition:background .15s}
+.btn-export:hover{background:var(--navy-light)}
+.sample-banner{background:#fffbeb;border-bottom:1px solid #fde68a;padding:6px 22px;font-size:11px;color:#78350f;display:flex;align-items:center;justify-content:center;gap:6px;flex-shrink:0}
+.sample-banner a{color:#92400e;font-weight:600}
+
+/* CONTENT */
+.content-area{flex:1;overflow-y:auto;padding:20px 22px}
+
+/* OVERLAY (mobile sidebar) */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50}
+.overlay.open{display:block}
 
 /* ============================================================
-   KPI CARDS
+   COMPONENTS
    ============================================================ */
-.kpi-row {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 16px; margin-bottom: 24px;
-}
-.kpi-card {
-  background: var(--white); border-radius: var(--radius);
-  padding: 20px 22px; box-shadow: var(--shadow);
-  border-top: 4px solid var(--blue);
-  display: flex; flex-direction: column; gap: 2px;
-  transition: box-shadow 0.15s, transform 0.15s;
-}
-.kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
-.kpi-card:nth-child(1) { border-color: var(--blue); }
-.kpi-card:nth-child(2) { border-color: var(--green); }
-.kpi-card:nth-child(3) { border-color: var(--amber); }
-.kpi-card:nth-child(4) { border-color: var(--purple); }
-.kpi-label {
-  font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
-  color: var(--gray-500); font-weight: 700; margin-bottom: 4px;
-}
-.kpi-value { font-size: 28px; font-weight: 800; color: var(--gray-900); line-height: 1.1; }
-.kpi-sub { font-size: 12px; color: var(--gray-500); }
-.kpi-trend { font-size: 11px; font-weight: 600; margin-top: 6px; }
-.kpi-trend.up   { color: var(--green); }
-.kpi-trend.down { color: var(--red); }
-.kpi-trend.neutral { color: var(--blue); }
 
-/* ============================================================
-   CARDS
-   ============================================================ */
-.card {
-  background: var(--white); border-radius: var(--radius);
-  box-shadow: var(--shadow); overflow: hidden;
-  transition: box-shadow 0.15s;
-}
-.card:hover { box-shadow: var(--shadow-md); }
-.card-hdr {
-  padding: 16px 22px 13px; border-bottom: 1px solid var(--gray-100);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.card-title {
-  font-size: 14px; font-weight: 700; color: var(--navy);
-  display: flex; align-items: center; gap: 7px;
-}
-.card-title .icon { font-size: 15px; }
-.card-badge {
-  font-size: 11px; background: var(--gray-100); color: var(--gray-500);
-  padding: 3px 9px; border-radius: 12px; font-weight: 600;
-}
-.card-body { padding: 18px 22px; }
+/* KPI grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px}
+.kpi-card{background:#fff;border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);border-left:4px solid transparent;transition:box-shadow .15s,transform .15s}
+.kpi-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
+.kc-1{border-color:var(--blue)}.kc-2{border-color:var(--green)}.kc-3{border-color:var(--amber)}.kc-4{border-color:var(--purple)}
+.kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--g500);font-weight:700;margin-bottom:4px}
+.kpi-val{font-size:24px;font-weight:800;color:var(--g900);line-height:1.1}
+.kpi-sub{font-size:11px;color:var(--g500);margin-top:2px}
+.kpi-trend{font-size:10.5px;font-weight:600;margin-top:5px}
+.kpi-trend.up{color:var(--green)}.kpi-trend.down{color:var(--red)}.kpi-trend.nt{color:var(--blue)}
 
-.mb-24 { margin-bottom: 24px; }
+/* Card */
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.card-hdr{padding:13px 18px 11px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
+.card-badge{font-size:10px;background:var(--g100);color:var(--g500);padding:2px 8px;border-radius:10px;font-weight:600}
+.card-body{padding:15px 18px}
 
-/* ============================================================
-   CHARTS ROW (2-col)
-   ============================================================ */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+/* Layout */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.mb16{margin-bottom:16px}.mb18{margin-bottom:18px}.mb20{margin-bottom:20px}
 
-/* Horizontal bar chart */
-.bar-chart { display: flex; flex-direction: column; gap: 13px; }
-.bar-row { display: flex; align-items: center; gap: 12px; }
-.bar-label {
-  width: 195px; flex-shrink: 0; font-size: 12px; color: var(--gray-700);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.bar-track {
-  flex: 1; background: var(--gray-100); border-radius: 5px;
-  height: 24px; overflow: hidden; position: relative;
-}
-.bar-fill {
-  height: 100%; border-radius: 5px; transition: width 0.8s cubic-bezier(0.22,1,0.36,1);
-  display: flex; align-items: center; padding: 0 8px;
-  min-width: 4px;
-}
-.bar-pct { font-size: 10px; color: rgba(255,255,255,0.85); font-weight: 700; white-space: nowrap; }
-.bar-amount { width: 72px; flex-shrink: 0; text-align: right; font-size: 12px; font-weight: 700; color: var(--gray-700); }
-
-/* Monthly trend bars */
-.trend-wrap {
-  display: flex; align-items: flex-end; gap: 8px;
-  height: 165px; padding-bottom: 30px;
-}
-.trend-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 5px; }
-.trend-bar {
-  width: 100%; border-radius: 5px 5px 0 0; background: var(--navy);
-  transition: height 0.8s cubic-bezier(0.22,1,0.36,1);
-  min-height: 4px; cursor: pointer; position: relative;
-}
-.trend-bar:hover { background: var(--blue); }
-.trend-bar .tip {
-  display: none; position: absolute; bottom: calc(100% + 6px);
-  left: 50%; transform: translateX(-50%);
-  background: var(--gray-900); color: var(--white);
-  padding: 4px 8px; border-radius: 5px; font-size: 11px; font-weight: 600;
-  white-space: nowrap; pointer-events: none;
-}
-.trend-bar:hover .tip { display: block; }
-.trend-month { font-size: 11px; color: var(--gray-500); font-weight: 600; }
-.trend-val { font-size: 10px; color: var(--gray-400); }
-
-/* Category spend mini bars */
-.cat-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.cat-label { width: 150px; font-size: 12px; color: var(--gray-700); flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cat-bar-track { flex: 1; background: var(--gray-100); border-radius: 4px; height: 16px; }
-.cat-bar-fill { height: 100%; border-radius: 4px; background: var(--blue); transition: width 0.7s ease; }
-.cat-amount { width: 60px; text-align: right; font-size: 11px; font-weight: 700; color: var(--gray-700); flex-shrink: 0; }
-
-/* ============================================================
-   TABLES
-   ============================================================ */
-.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 500px; }
-thead th {
-  background: var(--gray-50); color: var(--gray-500); font-weight: 700;
-  padding: 10px 14px; text-align: left; font-size: 11px;
-  text-transform: uppercase; letter-spacing: 0.4px;
-  border-bottom: 1.5px solid var(--gray-200); white-space: nowrap;
-}
-th.r, td.r { text-align: right; }
-tbody td {
-  padding: 10px 14px; border-bottom: 1px solid var(--gray-100);
-  color: var(--gray-700); vertical-align: middle;
-}
-tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover { background: var(--gray-50); }
-.td-strong { font-weight: 700; color: var(--gray-900); }
-.td-muted { color: var(--gray-400); font-size: 12px; }
-.td-num { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--gray-900); }
+/* Table */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:440px}
+thead th{background:var(--g50);color:var(--g500);font-weight:700;padding:8px 13px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1.5px solid var(--g200);white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{color:var(--g700)}
+thead th.sort-asc::after{content:' ↑'}
+thead th.sort-desc::after{content:' ↓'}
+th.r,td.r{text-align:right}
+tbody td{padding:8px 13px;border-bottom:1px solid var(--g100);color:var(--g700);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--g50)}
+.td-s{font-weight:700;color:var(--g900)}.td-m{color:var(--g400);font-size:11px}.td-n{font-variant-numeric:tabular-nums;font-weight:700;color:var(--g900)}
+.tr-total td{background:var(--g50);font-weight:800!important;color:var(--g900)!important;border-top:2px solid var(--g200)}
 
 /* Tags */
-.tag {
-  display: inline-flex; align-items: center;
-  padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700;
-}
-.tag-harper   { background: #eff6ff; color: #1d4ed8; }
-.tag-akron    { background: #f0fdf4; color: #166534; }
-.tag-cleveland{ background: #fdf4ff; color: #7e22ce; }
-.tag-storage  { background: #fff7ed; color: #c2410c; }
-.tag-rautmedia{ background: #f0f9ff; color: #0369a1; }
-.tag-cat      { background: var(--gray-100); color: var(--gray-700); }
+.tag{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:9px;font-size:10px;font-weight:700;white-space:nowrap}
+.th{background:#eff6ff;color:#1d4ed8}   /* harper */
+.ta{background:#f0fdf4;color:#166534}   /* akron */
+.tc{background:#f5f3ff;color:#5b21b6}   /* cleveland */
+.ts{background:#fffbeb;color:#92400e}   /* storage */
+.tr{background:#e0f2fe;color:#0369a1}   /* rautmedia */
+.tg{background:var(--g100);color:var(--g600)} /* generic */
+.tl{background:#fff1f2;color:#9f1239}   /* labor */
+.tm{background:#eff6ff;color:#1e40af}   /* materials */
+.tu{background:#fefce8;color:#854d0e}   /* utilities */
+.tp{background:#f0fdf4;color:#14532d}   /* permits */
+.tk{background:#fdf4ff;color:#6b21a8}   /* maintenance */
+.tad{background:var(--g100);color:var(--g600)} /* admin */
 
-/* Rank number */
-.rank { color: var(--gray-400); font-size: 12px; font-weight: 700; width: 20px; display: inline-block; text-align: right; margin-right: 4px; }
+/* Prop dot */
+.pdot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:4px}
 
-/* Vendor mini bar */
-.v-bar-wrap { display: inline-flex; align-items: center; gap: 6px; }
-.v-bar-track { width: 80px; height: 5px; background: var(--gray-100); border-radius: 3px; }
-.v-bar-fill { height: 100%; background: var(--blue); border-radius: 3px; }
-.v-pct { font-size: 11px; color: var(--gray-500); }
+/* Horizontal bar chart */
+.bar-chart{display:flex;flex-direction:column;gap:10px}
+.bar-row{display:flex;align-items:center;gap:9px}
+.bar-lbl{width:175px;flex-shrink:0;font-size:11px;color:var(--g700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.bar-track{flex:1;background:var(--g100);border-radius:4px;height:20px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .85s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;padding:0 6px;min-width:4px}
+.bar-pct{font-size:9.5px;color:rgba(255,255,255,.85);font-weight:700}
+.bar-amt{width:65px;flex-shrink:0;text-align:right;font-size:11.5px;font-weight:700;color:var(--g700)}
+
+/* Vertical trend bars */
+.trend-wrap{display:flex;align-items:flex-end;gap:6px;height:155px;padding-bottom:26px;position:relative}
+.trend-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.trend-bar{width:100%;border-radius:4px 4px 0 0;background:var(--navy);transition:height .8s cubic-bezier(.22,1,.36,1);min-height:3px;cursor:pointer;position:relative}
+.trend-bar:hover{background:var(--blue)}
+.trend-tip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--g900);color:#fff;padding:3px 7px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap;pointer-events:none;z-index:10}
+.trend-bar:hover .trend-tip{display:block}
+.trend-mo{font-size:10px;color:var(--g500);font-weight:600}
+.trend-val{font-size:9.5px;color:var(--g400)}
+
+/* Category mini bars */
+.cat-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.cat-lbl{width:145px;font-size:11.5px;color:var(--g700);flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-track{flex:1;background:var(--g100);border-radius:4px;height:13px}
+.cat-fill{height:100%;border-radius:4px;background:var(--blue);transition:width .7s ease}
+.cat-amt{width:56px;text-align:right;font-size:11px;font-weight:700;color:var(--g700);flex-shrink:0}
+
+/* Budget */
+.bdg-item{margin-bottom:16px}
+.bdg-item:last-child{margin-bottom:0}
+.bdg-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.bdg-name{font-size:12px;font-weight:700;color:var(--g900)}
+.bdg-amts{font-size:10.5px;color:var(--g500)}
+.bdg-track{background:var(--g100);border-radius:5px;height:9px;overflow:hidden}
+.bdg-fill{height:100%;border-radius:5px;transition:width .8s ease}
+.bdg-fill.g{background:var(--green)}.bdg-fill.a{background:var(--amber)}.bdg-fill.r{background:var(--red)}
+.bdg-bot{display:flex;justify-content:space-between;margin-top:4px}
+.bdg-pct{font-size:10px;font-weight:700}
+.bdg-pct.g{color:var(--green)}.bdg-pct.a{color:var(--amber)}.bdg-pct.r{color:var(--red)}
+.bdg-rem{font-size:10px;color:var(--g400)}
+
+/* Activity feed */
+.feed-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--g100)}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.feed-body{flex:1;min-width:0}
+.feed-title{font-size:12px;font-weight:600;color:var(--g900)}
+.feed-sub{font-size:10.5px;color:var(--g500);margin-top:1px}
+.feed-amt{font-size:12.5px;font-weight:700;color:var(--g900);flex-shrink:0;white-space:nowrap}
+
+/* Property cards */
+.prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.prop-card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:box-shadow .15s,transform .15s;border-top:4px solid transparent}
+.prop-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.prop-card-body{padding:14px 16px}
+.prop-card-name{font-size:13px;font-weight:700;color:var(--g900);margin-bottom:1px}
+.prop-card-city{font-size:10.5px;color:var(--g500);margin-bottom:12px}
+.prop-card-amt{font-size:22px;font-weight:800;color:var(--g900);margin-bottom:1px}
+.prop-card-meta{font-size:10.5px;color:var(--g500);margin-bottom:10px}
+.prop-card-cats{display:flex;flex-wrap:wrap;gap:4px}
+.prop-view-btn{margin-top:12px;width:100%;padding:7px;background:var(--g50);border:1px solid var(--g200);border-radius:6px;font-size:11px;font-weight:700;color:var(--g600);cursor:pointer;transition:background .14s,color .14s;text-align:center}
+.prop-card:hover .prop-view-btn{background:var(--blue-lt);border-color:var(--blue);color:var(--blue)}
+
+/* Property detail */
+.det-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.det-hdr-left{display:flex;align-items:center;gap:10px}
+.det-color-bar{width:5px;height:48px;border-radius:3px;flex-shrink:0}
+.det-name{font-size:18px;font-weight:800;color:var(--g900);line-height:1.2}
+.det-sub{font-size:11px;color:var(--g500);margin-top:2px}
+.det-total{font-size:26px;font-weight:800;color:var(--g900)}
+.det-total-label{font-size:10.5px;color:var(--g500);margin-bottom:2px}
+.btn-back{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--g100);border:1px solid var(--g200);border-radius:var(--r-sm);font-size:11.5px;font-weight:600;color:var(--g700);cursor:pointer;transition:background .14s;text-decoration:none;white-space:nowrap}
+.btn-back:hover{background:var(--g200)}
+
+/* Tabs */
+.tabs{display:flex;gap:3px;border-bottom:2px solid var(--g200);margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{padding:7px 12px;font-size:11.5px;font-weight:600;color:var(--g500);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s;user-select:none;white-space:nowrap}
+.tab:hover{color:var(--g700)}
+.tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+
+/* Filters */
+.filters-bar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:#fff;padding:11px 14px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px}
+.filter-sel,.filter-inp{padding:6px 10px;border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:12px;color:var(--g700);outline:none;background:#fff;transition:border-color .14s}
+.filter-sel:focus,.filter-inp:focus{border-color:var(--blue)}
+.filter-inp{flex:1;min-width:185px}
+.filter-lbl{font-size:10.5px;font-weight:600;color:var(--g500);white-space:nowrap}
+.btn-reset{padding:6px 11px;background:none;border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:11.5px;font-weight:600;color:var(--g500);cursor:pointer;transition:all .14s}
+.btn-reset:hover{border-color:var(--g400);color:var(--g700)}
+.txn-count{font-size:11px;color:var(--g500);margin-left:auto}
+
+/* Alert */
+.alert-r{background:var(--red-lt);border:1px solid #fca5a5;border-radius:var(--r-xs);padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;gap:7px;font-size:12px;color:#991b1b;font-weight:600}
+.alert-a{background:var(--amber-lt);border:1px solid #fcd34d;border-radius:var(--r-xs);padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;gap:7px;font-size:12px;color:#92400e;font-weight:600}
+
+/* Empty */
+.empty{text-align:center;padding:38px 20px;color:var(--g500)}
+.empty-icon{font-size:34px;margin-bottom:9px}
+.empty-title{font-size:13.5px;font-weight:700;color:var(--g700);margin-bottom:4px}
+.empty-sub{font-size:12px}
+
+/* Reports placeholder */
+.rp-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;background:#fff;border-radius:var(--r);box-shadow:var(--sh);text-align:center;padding:36px}
+.rp-icon{font-size:44px;margin-bottom:12px}
+.rp-title{font-size:19px;font-weight:800;color:var(--g900);margin-bottom:7px}
+.rp-sub{font-size:12.5px;color:var(--g500);max-width:360px;line-height:1.6}
+.rp-coming{display:inline-block;margin-top:14px;padding:5px 14px;background:var(--amber-lt);border:1px solid #fcd34d;border-radius:12px;font-size:11px;font-weight:700;color:#92400e}
+
+/* Section heading */
+.sec-hdr{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g500);margin-bottom:10px;margin-top:4px}
 
 /* ============================================================
-   BUDGET SECTION
+   MOBILE / RESPONSIVE
    ============================================================ */
-.budget-item { margin-bottom: 20px; }
-.budget-item:last-child { margin-bottom: 0; }
-.budget-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
-.budget-name { font-size: 13px; font-weight: 700; color: var(--gray-900); }
-.budget-amounts { font-size: 12px; color: var(--gray-500); }
-.budget-track { background: var(--gray-100); border-radius: 6px; height: 11px; overflow: hidden; }
-.budget-fill { height: 100%; border-radius: 6px; transition: width 0.8s ease; }
-.budget-fill.g { background: var(--green); }
-.budget-fill.a { background: var(--amber); }
-.budget-fill.r { background: var(--red); }
-.budget-bottom { display: flex; justify-content: space-between; margin-top: 5px; }
-.budget-pct { font-size: 11px; font-weight: 700; }
-.budget-pct.g { color: var(--green); }
-.budget-pct.a { color: var(--amber); }
-.budget-pct.r { color: var(--red); }
-.budget-rem { font-size: 11px; color: var(--gray-400); }
-
-/* Cardholder avatar */
-.ch-av {
-  width: 30px; height: 30px; border-radius: 50%; background: var(--navy);
-  color: var(--white); display: inline-flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 800; margin-right: 9px; flex-shrink: 0;
-  vertical-align: middle;
+@media(max-width:1100px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .g2{grid-template-columns:1fr}
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .prop-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-230px;top:0;height:100vh;z-index:100;transition:left .25s ease;box-shadow:none}
+  .sidebar.open{left:0;box-shadow:3px 0 20px rgba(0,0,0,.25)}
+  .hamburger{display:flex!important;align-items:center;justify-content:center}
+  .prop-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .topbar{padding:0 13px}
+  .content-area{padding:14px 13px 72px}
+  .btn-export span.ex-label{display:none}
+  .bar-lbl{width:110px;font-size:10px}
+  .bottom-nav{display:flex!important}
+}
+@media(max-width:480px){
+  .kpi-val{font-size:20px}
+  .topbar-sub{display:none}
+  .df-wrap{display:none}
 }
 
-/* Summary totals row */
-.totals-row td { background: var(--gray-50); font-weight: 800 !important; color: var(--gray-900) !important; border-top: 2px solid var(--gray-200); }
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-.dash-footer {
-  text-align: center; padding: 22px 20px; color: var(--gray-400);
-  font-size: 11px; border-top: 1px solid var(--gray-200); margin-top: 8px;
-}
-.dash-footer a { color: var(--blue); text-decoration: none; }
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 1100px) {
-  .two-col { grid-template-columns: 1fr; }
-  .kpi-row  { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .kpi-row  { grid-template-columns: 1fr 1fr; }
-  .kpi-value { font-size: 22px; }
-  .dash-body { padding: 14px; }
-  .auth-card { padding: 28px 18px; }
-  .bar-label { width: 110px; font-size: 11px; }
-  .hdr-badge, .hdr-sub { display: none; }
-  .hdr-title { font-size: 13px; }
-  .card-body { padding: 14px 16px; }
-}
+/* BOTTOM NAV */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--g200);z-index:80;height:54px}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;font-weight:600;color:var(--g500);cursor:pointer;transition:color .14s;padding:5px 0;border:none;background:none}
+.bn-item.active{color:var(--navy)}
+.bn-icon{font-size:17px}
+@media(min-width:769px){.bottom-nav{display:none!important}}
 </style>
 </head>
 <body>
 
-<!-- ===================================================================
-     LOGIN SCREEN
-     =================================================================== -->
+<!-- ============================================================
+     AUTH: LOGIN
+     ============================================================ -->
 <div class="auth-screen" id="screen-login">
   <div class="auth-card">
     <div class="auth-brand">
       <div class="auth-brand-icon">🏠</div>
       <div class="auth-brand-name">UpneX</div>
     </div>
-    <div class="auth-brand-tagline">Raut Properties &nbsp;·&nbsp; Owner Portal</div>
-
+    <div class="auth-tagline">Raut Properties &nbsp;·&nbsp; Owner Portal</div>
     <div class="auth-heading">Sign in to your dashboard</div>
-    <div class="auth-error" id="login-err">Incorrect username or password. Please try again.</div>
-
-    <div class="form-group">
+    <div class="auth-err" id="login-err">Incorrect username or password. Please try again.</div>
+    <div class="fg">
       <label>Username</label>
       <input type="text" id="l-user" placeholder="Username" autocomplete="username" spellcheck="false">
     </div>
-    <div class="form-group">
+    <div class="fg">
       <label>Password</label>
       <input type="password" id="l-pass" placeholder="Password" autocomplete="current-password">
     </div>
-    <button class="btn-primary" onclick="doLogin()">Continue &nbsp;→</button>
-
+    <button class="btn-auth" onclick="doLogin()">Continue &rarr;</button>
     <div class="auth-footer">
       <div class="ramp-badge">💳 Powered by Ramp</div>
-      <div class="auth-legal">Secure owner-only access · All data is confidential</div>
+      <div class="auth-legal">Secure owner-only access &middot; All data is confidential</div>
     </div>
   </div>
 </div>
 
-<!-- ===================================================================
-     PIN SCREEN
-     =================================================================== -->
+<!-- ============================================================
+     AUTH: PIN
+     ============================================================ -->
 <div class="auth-screen" id="screen-pin" style="display:none">
   <div class="auth-card">
     <div class="auth-brand">
       <div class="auth-brand-icon">🔐</div>
       <div class="auth-brand-name">2-Step Verification</div>
     </div>
-    <div class="auth-brand-tagline" style="margin-bottom:22px">Enter your 6-digit access PIN</div>
-
-    <div class="auth-error" id="pin-err">Incorrect PIN. Please try again.</div>
-
+    <div class="auth-tagline" style="margin-bottom:20px">Enter your 6-digit access PIN</div>
+    <div class="auth-err" id="pin-err">Incorrect PIN. Please try again.</div>
     <div class="pin-dots" id="pin-dots">
-      <div class="pin-dot" id="pd0"></div>
-      <div class="pin-dot" id="pd1"></div>
-      <div class="pin-dot" id="pd2"></div>
-      <div class="pin-dot" id="pd3"></div>
-      <div class="pin-dot" id="pd4"></div>
-      <div class="pin-dot" id="pd5"></div>
+      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+      <div class="pin-dot" id="pd4"></div><div class="pin-dot" id="pd5"></div>
     </div>
-
     <div class="pin-keypad">
       <div class="pin-key" onclick="pinAdd('1')">1</div>
       <div class="pin-key" onclick="pinAdd('2')">2</div>
@@ -449,519 +397,1083 @@ tbody tr:hover { background: var(--gray-50); }
       <div class="pin-key" onclick="pinAdd('9')">9</div>
       <div class="pin-key empty"></div>
       <div class="pin-key" onclick="pinAdd('0')">0</div>
-      <div class="pin-key del" onclick="pinDel()">⌫</div>
+      <div class="pin-key del" onclick="pinDel()">&#9003;</div>
     </div>
-
-    <div class="auth-footer" style="margin-top:16px">
-      <div class="auth-legal">🔒 Session stays active while this tab is open</div>
+    <div class="auth-footer" style="margin-top:14px">
+      <div class="auth-legal">🔒 Session active while this tab is open</div>
     </div>
   </div>
 </div>
 
-<!-- ===================================================================
-     DASHBOARD
-     =================================================================== -->
-<div id="screen-dashboard">
+<!-- ============================================================
+     APP SHELL
+     ============================================================ -->
+<div id="app">
+  <div class="overlay" id="sb-overlay" onclick="closeSidebar()"></div>
 
-  <!-- Header -->
-  <div class="dash-header">
-    <div class="hdr-left">
-      <div class="hdr-logo">🏠</div>
-      <div>
-        <div class="hdr-title">Raut Properties — Expense Dashboard</div>
-        <div class="hdr-sub">Last updated: June 1, 2026 &nbsp;·&nbsp; Powered by Ramp API</div>
-      </div>
-    </div>
-    <div class="hdr-right">
-      <div class="hdr-badge">💳 Ramp</div>
-      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
-    </div>
-  </div>
+  <div class="app-layout">
 
-  <!-- Sample data banner -->
-  <div class="sample-banner">
-    ⚠️ <strong>Sample Data</strong> — Live data loads on deployment when Ramp API credentials are configured on the host server
-  </div>
-
-  <div class="dash-body">
-
-    <!-- KPI Row -->
-    <div class="kpi-row mb-24">
-      <div class="kpi-card">
-        <div class="kpi-label">Total Spend — MTD</div>
-        <div class="kpi-value" id="kpi-mtd">$29,870</div>
-        <div class="kpi-sub">May 2026 &nbsp;·&nbsp; 38 transactions</div>
-        <div class="kpi-trend up">↑ 13.4% vs April 2026</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Total Spend — YTD</div>
-        <div class="kpi-value">$128,670</div>
-        <div class="kpi-sub">Jan – May 2026 &nbsp;·&nbsp; 125 transactions</div>
-        <div class="kpi-trend neutral">64.3% of $200K annual budget</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Active Cards</div>
-        <div class="kpi-value">3</div>
-        <div class="kpi-sub">3 cardholders &nbsp;·&nbsp; 4 entities</div>
-        <div class="kpi-trend neutral">1 physical · 2 virtual</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Transactions MTD</div>
-        <div class="kpi-value">38</div>
-        <div class="kpi-sub">Avg $786 / transaction</div>
-        <div class="kpi-trend down">↑ 5 more vs April</div>
-      </div>
-    </div>
-
-    <!-- Charts Row -->
-    <div class="two-col mb-24">
-
-      <!-- Spend by Property -->
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><span class="icon">🏘️</span> Spend by Property (YTD)</div>
-          <div class="card-badge">5 entities</div>
-        </div>
-        <div class="card-body">
-          <div class="bar-chart" id="prop-chart"></div>
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sb-logo">
+        <div class="sb-logo-icon">🏠</div>
+        <div>
+          <div class="sb-logo-name">UpneX</div>
+          <div class="sb-logo-sub">Raut Properties</div>
         </div>
       </div>
 
-      <!-- Monthly Trend -->
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><span class="icon">📈</span> Monthly Spend Trend</div>
-          <div class="card-badge">Jan – May 2026</div>
+      <div class="sb-nav">
+        <div class="nav-sec-label">Main</div>
+        <div class="nav-item active" id="nav-overview" onclick="navigate('overview')">
+          <span class="nav-icon">📊</span> Overview
         </div>
-        <div class="card-body">
-          <div class="trend-wrap" id="trend-chart"></div>
+        <div class="nav-item" id="nav-properties" onclick="navigate('properties')">
+          <span class="nav-icon">🏘️</span> Properties
+          <span class="nav-badge">5</span>
+        </div>
+        <div class="nav-item" id="nav-transactions" onclick="navigate('transactions')">
+          <span class="nav-icon">📋</span> Transactions
+        </div>
+        <div class="nav-sec-label">Finance</div>
+        <div class="nav-item" id="nav-budget" onclick="navigate('budget')">
+          <span class="nav-icon">🎯</span> Budget
+        </div>
+        <div class="nav-item" id="nav-reports" onclick="navigate('reports')">
+          <span class="nav-icon">📄</span> Reports
         </div>
       </div>
 
-    </div>
-
-    <!-- Top Vendors -->
-    <div class="card mb-24">
-      <div class="card-hdr">
-        <div class="card-title"><span class="icon">🏪</span> Top Vendors — YTD</div>
-        <div class="card-badge">by spend</div>
-      </div>
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:32px">#</th>
-              <th>Merchant</th>
-              <th>Category</th>
-              <th class="r">Transactions</th>
-              <th class="r">Total Spend</th>
-              <th class="r">% of Total</th>
-            </tr>
-          </thead>
-          <tbody id="vendor-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Recent Transactions -->
-    <div class="card mb-24">
-      <div class="card-hdr">
-        <div class="card-title"><span class="icon">📋</span> Recent Transactions</div>
-        <div class="card-badge">Last 20</div>
-      </div>
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Merchant</th>
-              <th>Category</th>
-              <th>Property</th>
-              <th class="r">Amount</th>
-              <th>Cardholder</th>
-            </tr>
-          </thead>
-          <tbody id="txn-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Budget + Cardholders -->
-    <div class="two-col mb-24">
-
-      <!-- Budget vs Actual -->
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><span class="icon">🎯</span> Budget vs Actual (YTD)</div>
-          <div class="card-badge">2026</div>
+      <div class="sb-user">
+        <div class="sb-avatar">AR</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name">Amit Raut</div>
+          <div class="sb-user-role">Property Owner</div>
         </div>
-        <div class="card-body" id="budget-section"></div>
+        <button class="btn-signout" onclick="doLogout()" title="Sign out">⏻</button>
+      </div>
+    </nav>
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()">☰</button>
+          <div>
+            <div class="topbar-title" id="topbar-title">Overview</div>
+            <div class="topbar-sub" id="topbar-sub">Raut Properties Portfolio</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="df-wrap">
+            <button class="df-btn" id="df-month" onclick="setDateRange('month')">This Month</button>
+            <button class="df-btn" id="df-q" onclick="setDateRange('q')">Last 3 Mo</button>
+            <button class="df-btn active" id="df-ytd" onclick="setDateRange('ytd')">YTD</button>
+            <button class="df-btn" id="df-all" onclick="setDateRange('all')">All Time</button>
+          </div>
+          <button class="btn-export" onclick="exportCSV()">
+            <span>⬇</span><span class="ex-label">Export</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Cardholder Breakdown -->
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title"><span class="icon">👤</span> Cardholder Breakdown</div>
-          <div class="card-badge">YTD</div>
-        </div>
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Cardholder</th>
-                <th>Card</th>
-                <th class="r">Txns</th>
-                <th class="r">Total Spend</th>
-                <th>Top Vendor</th>
-              </tr>
-            </thead>
-            <tbody id="ch-tbody"></tbody>
-          </table>
-        </div>
-
-        <!-- Spend by Category mini chart -->
-        <div class="card-hdr" style="margin-top:2px; border-top:1px solid var(--gray-100)">
-          <div class="card-title"><span class="icon">📊</span> Spend by Category</div>
-        </div>
-        <div class="card-body" id="cat-chart"></div>
-
+      <!-- SAMPLE DATA BANNER -->
+      <div class="sample-banner">
+        ⚠️ <strong>Sample Data</strong> — Ramp MCP not connected. Live data loads when Ramp API credentials are configured.
+        &nbsp;<a href="mailto:hari@upnexs.com">Contact hari@upnexs.com</a> to connect.
       </div>
 
-    </div>
+      <!-- PAGE CONTENT -->
+      <div class="content-area" id="content-area"></div>
 
-  </div><!-- /dash-body -->
+    </div><!-- /main-area -->
+  </div><!-- /app-layout -->
 
-  <div class="dash-footer">
-    <strong>Raut Properties</strong> &nbsp;·&nbsp; Expense Dashboard &nbsp;·&nbsp;
-    Powered by <strong>Ramp</strong> &nbsp;·&nbsp; Built by <strong>UpneX</strong>
-    &nbsp;·&nbsp; Generated June 1, 2026<br>
-    Questions? <a href="mailto:hari@upnexs.com">hari@upnexs.com</a>
-  </div>
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="bottom-nav">
+    <button class="bn-item active" id="bn-overview" onclick="navigate('overview')">
+      <span class="bn-icon">📊</span>Overview
+    </button>
+    <button class="bn-item" id="bn-properties" onclick="navigate('properties')">
+      <span class="bn-icon">🏘️</span>Props
+    </button>
+    <button class="bn-item" id="bn-transactions" onclick="navigate('transactions')">
+      <span class="bn-icon">📋</span>Txns
+    </button>
+    <button class="bn-item" id="bn-budget" onclick="navigate('budget')">
+      <span class="bn-icon">🎯</span>Budget
+    </button>
+    <button class="bn-item" id="bn-reports" onclick="navigate('reports')">
+      <span class="bn-icon">📄</span>Reports
+    </button>
+  </nav>
 
-</div><!-- /screen-dashboard -->
+</div><!-- /app -->
 
-
-<!-- ===================================================================
+<!-- ============================================================
      SCRIPT
-     =================================================================== -->
+     ============================================================ -->
 <script>
-/* -------- AUTH CREDENTIAL CONSTANTS (obfuscated, never plain-text) -------- */
-const _U = atob('cmF1' + 'dA==');          // username
-const _P = atob('UmF1dEAy' + 'MDI2IQ=='); // password
-const _C = atob('NDgy' + 'MDI0');          // 6-digit PIN
-
+/* ─── AUTH CONSTANTS (obfuscated) ─────────────────────────────── */
+const _U = atob('cmF1' + 'dA==');
+const _P = atob('UmF1dEAy' + 'MDI2IQ==');
+const _C = atob('NDgy' + 'MDI0');
 let _pin = '';
 
-/* -------- LOGIN -------- */
-function doLogin() {
-  const u = (document.getElementById('l-user').value || '').trim();
-  const p = document.getElementById('l-pass').value || '';
-  const err = document.getElementById('login-err');
-  if (u === _U && p === _P) {
-    err.style.display = 'none';
-    show('screen-login', 'none');
-    show('screen-pin', 'flex');
+/* ─── APP STATE ────────────────────────────────────────────────── */
+let currentView   = 'overview';
+let currentPropId = null;
+let propDetailTab = 'all';
+let globalRange   = 'ytd';
+let txnSortCol    = 'date';
+let txnSortDir    = 'desc';
+let txnSearch     = '';
+let txnPropFilter = 'all';
+let txnCatFilter  = 'all';
+
+/* ─── DATA ─────────────────────────────────────────────────────── */
+const PROPS = [
+  { id:'harper',    name:'2015 Harper Ave',    city:'Scranton, PA',  color:'#2563eb', budget:90000,  tagCls:'th' },
+  { id:'akron',     name:'Akron Properties',   city:'Akron, OH',     color:'#16a34a', budget:40000,  tagCls:'ta' },
+  { id:'cleveland', name:'Cleveland Properties',city:'Cleveland, OH', color:'#7c3aed', budget:45000,  tagCls:'tc' },
+  { id:'storage',   name:'Storage Bordentown',  city:'Bordentown, NJ',color:'#d97706', budget:20000,  tagCls:'ts' },
+  { id:'rautmedia', name:'RautMedia',           city:'Business',      color:'#0891b2', budget:15000,  tagCls:'tr' },
+];
+
+const CAT_BUDGETS = {
+  'Labor':       60000,
+  'Materials':   45000,
+  'Utilities':   18000,
+  'Permits':      8000,
+  'Maintenance': 15000,
+  'Admin':       10000,
+};
+
+/* 67 transactions, Jan – May 2026 */
+const TXNS = [
+  /* ── January 2026 ── */
+  { date:'2026-01-08', merchant:'ABC Roofing LLC',    cat:'Labor',       prop:'harper',    amt:8200,  card:'···7823', notes:'Roof replacement deposit' },
+  { date:'2026-01-10', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:2340,  card:'···7823', notes:'Framing lumber & supplies' },
+  { date:'2026-01-12', merchant:'PPL Electric',       cat:'Utilities',   prop:'harper',    amt:690,   card:'···9156', notes:'January electric bill' },
+  { date:'2026-01-15', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:1890,  card:'···7823', notes:'Plumbing rough-in labor' },
+  { date:'2026-01-14', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:1120,  card:'···3421', notes:'Flooring materials' },
+  { date:'2026-01-20', merchant:'Ace Hardware',       cat:'Maintenance', prop:'akron',     amt:340,   card:'···3421', notes:'Unit repairs misc' },
+  { date:'2026-01-09', merchant:"Lowe's",             cat:'Materials',   prop:'cleveland', amt:780,   card:'···3421', notes:'Drywall & mud' },
+  { date:'2026-01-22', merchant:'Sherwin-Williams',   cat:'Materials',   prop:'cleveland', amt:380,   card:'···3421', notes:'Exterior paint' },
+  { date:'2026-01-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
+  { date:'2026-01-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
+  { date:'2026-01-05', merchant:'Google Workspace',   cat:'Admin',       prop:'rautmedia', amt:72,    card:'···9156', notes:'G Suite monthly' },
+  { date:'2026-01-28', merchant:'Amazon Business',    cat:'Admin',       prop:'rautmedia', amt:230,   card:'···9156', notes:'Office supplies' },
+
+  /* ── February 2026 ── */
+  { date:'2026-02-03', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:1890,  card:'···7823', notes:'Insulation & drywall' },
+  { date:'2026-02-07', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:2450,  card:'···7823', notes:'Plumbing fixtures install' },
+  { date:'2026-02-14', merchant:'PECO Energy',        cat:'Utilities',   prop:'harper',    amt:890,   card:'···9156', notes:'February utility bill' },
+  { date:'2026-02-18', merchant:'City of Scranton',   cat:'Permits',     prop:'harper',    amt:450,   card:'···7823', notes:'Building permit fee' },
+  { date:'2026-02-10', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:1340,  card:'···3421', notes:'Kitchen cabinet materials' },
+  { date:'2026-02-19', merchant:"Lowe's",             cat:'Materials',   prop:'akron',     amt:680,   card:'···3421', notes:'Bathroom fixtures' },
+  { date:'2026-02-06', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:1700,  card:'···7823', notes:'Pipe replacement' },
+  { date:'2026-02-21', merchant:'Home Depot',         cat:'Materials',   prop:'cleveland', amt:890,   card:'···3421', notes:'Flooring' },
+  { date:'2026-02-15', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
+  { date:'2026-02-20', merchant:'State Farm',         cat:'Admin',       prop:'storage',   amt:720,   card:'···9156', notes:'Quarterly insurance premium' },
+  { date:'2026-02-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
+  { date:'2026-02-05', merchant:'Dropbox',            cat:'Admin',       prop:'rautmedia', amt:20,    card:'···9156', notes:'Storage subscription' },
+
+  /* ── March 2026 ── */
+  { date:'2026-03-04', merchant:'ABC Roofing LLC',    cat:'Labor',       prop:'harper',    amt:4100,  card:'···7823', notes:'Roof completion payment' },
+  { date:'2026-03-09', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:2890,  card:'···7823', notes:'Tile & flooring' },
+  { date:'2026-03-14', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'harper',    amt:3400,  card:'···7823', notes:'Master bath plumbing' },
+  { date:'2026-03-20', merchant:'Paint World',        cat:'Materials',   prop:'harper',    amt:680,   card:'···3421', notes:'Interior paint supply' },
+  { date:'2026-03-08', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:2100,  card:'···3421', notes:'Deck construction materials' },
+  { date:'2026-03-17', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'akron',     amt:1500,  card:'···7823', notes:'Kitchen plumbing' },
+  { date:'2026-03-11', merchant:'Sherwin-Williams',   cat:'Materials',   prop:'cleveland', amt:620,   card:'···3421', notes:'Interior paint 3 units' },
+  { date:'2026-03-18', merchant:'Ace Hardware',       cat:'Maintenance', prop:'cleveland', amt:450,   card:'···3421', notes:'Door hardware & locks' },
+  { date:'2026-03-25', merchant:'Home Depot',         cat:'Materials',   prop:'cleveland', amt:1340,  card:'···3421', notes:'Kitchen remodel supplies' },
+  { date:'2026-03-15', merchant:'Ace Hardware',       cat:'Maintenance', prop:'storage',   amt:450,   card:'···9156', notes:'Lock & key replacement' },
+  { date:'2026-03-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
+  { date:'2026-03-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
+  { date:'2026-03-12', merchant:'LinkedIn Ads',       cat:'Admin',       prop:'rautmedia', amt:850,   card:'···9156', notes:'Lead gen campaign' },
+  { date:'2026-03-19', merchant:'Google Ads',         cat:'Admin',       prop:'rautmedia', amt:1200,  card:'···9156', notes:'Search campaign spend' },
+
+  /* ── April 2026 ── */
+  { date:'2026-04-03', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:1780,  card:'···3421', notes:'Bathroom vanities' },
+  { date:'2026-04-10', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:1230,  card:'···7823', notes:'Fixture installation' },
+  { date:'2026-04-16', merchant:'PPL Electric',       cat:'Utilities',   prop:'harper',    amt:890,   card:'···9156', notes:'April electric bill' },
+  { date:'2026-04-22', merchant:'Ace Hardware',       cat:'Maintenance', prop:'harper',    amt:560,   card:'···3421', notes:'Tools & door hardware' },
+  { date:'2026-04-07', merchant:"Lowe's",             cat:'Materials',   prop:'akron',     amt:1200,  card:'···3421', notes:'Deck composite boards' },
+  { date:'2026-04-20', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:890,   card:'···3421', notes:'Garage door parts' },
+  { date:'2026-04-09', merchant:"Lowe's",             cat:'Materials',   prop:'cleveland', amt:980,   card:'···3421', notes:'Window replacement' },
+  { date:'2026-04-17', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:900,   card:'···7823', notes:'Sink repairs 2 units' },
+  { date:'2026-04-14', merchant:'ADT Security',       cat:'Admin',       prop:'storage',   amt:890,   card:'···9156', notes:'Security system install' },
+  { date:'2026-04-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
+  { date:'2026-04-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
+  { date:'2026-04-12', merchant:'AWS',                cat:'Admin',       prop:'rautmedia', amt:340,   card:'···9156', notes:'Cloud hosting' },
+
+  /* ── May 2026 ── */
+  { date:'2026-05-29', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:1890,  card:'···7823', notes:'Final plumbing inspection' },
+  { date:'2026-05-28', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:1250,  card:'···7823', notes:'Finishing materials' },
+  { date:'2026-05-27', merchant:'PECO Energy',        cat:'Utilities',   prop:'harper',    amt:890,   card:'···9156', notes:'May utility bill' },
+  { date:'2026-05-23', merchant:'ABC Roofing LLC',    cat:'Labor',       prop:'harper',    amt:4100,  card:'···7823', notes:'Gutter installation' },
+  { date:'2026-05-19', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:2340,  card:'···7823', notes:'Landscaping & exterior' },
+  { date:'2026-05-16', merchant:'PPL Electric',       cat:'Utilities',   prop:'harper',    amt:690,   card:'···9156', notes:'Electric reconnect fee' },
+  { date:'2026-05-15', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:2450,  card:'···7823', notes:'Final punch list plumbing' },
+  { date:'2026-05-26', merchant:"Lowe's",             cat:'Materials',   prop:'akron',     amt:450,   card:'···3421', notes:'Paint touch-up supplies' },
+  { date:'2026-05-13', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:1120,  card:'···3421', notes:'Window trim materials' },
+  { date:'2026-05-25', merchant:'Sherwin-Williams',   cat:'Materials',   prop:'cleveland', amt:380,   card:'···3421', notes:'Unit 3 exterior paint' },
+  { date:'2026-05-22', merchant:'Home Depot',         cat:'Materials',   prop:'cleveland', amt:890,   card:'···3421', notes:'Carpet replacement' },
+  { date:'2026-05-20', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:1700,  card:'···7823', notes:'Water heater replacement' },
+  { date:'2026-05-11', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:900,   card:'···7823', notes:'Drain line camera' },
+  { date:'2026-05-24', merchant:'Amazon Business',    cat:'Admin',       prop:'storage',   amt:230,   card:'···9156', notes:'Storage unit supplies' },
+  { date:'2026-05-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
+  { date:'2026-05-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
+  { date:'2026-05-05', merchant:'Zoom',               cat:'Admin',       prop:'rautmedia', amt:15,    card:'···9156', notes:'Video meetings subscription' },
+];
+
+/* ─── UTILITY FUNCTIONS ────────────────────────────────────────── */
+function fmt(n){ return '$' + Math.abs(Math.round(n)).toLocaleString('en-US'); }
+function pct(a,b){ return b ? ((a/b)*100).toFixed(1) : '0.0'; }
+function fmtDate(d){
+  const [,m,day] = d.split('-');
+  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]+' '+parseInt(day);
+}
+function fmtMo(d){
+  const [,m] = d.split('-');
+  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1];
+}
+function propById(id){ return PROPS.find(p=>p.id===id); }
+function catIcon(c){ return {Labor:'🔨',Materials:'🧱',Utilities:'⚡',Permits:'📋',Maintenance:'🔧',Admin:'🏢'}[c]||'📌'; }
+function catTagCls(c){ return {Labor:'tl',Materials:'tm',Utilities:'tu',Permits:'tp',Maintenance:'tk',Admin:'tad'}[c]||'tg'; }
+function catColor(c){ return {Labor:'#dc2626',Materials:'#2563eb',Utilities:'#d97706',Permits:'#16a34a',Maintenance:'#7c3aed',Admin:'#0891b2'}[c]||'#94a3b8'; }
+function propShort(id){ return {harper:'Harper Ave',akron:'Akron, OH',cleveland:'Cleveland, OH',storage:'Storage NJ',rautmedia:'RautMedia'}[id]||id; }
+
+function getDateFilter(){
+  if(globalRange==='month') return d=>d>='2026-05-01';
+  if(globalRange==='q')     return d=>d>='2026-03-01';
+  return ()=>true;
+}
+function filteredTxns(propId, cat){
+  const df = getDateFilter();
+  return TXNS.filter(t=>
+    df(t.date) &&
+    (!propId || propId==='all' || t.prop===propId) &&
+    (!cat    || cat==='all'   || t.cat===cat)
+  );
+}
+
+/* ─── AUTH ─────────────────────────────────────────────────────── */
+function show(id,d){ document.getElementById(id).style.display=d; }
+
+function doLogin(){
+  const u=(document.getElementById('l-user').value||'').trim();
+  const p=document.getElementById('l-pass').value||'';
+  const err=document.getElementById('login-err');
+  if(u===_U&&p===_P){
+    err.style.display='none';
+    show('screen-login','none');
+    show('screen-pin','flex');
   } else {
-    err.style.display = 'block';
-    document.getElementById('l-pass').value = '';
+    err.style.display='block';
+    document.getElementById('l-pass').value='';
     document.getElementById('l-pass').focus();
   }
 }
-
-/* -------- PIN -------- */
-function pinAdd(d) {
-  if (_pin.length >= 6) return;
-  _pin += d;
-  syncDots();
-  if (_pin.length === 6) setTimeout(checkPin, 250);
+function pinAdd(d){
+  if(_pin.length>=6)return;
+  _pin+=d; syncDots();
+  if(_pin.length===6)setTimeout(checkPin,250);
 }
-function pinDel() {
-  _pin = _pin.slice(0, -1);
-  syncDots();
-  document.getElementById('pin-err').style.display = 'none';
+function pinDel(){
+  _pin=_pin.slice(0,-1); syncDots();
+  document.getElementById('pin-err').style.display='none';
 }
-function syncDots() {
-  for (let i = 0; i < 6; i++) {
-    const d = document.getElementById('pd' + i);
-    d.className = 'pin-dot' + (i < _pin.length ? ' filled' : '');
+function syncDots(){
+  for(let i=0;i<6;i++){
+    document.getElementById('pd'+i).className='pin-dot'+(i<_pin.length?' filled':'');
   }
 }
-function checkPin() {
-  if (_pin === _C) {
-    sessionStorage.setItem('rp_ok', '1');
-    show('screen-pin', 'none');
-    openDash();
+function checkPin(){
+  if(_pin===_C){
+    sessionStorage.setItem('rp_ok','1');
+    show('screen-pin','none');
+    bootApp();
   } else {
-    document.getElementById('pin-err').style.display = 'block';
-    _pin = '';
-    syncDots();
+    document.getElementById('pin-err').style.display='block';
+    _pin=''; syncDots();
   }
 }
-
-/* -------- LOGOUT -------- */
-function doLogout() {
+function doLogout(){
   sessionStorage.removeItem('rp_ok');
-  _pin = '';
-  syncDots();
-  show('screen-dashboard', 'none');
-  show('screen-login', 'flex');
-  document.getElementById('l-user').value = '';
-  document.getElementById('l-pass').value = '';
-  document.getElementById('login-err').style.display = 'none';
-  document.getElementById('pin-err').style.display = 'none';
+  _pin=''; syncDots();
+  show('app','none');
+  show('screen-login','flex');
+  document.getElementById('l-user').value='';
+  document.getElementById('l-pass').value='';
+  document.getElementById('login-err').style.display='none';
+  document.getElementById('pin-err').style.display='none';
 }
 
-/* -------- HELPERS -------- */
-function show(id, disp) { document.getElementById(id).style.display = disp; }
-function $(id) { return document.getElementById(id); }
-function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
-function pct(a, b) { return ((a / b) * 100).toFixed(1); }
+/* ─── SIDEBAR (mobile) ─────────────────────────────────────────── */
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sb-overlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-overlay').classList.remove('open');
+}
 
-/* -------- BOOT -------- */
-document.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('rp_ok') === '1') {
-    show('screen-login', 'none');
-    openDash();
-  }
-  $('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-  $('l-user').addEventListener('keydown', e => { if (e.key === 'Enter') $('l-pass').focus(); });
-});
+/* ─── DATE RANGE ───────────────────────────────────────────────── */
+function setDateRange(r){
+  globalRange=r;
+  ['month','q','ytd','all'].forEach(k=>{
+    document.getElementById('df-'+k).classList.toggle('active',k===r);
+  });
+  renderView();
+}
 
-/* ==========================================================================
-   DASHBOARD DATA
-   NOTE: Replace this block with live Ramp API data on deployment.
-         Run: python3 [SKILL_DIR]/scripts/fetch_ramp_data.py --start YYYY-MM-DD --end YYYY-MM-DD --output data.json
-         Then inject the JSON into this DATA object.
-   ========================================================================== */
-const DATA = {
-  properties: [
-    { name: '2015 Harper Ave, Scranton PA',  amount: 47230, color: '#3b82f6' },
-    { name: 'Akron Ohio Properties',          amount: 31450, color: '#10b981' },
-    { name: 'Cleveland Ohio Properties',      amount: 28890, color: '#8b5cf6' },
-    { name: 'Storage Today, Bordentown NJ',   amount: 12340, color: '#f59e0b' },
-    { name: 'RautMedia',                      amount:  8760, color: '#06b6d4' }
-  ],
-  monthly: [
-    { m: 'Jan', v: 18420 },
-    { m: 'Feb', v: 22150 },
-    { m: 'Mar', v: 31890 },
-    { m: 'Apr', v: 26340 },
-    { m: 'May', v: 29870 }
-  ],
-  vendors: [
-    { name: 'Home Depot',         cat: 'Materials',   txns: 23, amt: 18450 },
-    { name: "Lowe's",             cat: 'Materials',   txns: 18, amt: 12340 },
-    { name: 'Ferguson Supply',    cat: 'Plumbing',    txns:  8, amt:  9870 },
-    { name: 'ABC Roofing LLC',    cat: 'Roofing',     txns:  2, amt:  8200 },
-    { name: 'PECO Energy',        cat: 'Utilities',   txns:  5, amt:  7450 },
-    { name: 'Plumbing Pro LLC',   cat: 'Labor',       txns:  4, amt:  6800 },
-    { name: 'Amazon Business',    cat: 'Supplies',    txns: 31, amt:  5230 },
-    { name: 'Sherwin-Williams',   cat: 'Paint',       txns: 12, amt:  4890 },
-    { name: 'Ace Hardware',       cat: 'Hardware',    txns: 15, amt:  3670 },
-    { name: 'PPL Electric',       cat: 'Utilities',   txns:  5, amt:  3450 },
-    { name: 'Menards',            cat: 'Materials',   txns:  9, amt:  3120 },
-    { name: 'Waste Management',   cat: 'Services',    txns:  5, amt:  2890 }
-  ],
-  transactions: [
-    { dt:'May 29', merchant:'Ferguson Supply',   cat:'Plumbing',  prop:'Harper Ave',         amt:1890, ch:'Hari Sundar'    },
-    { dt:'May 28', merchant:'Home Depot',         cat:'Materials', prop:'Harper Ave',         amt:1250, ch:'Hari Sundar'    },
-    { dt:'May 27', merchant:'PECO Energy',        cat:'Utilities', prop:'Harper Ave',         amt: 890, ch:'Ops Card'       },
-    { dt:'May 26', merchant:"Lowe's",             cat:'Materials', prop:'Akron OH',           amt: 450, ch:'Maint. Team'    },
-    { dt:'May 25', merchant:'Sherwin-Williams',   cat:'Paint',     prop:'Cleveland OH',       amt: 380, ch:'Maint. Team'    },
-    { dt:'May 24', merchant:'Amazon Business',    cat:'Supplies',  prop:'Storage-Bordentown', amt: 230, ch:'Ops Card'       },
-    { dt:'May 23', merchant:'ABC Roofing LLC',    cat:'Roofing',   prop:'Harper Ave',         amt:4100, ch:'Hari Sundar'    },
-    { dt:'May 22', merchant:'Home Depot',         cat:'Materials', prop:'Cleveland OH',       amt: 890, ch:'Maint. Team'    },
-    { dt:'May 21', merchant:'Ace Hardware',       cat:'Hardware',  prop:'Akron OH',           amt: 210, ch:'Maint. Team'    },
-    { dt:'May 20', merchant:'Plumbing Pro LLC',   cat:'Labor',     prop:'Cleveland OH',       amt:1700, ch:'Hari Sundar'    },
-    { dt:'May 19', merchant:'Home Depot',         cat:'Materials', prop:'Harper Ave',         amt:2340, ch:'Hari Sundar'    },
-    { dt:'May 18', merchant:'Amazon Business',    cat:'SaaS',      prop:'RautMedia',          amt: 145, ch:'Ops Card'       },
-    { dt:'May 17', merchant:"Lowe's",             cat:'Materials', prop:'Akron OH',           amt: 780, ch:'Maint. Team'    },
-    { dt:'May 16', merchant:'PPL Electric',       cat:'Utilities', prop:'Harper Ave',         amt: 690, ch:'Ops Card'       },
-    { dt:'May 15', merchant:'Ferguson Supply',    cat:'Plumbing',  prop:'Harper Ave',         amt:2450, ch:'Hari Sundar'    },
-    { dt:'May 14', merchant:'Sherwin-Williams',   cat:'Paint',     prop:'Cleveland OH',       amt: 420, ch:'Maint. Team'    },
-    { dt:'May 13', merchant:'Home Depot',         cat:'Materials', prop:'Akron OH',           amt:1120, ch:'Maint. Team'    },
-    { dt:'May 12', merchant:'PECO Energy',        cat:'Utilities', prop:'Harper Ave',         amt: 890, ch:'Ops Card'       },
-    { dt:'May 11', merchant:'ABC Roofing LLC',    cat:'Roofing',   prop:'Cleveland OH',       amt:4100, ch:'Hari Sundar'    },
-    { dt:'May 10', merchant:'Ace Hardware',       cat:'Hardware',  prop:'Storage-Bordentown', amt: 345, ch:'Maint. Team'    }
-  ],
-  budgets: [
-    { name:'Renovation & Rehab',      allocated: 80000, spent: 67890 },
-    { name:'Ongoing Maintenance',     allocated: 30000, spent: 18450 },
-    { name:'Utilities',               allocated: 15000, spent: 12340 },
-    { name:'Administrative & Other',  allocated:  8000, spent:  3200 }
-  ],
-  cardholders: [
-    { name:'Hari Sundar',     last4:'7823', txns: 62, amt: 45340, top:'Ferguson Supply'  },
-    { name:'Maintenance Team',last4:'3421', txns: 41, amt: 38920, top:'Home Depot'        },
-    { name:'Operations Card', last4:'9156', txns: 22, amt: 24410, top:'Amazon Business'   }
-  ],
-  categories: [
-    { name:'Materials & Supplies', amt: 32450 },
-    { name:'Labor & Contractors',  amt: 28900 },
-    { name:'Utilities',            amt: 15340 },
-    { name:'Maintenance & Repair', amt: 12890 },
-    { name:'Tools & Equipment',    amt:  8450 },
-    { name:'Administrative',       amt:  5640 }
-  ]
+/* ─── ROUTER ───────────────────────────────────────────────────── */
+const VIEWS = ['overview','properties','transactions','budget','reports'];
+const VIEW_TITLES = {
+  overview:    ['Overview',      'Raut Properties Portfolio'],
+  properties:  ['Properties',    '5 properties in portfolio'],
+  transactions:['Transactions',  'All spending activity'],
+  budget:      ['Budget',        'Actuals vs. allocated budgets'],
+  reports:     ['Reports',       'Monthly PDF reports'],
+  'property-detail': ['',        ''],
 };
 
-/* ---------- PROPERTY TAG CLASS ---------- */
-function propTag(prop) {
-  const p = prop.toLowerCase();
-  if (p.includes('harper'))          return 'tag-harper';
-  if (p.includes('akron'))           return 'tag-akron';
-  if (p.includes('cleveland'))       return 'tag-cleveland';
-  if (p.includes('storage') || p.includes('bordentown')) return 'tag-storage';
-  return 'tag-rautmedia';
+function navigate(view, propId){
+  closeSidebar();
+  if(view==='property-detail'){ propDetailTab='all'; }
+  currentView   = view;
+  currentPropId = propId||null;
+
+  // Update nav
+  VIEWS.forEach(v=>{
+    const el=document.getElementById('nav-'+v);
+    if(el) el.classList.toggle('active', v===view);
+    const bn=document.getElementById('bn-'+v);
+    if(bn) bn.classList.toggle('active', v===view);
+  });
+  if(view==='property-detail'){
+    document.getElementById('nav-properties').classList.add('active');
+    document.getElementById('bn-properties')&&document.getElementById('bn-properties').classList.add('active');
+  }
+
+  // Update topbar
+  if(view==='property-detail' && propId){
+    const pr=propById(propId);
+    document.getElementById('topbar-title').textContent=pr.name;
+    document.getElementById('topbar-sub').textContent=pr.city+' · Property Detail';
+  } else {
+    const [t,s]=VIEW_TITLES[view]||['',''];
+    document.getElementById('topbar-title').textContent=t;
+    document.getElementById('topbar-sub').textContent=s;
+  }
+
+  renderView();
+  document.getElementById('content-area').scrollTop=0;
 }
 
-/* ==========================================================================
-   RENDER FUNCTIONS
-   ========================================================================== */
-function openDash() {
-  show('screen-dashboard', 'block');
-  renderPropertyChart();
-  renderTrendChart();
-  renderVendors();
+function renderView(){
+  switch(currentView){
+    case 'overview':         renderOverview();               break;
+    case 'properties':       renderProperties();             break;
+    case 'property-detail':  renderPropertyDetail(currentPropId); break;
+    case 'transactions':     renderTransactions();           break;
+    case 'budget':           renderBudget();                 break;
+    case 'reports':          renderReports();                break;
+  }
+}
+
+/* ─── EXPORT CSV ───────────────────────────────────────────────── */
+function exportCSV(){
+  const txns=filteredTxns();
+  const rows=[['Date','Merchant','Category','Property','Amount','Card','Notes']];
+  txns.sort((a,b)=>b.date.localeCompare(a.date)).forEach(t=>{
+    rows.push([t.date,t.merchant,t.cat,propById(t.prop).name,t.amt,t.card,t.notes||'']);
+  });
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='raut-properties-export.csv';
+  a.click();
+}
+
+/* ─── OVERVIEW ─────────────────────────────────────────────────── */
+function renderOverview(){
+  const txns   = filteredTxns();
+  const all    = filteredTxns();
+  const mayTxns= TXNS.filter(t=>t.date>='2026-05-01');
+  const aprTxns= TXNS.filter(t=>t.date>='2026-04-01'&&t.date<'2026-05-01');
+  const total  = txns.reduce((s,t)=>s+t.amt,0);
+  const mtd    = mayTxns.reduce((s,t)=>s+t.amt,0);
+  const aprd   = aprTxns.reduce((s,t)=>s+t.amt,0);
+  const mtdChg = aprd ? ((mtd-aprd)/aprd*100).toFixed(1) : '0.0';
+  const totalBudget = PROPS.reduce((s,p)=>s+p.budget,0);
+  const budPct = (total/totalBudget*100).toFixed(1);
+
+  // Per-property totals
+  const propTotals = PROPS.map(p=>({
+    ...p,
+    spent: filteredTxns(p.id).reduce((s,t)=>s+t.amt,0)
+  })).sort((a,b)=>b.spent-a.spent);
+
+  // Monthly totals
+  const months=['2026-01','2026-02','2026-03','2026-04','2026-05'];
+  const mo_labels=['Jan','Feb','Mar','Apr','May'];
+  const monthly = months.map(m=>({
+    label: mo_labels[months.indexOf(m)],
+    v: TXNS.filter(t=>t.date.startsWith(m)).reduce((s,t)=>s+t.amt,0)
+  }));
+  const maxMo = Math.max(...monthly.map(m=>m.v));
+
+  // Recent 10 transactions
+  const recent = [...txns].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
+
+  document.getElementById('content-area').innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi-card kc-1">
+        <div class="kpi-label">Total Spend</div>
+        <div class="kpi-val">${fmt(total)}</div>
+        <div class="kpi-sub">${txns.length} transactions · ${rangeLabel()}</div>
+        <div class="kpi-trend nt">64.3% of annual budget</div>
+      </div>
+      <div class="kpi-card kc-2">
+        <div class="kpi-label">May 2026 (MTD)</div>
+        <div class="kpi-val">${fmt(mtd)}</div>
+        <div class="kpi-sub">${mayTxns.length} transactions this month</div>
+        <div class="kpi-trend ${+mtdChg>=0?'down':'up'}">${+mtdChg>=0?'↑':'↓'} ${Math.abs(+mtdChg)}% vs April</div>
+      </div>
+      <div class="kpi-card kc-3">
+        <div class="kpi-label">Properties</div>
+        <div class="kpi-val">5</div>
+        <div class="kpi-sub">PA · OH · NJ · Business</div>
+        <div class="kpi-trend nt">3 cards · 2 active projects</div>
+      </div>
+      <div class="kpi-card kc-4">
+        <div class="kpi-label">Budget Used</div>
+        <div class="kpi-val">${budPct}%</div>
+        <div class="kpi-sub">${fmt(total)} of ${fmt(totalBudget)} allocated</div>
+        <div class="kpi-trend nt">${fmt(totalBudget-total)} remaining</div>
+      </div>
+    </div>
+
+    <div class="g2 mb18">
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title">🏘️ Spend by Property</div>
+          <div class="card-badge">${rangeLabel()}</div>
+        </div>
+        <div class="card-body">
+          <div class="bar-chart">
+            ${propTotals.map(p=>{
+              const w=Math.round((p.spent/propTotals[0].spent)*100);
+              return `<div class="bar-row">
+                <div class="bar-lbl" title="${p.name}">
+                  <span class="pdot" style="background:${p.color}"></span>${p.name}
+                </div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:${w}%;background:${p.color}">
+                    ${w>18?`<span class="bar-pct">${pct(p.spent,propTotals[0].spent)}%</span>`:''}
+                  </div>
+                </div>
+                <div class="bar-amt">${fmt(p.spent)}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title">📈 Monthly Spend Trend</div>
+          <div class="card-badge">Jan – May 2026</div>
+        </div>
+        <div class="card-body">
+          <div class="trend-wrap">
+            ${monthly.map(m=>{
+              const h=Math.round((m.v/maxMo)*125);
+              return `<div class="trend-col">
+                <div class="trend-bar" style="height:${h}px">
+                  <div class="trend-tip">${fmt(m.v)}</div>
+                </div>
+                <div class="trend-mo">${m.label}</div>
+                <div class="trend-val">${fmt(m.v)}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb18">
+      <div class="card-hdr">
+        <div class="card-title">⚡ Recent Activity</div>
+        <div class="card-badge">Last 10 transactions</div>
+      </div>
+      <div class="card-body" style="padding-top:8px;padding-bottom:8px">
+        ${recent.map(t=>{
+          const pr=propById(t.prop);
+          return `<div class="feed-item">
+            <div class="feed-dot" style="background:${pr.color}"></div>
+            <div class="feed-body">
+              <div class="feed-title">${t.merchant}</div>
+              <div class="feed-sub">
+                <span class="tag ${pr.tagCls}">${propShort(t.prop)}</span>
+                &nbsp;<span class="tag ${catTagCls(t.cat)}">${catIcon(t.cat)} ${t.cat}</span>
+                &nbsp;${fmtDate(t.date)}
+              </div>
+            </div>
+            <div class="feed-amt">${fmt(t.amt)}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function rangeLabel(){
+  return {month:'May 2026',q:'Last 3 Months',ytd:'Jan–May 2026',all:'All Time'}[globalRange]||'YTD';
+}
+
+/* ─── PROPERTIES ───────────────────────────────────────────────── */
+function renderProperties(){
+  const html = PROPS.map(p=>{
+    const txns=filteredTxns(p.id);
+    const total=txns.reduce((s,t)=>s+t.amt,0);
+    const cats={};
+    txns.forEach(t=>{ cats[t.cat]=(cats[t.cat]||0)+t.amt; });
+    const topCats=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    const budPct=Math.round((total/p.budget)*100);
+    return `
+      <div class="prop-card" style="border-top-color:${p.color}" onclick="navigate('property-detail','${p.id}')">
+        <div class="prop-card-body">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
+            <span class="pdot" style="background:${p.color}"></span>
+            <div class="prop-card-name">${p.name}</div>
+          </div>
+          <div class="prop-card-city">${p.city}</div>
+          <div class="prop-card-amt">${fmt(total)}</div>
+          <div class="prop-card-meta">${txns.length} transactions · budget ${budPct}% used</div>
+          <div class="prop-card-cats">
+            ${topCats.map(([cat,amt])=>`
+              <span class="tag ${catTagCls(cat)}">${catIcon(cat)} ${cat}: ${fmt(amt)}</span>
+            `).join('')}
+          </div>
+          <div class="prop-view-btn">View Detail &rarr;</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const totals=PROPS.map(p=>filteredTxns(p.id).reduce((s,t)=>s+t.amt,0));
+  const grandTotal=totals.reduce((s,v)=>s+v,0);
+
+  document.getElementById('content-area').innerHTML = `
+    <div class="prop-grid">${html}</div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">📊 Portfolio Comparison</div>
+        <div class="card-badge">${rangeLabel()}</div>
+      </div>
+      <div class="card-body">
+        <div class="bar-chart">
+          ${PROPS.map((p,i)=>{
+            const spent=totals[i];
+            const w=grandTotal?Math.round((spent/grandTotal)*100):0;
+            const budPct=Math.round((spent/p.budget)*100);
+            const cls=budPct>=100?'r':budPct>=80?'a':'g';
+            return `<div class="bar-row">
+              <div class="bar-lbl">
+                <span class="pdot" style="background:${p.color}"></span>
+                <span title="${p.name}">${p.name}</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:${w}%;background:${p.color}">
+                  ${w>12?`<span class="bar-pct">${w}%</span>`:''}
+                </div>
+              </div>
+              <div class="bar-amt">${fmt(spent)}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ─── PROPERTY DETAIL ──────────────────────────────────────────── */
+function renderPropertyDetail(propId){
+  if(!propId) return;
+  const pr = propById(propId);
+  if(!pr) return;
+
+  const txns=filteredTxns(propId);
+  const total=txns.reduce((s,t)=>s+t.amt,0);
+
+  // Category breakdown
+  const cats={};
+  txns.forEach(t=>{ cats[t.cat]=(cats[t.cat]||0)+t.amt; });
+  const catEntries=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  const maxCat=catEntries.length?catEntries[0][1]:1;
+
+  // Monthly breakdown
+  const moKeys=['2026-01','2026-02','2026-03','2026-04','2026-05'];
+  const moLabels=['Jan','Feb','Mar','Apr','May'];
+  const monthly=moKeys.map((k,i)=>({
+    label:moLabels[i],
+    v:TXNS.filter(t=>t.prop===propId&&t.date.startsWith(k)).reduce((s,t)=>s+t.amt,0)
+  }));
+  const maxMo=Math.max(...monthly.map(m=>m.v),1);
+
+  // Filtered txns by tab
+  const tabTxns = propDetailTab==='all' ? txns
+    : txns.filter(t=>t.cat.toLowerCase()===propDetailTab.toLowerCase());
+
+  const catTabs = ['all',...Object.keys(cats).sort()];
+
+  const budPct = Math.round((total/pr.budget)*100);
+  const budCls = budPct>=100?'r':budPct>=80?'a':'g';
+
+  document.getElementById('content-area').innerHTML = `
+    <div style="margin-bottom:16px">
+      <button class="btn-back" onclick="navigate('properties')">&#8592; Properties</button>
+    </div>
+
+    <div class="det-header">
+      <div class="det-hdr-left">
+        <div class="det-color-bar" style="background:${pr.color}"></div>
+        <div>
+          <div class="det-name">${pr.name}</div>
+          <div class="det-sub">${pr.city} &nbsp;&middot;&nbsp; ${txns.length} transactions &nbsp;&middot;&nbsp; <span style="font-weight:700;color:var(--${budCls==='r'?'red':budCls==='a'?'amber':'green'})">${budPct}% of ${fmt(pr.budget)} budget used</span></div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="det-total-label">Total Spend · ${rangeLabel()}</div>
+        <div class="det-total" style="color:${pr.color}">${fmt(total)}</div>
+      </div>
+    </div>
+
+    <div class="g3 mb18">
+      ${catEntries.map(([cat,amt])=>`
+        <div class="kpi-card" style="border-color:${catColor(cat)}">
+          <div class="kpi-label">${catIcon(cat)} ${cat}</div>
+          <div class="kpi-val" style="font-size:20px">${fmt(amt)}</div>
+          <div class="kpi-sub">${pct(amt,total)}% of total · ${txns.filter(t=>t.cat===cat).length} txns</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="g2 mb18">
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title">📈 Monthly Spend</div>
+          <div class="card-badge">${pr.name}</div>
+        </div>
+        <div class="card-body">
+          <div class="trend-wrap" id="det-trend-chart">
+            ${monthly.map(m=>{
+              const h=Math.round((m.v/maxMo)*125);
+              return `<div class="trend-col">
+                <div class="trend-bar" style="height:${h}px;background:${pr.color}80">
+                  <div class="trend-tip">${fmt(m.v)}</div>
+                </div>
+                <div class="trend-mo">${m.label}</div>
+                <div class="trend-val">${fmt(m.v)}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title">📊 By Category</div>
+        </div>
+        <div class="card-body">
+          <div class="bar-chart">
+            ${catEntries.map(([cat,amt])=>`
+              <div class="bar-row">
+                <div class="bar-lbl">${catIcon(cat)} ${cat}</div>
+                <div class="bar-track">
+                  <div class="bar-fill" style="width:${Math.round((amt/maxCat)*100)}%;background:${catColor(cat)}">
+                    ${Math.round((amt/maxCat)*100)>20?`<span class="bar-pct">${pct(amt,total)}%</span>`:''}
+                  </div>
+                </div>
+                <div class="bar-amt">${fmt(amt)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">📋 Transactions</div>
+        <div class="card-badge">${tabTxns.length} shown</div>
+      </div>
+      <div class="tabs" style="padding:0 18px;border-bottom:none;border-top:1px solid var(--g100)">
+        ${catTabs.map(c=>`
+          <div class="tab ${propDetailTab===c?'active':''}"
+            onclick="setPropTab('${c}','${propId}')">${c==='all'?'All':catIcon(c)+' '+c}</div>
+        `).join('')}
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Date</th>
+            <th>Merchant</th>
+            <th>Category</th>
+            <th>Notes</th>
+            <th>Card</th>
+            <th class="r">Amount</th>
+          </tr></thead>
+          <tbody>
+            ${tabTxns.sort((a,b)=>b.date.localeCompare(a.date)).map(t=>`
+              <tr>
+                <td class="td-m" style="white-space:nowrap">${fmtDate(t.date)}</td>
+                <td class="td-s">${t.merchant}</td>
+                <td><span class="tag ${catTagCls(t.cat)}">${catIcon(t.cat)} ${t.cat}</span></td>
+                <td class="td-m">${t.notes||'—'}</td>
+                <td class="td-m">${t.card}</td>
+                <td class="r td-n">${fmt(t.amt)}</td>
+              </tr>
+            `).join('')}
+            <tr class="tr-total">
+              <td colspan="5" style="font-size:11px">Total</td>
+              <td class="r">${fmt(tabTxns.reduce((s,t)=>s+t.amt,0))}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function setPropTab(tab, propId){
+  propDetailTab=tab;
+  renderPropertyDetail(propId);
+}
+
+/* ─── TRANSACTIONS ─────────────────────────────────────────────── */
+function renderTransactions(){
+  let txns = filteredTxns();
+
+  // Apply local filters
+  if(txnSearch){
+    const q=txnSearch.toLowerCase();
+    txns=txns.filter(t=>
+      t.merchant.toLowerCase().includes(q)||
+      (t.notes||'').toLowerCase().includes(q)||
+      t.cat.toLowerCase().includes(q)
+    );
+  }
+  if(txnPropFilter!=='all') txns=txns.filter(t=>t.prop===txnPropFilter);
+  if(txnCatFilter!=='all')  txns=txns.filter(t=>t.cat===txnCatFilter);
+
+  // Sort
+  const dir = txnSortDir==='asc'?1:-1;
+  txns.sort((a,b)=>{
+    if(txnSortCol==='date')     return dir*(a.date.localeCompare(b.date));
+    if(txnSortCol==='merchant') return dir*(a.merchant.localeCompare(b.merchant));
+    if(txnSortCol==='amount')   return dir*(a.amt-b.amt);
+    if(txnSortCol==='cat')      return dir*(a.cat.localeCompare(b.cat));
+    if(txnSortCol==='prop')     return dir*(a.prop.localeCompare(b.prop));
+    return 0;
+  });
+
+  const total=txns.reduce((s,t)=>s+t.amt,0);
+
+  function thCls(col){ return txnSortCol===col?' sort-'+txnSortDir:''; }
+
+  document.getElementById('content-area').innerHTML = `
+    <div class="filters-bar">
+      <input class="filter-inp" type="search" id="txn-search" placeholder="Search merchant, notes, category…"
+        value="${txnSearch.replace(/"/g,'&quot;')}" oninput="txnSearch=this.value;renderTransactions()">
+      <span class="filter-lbl">Property:</span>
+      <select class="filter-sel" id="txn-prop" onchange="txnPropFilter=this.value;renderTransactions()">
+        <option value="all" ${txnPropFilter==='all'?'selected':''}>All Properties</option>
+        ${PROPS.map(p=>`<option value="${p.id}" ${txnPropFilter===p.id?'selected':''}>${p.name}</option>`).join('')}
+      </select>
+      <span class="filter-lbl">Category:</span>
+      <select class="filter-sel" id="txn-cat" onchange="txnCatFilter=this.value;renderTransactions()">
+        <option value="all" ${txnCatFilter==='all'?'selected':''}>All Categories</option>
+        ${Object.keys(CAT_BUDGETS).map(c=>`<option value="${c}" ${txnCatFilter===c?'selected':''}>${catIcon(c)} ${c}</option>`).join('')}
+      </select>
+      <button class="btn-reset" onclick="txnSearch='';txnPropFilter='all';txnCatFilter='all';renderTransactions()">Reset</button>
+      <span class="txn-count">${txns.length} of ${filteredTxns().length} transactions &nbsp;·&nbsp; ${fmt(total)}</span>
+    </div>
+
+    <div class="card">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th class="${thCls('date')}" onclick="txnSort('date')">Date</th>
+            <th class="${thCls('merchant')}" onclick="txnSort('merchant')">Merchant</th>
+            <th class="${thCls('prop')}" onclick="txnSort('prop')">Property</th>
+            <th class="${thCls('cat')}" onclick="txnSort('cat')">Category</th>
+            <th>Notes</th>
+            <th>Card</th>
+            <th class="r${thCls('amount')}" onclick="txnSort('amount')">Amount</th>
+          </tr></thead>
+          <tbody>
+            ${txns.length===0
+              ? `<tr><td colspan="7"><div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">No transactions match</div><div class="empty-sub">Try adjusting your filters or date range.</div></div></td></tr>`
+              : txns.map(t=>{
+                const pr=propById(t.prop);
+                return `<tr>
+                  <td class="td-m" style="white-space:nowrap">${fmtDate(t.date)}</td>
+                  <td class="td-s">${t.merchant}</td>
+                  <td><span class="tag ${pr.tagCls}"><span class="pdot" style="background:${pr.color};margin-right:2px"></span>${propShort(t.prop)}</span></td>
+                  <td><span class="tag ${catTagCls(t.cat)}">${catIcon(t.cat)} ${t.cat}</span></td>
+                  <td class="td-m">${t.notes||'—'}</td>
+                  <td class="td-m">${t.card}</td>
+                  <td class="r td-n">${fmt(t.amt)}</td>
+                </tr>`;
+              }).join('')
+            }
+            ${txns.length>0?`<tr class="tr-total">
+              <td colspan="6" style="font-size:11px">Total (${txns.length} transactions)</td>
+              <td class="r">${fmt(total)}</td>
+            </tr>`:''}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function txnSort(col){
+  if(txnSortCol===col) txnSortDir=txnSortDir==='asc'?'desc':'asc';
+  else { txnSortCol=col; txnSortDir='desc'; }
   renderTransactions();
-  renderBudget();
-  renderCardholders();
-  renderCategories();
 }
 
-/* Property horizontal bars */
-function renderPropertyChart() {
-  const maxAmt = Math.max(...DATA.properties.map(p => p.amount));
-  $('prop-chart').innerHTML = DATA.properties.map(p => {
-    const w = Math.round((p.amount / maxAmt) * 100);
-    const pctVal = pct(p.amount, maxAmt);
-    return `<div class="bar-row">
-      <div class="bar-label" title="${p.name}">${p.name}</div>
-      <div class="bar-track">
-        <div class="bar-fill" style="width:${w}%;background:${p.color}">
-          ${w > 20 ? `<span class="bar-pct">${pctVal}%</span>` : ''}
+/* ─── BUDGET ────────────────────────────────────────────────────── */
+function renderBudget(){
+  const txns=filteredTxns();
+  const grandTotal=txns.reduce((s,t)=>s+t.amt,0);
+  const totalBudget=PROPS.reduce((s,p)=>s+p.budget,0);
+
+  // Per-property
+  const propData=PROPS.map(p=>{
+    const spent=filteredTxns(p.id).reduce((s,t)=>s+t.amt,0);
+    return { ...p, spent };
+  });
+  const overBudgetProps=propData.filter(p=>p.spent>p.budget);
+
+  // Per-category
+  const catData=Object.entries(CAT_BUDGETS).map(([cat,allocated])=>{
+    const spent=txns.filter(t=>t.cat===cat).reduce((s,t)=>s+t.amt,0);
+    return { cat, allocated, spent };
+  });
+  const overBudgetCats=catData.filter(c=>c.spent>c.allocated);
+
+  function budBar(spent,allocated){
+    const p=Math.min(Math.round((spent/allocated)*100),100);
+    const cls=p>=100?'r':p>=80?'a':'g';
+    const rem=allocated-spent;
+    return `
+      <div class="bdg-top">
+        <span class="bdg-name">${''}</span>
+        <span class="bdg-amts">${fmt(spent)} spent of ${fmt(allocated)}</span>
+      </div>
+      <div class="bdg-track"><div class="bdg-fill ${cls}" style="width:${p}%"></div></div>
+      <div class="bdg-bot">
+        <span class="bdg-pct ${cls}">${p}% used</span>
+        <span class="bdg-rem">${rem>=0?fmt(rem)+' left':'Over by '+fmt(-rem)}</span>
+      </div>`;
+  }
+
+  document.getElementById('content-area').innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi-card kc-1">
+        <div class="kpi-label">Total Spent</div>
+        <div class="kpi-val">${fmt(grandTotal)}</div>
+        <div class="kpi-sub">${rangeLabel()}</div>
+        <div class="kpi-trend nt">${pct(grandTotal,totalBudget)}% of total budget</div>
+      </div>
+      <div class="kpi-card kc-2">
+        <div class="kpi-label">Total Budget</div>
+        <div class="kpi-val">${fmt(totalBudget)}</div>
+        <div class="kpi-sub">Across 5 properties</div>
+        <div class="kpi-trend nt">${fmt(totalBudget-grandTotal)} remaining</div>
+      </div>
+      <div class="kpi-card kc-3">
+        <div class="kpi-label">Over Budget</div>
+        <div class="kpi-val">${overBudgetProps.length+overBudgetCats.length}</div>
+        <div class="kpi-sub">${overBudgetProps.length} properties, ${overBudgetCats.length} categories</div>
+        ${overBudgetProps.length+overBudgetCats.length>0
+          ? `<div class="kpi-trend down">⚠ Action required</div>`
+          : `<div class="kpi-trend up">✓ All within budget</div>`}
+      </div>
+      <div class="kpi-card kc-4">
+        <div class="kpi-label">Largest Budget</div>
+        <div class="kpi-val">${propData.sort((a,b)=>b.spent/b.budget-a.spent/a.budget)[0].name.split(' ')[0]}</div>
+        <div class="kpi-sub">Highest utilisation rate</div>
+        <div class="kpi-trend nt">${Math.round(propData[0].spent/propData[0].budget*100)}% used</div>
+      </div>
+    </div>
+
+    ${overBudgetProps.map(p=>`<div class="alert-r">⚠️ <strong>${p.name}</strong> is over budget — ${fmt(p.spent)} spent vs ${fmt(p.budget)} allocated (${Math.round(p.spent/p.budget*100)}%)</div>`).join('')}
+    ${overBudgetCats.map(c=>`<div class="alert-a">⚠️ <strong>${catIcon(c.cat)} ${c.cat}</strong> category is over budget — ${fmt(c.spent)} spent vs ${fmt(c.allocated)} allocated</div>`).join('')}
+
+    <div class="g2 mb18">
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title">🏘️ Budget by Property</div>
+          <div class="card-badge">${rangeLabel()}</div>
+        </div>
+        <div class="card-body">
+          ${PROPS.map(p=>{
+            const spent=filteredTxns(p.id).reduce((s,t)=>s+t.amt,0);
+            const pp=Math.min(Math.round((spent/p.budget)*100),100);
+            const cls=pp>=100?'r':pp>=80?'a':'g';
+            const rem=p.budget-spent;
+            return `<div class="bdg-item">
+              <div class="bdg-top">
+                <span class="bdg-name"><span class="pdot" style="background:${p.color}"></span> ${p.name}</span>
+                <span class="bdg-amts">${fmt(spent)} / ${fmt(p.budget)}</span>
+              </div>
+              <div class="bdg-track"><div class="bdg-fill ${cls}" style="width:${pp}%"></div></div>
+              <div class="bdg-bot">
+                <span class="bdg-pct ${cls}">${pp}% used</span>
+                <span class="bdg-rem">${rem>=0?fmt(rem)+' remaining':'Over by '+fmt(-rem)}</span>
+              </div>
+            </div>`;
+          }).join('')}
         </div>
       </div>
-      <div class="bar-amount">${fmt(p.amount)}</div>
-    </div>`;
-  }).join('');
-}
 
-/* Monthly trend */
-function renderTrendChart() {
-  const maxV = Math.max(...DATA.monthly.map(m => m.v));
-  $('trend-chart').innerHTML = DATA.monthly.map(m => {
-    const h = Math.round((m.v / maxV) * 130);
-    return `<div class="trend-col">
-      <div class="trend-bar" style="height:${h}px">
-        <div class="tip">${fmt(m.v)}</div>
-      </div>
-      <div class="trend-month">${m.m}</div>
-      <div class="trend-val">${fmt(m.v)}</div>
-    </div>`;
-  }).join('');
-}
-
-/* Vendors table */
-function renderVendors() {
-  const total = DATA.vendors.reduce((s, v) => s + v.amt, 0);
-  const maxAmt = DATA.vendors[0].amt;
-  $('vendor-tbody').innerHTML = DATA.vendors.map((v, i) => {
-    const p = ((v.amt / total) * 100).toFixed(1);
-    const barW = Math.round((v.amt / maxAmt) * 80);
-    return `<tr>
-      <td><span class="rank">${i + 1}</span></td>
-      <td class="td-strong">${v.name}</td>
-      <td><span class="tag tag-cat">${v.cat}</span></td>
-      <td class="r td-muted">${v.txns}</td>
-      <td class="r td-num">${fmt(v.amt)}</td>
-      <td class="r">
-        <div class="v-bar-wrap">
-          <div class="v-bar-track"><div class="v-bar-fill" style="width:${barW}px"></div></div>
-          <span class="v-pct">${p}%</span>
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title">📊 Budget by Category</div>
+          <div class="card-badge">${rangeLabel()}</div>
         </div>
-      </td>
-    </tr>`;
-  }).join('') + `<tr class="totals-row">
-    <td></td>
-    <td>All Vendors (shown)</td>
-    <td></td>
-    <td class="r">${DATA.vendors.reduce((s,v)=>s+v.txns,0)}</td>
-    <td class="r">${fmt(total)}</td>
-    <td class="r">100%</td>
-  </tr>`;
-}
-
-/* Transactions table */
-function renderTransactions() {
-  $('txn-tbody').innerHTML = DATA.transactions.map(t => `<tr>
-    <td class="td-muted" style="white-space:nowrap">${t.dt}</td>
-    <td class="td-strong">${t.merchant}</td>
-    <td><span class="tag tag-cat">${t.cat}</span></td>
-    <td><span class="tag ${propTag(t.prop)}">${t.prop}</span></td>
-    <td class="r td-num">${fmt(t.amt)}</td>
-    <td class="td-muted">${t.ch}</td>
-  </tr>`).join('');
-}
-
-/* Budget progress bars */
-function renderBudget() {
-  $('budget-section').innerHTML = DATA.budgets.map(b => {
-    const p = Math.round((b.spent / b.allocated) * 100);
-    const cls = p >= 100 ? 'r' : p >= 80 ? 'a' : 'g';
-    const clsLabel = p >= 100 ? 'r' : p >= 80 ? 'a' : 'g';
-    const rem = b.allocated - b.spent;
-    const barW = Math.min(p, 100);
-    return `<div class="budget-item">
-      <div class="budget-top">
-        <div class="budget-name">${b.name}</div>
-        <div class="budget-amounts">${fmt(b.spent)} spent of ${fmt(b.allocated)}</div>
+        <div class="card-body">
+          ${catData.map(c=>{
+            const pp=Math.min(Math.round((c.spent/c.allocated)*100),100);
+            const cls=pp>=100?'r':pp>=80?'a':'g';
+            const rem=c.allocated-c.spent;
+            return `<div class="bdg-item">
+              <div class="bdg-top">
+                <span class="bdg-name">${catIcon(c.cat)} ${c.cat}</span>
+                <span class="bdg-amts">${fmt(c.spent)} / ${fmt(c.allocated)}</span>
+              </div>
+              <div class="bdg-track"><div class="bdg-fill ${cls}" style="width:${pp}%"></div></div>
+              <div class="bdg-bot">
+                <span class="bdg-pct ${cls}">${pp}% used</span>
+                <span class="bdg-rem">${rem>=0?fmt(rem)+' remaining':'Over by '+fmt(-rem)}</span>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
       </div>
-      <div class="budget-track">
-        <div class="budget-fill ${cls}" style="width:${barW}%"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">📋 Full Budget Summary</div>
+        <div class="card-badge">All properties</div>
       </div>
-      <div class="budget-bottom">
-        <div class="budget-pct ${clsLabel}">${p}% used</div>
-        <div class="budget-rem">${rem >= 0 ? fmt(rem) + ' remaining' : 'Over by ' + fmt(Math.abs(rem))}</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Property</th>
+            <th class="r">Budget</th>
+            <th class="r">Spent</th>
+            <th class="r">Remaining</th>
+            <th class="r">% Used</th>
+            <th>Status</th>
+          </tr></thead>
+          <tbody>
+            ${PROPS.map(p=>{
+              const spent=filteredTxns(p.id).reduce((s,t)=>s+t.amt,0);
+              const pp=Math.round((spent/p.budget)*100);
+              const rem=p.budget-spent;
+              const cls=pp>=100?'r':pp>=80?'a':'g';
+              const badge=pp>=100?'Over Budget':pp>=80?'Watch':'On Track';
+              const badgeCls=pp>=100?'tl':pp>=80?'tu':'tp';
+              return `<tr>
+                <td><span class="pdot" style="background:${p.color}"></span> <span class="td-s">${p.name}</span></td>
+                <td class="r td-m">${fmt(p.budget)}</td>
+                <td class="r td-n">${fmt(spent)}</td>
+                <td class="r ${rem<0?'td-n':'td-m'}" style="${rem<0?'color:var(--red)':''}">${rem>=0?fmt(rem):'-'+fmt(-rem)}</td>
+                <td class="r"><span class="bdg-pct ${cls}">${pp}%</span></td>
+                <td><span class="tag ${badgeCls}">${badge}</span></td>
+              </tr>`;
+            }).join('')}
+            <tr class="tr-total">
+              <td>Portfolio Total</td>
+              <td class="r">${fmt(totalBudget)}</td>
+              <td class="r">${fmt(grandTotal)}</td>
+              <td class="r">${fmt(totalBudget-grandTotal)}</td>
+              <td class="r">${pct(grandTotal,totalBudget)}%</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>`;
-  }).join('');
+    </div>
+  `;
 }
 
-/* Cardholders table */
-function renderCardholders() {
-  const total = DATA.cardholders.reduce((s, c) => s + c.amt, 0);
-  $('ch-tbody').innerHTML = DATA.cardholders.map(c => {
-    const ini = c.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    const p = ((c.amt / total) * 100).toFixed(1);
-    return `<tr>
-      <td style="white-space:nowrap">
-        <span class="ch-av">${ini}</span>${c.name}
-      </td>
-      <td class="td-muted">···${c.last4}</td>
-      <td class="r td-muted">${c.txns}</td>
-      <td class="r td-num">${fmt(c.amt)} <span class="td-muted">(${p}%)</span></td>
-      <td class="td-muted">${c.top}</td>
-    </tr>`;
-  }).join('') + `<tr class="totals-row">
-    <td colspan="3" style="font-weight:800">Total</td>
-    <td class="r td-num">${fmt(total)}</td>
-    <td></td>
-  </tr>`;
+/* ─── REPORTS ───────────────────────────────────────────────────── */
+function renderReports(){
+  document.getElementById('content-area').innerHTML = `
+    <div class="rp-placeholder">
+      <div class="rp-icon">📄</div>
+      <div class="rp-title">Monthly Reports</div>
+      <div class="rp-sub">
+        Automated monthly PDF expense reports for each property will appear here.
+        Each report includes a full transaction log, category breakdown, budget comparison, and trend analysis —
+        ready to share with investors or accountants.
+      </div>
+      <span class="rp-coming">🚧 Coming Soon</span>
+    </div>
+
+    <div class="g2" style="margin-top:16px">
+      <div class="card">
+        <div class="card-hdr"><div class="card-title">📅 Planned Report Types</div></div>
+        <div class="card-body">
+          <div class="cat-row"><div class="cat-lbl">📊 Monthly Spend Summary</div><span class="tag tp">Planned</span></div>
+          <div class="cat-row"><div class="cat-lbl">🏘️ Per-Property Report</div><span class="tag tp">Planned</span></div>
+          <div class="cat-row"><div class="cat-lbl">🎯 Budget vs Actual</div><span class="tag tp">Planned</span></div>
+          <div class="cat-row"><div class="cat-lbl">📈 YTD Trend Analysis</div><span class="tag tp">Planned</span></div>
+          <div class="cat-row"><div class="cat-lbl">💰 Tax Prep Export</div><span class="tag tu">Roadmap</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div class="card-title">📬 Report Delivery</div></div>
+        <div class="card-body">
+          <div class="cat-row" style="margin-bottom:12px"><div class="cat-lbl">Email delivery</div><span class="tag tp">✓ Supported</span></div>
+          <div class="cat-row" style="margin-bottom:12px"><div class="cat-lbl">PDF download</div><span class="tag tp">✓ Supported</span></div>
+          <div class="cat-row" style="margin-bottom:12px"><div class="cat-lbl">Monthly auto-send</div><span class="tag tp">✓ Supported</span></div>
+          <div class="cat-row"><div class="cat-lbl">Slack integration</div><span class="tag tu">Roadmap</span></div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
-/* Category mini bars */
-function renderCategories() {
-  const maxAmt = Math.max(...DATA.categories.map(c => c.amt));
-  $('cat-chart').innerHTML = DATA.categories.map(c => {
-    const w = Math.round((c.amt / maxAmt) * 100);
-    return `<div class="cat-row">
-      <div class="cat-label" title="${c.name}">${c.name}</div>
-      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${w}%"></div></div>
-      <div class="cat-amount">${fmt(c.amt)}</div>
-    </div>`;
-  }).join('');
+/* ─── BOOT ──────────────────────────────────────────────────────── */
+function bootApp(){
+  show('app','block');
+  navigate('overview');
 }
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  if(sessionStorage.getItem('rp_ok')==='1'){
+    show('screen-login','none');
+    bootApp();
+  }
+  document.getElementById('l-pass').addEventListener('keydown',e=>{ if(e.key==='Enter')doLogin(); });
+  document.getElementById('l-user').addEventListener('keydown',e=>{ if(e.key==='Enter')document.getElementById('l-pass').focus(); });
+});
 </script>
 </body>
 </html>
