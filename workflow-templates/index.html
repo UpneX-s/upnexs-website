@@ -77,50 +77,156 @@ body {
   z-index: 1;
 }
 
-/* ─── PM TABS ─────────────────────────────────────────────────── */
-.pm-tabs-wrap {
-  background: #0d1b2a;
-  border-bottom: 1px solid #1a2e4a;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* ─── PM SOFTWARE SELECTOR ────────────────────────────────────── */
+.pm-selector-wrap {
+  background: white;
+  border-top: 1px solid #e8edf5;
+  border-bottom: 2px solid #e8edf5;
+  padding: 22px 20px 18px;
 }
-.pm-tabs {
+.pm-selector-title {
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: #9ab8d0;
+  margin-bottom: 14px;
+}
+.pm-selector {
   display: flex;
   justify-content: center;
-  max-width: 900px;
+  gap: 12px;
+  flex-wrap: wrap;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 0 16px;
-  gap: 2px;
-  overflow-x: auto;
 }
-.pm-tab {
-  padding: 14px 28px;
+.pm-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 16px 14px 14px;
+  border-radius: 14px;
+  border: 2px solid #e8edf5;
+  background: #fafbfd;
   cursor: pointer;
-  color: #4a7090;
-  font-size: 13px;
-  font-weight: 600;
-  border-bottom: 3px solid transparent;
-  transition: all 0.2s;
-  white-space: nowrap;
+  transition: all 0.22s;
+  min-width: 130px;
+  flex: 1;
+  max-width: 188px;
   user-select: none;
+  position: relative;
 }
-.pm-tab.active {
+.pm-card:hover:not(.pm-disabled) {
+  border-color: #93c5fd;
+  background: #f0f7ff;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.10);
+  transform: translateY(-2px);
+}
+.pm-card.active {
+  border-color: #2563EB;
+  background: linear-gradient(150deg, #eff6ff 0%, #f0f4ff 100%);
+  box-shadow: 0 6px 22px rgba(37,99,235,0.16);
+  transform: translateY(-2px);
+}
+.pm-card.pm-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.pm-card.pm-disabled:hover { transform: none; box-shadow: none; }
+.pm-active-check {
+  position: absolute;
+  top: 9px;
+  right: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2563EB;
   color: white;
-  border-bottom-color: #4a9eff;
-  background: rgba(74,158,255,0.06);
+  font-size: 10px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
-.pm-tab.coming-soon { cursor: not-allowed; opacity: 0.45; }
+.pm-card.active .pm-active-check { opacity: 1; }
+.pm-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+}
+.pm-card.active .pm-icon { border-color: rgba(37,99,235,0.2); }
+.pm-sw-name {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #1a2e4a;
+  letter-spacing: -0.2px;
+}
+.pm-card.active .pm-sw-name { color: #1d4ed8; }
+.pm-wf-count {
+  font-size: 11px;
+  color: #9ab8d0;
+  font-weight: 500;
+}
+.pm-card.active .pm-wf-count { color: #4a9eff; font-weight: 600; }
 .cs-badge {
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 700;
-  background: #1e3a5f;
-  color: #4a7090;
-  padding: 2px 6px;
-  border-radius: 8px;
-  margin-left: 6px;
+  background: #f1f5f9;
+  color: #94a3b8;
+  padding: 3px 8px;
+  border-radius: 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+/* Tooltip for disabled card */
+.pm-card.pm-disabled::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a2e4a;
+  color: #8bb8d8;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: 8px;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 300;
+  border: 1px solid #2a4060;
+  width: 200px;
+  text-align: center;
+  line-height: 1.4;
+}
+.pm-card.pm-disabled:hover::after { opacity: 1; }
+.pm-selector-sub {
+  text-align: center;
+  font-size: 11.5px;
+  color: #b0c8dc;
+  margin-top: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+@media (max-width: 560px) {
+  .pm-selector { gap: 8px; }
+  .pm-card { min-width: 100px; max-width: none; padding: 12px 10px 10px; }
+  .pm-icon { width: 42px; height: 42px; font-size: 13px; border-radius: 10px; }
+  .pm-sw-name { font-size: 12px; }
 }
 
 /* ─── CONTENT ─────────────────────────────────────────────────── */
@@ -580,45 +686,7 @@ body {
   line-height: 1.5;
 }
 
-/* ─── PM TABS SUB-LINE ────────────────────────────────────────── */
-.pm-tabs-sub {
-  text-align: center;
-  font-size: 11px;
-  color: #2e4a66;
-  padding: 5px 16px 7px;
-  letter-spacing: 0.2px;
-}
-
-/* ─── COMING SOON TOOLTIP ─────────────────────────────────────── */
-.pm-tab.coming-soon {
-  position: relative;
-}
-.pm-tab.coming-soon::after {
-  content: attr(data-tip);
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1a2e4a;
-  color: #8bb8d8;
-  font-size: 11px;
-  font-weight: 500;
-  padding: 7px 13px;
-  border-radius: 8px;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.15s;
-  z-index: 300;
-  border: 1px solid #2a4060;
-  max-width: 240px;
-  white-space: normal;
-  text-align: center;
-  line-height: 1.4;
-}
-.pm-tab.coming-soon:hover::after {
-  opacity: 1;
-}
+/* (pm-tabs-sub and old coming-soon tooltip superseded by .pm-card styles) */
 
 /* ─── UTILITY DOMAIN ──────────────────────────────────────────── */
 .utility-divider {
@@ -695,7 +763,7 @@ body {
   .dp-grid { grid-template-columns: 1fr; }
   .domain-header { padding: 14px 16px; gap: 10px; }
   .domain-icon-wrap { width: 38px; height: 38px; font-size: 17px; }
-  .pm-tab { padding: 12px 18px; font-size: 12px; }
+  .pm-sw-name { font-size: 12px; }
 }
 @media (max-width: 440px) {
   .stats-bar { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -747,15 +815,41 @@ body {
   </div>
 </div>
 
-<!-- ═══ PM TABS ═══ -->
-<div class="pm-tabs-wrap">
-  <div class="pm-tabs">
-    <div class="pm-tab active" onclick="selectPM(this, 'appfolio')">AppFolio</div>
-    <div class="pm-tab" onclick="selectPM(this, 'buildium')">Buildium</div>
-    <div class="pm-tab" onclick="selectPM(this, 'propertyware')">PropertyWare</div>
-    <div class="pm-tab coming-soon" data-tip="More property management software coming soon — and more workflows with it.">Rent Manager <span class="cs-badge">Soon</span></div>
+<!-- ═══ PM SELECTOR ═══ -->
+<div class="pm-selector-wrap">
+  <div class="pm-selector-title">Select your property management software</div>
+  <div class="pm-selector">
+
+    <div class="pm-card active" onclick="selectPM(this, 'appfolio')">
+      <div class="pm-active-check">✓</div>
+      <div class="pm-icon" style="background:#dbeafe;color:#1d4ed8;border-color:#bfdbfe;">AF</div>
+      <div class="pm-sw-name">AppFolio</div>
+      <div class="pm-wf-count" id="pc-appfolio">loading…</div>
+    </div>
+
+    <div class="pm-card" onclick="selectPM(this, 'buildium')">
+      <div class="pm-active-check">✓</div>
+      <div class="pm-icon" style="background:#dcfce7;color:#15803d;border-color:#bbf7d0;">BU</div>
+      <div class="pm-sw-name">Buildium</div>
+      <div class="pm-wf-count" id="pc-buildium">loading…</div>
+    </div>
+
+    <div class="pm-card" onclick="selectPM(this, 'propertyware')">
+      <div class="pm-active-check">✓</div>
+      <div class="pm-icon" style="background:#ede9fe;color:#7c3aed;border-color:#ddd6fe;">PW</div>
+      <div class="pm-sw-name">PropertyWare</div>
+      <div class="pm-wf-count" id="pc-propertyware">loading…</div>
+    </div>
+
+    <div class="pm-card pm-disabled" data-tip="More property management software coming soon — and more workflows with it.">
+      <div class="pm-active-check" style="visibility:hidden">✓</div>
+      <div class="pm-icon" style="background:#f1f5f9;color:#94a3b8;">RM</div>
+      <div class="pm-sw-name" style="color:#94a3b8;">Rent Manager</div>
+      <div class="pm-wf-count"><span class="cs-badge">Coming Soon</span></div>
+    </div>
+
   </div>
-  <div class="pm-tabs-sub">More PM software integrations in development &mdash; Rent Manager, Yardi, and others coming soon.</div>
+  <div class="pm-selector-sub">More integrations in development — Yardi, RealPage, and others coming soon.</div>
 </div>
 
 <!-- ═══ MAIN CONTENT ═══ -->
@@ -1712,12 +1806,21 @@ let currentPM = 'appfolio';
 // ════════════════════════════════════════════════════════════
 
 function selectPM(tab, pmKey) {
-  document.querySelectorAll('.pm-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.pm-card').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
   currentPM = pmKey || 'appfolio';
   renderStats();
   renderSectionLabel();
   renderDomains();
+}
+
+function renderPMCounts() {
+  Object.entries(PM_CATALOG).forEach(([key, cat]) => {
+    const el = document.getElementById(`pc-${key}`);
+    if (!el) return;
+    const total = cat.domains.reduce((s, d) => s + d.workflows.length, 0);
+    el.textContent = `${total} workflows`;
+  });
 }
 
 function toggleDomain(id) {
@@ -1893,6 +1996,7 @@ function renderDomains() {
 }
 
 // ── INIT ──────────────────────────────────────────────────────
+renderPMCounts();
 renderStats();
 renderSectionLabel();
 renderDomains();
