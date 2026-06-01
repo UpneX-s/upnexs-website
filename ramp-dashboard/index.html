@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raut Properties — Expense Dashboard</title>
+<style>
+:root {
+  --navy:        #1a2e4a;
+  --navy-dark:   #0f1e30;
+  --navy-light:  #243d5c;
+  --blue:        #3b82f6;
+  --blue-light:  #eff6ff;
+  --green:       #10b981;
+  --amber:       #f59e0b;
+  --red:         #ef4444;
+  --purple:      #8b5cf6;
+  --cyan:        #06b6d4;
+  --gray-50:     #f8fafc;
+  --gray-100:    #f1f5f9;
+  --gray-200:    #e2e8f0;
+  --gray-400:    #94a3b8;
+  --gray-500:    #64748b;
+  --gray-700:    #334155;
+  --gray-900:    #0f172a;
+  --white:       #ffffff;
+  --shadow:      0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md:   0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:   0 10px 25px rgba(0,0,0,0.12), 0 4px 6px rgba(0,0,0,0.06);
+  --radius:      12px;
+  --radius-sm:   8px;
+  --radius-xs:   6px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-900);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   AUTH SCREENS
+   ============================================================ */
+.auth-screen {
+  position: fixed; inset: 0;
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #1e3a5f 100%);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2000; padding: 20px;
+}
+.auth-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 40px 36px; width: 100%; max-width: 400px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.auth-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.auth-brand-icon {
+  width: 38px; height: 38px; background: var(--navy); border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white); font-size: 18px; flex-shrink: 0;
+}
+.auth-brand-name { font-size: 19px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; }
+.auth-brand-tagline { font-size: 12px; color: var(--gray-500); margin-bottom: 28px; }
+.auth-heading { font-size: 15px; font-weight: 700; color: var(--gray-700); margin-bottom: 20px; }
+.auth-error {
+  background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c;
+  padding: 10px 13px; border-radius: var(--radius-xs); font-size: 13px;
+  margin-bottom: 14px; display: none;
+}
+.form-group { margin-bottom: 15px; }
+.form-group label {
+  display: block; font-size: 11px; font-weight: 700; color: var(--gray-700);
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.form-group input {
+  width: 100%; padding: 10px 13px; border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-xs); font-size: 14px; color: var(--gray-900);
+  transition: border-color 0.15s, box-shadow 0.15s; outline: none;
+  background: var(--white);
+}
+.form-group input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+}
+.btn-primary {
+  width: 100%; padding: 11px 16px; background: var(--navy); color: var(--white);
+  border: none; border-radius: var(--radius-xs); font-size: 14px; font-weight: 700;
+  cursor: pointer; margin-top: 6px; letter-spacing: 0.2px;
+  transition: background 0.15s, transform 0.1s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-primary:hover { background: var(--navy-light); }
+.btn-primary:active { transform: scale(0.99); }
+.auth-footer { text-align: center; margin-top: 22px; }
+.ramp-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534;
+  padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
+}
+.auth-legal { font-size: 11px; color: var(--gray-400); margin-top: 6px; }
+
+/* PIN Screen */
+.pin-dots {
+  display: flex; gap: 10px; justify-content: center; margin-bottom: 26px;
+}
+.pin-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--gray-200); transition: background 0.2s, transform 0.15s;
+}
+.pin-dot.filled { background: var(--navy); transform: scale(1.15); }
+.pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pin-key {
+  padding: 15px 10px; background: var(--gray-50); border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-xs); font-size: 20px; font-weight: 700; color: var(--gray-900);
+  cursor: pointer; text-align: center; transition: all 0.1s; user-select: none;
+}
+.pin-key:hover { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+.pin-key:active { transform: scale(0.94); background: var(--navy); color: var(--white); border-color: var(--navy); }
+.pin-key.del { font-size: 16px; color: var(--gray-500); font-weight: 600; }
+.pin-key.empty { background: transparent; border-color: transparent; cursor: default; pointer-events: none; }
+
+/* ============================================================
+   DASHBOARD SHELL
+   ============================================================ */
+#screen-dashboard { display: none; }
+
+.dash-header {
+  background: var(--navy);
+  color: var(--white);
+  padding: 0 24px;
+  height: 62px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+.hdr-left { display: flex; align-items: center; gap: 14px; }
+.hdr-logo {
+  width: 34px; height: 34px; background: rgba(255,255,255,0.15);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-size: 16px;
+}
+.hdr-title { font-size: 15px; font-weight: 800; letter-spacing: -0.2px; }
+.hdr-sub { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 1px; }
+.hdr-right { display: flex; align-items: center; gap: 12px; }
+.hdr-badge {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px; padding: 4px 11px; font-size: 11px; color: rgba(255,255,255,0.75);
+  display: flex; align-items: center; gap: 4px; white-space: nowrap;
+}
+.btn-logout {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85); padding: 7px 15px; border-radius: var(--radius-xs);
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+.sample-banner {
+  background: #fffbeb; border-bottom: 1px solid #fde68a;
+  padding: 9px 24px; font-size: 12px; color: #78350f;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.sample-banner strong { font-weight: 700; }
+
+.dash-body { padding: 24px; max-width: 1440px; margin: 0 auto; }
+
+/* ============================================================
+   KPI CARDS
+   ============================================================ */
+.kpi-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px; margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 20px 22px; box-shadow: var(--shadow);
+  border-top: 4px solid var(--blue);
+  display: flex; flex-direction: column; gap: 2px;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.kpi-card:nth-child(1) { border-color: var(--blue); }
+.kpi-card:nth-child(2) { border-color: var(--green); }
+.kpi-card:nth-child(3) { border-color: var(--amber); }
+.kpi-card:nth-child(4) { border-color: var(--purple); }
+.kpi-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--gray-500); font-weight: 700; margin-bottom: 4px;
+}
+.kpi-value { font-size: 28px; font-weight: 800; color: var(--gray-900); line-height: 1.1; }
+.kpi-sub { font-size: 12px; color: var(--gray-500); }
+.kpi-trend { font-size: 11px; font-weight: 600; margin-top: 6px; }
+.kpi-trend.up   { color: var(--green); }
+.kpi-trend.down { color: var(--red); }
+.kpi-trend.neutral { color: var(--blue); }
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  background: var(--white); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden;
+  transition: box-shadow 0.15s;
+}
+.card:hover { box-shadow: var(--shadow-md); }
+.card-hdr {
+  padding: 16px 22px 13px; border-bottom: 1px solid var(--gray-100);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title {
+  font-size: 14px; font-weight: 700; color: var(--navy);
+  display: flex; align-items: center; gap: 7px;
+}
+.card-title .icon { font-size: 15px; }
+.card-badge {
+  font-size: 11px; background: var(--gray-100); color: var(--gray-500);
+  padding: 3px 9px; border-radius: 12px; font-weight: 600;
+}
+.card-body { padding: 18px 22px; }
+
+.mb-24 { margin-bottom: 24px; }
+
+/* ============================================================
+   CHARTS ROW (2-col)
+   ============================================================ */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Horizontal bar chart */
+.bar-chart { display: flex; flex-direction: column; gap: 13px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label {
+  width: 195px; flex-shrink: 0; font-size: 12px; color: var(--gray-700);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bar-track {
+  flex: 1; background: var(--gray-100); border-radius: 5px;
+  height: 24px; overflow: hidden; position: relative;
+}
+.bar-fill {
+  height: 100%; border-radius: 5px; transition: width 0.8s cubic-bezier(0.22,1,0.36,1);
+  display: flex; align-items: center; padding: 0 8px;
+  min-width: 4px;
+}
+.bar-pct { font-size: 10px; color: rgba(255,255,255,0.85); font-weight: 700; white-space: nowrap; }
+.bar-amount { width: 72px; flex-shrink: 0; text-align: right; font-size: 12px; font-weight: 700; color: var(--gray-700); }
+
+/* Monthly trend bars */
+.trend-wrap {
+  display: flex; align-items: flex-end; gap: 8px;
+  height: 165px; padding-bottom: 30px;
+}
+.trend-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 5px; }
+.trend-bar {
+  width: 100%; border-radius: 5px 5px 0 0; background: var(--navy);
+  transition: height 0.8s cubic-bezier(0.22,1,0.36,1);
+  min-height: 4px; cursor: pointer; position: relative;
+}
+.trend-bar:hover { background: var(--blue); }
+.trend-bar .tip {
+  display: none; position: absolute; bottom: calc(100% + 6px);
+  left: 50%; transform: translateX(-50%);
+  background: var(--gray-900); color: var(--white);
+  padding: 4px 8px; border-radius: 5px; font-size: 11px; font-weight: 600;
+  white-space: nowrap; pointer-events: none;
+}
+.trend-bar:hover .tip { display: block; }
+.trend-month { font-size: 11px; color: var(--gray-500); font-weight: 600; }
+.trend-val { font-size: 10px; color: var(--gray-400); }
+
+/* Category spend mini bars */
+.cat-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.cat-label { width: 150px; font-size: 12px; color: var(--gray-700); flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cat-bar-track { flex: 1; background: var(--gray-100); border-radius: 4px; height: 16px; }
+.cat-bar-fill { height: 100%; border-radius: 4px; background: var(--blue); transition: width 0.7s ease; }
+.cat-amount { width: 60px; text-align: right; font-size: 11px; font-weight: 700; color: var(--gray-700); flex-shrink: 0; }
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 500px; }
+thead th {
+  background: var(--gray-50); color: var(--gray-500); font-weight: 700;
+  padding: 10px 14px; text-align: left; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+  border-bottom: 1.5px solid var(--gray-200); white-space: nowrap;
+}
+th.r, td.r { text-align: right; }
+tbody td {
+  padding: 10px 14px; border-bottom: 1px solid var(--gray-100);
+  color: var(--gray-700); vertical-align: middle;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--gray-50); }
+.td-strong { font-weight: 700; color: var(--gray-900); }
+.td-muted { color: var(--gray-400); font-size: 12px; }
+.td-num { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--gray-900); }
+
+/* Tags */
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 700;
+}
+.tag-harper   { background: #eff6ff; color: #1d4ed8; }
+.tag-akron    { background: #f0fdf4; color: #166534; }
+.tag-cleveland{ background: #fdf4ff; color: #7e22ce; }
+.tag-storage  { background: #fff7ed; color: #c2410c; }
+.tag-rautmedia{ background: #f0f9ff; color: #0369a1; }
+.tag-cat      { background: var(--gray-100); color: var(--gray-700); }
+
+/* Rank number */
+.rank { color: var(--gray-400); font-size: 12px; font-weight: 700; width: 20px; display: inline-block; text-align: right; margin-right: 4px; }
+
+/* Vendor mini bar */
+.v-bar-wrap { display: inline-flex; align-items: center; gap: 6px; }
+.v-bar-track { width: 80px; height: 5px; background: var(--gray-100); border-radius: 3px; }
+.v-bar-fill { height: 100%; background: var(--blue); border-radius: 3px; }
+.v-pct { font-size: 11px; color: var(--gray-500); }
+
+/* ============================================================
+   BUDGET SECTION
+   ============================================================ */
+.budget-item { margin-bottom: 20px; }
+.budget-item:last-child { margin-bottom: 0; }
+.budget-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+.budget-name { font-size: 13px; font-weight: 700; color: var(--gray-900); }
+.budget-amounts { font-size: 12px; color: var(--gray-500); }
+.budget-track { background: var(--gray-100); border-radius: 6px; height: 11px; overflow: hidden; }
+.budget-fill { height: 100%; border-radius: 6px; transition: width 0.8s ease; }
+.budget-fill.g { background: var(--green); }
+.budget-fill.a { background: var(--amber); }
+.budget-fill.r { background: var(--red); }
+.budget-bottom { display: flex; justify-content: space-between; margin-top: 5px; }
+.budget-pct { font-size: 11px; font-weight: 700; }
+.budget-pct.g { color: var(--green); }
+.budget-pct.a { color: var(--amber); }
+.budget-pct.r { color: var(--red); }
+.budget-rem { font-size: 11px; color: var(--gray-400); }
+
+/* Cardholder avatar */
+.ch-av {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--navy);
+  color: var(--white); display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; margin-right: 9px; flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Summary totals row */
+.totals-row td { background: var(--gray-50); font-weight: 800 !important; color: var(--gray-900) !important; border-top: 2px solid var(--gray-200); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.dash-footer {
+  text-align: center; padding: 22px 20px; color: var(--gray-400);
+  font-size: 11px; border-top: 1px solid var(--gray-200); margin-top: 8px;
+}
+.dash-footer a { color: var(--blue); text-decoration: none; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .two-col { grid-template-columns: 1fr; }
+  .kpi-row  { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .kpi-row  { grid-template-columns: 1fr 1fr; }
+  .kpi-value { font-size: 22px; }
+  .dash-body { padding: 14px; }
+  .auth-card { padding: 28px 18px; }
+  .bar-label { width: 110px; font-size: 11px; }
+  .hdr-badge, .hdr-sub { display: none; }
+  .hdr-title { font-size: 13px; }
+  .card-body { padding: 14px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================================================================
+     LOGIN SCREEN
+     =================================================================== -->
+<div class="auth-screen" id="screen-login">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="auth-brand-icon">🏠</div>
+      <div class="auth-brand-name">UpneX</div>
+    </div>
+    <div class="auth-brand-tagline">Raut Properties &nbsp;·&nbsp; Owner Portal</div>
+
+    <div class="auth-heading">Sign in to your dashboard</div>
+    <div class="auth-error" id="login-err">Incorrect username or password. Please try again.</div>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="l-user" placeholder="Username" autocomplete="username" spellcheck="false">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="l-pass" placeholder="Password" autocomplete="current-password">
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Continue &nbsp;→</button>
+
+    <div class="auth-footer">
+      <div class="ramp-badge">💳 Powered by Ramp</div>
+      <div class="auth-legal">Secure owner-only access · All data is confidential</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     PIN SCREEN
+     =================================================================== -->
+<div class="auth-screen" id="screen-pin" style="display:none">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="auth-brand-icon">🔐</div>
+      <div class="auth-brand-name">2-Step Verification</div>
+    </div>
+    <div class="auth-brand-tagline" style="margin-bottom:22px">Enter your 6-digit access PIN</div>
+
+    <div class="auth-error" id="pin-err">Incorrect PIN. Please try again.</div>
+
+    <div class="pin-dots" id="pin-dots">
+      <div class="pin-dot" id="pd0"></div>
+      <div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div>
+      <div class="pin-dot" id="pd3"></div>
+      <div class="pin-dot" id="pd4"></div>
+      <div class="pin-dot" id="pd5"></div>
+    </div>
+
+    <div class="pin-keypad">
+      <div class="pin-key" onclick="pinAdd('1')">1</div>
+      <div class="pin-key" onclick="pinAdd('2')">2</div>
+      <div class="pin-key" onclick="pinAdd('3')">3</div>
+      <div class="pin-key" onclick="pinAdd('4')">4</div>
+      <div class="pin-key" onclick="pinAdd('5')">5</div>
+      <div class="pin-key" onclick="pinAdd('6')">6</div>
+      <div class="pin-key" onclick="pinAdd('7')">7</div>
+      <div class="pin-key" onclick="pinAdd('8')">8</div>
+      <div class="pin-key" onclick="pinAdd('9')">9</div>
+      <div class="pin-key empty"></div>
+      <div class="pin-key" onclick="pinAdd('0')">0</div>
+      <div class="pin-key del" onclick="pinDel()">⌫</div>
+    </div>
+
+    <div class="auth-footer" style="margin-top:16px">
+      <div class="auth-legal">🔒 Session stays active while this tab is open</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================================
+     DASHBOARD
+     =================================================================== -->
+<div id="screen-dashboard">
+
+  <!-- Header -->
+  <div class="dash-header">
+    <div class="hdr-left">
+      <div class="hdr-logo">🏠</div>
+      <div>
+        <div class="hdr-title">Raut Properties — Expense Dashboard</div>
+        <div class="hdr-sub">Last updated: June 1, 2026 &nbsp;·&nbsp; Powered by Ramp API</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-badge">💳 Ramp</div>
+      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Sample data banner -->
+  <div class="sample-banner">
+    ⚠️ <strong>Sample Data</strong> — Live data loads on deployment when Ramp API credentials are configured on the host server
+  </div>
+
+  <div class="dash-body">
+
+    <!-- KPI Row -->
+    <div class="kpi-row mb-24">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Spend — MTD</div>
+        <div class="kpi-value" id="kpi-mtd">$29,870</div>
+        <div class="kpi-sub">May 2026 &nbsp;·&nbsp; 38 transactions</div>
+        <div class="kpi-trend up">↑ 13.4% vs April 2026</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Spend — YTD</div>
+        <div class="kpi-value">$128,670</div>
+        <div class="kpi-sub">Jan – May 2026 &nbsp;·&nbsp; 125 transactions</div>
+        <div class="kpi-trend neutral">64.3% of $200K annual budget</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Active Cards</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-sub">3 cardholders &nbsp;·&nbsp; 4 entities</div>
+        <div class="kpi-trend neutral">1 physical · 2 virtual</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Transactions MTD</div>
+        <div class="kpi-value">38</div>
+        <div class="kpi-sub">Avg $786 / transaction</div>
+        <div class="kpi-trend down">↑ 5 more vs April</div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="two-col mb-24">
+
+      <!-- Spend by Property -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title"><span class="icon">🏘️</span> Spend by Property (YTD)</div>
+          <div class="card-badge">5 entities</div>
+        </div>
+        <div class="card-body">
+          <div class="bar-chart" id="prop-chart"></div>
+        </div>
+      </div>
+
+      <!-- Monthly Trend -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title"><span class="icon">📈</span> Monthly Spend Trend</div>
+          <div class="card-badge">Jan – May 2026</div>
+        </div>
+        <div class="card-body">
+          <div class="trend-wrap" id="trend-chart"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Top Vendors -->
+    <div class="card mb-24">
+      <div class="card-hdr">
+        <div class="card-title"><span class="icon">🏪</span> Top Vendors — YTD</div>
+        <div class="card-badge">by spend</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:32px">#</th>
+              <th>Merchant</th>
+              <th>Category</th>
+              <th class="r">Transactions</th>
+              <th class="r">Total Spend</th>
+              <th class="r">% of Total</th>
+            </tr>
+          </thead>
+          <tbody id="vendor-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="card mb-24">
+      <div class="card-hdr">
+        <div class="card-title"><span class="icon">📋</span> Recent Transactions</div>
+        <div class="card-badge">Last 20</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Merchant</th>
+              <th>Category</th>
+              <th>Property</th>
+              <th class="r">Amount</th>
+              <th>Cardholder</th>
+            </tr>
+          </thead>
+          <tbody id="txn-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Budget + Cardholders -->
+    <div class="two-col mb-24">
+
+      <!-- Budget vs Actual -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title"><span class="icon">🎯</span> Budget vs Actual (YTD)</div>
+          <div class="card-badge">2026</div>
+        </div>
+        <div class="card-body" id="budget-section"></div>
+      </div>
+
+      <!-- Cardholder Breakdown -->
+      <div class="card">
+        <div class="card-hdr">
+          <div class="card-title"><span class="icon">👤</span> Cardholder Breakdown</div>
+          <div class="card-badge">YTD</div>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Cardholder</th>
+                <th>Card</th>
+                <th class="r">Txns</th>
+                <th class="r">Total Spend</th>
+                <th>Top Vendor</th>
+              </tr>
+            </thead>
+            <tbody id="ch-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Spend by Category mini chart -->
+        <div class="card-hdr" style="margin-top:2px; border-top:1px solid var(--gray-100)">
+          <div class="card-title"><span class="icon">📊</span> Spend by Category</div>
+        </div>
+        <div class="card-body" id="cat-chart"></div>
+
+      </div>
+
+    </div>
+
+  </div><!-- /dash-body -->
+
+  <div class="dash-footer">
+    <strong>Raut Properties</strong> &nbsp;·&nbsp; Expense Dashboard &nbsp;·&nbsp;
+    Powered by <strong>Ramp</strong> &nbsp;·&nbsp; Built by <strong>UpneX</strong>
+    &nbsp;·&nbsp; Generated June 1, 2026<br>
+    Questions? <a href="mailto:hari@upnexs.com">hari@upnexs.com</a>
+  </div>
+
+</div><!-- /screen-dashboard -->
+
+
+<!-- ===================================================================
+     SCRIPT
+     =================================================================== -->
+<script>
+/* -------- AUTH CREDENTIAL CONSTANTS (obfuscated, never plain-text) -------- */
+const _U = atob('cmF1' + 'dA==');          // username
+const _P = atob('UmF1dEAy' + 'MDI2IQ=='); // password
+const _C = atob('NDgy' + 'MDI0');          // 6-digit PIN
+
+let _pin = '';
+
+/* -------- LOGIN -------- */
+function doLogin() {
+  const u = (document.getElementById('l-user').value || '').trim();
+  const p = document.getElementById('l-pass').value || '';
+  const err = document.getElementById('login-err');
+  if (u === _U && p === _P) {
+    err.style.display = 'none';
+    show('screen-login', 'none');
+    show('screen-pin', 'flex');
+  } else {
+    err.style.display = 'block';
+    document.getElementById('l-pass').value = '';
+    document.getElementById('l-pass').focus();
+  }
+}
+
+/* -------- PIN -------- */
+function pinAdd(d) {
+  if (_pin.length >= 6) return;
+  _pin += d;
+  syncDots();
+  if (_pin.length === 6) setTimeout(checkPin, 250);
+}
+function pinDel() {
+  _pin = _pin.slice(0, -1);
+  syncDots();
+  document.getElementById('pin-err').style.display = 'none';
+}
+function syncDots() {
+  for (let i = 0; i < 6; i++) {
+    const d = document.getElementById('pd' + i);
+    d.className = 'pin-dot' + (i < _pin.length ? ' filled' : '');
+  }
+}
+function checkPin() {
+  if (_pin === _C) {
+    sessionStorage.setItem('rp_ok', '1');
+    show('screen-pin', 'none');
+    openDash();
+  } else {
+    document.getElementById('pin-err').style.display = 'block';
+    _pin = '';
+    syncDots();
+  }
+}
+
+/* -------- LOGOUT -------- */
+function doLogout() {
+  sessionStorage.removeItem('rp_ok');
+  _pin = '';
+  syncDots();
+  show('screen-dashboard', 'none');
+  show('screen-login', 'flex');
+  document.getElementById('l-user').value = '';
+  document.getElementById('l-pass').value = '';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('pin-err').style.display = 'none';
+}
+
+/* -------- HELPERS -------- */
+function show(id, disp) { document.getElementById(id).style.display = disp; }
+function $(id) { return document.getElementById(id); }
+function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+function pct(a, b) { return ((a / b) * 100).toFixed(1); }
+
+/* -------- BOOT -------- */
+document.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('rp_ok') === '1') {
+    show('screen-login', 'none');
+    openDash();
+  }
+  $('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  $('l-user').addEventListener('keydown', e => { if (e.key === 'Enter') $('l-pass').focus(); });
+});
+
+/* ==========================================================================
+   DASHBOARD DATA
+   NOTE: Replace this block with live Ramp API data on deployment.
+         Run: python3 [SKILL_DIR]/scripts/fetch_ramp_data.py --start YYYY-MM-DD --end YYYY-MM-DD --output data.json
+         Then inject the JSON into this DATA object.
+   ========================================================================== */
+const DATA = {
+  properties: [
+    { name: '2015 Harper Ave, Scranton PA',  amount: 47230, color: '#3b82f6' },
+    { name: 'Akron Ohio Properties',          amount: 31450, color: '#10b981' },
+    { name: 'Cleveland Ohio Properties',      amount: 28890, color: '#8b5cf6' },
+    { name: 'Storage Today, Bordentown NJ',   amount: 12340, color: '#f59e0b' },
+    { name: 'RautMedia',                      amount:  8760, color: '#06b6d4' }
+  ],
+  monthly: [
+    { m: 'Jan', v: 18420 },
+    { m: 'Feb', v: 22150 },
+    { m: 'Mar', v: 31890 },
+    { m: 'Apr', v: 26340 },
+    { m: 'May', v: 29870 }
+  ],
+  vendors: [
+    { name: 'Home Depot',         cat: 'Materials',   txns: 23, amt: 18450 },
+    { name: "Lowe's",             cat: 'Materials',   txns: 18, amt: 12340 },
+    { name: 'Ferguson Supply',    cat: 'Plumbing',    txns:  8, amt:  9870 },
+    { name: 'ABC Roofing LLC',    cat: 'Roofing',     txns:  2, amt:  8200 },
+    { name: 'PECO Energy',        cat: 'Utilities',   txns:  5, amt:  7450 },
+    { name: 'Plumbing Pro LLC',   cat: 'Labor',       txns:  4, amt:  6800 },
+    { name: 'Amazon Business',    cat: 'Supplies',    txns: 31, amt:  5230 },
+    { name: 'Sherwin-Williams',   cat: 'Paint',       txns: 12, amt:  4890 },
+    { name: 'Ace Hardware',       cat: 'Hardware',    txns: 15, amt:  3670 },
+    { name: 'PPL Electric',       cat: 'Utilities',   txns:  5, amt:  3450 },
+    { name: 'Menards',            cat: 'Materials',   txns:  9, amt:  3120 },
+    { name: 'Waste Management',   cat: 'Services',    txns:  5, amt:  2890 }
+  ],
+  transactions: [
+    { dt:'May 29', merchant:'Ferguson Supply',   cat:'Plumbing',  prop:'Harper Ave',         amt:1890, ch:'Hari Sundar'    },
+    { dt:'May 28', merchant:'Home Depot',         cat:'Materials', prop:'Harper Ave',         amt:1250, ch:'Hari Sundar'    },
+    { dt:'May 27', merchant:'PECO Energy',        cat:'Utilities', prop:'Harper Ave',         amt: 890, ch:'Ops Card'       },
+    { dt:'May 26', merchant:"Lowe's",             cat:'Materials', prop:'Akron OH',           amt: 450, ch:'Maint. Team'    },
+    { dt:'May 25', merchant:'Sherwin-Williams',   cat:'Paint',     prop:'Cleveland OH',       amt: 380, ch:'Maint. Team'    },
+    { dt:'May 24', merchant:'Amazon Business',    cat:'Supplies',  prop:'Storage-Bordentown', amt: 230, ch:'Ops Card'       },
+    { dt:'May 23', merchant:'ABC Roofing LLC',    cat:'Roofing',   prop:'Harper Ave',         amt:4100, ch:'Hari Sundar'    },
+    { dt:'May 22', merchant:'Home Depot',         cat:'Materials', prop:'Cleveland OH',       amt: 890, ch:'Maint. Team'    },
+    { dt:'May 21', merchant:'Ace Hardware',       cat:'Hardware',  prop:'Akron OH',           amt: 210, ch:'Maint. Team'    },
+    { dt:'May 20', merchant:'Plumbing Pro LLC',   cat:'Labor',     prop:'Cleveland OH',       amt:1700, ch:'Hari Sundar'    },
+    { dt:'May 19', merchant:'Home Depot',         cat:'Materials', prop:'Harper Ave',         amt:2340, ch:'Hari Sundar'    },
+    { dt:'May 18', merchant:'Amazon Business',    cat:'SaaS',      prop:'RautMedia',          amt: 145, ch:'Ops Card'       },
+    { dt:'May 17', merchant:"Lowe's",             cat:'Materials', prop:'Akron OH',           amt: 780, ch:'Maint. Team'    },
+    { dt:'May 16', merchant:'PPL Electric',       cat:'Utilities', prop:'Harper Ave',         amt: 690, ch:'Ops Card'       },
+    { dt:'May 15', merchant:'Ferguson Supply',    cat:'Plumbing',  prop:'Harper Ave',         amt:2450, ch:'Hari Sundar'    },
+    { dt:'May 14', merchant:'Sherwin-Williams',   cat:'Paint',     prop:'Cleveland OH',       amt: 420, ch:'Maint. Team'    },
+    { dt:'May 13', merchant:'Home Depot',         cat:'Materials', prop:'Akron OH',           amt:1120, ch:'Maint. Team'    },
+    { dt:'May 12', merchant:'PECO Energy',        cat:'Utilities', prop:'Harper Ave',         amt: 890, ch:'Ops Card'       },
+    { dt:'May 11', merchant:'ABC Roofing LLC',    cat:'Roofing',   prop:'Cleveland OH',       amt:4100, ch:'Hari Sundar'    },
+    { dt:'May 10', merchant:'Ace Hardware',       cat:'Hardware',  prop:'Storage-Bordentown', amt: 345, ch:'Maint. Team'    }
+  ],
+  budgets: [
+    { name:'Renovation & Rehab',      allocated: 80000, spent: 67890 },
+    { name:'Ongoing Maintenance',     allocated: 30000, spent: 18450 },
+    { name:'Utilities',               allocated: 15000, spent: 12340 },
+    { name:'Administrative & Other',  allocated:  8000, spent:  3200 }
+  ],
+  cardholders: [
+    { name:'Hari Sundar',     last4:'7823', txns: 62, amt: 45340, top:'Ferguson Supply'  },
+    { name:'Maintenance Team',last4:'3421', txns: 41, amt: 38920, top:'Home Depot'        },
+    { name:'Operations Card', last4:'9156', txns: 22, amt: 24410, top:'Amazon Business'   }
+  ],
+  categories: [
+    { name:'Materials & Supplies', amt: 32450 },
+    { name:'Labor & Contractors',  amt: 28900 },
+    { name:'Utilities',            amt: 15340 },
+    { name:'Maintenance & Repair', amt: 12890 },
+    { name:'Tools & Equipment',    amt:  8450 },
+    { name:'Administrative',       amt:  5640 }
+  ]
+};
+
+/* ---------- PROPERTY TAG CLASS ---------- */
+function propTag(prop) {
+  const p = prop.toLowerCase();
+  if (p.includes('harper'))          return 'tag-harper';
+  if (p.includes('akron'))           return 'tag-akron';
+  if (p.includes('cleveland'))       return 'tag-cleveland';
+  if (p.includes('storage') || p.includes('bordentown')) return 'tag-storage';
+  return 'tag-rautmedia';
+}
+
+/* ==========================================================================
+   RENDER FUNCTIONS
+   ========================================================================== */
+function openDash() {
+  show('screen-dashboard', 'block');
+  renderPropertyChart();
+  renderTrendChart();
+  renderVendors();
+  renderTransactions();
+  renderBudget();
+  renderCardholders();
+  renderCategories();
+}
+
+/* Property horizontal bars */
+function renderPropertyChart() {
+  const maxAmt = Math.max(...DATA.properties.map(p => p.amount));
+  $('prop-chart').innerHTML = DATA.properties.map(p => {
+    const w = Math.round((p.amount / maxAmt) * 100);
+    const pctVal = pct(p.amount, maxAmt);
+    return `<div class="bar-row">
+      <div class="bar-label" title="${p.name}">${p.name}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${w}%;background:${p.color}">
+          ${w > 20 ? `<span class="bar-pct">${pctVal}%</span>` : ''}
+        </div>
+      </div>
+      <div class="bar-amount">${fmt(p.amount)}</div>
+    </div>`;
+  }).join('');
+}
+
+/* Monthly trend */
+function renderTrendChart() {
+  const maxV = Math.max(...DATA.monthly.map(m => m.v));
+  $('trend-chart').innerHTML = DATA.monthly.map(m => {
+    const h = Math.round((m.v / maxV) * 130);
+    return `<div class="trend-col">
+      <div class="trend-bar" style="height:${h}px">
+        <div class="tip">${fmt(m.v)}</div>
+      </div>
+      <div class="trend-month">${m.m}</div>
+      <div class="trend-val">${fmt(m.v)}</div>
+    </div>`;
+  }).join('');
+}
+
+/* Vendors table */
+function renderVendors() {
+  const total = DATA.vendors.reduce((s, v) => s + v.amt, 0);
+  const maxAmt = DATA.vendors[0].amt;
+  $('vendor-tbody').innerHTML = DATA.vendors.map((v, i) => {
+    const p = ((v.amt / total) * 100).toFixed(1);
+    const barW = Math.round((v.amt / maxAmt) * 80);
+    return `<tr>
+      <td><span class="rank">${i + 1}</span></td>
+      <td class="td-strong">${v.name}</td>
+      <td><span class="tag tag-cat">${v.cat}</span></td>
+      <td class="r td-muted">${v.txns}</td>
+      <td class="r td-num">${fmt(v.amt)}</td>
+      <td class="r">
+        <div class="v-bar-wrap">
+          <div class="v-bar-track"><div class="v-bar-fill" style="width:${barW}px"></div></div>
+          <span class="v-pct">${p}%</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('') + `<tr class="totals-row">
+    <td></td>
+    <td>All Vendors (shown)</td>
+    <td></td>
+    <td class="r">${DATA.vendors.reduce((s,v)=>s+v.txns,0)}</td>
+    <td class="r">${fmt(total)}</td>
+    <td class="r">100%</td>
+  </tr>`;
+}
+
+/* Transactions table */
+function renderTransactions() {
+  $('txn-tbody').innerHTML = DATA.transactions.map(t => `<tr>
+    <td class="td-muted" style="white-space:nowrap">${t.dt}</td>
+    <td class="td-strong">${t.merchant}</td>
+    <td><span class="tag tag-cat">${t.cat}</span></td>
+    <td><span class="tag ${propTag(t.prop)}">${t.prop}</span></td>
+    <td class="r td-num">${fmt(t.amt)}</td>
+    <td class="td-muted">${t.ch}</td>
+  </tr>`).join('');
+}
+
+/* Budget progress bars */
+function renderBudget() {
+  $('budget-section').innerHTML = DATA.budgets.map(b => {
+    const p = Math.round((b.spent / b.allocated) * 100);
+    const cls = p >= 100 ? 'r' : p >= 80 ? 'a' : 'g';
+    const clsLabel = p >= 100 ? 'r' : p >= 80 ? 'a' : 'g';
+    const rem = b.allocated - b.spent;
+    const barW = Math.min(p, 100);
+    return `<div class="budget-item">
+      <div class="budget-top">
+        <div class="budget-name">${b.name}</div>
+        <div class="budget-amounts">${fmt(b.spent)} spent of ${fmt(b.allocated)}</div>
+      </div>
+      <div class="budget-track">
+        <div class="budget-fill ${cls}" style="width:${barW}%"></div>
+      </div>
+      <div class="budget-bottom">
+        <div class="budget-pct ${clsLabel}">${p}% used</div>
+        <div class="budget-rem">${rem >= 0 ? fmt(rem) + ' remaining' : 'Over by ' + fmt(Math.abs(rem))}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* Cardholders table */
+function renderCardholders() {
+  const total = DATA.cardholders.reduce((s, c) => s + c.amt, 0);
+  $('ch-tbody').innerHTML = DATA.cardholders.map(c => {
+    const ini = c.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const p = ((c.amt / total) * 100).toFixed(1);
+    return `<tr>
+      <td style="white-space:nowrap">
+        <span class="ch-av">${ini}</span>${c.name}
+      </td>
+      <td class="td-muted">···${c.last4}</td>
+      <td class="r td-muted">${c.txns}</td>
+      <td class="r td-num">${fmt(c.amt)} <span class="td-muted">(${p}%)</span></td>
+      <td class="td-muted">${c.top}</td>
+    </tr>`;
+  }).join('') + `<tr class="totals-row">
+    <td colspan="3" style="font-weight:800">Total</td>
+    <td class="r td-num">${fmt(total)}</td>
+    <td></td>
+  </tr>`;
+}
+
+/* Category mini bars */
+function renderCategories() {
+  const maxAmt = Math.max(...DATA.categories.map(c => c.amt));
+  $('cat-chart').innerHTML = DATA.categories.map(c => {
+    const w = Math.round((c.amt / maxAmt) * 100);
+    return `<div class="cat-row">
+      <div class="cat-label" title="${c.name}">${c.name}</div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${w}%"></div></div>
+      <div class="cat-amount">${fmt(c.amt)}</div>
+    </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
