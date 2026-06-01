@@ -3,1476 +3,779 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raut Properties — Owner Portal</title>
+<title>Raut Properties — Owner Dashboard</title>
 <style>
-/* ============================================================
-   VARIABLES & RESET
-   ============================================================ */
-:root {
-  --sidebar-w: 224px;
-  --topbar-h: 56px;
-  --navy: #1a2e4a;
-  --navy-dark: #0f1e30;
-  --navy-light: #243d5c;
-  --blue: #0066cc;
-  --blue-lt: #e8f2fd;
-  --green: #16a34a;
-  --green-lt: #dcfce7;
-  --amber: #d97706;
-  --amber-lt: #fef3c7;
-  --red: #dc2626;
-  --red-lt: #fee2e2;
-  --purple: #7c3aed;
-  --purple-lt: #ede9fe;
-  --cyan: #0891b2;
-  --cyan-lt: #e0f7fa;
-  --g50: #f8fafc; --g100: #f1f5f9; --g200: #e2e8f0;
-  --g300: #cbd5e1; --g400: #94a3b8; --g500: #64748b;
-  --g600: #475569; --g700: #334155; --g900: #0f172a;
-  --white: #ffffff;
-  --sh: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
-  --sh-md: 0 4px 12px rgba(0,0,0,.09), 0 2px 4px rgba(0,0,0,.04);
-  --sh-lg: 0 10px 30px rgba(0,0,0,.13), 0 4px 8px rgba(0,0,0,.06);
-  --r: 10px; --r-sm: 7px; --r-xs: 5px;
+:root{
+  --navy:#1a2e4a;--navy-d:#0f1e30;--navy-l:#243d5c;
+  --blue:#3b82f6;--blue-l:#eff6ff;
+  --green:#10b981;--amber:#f59e0b;--red:#ef4444;--purple:#8b5cf6;--cyan:#06b6d4;
+  --g50:#f8fafc;--g100:#f1f5f9;--g200:#e2e8f0;--g400:#94a3b8;--g500:#64748b;--g700:#334155;--g900:#0f172a;
+  --white:#fff;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --sh-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.04);
+  --sh-lg:0 10px 25px rgba(0,0,0,.12),0 4px 6px rgba(0,0,0,.06);
+  --r:12px;--rs:8px;--rx:6px;--sb:220px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{height:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--g100);color:var(--g900);height:100%;line-height:1.5;font-size:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--g100);color:var(--g900);min-height:100vh;line-height:1.5;}
 
-/* ============================================================
-   AUTH SCREENS
-   ============================================================ */
-.auth-screen{
-  position:fixed;inset:0;
-  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 55%,#1d3a5e 100%);
-  display:flex;align-items:center;justify-content:center;z-index:2000;padding:20px;
-}
-.auth-card{
-  background:var(--white);border-radius:var(--r);padding:36px 32px;
-  width:100%;max-width:378px;box-shadow:var(--sh-lg);animation:fadeUp .3s ease;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.auth-brand{display:flex;align-items:center;gap:10px;margin-bottom:4px}
-.auth-brand-icon{width:34px;height:34px;background:var(--navy);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
-.auth-brand-name{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.3px}
-.auth-tagline{font-size:11.5px;color:var(--g500);margin-bottom:24px}
-.auth-heading{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:17px}
-.auth-err{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:9px 12px;border-radius:var(--r-xs);font-size:12px;margin-bottom:12px;display:none}
-.fg{margin-bottom:13px}
-.fg label{display:block;font-size:10px;font-weight:700;color:var(--g700);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
-.fg input{width:100%;padding:9px 12px;border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:13.5px;color:var(--g900);outline:none;transition:border-color .15s,box-shadow .15s;background:#fff}
-.fg input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,102,204,.11)}
-.btn-auth{width:100%;padding:10px 16px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-xs);font-size:13px;font-weight:700;cursor:pointer;margin-top:4px;transition:background .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:6px}
-.btn-auth:hover{background:var(--navy-light)}
-.btn-auth:active{transform:scale(.99)}
-.auth-footer{text-align:center;margin-top:18px}
-.ramp-badge{display:inline-flex;align-items:center;gap:5px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:700}
-.auth-legal{font-size:10.5px;color:var(--g400);margin-top:5px}
+/* AUTH */
+.auth-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--navy-d),var(--navy) 60%,#1e3a5f);display:flex;align-items:center;justify-content:center;z-index:2000;padding:20px;}
+.auth-card{background:var(--white);border-radius:var(--r);padding:40px 36px;width:100%;max-width:400px;box-shadow:var(--sh-lg);animation:slideUp .3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.auth-brand{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.auth-icon{width:38px;height:38px;background:var(--navy);border-radius:9px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:18px;flex-shrink:0;}
+.auth-name{font-size:19px;font-weight:800;color:var(--navy);}
+.auth-sub{font-size:12px;color:var(--g500);margin-bottom:28px;}
+.auth-h{font-size:15px;font-weight:700;color:var(--g700);margin-bottom:20px;}
+.auth-err{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 13px;border-radius:var(--rx);font-size:13px;margin-bottom:14px;display:none;}
+.fg{margin-bottom:15px;}
+.fg label{display:block;font-size:11px;font-weight:700;color:var(--g700);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.fg input{width:100%;padding:10px 13px;border:1.5px solid var(--g200);border-radius:var(--rx);font-size:14px;color:var(--g900);transition:border-color .15s,box-shadow .15s;outline:none;background:var(--white);}
+.fg input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.12);}
+.btn-pri{width:100%;padding:11px 16px;background:var(--navy);color:var(--white);border:none;border-radius:var(--rx);font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;transition:background .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-pri:hover{background:var(--navy-l);}
+.btn-pri:active{transform:scale(.99);}
+.auth-foot{text-align:center;margin-top:22px;}
+.ramp-badge{display:inline-flex;align-items:center;gap:5px;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.auth-legal{font-size:11px;color:var(--g400);margin-top:6px;}
+.pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:26px;}
+.pin-dot{width:14px;height:14px;border-radius:50%;background:var(--g200);transition:background .2s,transform .15s;}
+.pin-dot.filled{background:var(--navy);transform:scale(1.15);}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.pin-key{padding:15px 10px;background:var(--g50);border:1.5px solid var(--g200);border-radius:var(--rx);font-size:20px;font-weight:700;color:var(--g900);cursor:pointer;text-align:center;transition:all .1s;user-select:none;}
+.pin-key:hover{background:var(--blue-l);border-color:var(--blue);color:var(--blue);}
+.pin-key:active{transform:scale(.94);background:var(--navy);color:var(--white);border-color:var(--navy);}
+.pin-key.del{font-size:16px;color:var(--g500);}
+.pin-key.empty{background:transparent;border-color:transparent;cursor:default;pointer-events:none;}
 
-/* PIN */
-.pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:22px}
-.pin-dot{width:13px;height:13px;border-radius:50%;background:var(--g200);transition:background .2s,transform .15s}
-.pin-dot.filled{background:var(--navy);transform:scale(1.15)}
-.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.pin-key{padding:13px 10px;background:var(--g50);border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:18px;font-weight:700;color:var(--g900);cursor:pointer;text-align:center;transition:all .1s;user-select:none}
-.pin-key:hover{background:var(--blue-lt);border-color:var(--blue);color:var(--blue)}
-.pin-key:active{transform:scale(.93);background:var(--navy);color:#fff;border-color:var(--navy)}
-.pin-key.del{font-size:14px;color:var(--g500);font-weight:600}
-.pin-key.empty{background:transparent;border-color:transparent;cursor:default;pointer-events:none}
+/* APP SHELL */
+#app{display:none;min-height:100vh;}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sb);background:var(--navy);display:flex;flex-direction:column;z-index:200;transition:transform .25s;}
+.sb-brand{padding:20px 18px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);}
+.sb-logo{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sb-bname{font-size:15px;font-weight:800;color:var(--white);}
+.sb-bsub{font-size:10px;color:rgba(255,255,255,.45);}
+.sb-nav{flex:1;padding:12px 0;overflow-y:auto;}
+.nav-sec{padding:6px 18px 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;transition:background .15s,border-color .15s;border-left:3px solid transparent;color:rgba(255,255,255,.65);font-size:13px;font-weight:500;}
+.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.9);}
+.nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--blue);color:var(--white);font-weight:700;}
+.nav-item .ni{font-size:15px;width:20px;text-align:center;}
+.sb-foot{padding:14px 18px;border-top:1px solid rgba(255,255,255,.08);}
+.sb-user{display:flex;align-items:center;gap:10px;}
+.sb-av{width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white);flex-shrink:0;}
+.sb-uname{font-size:12px;font-weight:700;color:rgba(255,255,255,.85);}
+.sb-urole{font-size:10px;color:rgba(255,255,255,.45);}
+.sb-logout{margin-top:10px;width:100%;padding:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--rx);color:rgba(255,255,255,.65);font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;}
+.sb-logout:hover{background:rgba(255,255,255,.15);color:var(--white);}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:190;}
+.sb-overlay.open{display:block;}
+.main{margin-left:var(--sb);display:flex;flex-direction:column;min-height:100vh;}
+.topbar{background:var(--white);border-bottom:1px solid var(--g200);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;box-shadow:var(--sh);}
+.tb-left{display:flex;align-items:center;gap:12px;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;font-size:18px;color:var(--g700);}
+.page-title{font-size:16px;font-weight:800;color:var(--navy);}
+.tb-right{display:flex;align-items:center;gap:6px;}
+.date-btn{padding:6px 12px;border:1.5px solid var(--g200);border-radius:var(--rx);font-size:12px;font-weight:600;color:var(--g500);background:var(--white);cursor:pointer;transition:all .15s;}
+.date-btn:hover{border-color:var(--blue);color:var(--blue);}
+.date-btn.active{background:var(--navy);border-color:var(--navy);color:var(--white);}
+.sample-banner{background:#fffbeb;border-bottom:1px solid #fde68a;padding:8px 24px;font-size:12px;color:#78350f;display:flex;align-items:center;justify-content:center;gap:8px;}
+#page-content{flex:1;padding:24px;max-width:1440px;width:100%;margin:0 auto;}
 
-/* ============================================================
-   APP SHELL
-   ============================================================ */
-#app{display:none;height:100vh;overflow:hidden}
-.app-layout{display:flex;height:100%}
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.kpi{background:var(--white);border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh);border-top:4px solid var(--blue);display:flex;flex-direction:column;gap:2px;transition:box-shadow .15s,transform .15s;}
+.kpi:hover{box-shadow:var(--sh-md);transform:translateY(-1px);}
+.kpi:nth-child(1){border-color:var(--blue);}
+.kpi:nth-child(2){border-color:var(--green);}
+.kpi:nth-child(3){border-color:var(--amber);}
+.kpi:nth-child(4){border-color:var(--purple);}
+.kpi-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--g500);font-weight:700;margin-bottom:4px;}
+.kpi-val{font-size:28px;font-weight:800;color:var(--g900);line-height:1.1;}
+.kpi-sub{font-size:12px;color:var(--g500);}
+.kpi-trend{font-size:11px;font-weight:600;margin-top:6px;}
+.kpi-trend.up{color:var(--green);}
+.kpi-trend.dn{color:var(--red);}
+.kpi-trend.info{color:var(--blue);}
 
-/* SIDEBAR */
-.sidebar{
-  width:var(--sidebar-w);background:var(--navy);color:#fff;
-  display:flex;flex-direction:column;flex-shrink:0;height:100%;
-  overflow-y:auto;position:relative;z-index:10;
-}
-.sb-logo{padding:16px 14px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:9px}
-.sb-logo-icon{width:30px;height:30px;background:rgba(255,255,255,.14);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.sb-logo-name{font-size:13px;font-weight:800;letter-spacing:-.2px}
-.sb-logo-sub{font-size:10px;color:rgba(255,255,255,.42);margin-top:1px}
-.sb-nav{flex:1;padding:10px 6px}
-.nav-sec-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.8px;padding:10px 10px 4px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;transition:background .14s,color .14s;user-select:none;margin-bottom:1px}
-.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.88)}
-.nav-item.active{background:rgba(255,255,255,.11);color:#fff}
-.nav-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
-.nav-badge{margin-left:auto;background:rgba(255,255,255,.11);padding:1px 6px;border-radius:9px;font-size:10px;font-weight:700;color:rgba(255,255,255,.65)}
-.sb-user{padding:11px 14px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:9px}
-.sb-avatar{width:28px;height:28px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
-.sb-user-info{flex:1;line-height:1.2;min-width:0}
-.sb-user-name{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sb-user-role{font-size:10px;color:rgba(255,255,255,.4)}
-.btn-signout{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:16px;padding:3px;transition:color .15s;line-height:1}
-.btn-signout:hover{color:rgba(255,255,255,.75)}
+/* CARD */
+.card{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;transition:box-shadow .15s;}
+.card:hover{box-shadow:var(--sh-md);}
+.card-hdr{padding:16px 22px 13px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;}
+.card-title{font-size:14px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:7px;}
+.card-badge{font-size:11px;background:var(--g100);color:var(--g500);padding:3px 9px;border-radius:12px;font-weight:600;}
+.card-body{padding:18px 22px;}
+.mb24{margin-bottom:24px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 
-/* MAIN AREA */
-.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+/* CHARTS */
+.bar-chart{display:flex;flex-direction:column;gap:12px;}
+.bar-row{display:flex;align-items:center;gap:12px;}
+.bar-lbl{width:175px;flex-shrink:0;font-size:12px;color:var(--g700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bar-track{flex:1;background:var(--g100);border-radius:5px;height:24px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:5px;display:flex;align-items:center;padding:0 8px;min-width:4px;transition:width .8s cubic-bezier(.22,1,.36,1);}
+.bar-pct{font-size:10px;color:rgba(255,255,255,.85);font-weight:700;white-space:nowrap;}
+.bar-amt{width:72px;flex-shrink:0;text-align:right;font-size:12px;font-weight:700;color:var(--g700);}
+.trend-wrap{display:flex;align-items:flex-end;gap:8px;height:160px;padding-bottom:32px;}
+.trend-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;}
+.trend-bar{width:100%;border-radius:4px 4px 0 0;background:var(--navy);min-height:4px;cursor:pointer;position:relative;transition:height .8s cubic-bezier(.22,1,.36,1);}
+.trend-bar:hover{background:var(--blue);}
+.trend-bar .tip{display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--g900);color:var(--white);padding:4px 8px;border-radius:5px;font-size:11px;font-weight:600;white-space:nowrap;pointer-events:none;z-index:10;}
+.trend-bar:hover .tip{display:block;}
+.trend-mo{font-size:11px;color:var(--g500);font-weight:600;}
+.trend-v{font-size:10px;color:var(--g400);}
 
-/* TOP BAR */
-.topbar{height:var(--topbar-h);background:#fff;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;padding:0 22px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.topbar-left{display:flex;align-items:center;gap:9px}
-.hamburger{display:none;background:none;border:none;color:var(--g700);font-size:20px;cursor:pointer;padding:3px;line-height:1}
-.topbar-title{font-size:14.5px;font-weight:800;color:var(--g900)}
-.topbar-sub{font-size:10.5px;color:var(--g400);margin-top:1px}
-.topbar-right{display:flex;align-items:center;gap:7px}
-.df-wrap{display:flex;background:var(--g100);border-radius:7px;padding:3px;gap:2px}
-.df-btn{padding:4px 9px;border:none;background:none;border-radius:5px;font-size:11px;font-weight:600;color:var(--g500);cursor:pointer;transition:background .12s,color .12s;white-space:nowrap}
-.df-btn.active{background:#fff;color:var(--navy);box-shadow:0 1px 3px rgba(0,0,0,.09)}
-.btn-export{display:flex;align-items:center;gap:5px;padding:6px 12px;background:var(--navy);color:#fff;border:none;border-radius:var(--r-sm);font-size:11.5px;font-weight:700;cursor:pointer;transition:background .15s}
-.btn-export:hover{background:var(--navy-light)}
-.sample-banner{background:#fffbeb;border-bottom:1px solid #fde68a;padding:6px 22px;font-size:11px;color:#78350f;display:flex;align-items:center;justify-content:center;gap:6px;flex-shrink:0}
-.sample-banner a{color:#92400e;font-weight:600}
+/* TABLE */
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:500px;}
+thead th{background:var(--g50);color:var(--g500);font-weight:700;padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1.5px solid var(--g200);white-space:nowrap;}
+th.r,td.r{text-align:right;}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--g100);color:var(--g700);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--g50);}
+.td-s{font-weight:700;color:var(--g900);}
+.td-m{color:var(--g400);font-size:12px;}
+.td-n{font-variant-numeric:tabular-nums;font-weight:700;color:var(--g900);}
+.tot-row td{background:var(--g50);font-weight:800!important;color:var(--g900)!important;border-top:2px solid var(--g200);}
 
-/* CONTENT */
-.content-area{flex:1;overflow-y:auto;padding:20px 22px}
+/* TAGS */
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;}
+.p-harper   {background:#eff6ff;color:#1d4ed8;}
+.p-lindholm {background:#f0fdf4;color:#166534;}
+.p-euclid   {background:#fdf4ff;color:#7e22ce;}
+.p-storage  {background:#fff7ed;color:#c2410c;}
+.p-rautmedia{background:#f0f9ff;color:#0369a1;}
+.cat-tag    {background:var(--g100);color:var(--g700);}
 
-/* OVERLAY (mobile sidebar) */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50}
-.overlay.open{display:block}
+/* BUDGET */
+.bud-item{margin-bottom:18px;}
+.bud-item:last-child{margin-bottom:0;}
+.bud-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;}
+.bud-name{font-size:13px;font-weight:700;color:var(--g900);display:flex;align-items:center;gap:6px;}
+.bud-amts{font-size:12px;color:var(--g500);}
+.bud-track{background:var(--g100);border-radius:6px;height:11px;overflow:hidden;}
+.bud-fill{height:100%;border-radius:6px;transition:width .8s ease;}
+.bud-fill.g{background:var(--green);}
+.bud-fill.a{background:var(--amber);}
+.bud-fill.r{background:var(--red);}
+.bud-bot{display:flex;justify-content:space-between;margin-top:5px;}
+.bud-pct{font-size:11px;font-weight:700;}
+.bud-pct.g{color:var(--green);}
+.bud-pct.a{color:var(--amber);}
+.bud-pct.r{color:var(--red);}
+.bud-rem{font-size:11px;color:var(--g400);}
 
-/* ============================================================
-   COMPONENTS
-   ============================================================ */
+/* PROPERTY CARDS */
+.prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}
+.prop-card{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);cursor:pointer;transition:box-shadow .15s,transform .15s;overflow:hidden;border-top:4px solid var(--blue);}
+.prop-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px);}
+.pc-hdr{padding:16px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;}
+.pc-name{font-size:14px;font-weight:800;color:var(--navy);line-height:1.3;}
+.pc-city{font-size:11px;color:var(--g400);margin-top:2px;}
+.pc-type{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:var(--g100);color:var(--g500);white-space:nowrap;}
+.pc-body{padding:0 18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.pc-stat-lbl{font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
+.pc-stat-val{font-size:16px;font-weight:800;color:var(--g900);}
+.pc-stat-sub{font-size:11px;color:var(--g500);}
+.pc-foot{padding:10px 18px;background:var(--g50);border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.pc-mini-bar{flex:1;background:var(--g200);border-radius:4px;height:6px;}
+.pc-mini-fill{height:100%;border-radius:4px;}
+.pc-link{font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;white-space:nowrap;}
 
-/* KPI grid */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px}
-.kpi-card{background:#fff;border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);border-left:4px solid transparent;transition:box-shadow .15s,transform .15s}
-.kpi-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
-.kc-1{border-color:var(--blue)}.kc-2{border-color:var(--green)}.kc-3{border-color:var(--amber)}.kc-4{border-color:var(--purple)}
-.kpi-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--g500);font-weight:700;margin-bottom:4px}
-.kpi-val{font-size:24px;font-weight:800;color:var(--g900);line-height:1.1}
-.kpi-sub{font-size:11px;color:var(--g500);margin-top:2px}
-.kpi-trend{font-size:10.5px;font-weight:600;margin-top:5px}
-.kpi-trend.up{color:var(--green)}.kpi-trend.down{color:var(--red)}.kpi-trend.nt{color:var(--blue)}
+/* PROPERTY DETAIL */
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--blue);font-size:13px;font-weight:700;cursor:pointer;margin-bottom:20px;padding:0;}
+.back-btn:hover{color:var(--navy);}
+.pd-hdr{background:var(--white);border-radius:var(--r);padding:20px 24px;box-shadow:var(--sh);margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.pd-name{font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.3px;}
+.pd-sub{font-size:13px;color:var(--g500);margin-top:2px;}
+.pd-kpis{display:flex;gap:32px;flex-wrap:wrap;}
+.pd-kpi{display:flex;flex-direction:column;gap:2px;}
+.pd-kpi-lbl{font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
+.pd-kpi-val{font-size:20px;font-weight:800;color:var(--g900);}
+.tab-bar{display:flex;gap:4px;margin-bottom:20px;background:var(--white);border-radius:var(--rs);padding:4px;box-shadow:var(--sh);width:fit-content;flex-wrap:wrap;}
+.tab-btn{padding:7px 14px;border:none;border-radius:var(--rx);font-size:12px;font-weight:600;color:var(--g500);background:none;cursor:pointer;transition:all .15s;}
+.tab-btn.active{background:var(--navy);color:var(--white);}
+.tab-btn:hover:not(.active){background:var(--g100);color:var(--g900);}
 
-/* Card */
-.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
-.card-hdr{padding:13px 18px 11px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between}
-.card-title{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
-.card-badge{font-size:10px;background:var(--g100);color:var(--g500);padding:2px 8px;border-radius:10px;font-weight:600}
-.card-body{padding:15px 18px}
+/* ACTIVITY FEED */
+.act-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100);}
+.act-item:last-child{border-bottom:none;}
+.act-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px;}
+.act-body{flex:1;}
+.act-title{font-size:13px;font-weight:600;color:var(--g900);}
+.act-meta{font-size:12px;color:var(--g400);}
+.act-amt{font-size:13px;font-weight:700;color:var(--g900);white-space:nowrap;}
 
-/* Layout */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.mb16{margin-bottom:16px}.mb18{margin-bottom:18px}.mb20{margin-bottom:20px}
+/* FILTERS */
+.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.search-input{padding:8px 14px;border:1.5px solid var(--g200);border-radius:var(--rx);font-size:13px;color:var(--g900);outline:none;background:var(--white);transition:border-color .15s,box-shadow .15s;min-width:200px;}
+.search-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.1);}
+.filter-sel{padding:8px 12px;border:1.5px solid var(--g200);border-radius:var(--rx);font-size:13px;color:var(--g700);background:var(--white);outline:none;cursor:pointer;}
+.filter-sel:focus{border-color:var(--blue);}
 
-/* Table */
-.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:440px}
-thead th{background:var(--g50);color:var(--g500);font-weight:700;padding:8px 13px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;border-bottom:1.5px solid var(--g200);white-space:nowrap;cursor:pointer;user-select:none}
-thead th:hover{color:var(--g700)}
-thead th.sort-asc::after{content:' ↑'}
-thead th.sort-desc::after{content:' ↓'}
-th.r,td.r{text-align:right}
-tbody td{padding:8px 13px;border-bottom:1px solid var(--g100);color:var(--g700);vertical-align:middle}
-tbody tr:last-child td{border-bottom:none}
-tbody tr:hover{background:var(--g50)}
-.td-s{font-weight:700;color:var(--g900)}.td-m{color:var(--g400);font-size:11px}.td-n{font-variant-numeric:tabular-nums;font-weight:700;color:var(--g900)}
-.tr-total td{background:var(--g50);font-weight:800!important;color:var(--g900)!important;border-top:2px solid var(--g200)}
+/* COMING SOON */
+.coming-soon{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;text-align:center;}
+.cs-icon{font-size:52px;margin-bottom:16px;}
+.cs-title{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:8px;}
+.cs-sub{font-size:14px;color:var(--g500);max-width:380px;}
 
-/* Tags */
-.tag{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:9px;font-size:10px;font-weight:700;white-space:nowrap}
-.th{background:#eff6ff;color:#1d4ed8}   /* harper */
-.ta{background:#f0fdf4;color:#166534}   /* akron */
-.tc{background:#f5f3ff;color:#5b21b6}   /* cleveland */
-.ts{background:#fffbeb;color:#92400e}   /* storage */
-.tr{background:#e0f2fe;color:#0369a1}   /* rautmedia */
-.tg{background:var(--g100);color:var(--g600)} /* generic */
-.tl{background:#fff1f2;color:#9f1239}   /* labor */
-.tm{background:#eff6ff;color:#1e40af}   /* materials */
-.tu{background:#fefce8;color:#854d0e}   /* utilities */
-.tp{background:#f0fdf4;color:#14532d}   /* permits */
-.tk{background:#fdf4ff;color:#6b21a8}   /* maintenance */
-.tad{background:var(--g100);color:var(--g600)} /* admin */
-
-/* Prop dot */
-.pdot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:4px}
-
-/* Horizontal bar chart */
-.bar-chart{display:flex;flex-direction:column;gap:10px}
-.bar-row{display:flex;align-items:center;gap:9px}
-.bar-lbl{width:175px;flex-shrink:0;font-size:11px;color:var(--g700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:5px}
-.bar-track{flex:1;background:var(--g100);border-radius:4px;height:20px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;transition:width .85s cubic-bezier(.22,1,.36,1);display:flex;align-items:center;padding:0 6px;min-width:4px}
-.bar-pct{font-size:9.5px;color:rgba(255,255,255,.85);font-weight:700}
-.bar-amt{width:65px;flex-shrink:0;text-align:right;font-size:11.5px;font-weight:700;color:var(--g700)}
-
-/* Vertical trend bars */
-.trend-wrap{display:flex;align-items:flex-end;gap:6px;height:155px;padding-bottom:26px;position:relative}
-.trend-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
-.trend-bar{width:100%;border-radius:4px 4px 0 0;background:var(--navy);transition:height .8s cubic-bezier(.22,1,.36,1);min-height:3px;cursor:pointer;position:relative}
-.trend-bar:hover{background:var(--blue)}
-.trend-tip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:var(--g900);color:#fff;padding:3px 7px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap;pointer-events:none;z-index:10}
-.trend-bar:hover .trend-tip{display:block}
-.trend-mo{font-size:10px;color:var(--g500);font-weight:600}
-.trend-val{font-size:9.5px;color:var(--g400)}
-
-/* Category mini bars */
-.cat-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.cat-lbl{width:145px;font-size:11.5px;color:var(--g700);flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cat-track{flex:1;background:var(--g100);border-radius:4px;height:13px}
-.cat-fill{height:100%;border-radius:4px;background:var(--blue);transition:width .7s ease}
-.cat-amt{width:56px;text-align:right;font-size:11px;font-weight:700;color:var(--g700);flex-shrink:0}
-
-/* Budget */
-.bdg-item{margin-bottom:16px}
-.bdg-item:last-child{margin-bottom:0}
-.bdg-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
-.bdg-name{font-size:12px;font-weight:700;color:var(--g900)}
-.bdg-amts{font-size:10.5px;color:var(--g500)}
-.bdg-track{background:var(--g100);border-radius:5px;height:9px;overflow:hidden}
-.bdg-fill{height:100%;border-radius:5px;transition:width .8s ease}
-.bdg-fill.g{background:var(--green)}.bdg-fill.a{background:var(--amber)}.bdg-fill.r{background:var(--red)}
-.bdg-bot{display:flex;justify-content:space-between;margin-top:4px}
-.bdg-pct{font-size:10px;font-weight:700}
-.bdg-pct.g{color:var(--green)}.bdg-pct.a{color:var(--amber)}.bdg-pct.r{color:var(--red)}
-.bdg-rem{font-size:10px;color:var(--g400)}
-
-/* Activity feed */
-.feed-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--g100)}
-.feed-item:last-child{border-bottom:none}
-.feed-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.feed-body{flex:1;min-width:0}
-.feed-title{font-size:12px;font-weight:600;color:var(--g900)}
-.feed-sub{font-size:10.5px;color:var(--g500);margin-top:1px}
-.feed-amt{font-size:12.5px;font-weight:700;color:var(--g900);flex-shrink:0;white-space:nowrap}
-
-/* Property cards */
-.prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.prop-card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:box-shadow .15s,transform .15s;border-top:4px solid transparent}
-.prop-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
-.prop-card-body{padding:14px 16px}
-.prop-card-name{font-size:13px;font-weight:700;color:var(--g900);margin-bottom:1px}
-.prop-card-city{font-size:10.5px;color:var(--g500);margin-bottom:12px}
-.prop-card-amt{font-size:22px;font-weight:800;color:var(--g900);margin-bottom:1px}
-.prop-card-meta{font-size:10.5px;color:var(--g500);margin-bottom:10px}
-.prop-card-cats{display:flex;flex-wrap:wrap;gap:4px}
-.prop-view-btn{margin-top:12px;width:100%;padding:7px;background:var(--g50);border:1px solid var(--g200);border-radius:6px;font-size:11px;font-weight:700;color:var(--g600);cursor:pointer;transition:background .14s,color .14s;text-align:center}
-.prop-card:hover .prop-view-btn{background:var(--blue-lt);border-color:var(--blue);color:var(--blue)}
-
-/* Property detail */
-.det-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
-.det-hdr-left{display:flex;align-items:center;gap:10px}
-.det-color-bar{width:5px;height:48px;border-radius:3px;flex-shrink:0}
-.det-name{font-size:18px;font-weight:800;color:var(--g900);line-height:1.2}
-.det-sub{font-size:11px;color:var(--g500);margin-top:2px}
-.det-total{font-size:26px;font-weight:800;color:var(--g900)}
-.det-total-label{font-size:10.5px;color:var(--g500);margin-bottom:2px}
-.btn-back{display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--g100);border:1px solid var(--g200);border-radius:var(--r-sm);font-size:11.5px;font-weight:600;color:var(--g700);cursor:pointer;transition:background .14s;text-decoration:none;white-space:nowrap}
-.btn-back:hover{background:var(--g200)}
-
-/* Tabs */
-.tabs{display:flex;gap:3px;border-bottom:2px solid var(--g200);margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tab{padding:7px 12px;font-size:11.5px;font-weight:600;color:var(--g500);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s;user-select:none;white-space:nowrap}
-.tab:hover{color:var(--g700)}
-.tab.active{color:var(--navy);border-bottom-color:var(--navy)}
-
-/* Filters */
-.filters-bar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:#fff;padding:11px 14px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:14px}
-.filter-sel,.filter-inp{padding:6px 10px;border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:12px;color:var(--g700);outline:none;background:#fff;transition:border-color .14s}
-.filter-sel:focus,.filter-inp:focus{border-color:var(--blue)}
-.filter-inp{flex:1;min-width:185px}
-.filter-lbl{font-size:10.5px;font-weight:600;color:var(--g500);white-space:nowrap}
-.btn-reset{padding:6px 11px;background:none;border:1.5px solid var(--g200);border-radius:var(--r-xs);font-size:11.5px;font-weight:600;color:var(--g500);cursor:pointer;transition:all .14s}
-.btn-reset:hover{border-color:var(--g400);color:var(--g700)}
-.txn-count{font-size:11px;color:var(--g500);margin-left:auto}
-
-/* Alert */
-.alert-r{background:var(--red-lt);border:1px solid #fca5a5;border-radius:var(--r-xs);padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;gap:7px;font-size:12px;color:#991b1b;font-weight:600}
-.alert-a{background:var(--amber-lt);border:1px solid #fcd34d;border-radius:var(--r-xs);padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;gap:7px;font-size:12px;color:#92400e;font-weight:600}
-
-/* Empty */
-.empty{text-align:center;padding:38px 20px;color:var(--g500)}
-.empty-icon{font-size:34px;margin-bottom:9px}
-.empty-title{font-size:13.5px;font-weight:700;color:var(--g700);margin-bottom:4px}
-.empty-sub{font-size:12px}
-
-/* Reports placeholder */
-.rp-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;background:#fff;border-radius:var(--r);box-shadow:var(--sh);text-align:center;padding:36px}
-.rp-icon{font-size:44px;margin-bottom:12px}
-.rp-title{font-size:19px;font-weight:800;color:var(--g900);margin-bottom:7px}
-.rp-sub{font-size:12.5px;color:var(--g500);max-width:360px;line-height:1.6}
-.rp-coming{display:inline-block;margin-top:14px;padding:5px 14px;background:var(--amber-lt);border:1px solid #fcd34d;border-radius:12px;font-size:11px;font-weight:700;color:#92400e}
-
-/* Section heading */
-.sec-hdr{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g500);margin-bottom:10px;margin-top:4px}
-
-/* ============================================================
-   MOBILE / RESPONSIVE
-   ============================================================ */
-@media(max-width:1100px){
-  .kpi-grid{grid-template-columns:repeat(2,1fr)}
-  .g2{grid-template-columns:1fr}
-  .g3{grid-template-columns:repeat(2,1fr)}
-  .prop-grid{grid-template-columns:repeat(2,1fr)}
-}
+/* RESPONSIVE */
 @media(max-width:768px){
-  .sidebar{position:fixed;left:-230px;top:0;height:100vh;z-index:100;transition:left .25s ease;box-shadow:none}
-  .sidebar.open{left:0;box-shadow:3px 0 20px rgba(0,0,0,.25)}
-  .hamburger{display:flex!important;align-items:center;justify-content:center}
-  .prop-grid{grid-template-columns:1fr}
-  .kpi-grid{grid-template-columns:repeat(2,1fr)}
-  .topbar{padding:0 13px}
-  .content-area{padding:14px 13px 72px}
-  .btn-export span.ex-label{display:none}
-  .bar-lbl{width:110px;font-size:10px}
-  .bottom-nav{display:flex!important}
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .hamburger{display:flex;}
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+  .two-col{grid-template-columns:1fr;}
+  .prop-grid{grid-template-columns:1fr;}
+  #page-content{padding:14px;}
+  .kpi-val{font-size:22px;}
+  .topbar{padding:0 14px;}
+  .tb-right .date-btn:nth-child(1),.tb-right .date-btn:nth-child(2){display:none;}
 }
-@media(max-width:480px){
-  .kpi-val{font-size:20px}
-  .topbar-sub{display:none}
-  .df-wrap{display:none}
+@media(max-width:1100px){
+  .two-col{grid-template-columns:1fr;}
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+  .prop-grid{grid-template-columns:repeat(2,1fr);}
 }
-
-/* BOTTOM NAV */
-.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--g200);z-index:80;height:54px}
-.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;font-weight:600;color:var(--g500);cursor:pointer;transition:color .14s;padding:5px 0;border:none;background:none}
-.bn-item.active{color:var(--navy)}
-.bn-icon{font-size:17px}
-@media(min-width:769px){.bottom-nav{display:none!important}}
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     AUTH: LOGIN
-     ============================================================ -->
+<!-- LOGIN -->
 <div class="auth-screen" id="screen-login">
   <div class="auth-card">
     <div class="auth-brand">
-      <div class="auth-brand-icon">🏠</div>
-      <div class="auth-brand-name">UpneX</div>
+      <div class="auth-icon">🏠</div>
+      <div class="auth-name">UpneX</div>
     </div>
-    <div class="auth-tagline">Raut Properties &nbsp;·&nbsp; Owner Portal</div>
-    <div class="auth-heading">Sign in to your dashboard</div>
-    <div class="auth-err" id="login-err">Incorrect username or password. Please try again.</div>
-    <div class="fg">
-      <label>Username</label>
-      <input type="text" id="l-user" placeholder="Username" autocomplete="username" spellcheck="false">
-    </div>
-    <div class="fg">
-      <label>Password</label>
-      <input type="password" id="l-pass" placeholder="Password" autocomplete="current-password">
-    </div>
-    <button class="btn-auth" onclick="doLogin()">Continue &rarr;</button>
-    <div class="auth-footer">
+    <div class="auth-sub">Raut Properties &nbsp;·&nbsp; Owner Portal</div>
+    <div class="auth-h">Sign in to your dashboard</div>
+    <div class="auth-err" id="login-err">Incorrect username or password.</div>
+    <div class="fg"><label>Username</label><input type="text" id="l-user" placeholder="Username" autocomplete="username" spellcheck="false"></div>
+    <div class="fg"><label>Password</label><input type="password" id="l-pass" placeholder="Password" autocomplete="current-password"></div>
+    <button class="btn-pri" onclick="doLogin()">Continue &nbsp;→</button>
+    <div class="auth-foot">
       <div class="ramp-badge">💳 Powered by Ramp</div>
-      <div class="auth-legal">Secure owner-only access &middot; All data is confidential</div>
+      <div class="auth-legal">Secure owner-only access · All data is confidential</div>
     </div>
   </div>
 </div>
 
-<!-- ============================================================
-     AUTH: PIN
-     ============================================================ -->
+<!-- PIN -->
 <div class="auth-screen" id="screen-pin" style="display:none">
   <div class="auth-card">
     <div class="auth-brand">
-      <div class="auth-brand-icon">🔐</div>
-      <div class="auth-brand-name">2-Step Verification</div>
+      <div class="auth-icon">🔐</div>
+      <div class="auth-name">2-Step Verification</div>
     </div>
-    <div class="auth-tagline" style="margin-bottom:20px">Enter your 6-digit access PIN</div>
+    <div class="auth-sub" style="margin-bottom:22px">Enter your 6-digit access PIN</div>
     <div class="auth-err" id="pin-err">Incorrect PIN. Please try again.</div>
     <div class="pin-dots" id="pin-dots">
-      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
-      <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
-      <div class="pin-dot" id="pd4"></div><div class="pin-dot" id="pd5"></div>
+      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div><div class="pin-dot" id="pd2"></div>
+      <div class="pin-dot" id="pd3"></div><div class="pin-dot" id="pd4"></div><div class="pin-dot" id="pd5"></div>
     </div>
     <div class="pin-keypad">
-      <div class="pin-key" onclick="pinAdd('1')">1</div>
-      <div class="pin-key" onclick="pinAdd('2')">2</div>
-      <div class="pin-key" onclick="pinAdd('3')">3</div>
-      <div class="pin-key" onclick="pinAdd('4')">4</div>
-      <div class="pin-key" onclick="pinAdd('5')">5</div>
-      <div class="pin-key" onclick="pinAdd('6')">6</div>
-      <div class="pin-key" onclick="pinAdd('7')">7</div>
-      <div class="pin-key" onclick="pinAdd('8')">8</div>
-      <div class="pin-key" onclick="pinAdd('9')">9</div>
-      <div class="pin-key empty"></div>
-      <div class="pin-key" onclick="pinAdd('0')">0</div>
-      <div class="pin-key del" onclick="pinDel()">&#9003;</div>
+      <div class="pin-key" onclick="pinAdd('1')">1</div><div class="pin-key" onclick="pinAdd('2')">2</div><div class="pin-key" onclick="pinAdd('3')">3</div>
+      <div class="pin-key" onclick="pinAdd('4')">4</div><div class="pin-key" onclick="pinAdd('5')">5</div><div class="pin-key" onclick="pinAdd('6')">6</div>
+      <div class="pin-key" onclick="pinAdd('7')">7</div><div class="pin-key" onclick="pinAdd('8')">8</div><div class="pin-key" onclick="pinAdd('9')">9</div>
+      <div class="pin-key empty"></div><div class="pin-key" onclick="pinAdd('0')">0</div><div class="pin-key del" onclick="pinDel()">⌫</div>
     </div>
-    <div class="auth-footer" style="margin-top:14px">
-      <div class="auth-legal">🔒 Session active while this tab is open</div>
-    </div>
+    <div class="auth-foot" style="margin-top:16px"><div class="auth-legal">🔒 Session stays active while this tab is open</div></div>
   </div>
 </div>
 
-<!-- ============================================================
-     APP SHELL
-     ============================================================ -->
+<!-- APP -->
 <div id="app">
-  <div class="overlay" id="sb-overlay" onclick="closeSidebar()"></div>
-
-  <div class="app-layout">
-
-    <!-- SIDEBAR -->
-    <nav class="sidebar" id="sidebar">
-      <div class="sb-logo">
-        <div class="sb-logo-icon">🏠</div>
-        <div>
-          <div class="sb-logo-name">UpneX</div>
-          <div class="sb-logo-sub">Raut Properties</div>
-        </div>
-      </div>
-
-      <div class="sb-nav">
-        <div class="nav-sec-label">Main</div>
-        <div class="nav-item active" id="nav-overview" onclick="navigate('overview')">
-          <span class="nav-icon">📊</span> Overview
-        </div>
-        <div class="nav-item" id="nav-properties" onclick="navigate('properties')">
-          <span class="nav-icon">🏘️</span> Properties
-          <span class="nav-badge">5</span>
-        </div>
-        <div class="nav-item" id="nav-transactions" onclick="navigate('transactions')">
-          <span class="nav-icon">📋</span> Transactions
-        </div>
-        <div class="nav-sec-label">Finance</div>
-        <div class="nav-item" id="nav-budget" onclick="navigate('budget')">
-          <span class="nav-icon">🎯</span> Budget
-        </div>
-        <div class="nav-item" id="nav-reports" onclick="navigate('reports')">
-          <span class="nav-icon">📄</span> Reports
-        </div>
-      </div>
-
+  <div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">🏠</div>
+      <div><div class="sb-bname">UpneX</div><div class="sb-bsub">Raut Properties</div></div>
+    </div>
+    <div class="sb-nav">
+      <div class="nav-sec">Main</div>
+      <div class="nav-item active" data-view="overview"     onclick="nav(this,'overview')"><span class="ni">📊</span>Overview</div>
+      <div class="nav-item"        data-view="properties"   onclick="nav(this,'properties')"><span class="ni">🏘️</span>Properties</div>
+      <div class="nav-item"        data-view="transactions" onclick="nav(this,'transactions')"><span class="ni">📋</span>Transactions</div>
+      <div class="nav-item"        data-view="budget"       onclick="nav(this,'budget')"><span class="ni">🎯</span>Budget</div>
+      <div class="nav-sec" style="margin-top:8px">Analytics</div>
+      <div class="nav-item"        data-view="reports"      onclick="nav(this,'reports')"><span class="ni">📄</span>Reports</div>
+    </div>
+    <div class="sb-foot">
       <div class="sb-user">
-        <div class="sb-avatar">AR</div>
-        <div class="sb-user-info">
-          <div class="sb-user-name">Amit Raut</div>
-          <div class="sb-user-role">Property Owner</div>
-        </div>
-        <button class="btn-signout" onclick="doLogout()" title="Sign out">⏻</button>
+        <div class="sb-av">AR</div>
+        <div><div class="sb-uname">Amit Raut</div><div class="sb-urole">Property Owner</div></div>
       </div>
-    </nav>
-
-    <!-- MAIN AREA -->
-    <div class="main-area">
-
-      <!-- TOP BAR -->
-      <div class="topbar">
-        <div class="topbar-left">
-          <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()">☰</button>
-          <div>
-            <div class="topbar-title" id="topbar-title">Overview</div>
-            <div class="topbar-sub" id="topbar-sub">Raut Properties Portfolio</div>
-          </div>
-        </div>
-        <div class="topbar-right">
-          <div class="df-wrap">
-            <button class="df-btn" id="df-month" onclick="setDateRange('month')">This Month</button>
-            <button class="df-btn" id="df-q" onclick="setDateRange('q')">Last 3 Mo</button>
-            <button class="df-btn active" id="df-ytd" onclick="setDateRange('ytd')">YTD</button>
-            <button class="df-btn" id="df-all" onclick="setDateRange('all')">All Time</button>
-          </div>
-          <button class="btn-export" onclick="exportCSV()">
-            <span>⬇</span><span class="ex-label">Export</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- SAMPLE DATA BANNER -->
-      <div class="sample-banner">
-        ⚠️ <strong>Sample Data</strong> — Ramp MCP not connected. Live data loads when Ramp API credentials are configured.
-        &nbsp;<a href="mailto:hari@upnexs.com">Contact hari@upnexs.com</a> to connect.
-      </div>
-
-      <!-- PAGE CONTENT -->
-      <div class="content-area" id="content-area"></div>
-
-    </div><!-- /main-area -->
-  </div><!-- /app-layout -->
-
-  <!-- BOTTOM NAV (mobile) -->
-  <nav class="bottom-nav">
-    <button class="bn-item active" id="bn-overview" onclick="navigate('overview')">
-      <span class="bn-icon">📊</span>Overview
-    </button>
-    <button class="bn-item" id="bn-properties" onclick="navigate('properties')">
-      <span class="bn-icon">🏘️</span>Props
-    </button>
-    <button class="bn-item" id="bn-transactions" onclick="navigate('transactions')">
-      <span class="bn-icon">📋</span>Txns
-    </button>
-    <button class="bn-item" id="bn-budget" onclick="navigate('budget')">
-      <span class="bn-icon">🎯</span>Budget
-    </button>
-    <button class="bn-item" id="bn-reports" onclick="navigate('reports')">
-      <span class="bn-icon">📄</span>Reports
-    </button>
+      <button class="sb-logout" onclick="doLogout()">Sign Out</button>
+    </div>
   </nav>
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-left">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <div class="page-title" id="page-title">Overview</div>
+      </div>
+      <div class="tb-right" id="date-filters">
+        <button class="date-btn"        onclick="setDate(this,'month')">This Month</button>
+        <button class="date-btn"        onclick="setDate(this,'3mo')">3 Months</button>
+        <button class="date-btn active" onclick="setDate(this,'ytd')">YTD</button>
+        <button class="date-btn"        onclick="setDate(this,'all')">All Time</button>
+      </div>
+    </div>
+    <div class="sample-banner">⚠️&nbsp;<strong>Sample Data</strong> — Connect Ramp for live data</div>
+    <div id="page-content"></div>
+  </div>
+</div>
 
-</div><!-- /app -->
-
-<!-- ============================================================
-     SCRIPT
-     ============================================================ -->
 <script>
-/* ─── AUTH CONSTANTS (obfuscated) ─────────────────────────────── */
-const _U = atob('cmF1' + 'dA==');
-const _P = atob('UmF1dEAy' + 'MDI2IQ==');
-const _C = atob('NDgy' + 'MDI0');
-let _pin = '';
-
-/* ─── APP STATE ────────────────────────────────────────────────── */
-let currentView   = 'overview';
-let currentPropId = null;
-let propDetailTab = 'all';
-let globalRange   = 'ytd';
-let txnSortCol    = 'date';
-let txnSortDir    = 'desc';
-let txnSearch     = '';
-let txnPropFilter = 'all';
-let txnCatFilter  = 'all';
-
-/* ─── DATA ─────────────────────────────────────────────────────── */
-const PROPS = [
-  { id:'harper',    name:'2015 Harper Ave',    city:'Scranton, PA',  color:'#2563eb', budget:90000,  tagCls:'th' },
-  { id:'akron',     name:'Akron Properties',   city:'Akron, OH',     color:'#16a34a', budget:40000,  tagCls:'ta' },
-  { id:'cleveland', name:'Cleveland Properties',city:'Cleveland, OH', color:'#7c3aed', budget:45000,  tagCls:'tc' },
-  { id:'storage',   name:'Storage Bordentown',  city:'Bordentown, NJ',color:'#d97706', budget:20000,  tagCls:'ts' },
-  { id:'rautmedia', name:'RautMedia',           city:'Business',      color:'#0891b2', budget:15000,  tagCls:'tr' },
-];
-
-const CAT_BUDGETS = {
-  'Labor':       60000,
-  'Materials':   45000,
-  'Utilities':   18000,
-  'Permits':      8000,
-  'Maintenance': 15000,
-  'Admin':       10000,
-};
-
-/* 67 transactions, Jan – May 2026 */
-const TXNS = [
-  /* ── January 2026 ── */
-  { date:'2026-01-08', merchant:'ABC Roofing LLC',    cat:'Labor',       prop:'harper',    amt:8200,  card:'···7823', notes:'Roof replacement deposit' },
-  { date:'2026-01-10', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:2340,  card:'···7823', notes:'Framing lumber & supplies' },
-  { date:'2026-01-12', merchant:'PPL Electric',       cat:'Utilities',   prop:'harper',    amt:690,   card:'···9156', notes:'January electric bill' },
-  { date:'2026-01-15', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:1890,  card:'···7823', notes:'Plumbing rough-in labor' },
-  { date:'2026-01-14', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:1120,  card:'···3421', notes:'Flooring materials' },
-  { date:'2026-01-20', merchant:'Ace Hardware',       cat:'Maintenance', prop:'akron',     amt:340,   card:'···3421', notes:'Unit repairs misc' },
-  { date:'2026-01-09', merchant:"Lowe's",             cat:'Materials',   prop:'cleveland', amt:780,   card:'···3421', notes:'Drywall & mud' },
-  { date:'2026-01-22', merchant:'Sherwin-Williams',   cat:'Materials',   prop:'cleveland', amt:380,   card:'···3421', notes:'Exterior paint' },
-  { date:'2026-01-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
-  { date:'2026-01-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
-  { date:'2026-01-05', merchant:'Google Workspace',   cat:'Admin',       prop:'rautmedia', amt:72,    card:'···9156', notes:'G Suite monthly' },
-  { date:'2026-01-28', merchant:'Amazon Business',    cat:'Admin',       prop:'rautmedia', amt:230,   card:'···9156', notes:'Office supplies' },
-
-  /* ── February 2026 ── */
-  { date:'2026-02-03', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:1890,  card:'···7823', notes:'Insulation & drywall' },
-  { date:'2026-02-07', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:2450,  card:'···7823', notes:'Plumbing fixtures install' },
-  { date:'2026-02-14', merchant:'PECO Energy',        cat:'Utilities',   prop:'harper',    amt:890,   card:'···9156', notes:'February utility bill' },
-  { date:'2026-02-18', merchant:'City of Scranton',   cat:'Permits',     prop:'harper',    amt:450,   card:'···7823', notes:'Building permit fee' },
-  { date:'2026-02-10', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:1340,  card:'···3421', notes:'Kitchen cabinet materials' },
-  { date:'2026-02-19', merchant:"Lowe's",             cat:'Materials',   prop:'akron',     amt:680,   card:'···3421', notes:'Bathroom fixtures' },
-  { date:'2026-02-06', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:1700,  card:'···7823', notes:'Pipe replacement' },
-  { date:'2026-02-21', merchant:'Home Depot',         cat:'Materials',   prop:'cleveland', amt:890,   card:'···3421', notes:'Flooring' },
-  { date:'2026-02-15', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
-  { date:'2026-02-20', merchant:'State Farm',         cat:'Admin',       prop:'storage',   amt:720,   card:'···9156', notes:'Quarterly insurance premium' },
-  { date:'2026-02-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
-  { date:'2026-02-05', merchant:'Dropbox',            cat:'Admin',       prop:'rautmedia', amt:20,    card:'···9156', notes:'Storage subscription' },
-
-  /* ── March 2026 ── */
-  { date:'2026-03-04', merchant:'ABC Roofing LLC',    cat:'Labor',       prop:'harper',    amt:4100,  card:'···7823', notes:'Roof completion payment' },
-  { date:'2026-03-09', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:2890,  card:'···7823', notes:'Tile & flooring' },
-  { date:'2026-03-14', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'harper',    amt:3400,  card:'···7823', notes:'Master bath plumbing' },
-  { date:'2026-03-20', merchant:'Paint World',        cat:'Materials',   prop:'harper',    amt:680,   card:'···3421', notes:'Interior paint supply' },
-  { date:'2026-03-08', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:2100,  card:'···3421', notes:'Deck construction materials' },
-  { date:'2026-03-17', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'akron',     amt:1500,  card:'···7823', notes:'Kitchen plumbing' },
-  { date:'2026-03-11', merchant:'Sherwin-Williams',   cat:'Materials',   prop:'cleveland', amt:620,   card:'···3421', notes:'Interior paint 3 units' },
-  { date:'2026-03-18', merchant:'Ace Hardware',       cat:'Maintenance', prop:'cleveland', amt:450,   card:'···3421', notes:'Door hardware & locks' },
-  { date:'2026-03-25', merchant:'Home Depot',         cat:'Materials',   prop:'cleveland', amt:1340,  card:'···3421', notes:'Kitchen remodel supplies' },
-  { date:'2026-03-15', merchant:'Ace Hardware',       cat:'Maintenance', prop:'storage',   amt:450,   card:'···9156', notes:'Lock & key replacement' },
-  { date:'2026-03-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
-  { date:'2026-03-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
-  { date:'2026-03-12', merchant:'LinkedIn Ads',       cat:'Admin',       prop:'rautmedia', amt:850,   card:'···9156', notes:'Lead gen campaign' },
-  { date:'2026-03-19', merchant:'Google Ads',         cat:'Admin',       prop:'rautmedia', amt:1200,  card:'···9156', notes:'Search campaign spend' },
-
-  /* ── April 2026 ── */
-  { date:'2026-04-03', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:1780,  card:'···3421', notes:'Bathroom vanities' },
-  { date:'2026-04-10', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:1230,  card:'···7823', notes:'Fixture installation' },
-  { date:'2026-04-16', merchant:'PPL Electric',       cat:'Utilities',   prop:'harper',    amt:890,   card:'···9156', notes:'April electric bill' },
-  { date:'2026-04-22', merchant:'Ace Hardware',       cat:'Maintenance', prop:'harper',    amt:560,   card:'···3421', notes:'Tools & door hardware' },
-  { date:'2026-04-07', merchant:"Lowe's",             cat:'Materials',   prop:'akron',     amt:1200,  card:'···3421', notes:'Deck composite boards' },
-  { date:'2026-04-20', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:890,   card:'···3421', notes:'Garage door parts' },
-  { date:'2026-04-09', merchant:"Lowe's",             cat:'Materials',   prop:'cleveland', amt:980,   card:'···3421', notes:'Window replacement' },
-  { date:'2026-04-17', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:900,   card:'···7823', notes:'Sink repairs 2 units' },
-  { date:'2026-04-14', merchant:'ADT Security',       cat:'Admin',       prop:'storage',   amt:890,   card:'···9156', notes:'Security system install' },
-  { date:'2026-04-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
-  { date:'2026-04-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
-  { date:'2026-04-12', merchant:'AWS',                cat:'Admin',       prop:'rautmedia', amt:340,   card:'···9156', notes:'Cloud hosting' },
-
-  /* ── May 2026 ── */
-  { date:'2026-05-29', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:1890,  card:'···7823', notes:'Final plumbing inspection' },
-  { date:'2026-05-28', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:1250,  card:'···7823', notes:'Finishing materials' },
-  { date:'2026-05-27', merchant:'PECO Energy',        cat:'Utilities',   prop:'harper',    amt:890,   card:'···9156', notes:'May utility bill' },
-  { date:'2026-05-23', merchant:'ABC Roofing LLC',    cat:'Labor',       prop:'harper',    amt:4100,  card:'···7823', notes:'Gutter installation' },
-  { date:'2026-05-19', merchant:'Home Depot',         cat:'Materials',   prop:'harper',    amt:2340,  card:'···7823', notes:'Landscaping & exterior' },
-  { date:'2026-05-16', merchant:'PPL Electric',       cat:'Utilities',   prop:'harper',    amt:690,   card:'···9156', notes:'Electric reconnect fee' },
-  { date:'2026-05-15', merchant:'Ferguson Supply',    cat:'Labor',       prop:'harper',    amt:2450,  card:'···7823', notes:'Final punch list plumbing' },
-  { date:'2026-05-26', merchant:"Lowe's",             cat:'Materials',   prop:'akron',     amt:450,   card:'···3421', notes:'Paint touch-up supplies' },
-  { date:'2026-05-13', merchant:'Home Depot',         cat:'Materials',   prop:'akron',     amt:1120,  card:'···3421', notes:'Window trim materials' },
-  { date:'2026-05-25', merchant:'Sherwin-Williams',   cat:'Materials',   prop:'cleveland', amt:380,   card:'···3421', notes:'Unit 3 exterior paint' },
-  { date:'2026-05-22', merchant:'Home Depot',         cat:'Materials',   prop:'cleveland', amt:890,   card:'···3421', notes:'Carpet replacement' },
-  { date:'2026-05-20', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:1700,  card:'···7823', notes:'Water heater replacement' },
-  { date:'2026-05-11', merchant:'Plumbing Pro LLC',   cat:'Labor',       prop:'cleveland', amt:900,   card:'···7823', notes:'Drain line camera' },
-  { date:'2026-05-24', merchant:'Amazon Business',    cat:'Admin',       prop:'storage',   amt:230,   card:'···9156', notes:'Storage unit supplies' },
-  { date:'2026-05-18', merchant:'Waste Management',   cat:'Admin',       prop:'storage',   amt:580,   card:'···9156', notes:'Monthly waste pickup' },
-  { date:'2026-05-05', merchant:'Adobe Inc',          cat:'Admin',       prop:'rautmedia', amt:145,   card:'···9156', notes:'Creative Cloud' },
-  { date:'2026-05-05', merchant:'Zoom',               cat:'Admin',       prop:'rautmedia', amt:15,    card:'···9156', notes:'Video meetings subscription' },
-];
-
-/* ─── UTILITY FUNCTIONS ────────────────────────────────────────── */
-function fmt(n){ return '$' + Math.abs(Math.round(n)).toLocaleString('en-US'); }
-function pct(a,b){ return b ? ((a/b)*100).toFixed(1) : '0.0'; }
-function fmtDate(d){
-  const [,m,day] = d.split('-');
-  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]+' '+parseInt(day);
-}
-function fmtMo(d){
-  const [,m] = d.split('-');
-  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1];
-}
-function propById(id){ return PROPS.find(p=>p.id===id); }
-function catIcon(c){ return {Labor:'🔨',Materials:'🧱',Utilities:'⚡',Permits:'📋',Maintenance:'🔧',Admin:'🏢'}[c]||'📌'; }
-function catTagCls(c){ return {Labor:'tl',Materials:'tm',Utilities:'tu',Permits:'tp',Maintenance:'tk',Admin:'tad'}[c]||'tg'; }
-function catColor(c){ return {Labor:'#dc2626',Materials:'#2563eb',Utilities:'#d97706',Permits:'#16a34a',Maintenance:'#7c3aed',Admin:'#0891b2'}[c]||'#94a3b8'; }
-function propShort(id){ return {harper:'Harper Ave',akron:'Akron, OH',cleveland:'Cleveland, OH',storage:'Storage NJ',rautmedia:'RautMedia'}[id]||id; }
-
-function getDateFilter(){
-  if(globalRange==='month') return d=>d>='2026-05-01';
-  if(globalRange==='q')     return d=>d>='2026-03-01';
-  return ()=>true;
-}
-function filteredTxns(propId, cat){
-  const df = getDateFilter();
-  return TXNS.filter(t=>
-    df(t.date) &&
-    (!propId || propId==='all' || t.prop===propId) &&
-    (!cat    || cat==='all'   || t.cat===cat)
-  );
-}
-
-/* ─── AUTH ─────────────────────────────────────────────────────── */
-function show(id,d){ document.getElementById(id).style.display=d; }
-
+/* ── AUTH ── */
+const _U=atob('cmF1dA==');
+const _P=atob('UmF1dEAy'+'MDI2IQ==');
+const _C=atob('NDgy'+'MDI0');
+let _pin='';
 function doLogin(){
   const u=(document.getElementById('l-user').value||'').trim();
   const p=document.getElementById('l-pass').value||'';
-  const err=document.getElementById('login-err');
-  if(u===_U&&p===_P){
-    err.style.display='none';
-    show('screen-login','none');
-    show('screen-pin','flex');
-  } else {
-    err.style.display='block';
-    document.getElementById('l-pass').value='';
-    document.getElementById('l-pass').focus();
-  }
+  const e=document.getElementById('login-err');
+  if(u===_U&&p===_P){e.style.display='none';show('screen-login','none');show('screen-pin','flex');}
+  else{e.style.display='block';document.getElementById('l-pass').value='';document.getElementById('l-pass').focus();}
 }
-function pinAdd(d){
-  if(_pin.length>=6)return;
-  _pin+=d; syncDots();
-  if(_pin.length===6)setTimeout(checkPin,250);
-}
-function pinDel(){
-  _pin=_pin.slice(0,-1); syncDots();
-  document.getElementById('pin-err').style.display='none';
-}
-function syncDots(){
-  for(let i=0;i<6;i++){
-    document.getElementById('pd'+i).className='pin-dot'+(i<_pin.length?' filled':'');
-  }
-}
+function pinAdd(d){if(_pin.length>=6)return;_pin+=d;syncDots();if(_pin.length===6)setTimeout(checkPin,250);}
+function pinDel(){_pin=_pin.slice(0,-1);syncDots();document.getElementById('pin-err').style.display='none';}
+function syncDots(){for(let i=0;i<6;i++){const d=document.getElementById('pd'+i);d.className='pin-dot'+(i<_pin.length?' filled':'');}}
 function checkPin(){
-  if(_pin===_C){
-    sessionStorage.setItem('rp_ok','1');
-    show('screen-pin','none');
-    bootApp();
-  } else {
-    document.getElementById('pin-err').style.display='block';
-    _pin=''; syncDots();
-  }
+  if(_pin===_C){sessionStorage.setItem('rp_ok','1');show('screen-pin','none');openApp();}
+  else{document.getElementById('pin-err').style.display='block';_pin='';syncDots();}
 }
 function doLogout(){
-  sessionStorage.removeItem('rp_ok');
-  _pin=''; syncDots();
-  show('app','none');
-  show('screen-login','flex');
-  document.getElementById('l-user').value='';
-  document.getElementById('l-pass').value='';
+  sessionStorage.removeItem('rp_ok');_pin='';syncDots();
+  show('app','none');show('screen-login','flex');
+  document.getElementById('l-user').value='';document.getElementById('l-pass').value='';
   document.getElementById('login-err').style.display='none';
   document.getElementById('pin-err').style.display='none';
 }
+function show(id,d){document.getElementById(id).style.display=d;}
 
-/* ─── SIDEBAR (mobile) ─────────────────────────────────────────── */
-function toggleSidebar(){
-  const sb=document.getElementById('sidebar');
-  const ov=document.getElementById('sb-overlay');
-  sb.classList.toggle('open');
-  ov.classList.toggle('open');
-}
-function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sb-overlay').classList.remove('open');
-}
+/* ── DATA ── */
+const PROPS=[
+  {id:'harper',    name:'Harper Ave',        city:'Akron, OH',          type:'Renovation',color:'#3b82f6',cls:'p-harper',   budget:90000},
+  {id:'lindholm',  name:'3650 Lindholm Rd',  city:'Shaker Heights, OH', type:'Rental',    color:'#10b981',cls:'p-lindholm', budget:40000},
+  {id:'euclid',    name:'884 E 248th St',     city:'Euclid, OH',         type:'Rental',    color:'#8b5cf6',cls:'p-euclid',   budget:30000},
+  {id:'storage',   name:'Storage Bordentown', city:'Bordentown, NJ',     type:'Storage',   color:'#f59e0b',cls:'p-storage',  budget:12000},
+  {id:'rautmedia', name:'RautMedia',          city:'Business Ops',       type:'Business',  color:'#06b6d4',cls:'p-rautmedia',budget:30000},
+];
+const CATS=['Labor','Materials','Utilities','Permits & Fees','Maintenance','Admin'];
+const BUDGETS_CAT=[
+  {name:'Labor',         allocated:60000},
+  {name:'Materials',     allocated:45000},
+  {name:'Utilities',     allocated:14000},
+  {name:'Permits & Fees',allocated:6000},
+  {name:'Maintenance',   allocated:12000},
+  {name:'Admin',         allocated:25000},
+];
+const TXN=[
+/* HARPER AVE */
+{id:1, date:'2026-01-06',merchant:'Demo City LLC',        cat:'Labor',         prop:'harper',   amt:4200,card:'Hari S.'},
+{id:2, date:'2026-01-10',merchant:'Ohio Drywall Co',      cat:'Labor',         prop:'harper',   amt:3800,card:'Hari S.'},
+{id:3, date:'2026-01-14',merchant:'Cleveland Lumber',     cat:'Materials',     prop:'harper',   amt:3600,card:'Hari S.'},
+{id:4, date:'2026-01-17',merchant:'City of Akron',        cat:'Permits & Fees',prop:'harper',   amt:900, card:'Hari S.'},
+{id:5, date:'2026-02-03',merchant:'ABC Electric',         cat:'Labor',         prop:'harper',   amt:5200,card:'Hari S.'},
+{id:6, date:'2026-02-09',merchant:'Ferguson Plumbing',    cat:'Labor',         prop:'harper',   amt:4000,card:'Hari S.'},
+{id:7, date:'2026-02-13',merchant:'Home Depot',           cat:'Materials',     prop:'harper',   amt:2800,card:'Hari S.'},
+{id:8, date:'2026-02-21',merchant:'City of Akron',        cat:'Permits & Fees',prop:'harper',   amt:640, card:'Hari S.'},
+{id:9, date:'2026-03-05',merchant:'Master Tile Inc',      cat:'Materials',     prop:'harper',   amt:4200,card:'Hari S.'},
+{id:10,date:'2026-03-11',merchant:'All Pro Flooring',     cat:'Labor',         prop:'harper',   amt:5800,card:'Hari S.'},
+{id:11,date:'2026-03-18',merchant:'Home Depot',           cat:'Materials',     prop:'harper',   amt:2100,card:'Hari S.'},
+{id:12,date:'2026-03-24',merchant:'Ohio Gas & Electric',  cat:'Utilities',     prop:'harper',   amt:380, card:'Ops Card'},
+{id:13,date:'2026-04-07',merchant:'Summit Carpentry',     cat:'Labor',         prop:'harper',   amt:4800,card:'Hari S.'},
+{id:14,date:'2026-04-15',merchant:'Window World',         cat:'Materials',     prop:'harper',   amt:6800,card:'Hari S.'},
+{id:15,date:'2026-04-22',merchant:'GreenStar Landscaping',cat:'Maintenance',   prop:'harper',   amt:780, card:'Ops Card'},
+{id:16,date:'2026-05-06',merchant:'Final Touch Painting', cat:'Labor',         prop:'harper',   amt:3400,card:'Hari S.'},
+{id:17,date:'2026-05-14',merchant:'AppliancePro',         cat:'Materials',     prop:'harper',   amt:3800,card:'Hari S.'},
+{id:18,date:'2026-05-22',merchant:'UpneX Mgmt Fee',       cat:'Admin',         prop:'harper',   amt:600, card:'Ops Card'},
+/* LINDHOLM RD */
+{id:19,date:'2026-01-08',merchant:'Reliable Plumbing OH', cat:'Labor',         prop:'lindholm', amt:2800,card:'Hari S.'},
+{id:20,date:'2026-01-16',merchant:'Home Depot',           cat:'Materials',     prop:'lindholm', amt:1400,card:'Maint. Team'},
+{id:21,date:'2026-01-23',merchant:'FirstEnergy',          cat:'Utilities',     prop:'lindholm', amt:480, card:'Ops Card'},
+{id:22,date:'2026-02-05',merchant:'ABC Roofing LLC',      cat:'Labor',         prop:'lindholm', amt:4200,card:'Hari S.'},
+{id:23,date:'2026-02-18',merchant:"Lowe's",               cat:'Materials',     prop:'lindholm', amt:1900,card:'Maint. Team'},
+{id:24,date:'2026-02-26',merchant:'FirstEnergy',          cat:'Utilities',     prop:'lindholm', amt:510, card:'Ops Card'},
+{id:25,date:'2026-03-09',merchant:'Sherwin-Williams',     cat:'Materials',     prop:'lindholm', amt:880, card:'Maint. Team'},
+{id:26,date:'2026-03-20',merchant:'Pro HVAC Service',     cat:'Maintenance',   prop:'lindholm', amt:1600,card:'Hari S.'},
+{id:27,date:'2026-03-28',merchant:'FirstEnergy',          cat:'Utilities',     prop:'lindholm', amt:490, card:'Ops Card'},
+{id:28,date:'2026-04-10',merchant:'Ace Hardware',         cat:'Materials',     prop:'lindholm', amt:340, card:'Maint. Team'},
+{id:29,date:'2026-04-18',merchant:'Summit Carpentry',     cat:'Labor',         prop:'lindholm', amt:2600,card:'Hari S.'},
+{id:30,date:'2026-04-28',merchant:'FirstEnergy',          cat:'Utilities',     prop:'lindholm', amt:460, card:'Ops Card'},
+{id:31,date:'2026-05-07',merchant:'Pro HVAC Service',     cat:'Maintenance',   prop:'lindholm', amt:950, card:'Hari S.'},
+{id:32,date:'2026-05-16',merchant:'Home Depot',           cat:'Materials',     prop:'lindholm', amt:760, card:'Maint. Team'},
+{id:33,date:'2026-05-24',merchant:'FirstEnergy',          cat:'Utilities',     prop:'lindholm', amt:480, card:'Ops Card'},
+{id:34,date:'2026-05-28',merchant:'UpneX Mgmt Fee',       cat:'Admin',         prop:'lindholm', amt:500, card:'Ops Card'},
+/* EUCLID */
+{id:35,date:'2026-01-09',merchant:'Plumbing Pro LLC',     cat:'Labor',         prop:'euclid',   amt:1800,card:'Hari S.'},
+{id:36,date:'2026-01-20',merchant:"Lowe's",               cat:'Materials',     prop:'euclid',   amt:920, card:'Maint. Team'},
+{id:37,date:'2026-01-27',merchant:'Cleveland Electric',   cat:'Utilities',     prop:'euclid',   amt:520, card:'Ops Card'},
+{id:38,date:'2026-02-10',merchant:'Ace Hardware',         cat:'Materials',     prop:'euclid',   amt:460, card:'Maint. Team'},
+{id:39,date:'2026-02-20',merchant:'All Pro Flooring',     cat:'Labor',         prop:'euclid',   amt:2400,card:'Hari S.'},
+{id:40,date:'2026-02-27',merchant:'Cleveland Electric',   cat:'Utilities',     prop:'euclid',   amt:490, card:'Ops Card'},
+{id:41,date:'2026-03-07',merchant:'Sherwin-Williams',     cat:'Materials',     prop:'euclid',   amt:740, card:'Maint. Team'},
+{id:42,date:'2026-03-14',merchant:'Pest Pro',             cat:'Maintenance',   prop:'euclid',   amt:380, card:'Ops Card'},
+{id:43,date:'2026-03-26',merchant:'Cleveland Electric',   cat:'Utilities',     prop:'euclid',   amt:510, card:'Ops Card'},
+{id:44,date:'2026-04-08',merchant:'Home Depot',           cat:'Materials',     prop:'euclid',   amt:680, card:'Maint. Team'},
+{id:45,date:'2026-04-19',merchant:'Reliable Plumbing OH', cat:'Labor',         prop:'euclid',   amt:1400,card:'Hari S.'},
+{id:46,date:'2026-04-27',merchant:'Cleveland Electric',   cat:'Utilities',     prop:'euclid',   amt:480, card:'Ops Card'},
+{id:47,date:'2026-05-09',merchant:'Pest Pro',             cat:'Maintenance',   prop:'euclid',   amt:380, card:'Ops Card'},
+{id:48,date:'2026-05-18',merchant:'Ace Hardware',         cat:'Materials',     prop:'euclid',   amt:310, card:'Maint. Team'},
+{id:49,date:'2026-05-26',merchant:'Cleveland Electric',   cat:'Utilities',     prop:'euclid',   amt:490, card:'Ops Card'},
+{id:50,date:'2026-05-30',merchant:'UpneX Mgmt Fee',       cat:'Admin',         prop:'euclid',   amt:450, card:'Ops Card'},
+/* STORAGE BORDENTOWN */
+{id:51,date:'2026-01-11',merchant:'NJ Storage Supplies',  cat:'Maintenance',   prop:'storage',  amt:420, card:'Ops Card'},
+{id:52,date:'2026-01-25',merchant:'JCP&L Energy',         cat:'Utilities',     prop:'storage',  amt:680, card:'Ops Card'},
+{id:53,date:'2026-02-12',merchant:'Fence & Gate Pro',     cat:'Maintenance',   prop:'storage',  amt:1200,card:'Hari S.'},
+{id:54,date:'2026-02-24',merchant:'JCP&L Energy',         cat:'Utilities',     prop:'storage',  amt:640, card:'Ops Card'},
+{id:55,date:'2026-03-10',merchant:'Lock Systems Inc',     cat:'Materials',     prop:'storage',  amt:580, card:'Hari S.'},
+{id:56,date:'2026-03-25',merchant:'JCP&L Energy',         cat:'Utilities',     prop:'storage',  amt:620, card:'Ops Card'},
+{id:57,date:'2026-04-09',merchant:'NJ Storage Supplies',  cat:'Maintenance',   prop:'storage',  amt:380, card:'Ops Card'},
+{id:58,date:'2026-04-24',merchant:'JCP&L Energy',         cat:'Utilities',     prop:'storage',  amt:660, card:'Ops Card'},
+{id:59,date:'2026-05-08',merchant:'NJ Storage Supplies',  cat:'Maintenance',   prop:'storage',  amt:360, card:'Ops Card'},
+{id:60,date:'2026-05-23',merchant:'JCP&L Energy',         cat:'Utilities',     prop:'storage',  amt:640, card:'Ops Card'},
+{id:61,date:'2026-05-29',merchant:'Bordentown Admin',     cat:'Admin',         prop:'storage',  amt:200, card:'Ops Card'},
+/* RAUTMEDIA */
+{id:62,date:'2026-01-05',merchant:'AWS',                  cat:'Admin',         prop:'rautmedia',amt:1240,card:'Ops Card'},
+{id:63,date:'2026-01-12',merchant:'Adobe Creative',       cat:'Admin',         prop:'rautmedia',amt:760, card:'Ops Card'},
+{id:64,date:'2026-01-19',merchant:'Video Crew LLC',       cat:'Labor',         prop:'rautmedia',amt:1800,card:'Hari S.'},
+{id:65,date:'2026-01-28',merchant:'Office Depot',         cat:'Materials',     prop:'rautmedia',amt:380, card:'Ops Card'},
+{id:66,date:'2026-02-06',merchant:'AWS',                  cat:'Admin',         prop:'rautmedia',amt:1340,card:'Ops Card'},
+{id:67,date:'2026-02-14',merchant:'Adobe Creative',       cat:'Admin',         prop:'rautmedia',amt:760, card:'Ops Card'},
+{id:68,date:'2026-02-22',merchant:'Video Crew LLC',       cat:'Labor',         prop:'rautmedia',amt:2200,card:'Hari S.'},
+{id:69,date:'2026-02-27',merchant:'Verizon Business',     cat:'Utilities',     prop:'rautmedia',amt:280, card:'Ops Card'},
+{id:70,date:'2026-03-07',merchant:'AWS',                  cat:'Admin',         prop:'rautmedia',amt:1420,card:'Ops Card'},
+{id:71,date:'2026-03-15',merchant:'Adobe Creative',       cat:'Admin',         prop:'rautmedia',amt:760, card:'Ops Card'},
+{id:72,date:'2026-03-23',merchant:'Video Crew LLC',       cat:'Labor',         prop:'rautmedia',amt:1600,card:'Hari S.'},
+{id:73,date:'2026-03-28',merchant:'Verizon Business',     cat:'Utilities',     prop:'rautmedia',amt:280, card:'Ops Card'},
+{id:74,date:'2026-04-08',merchant:'AWS',                  cat:'Admin',         prop:'rautmedia',amt:1460,card:'Ops Card'},
+{id:75,date:'2026-04-16',merchant:'Adobe Creative',       cat:'Admin',         prop:'rautmedia',amt:760, card:'Ops Card'},
+{id:76,date:'2026-04-24',merchant:'Video Crew LLC',       cat:'Labor',         prop:'rautmedia',amt:2000,card:'Hari S.'},
+{id:77,date:'2026-04-28',merchant:'Verizon Business',     cat:'Utilities',     prop:'rautmedia',amt:280, card:'Ops Card'},
+{id:78,date:'2026-05-05',merchant:'AWS',                  cat:'Admin',         prop:'rautmedia',amt:1520,card:'Ops Card'},
+{id:79,date:'2026-05-13',merchant:'Adobe Creative',       cat:'Admin',         prop:'rautmedia',amt:760, card:'Ops Card'},
+{id:80,date:'2026-05-21',merchant:'Video Crew LLC',       cat:'Labor',         prop:'rautmedia',amt:1800,card:'Hari S.'},
+{id:81,date:'2026-05-27',merchant:'Verizon Business',     cat:'Utilities',     prop:'rautmedia',amt:280, card:'Ops Card'},
+];
 
-/* ─── DATE RANGE ───────────────────────────────────────────────── */
-function setDateRange(r){
-  globalRange=r;
-  ['month','q','ytd','all'].forEach(k=>{
-    document.getElementById('df-'+k).classList.toggle('active',k===r);
-  });
-  renderView();
-}
+/* ── STATE ── */
+let S={view:'overview',dateFilter:'ytd',detailProp:null,detailTab:'All'};
 
-/* ─── ROUTER ───────────────────────────────────────────────────── */
-const VIEWS = ['overview','properties','transactions','budget','reports'];
-const VIEW_TITLES = {
-  overview:    ['Overview',      'Raut Properties Portfolio'],
-  properties:  ['Properties',    '5 properties in portfolio'],
-  transactions:['Transactions',  'All spending activity'],
-  budget:      ['Budget',        'Actuals vs. allocated budgets'],
-  reports:     ['Reports',       'Monthly PDF reports'],
-  'property-detail': ['',        ''],
-};
+function openApp(){show('app','block');renderView('overview');}
 
-function navigate(view, propId){
+function nav(el,view){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  S.detailProp=null;
+  renderView(view);
   closeSidebar();
-  if(view==='property-detail'){ propDetailTab='all'; }
-  currentView   = view;
-  currentPropId = propId||null;
+}
+function renderView(v){
+  S.view=v;
+  const titles={overview:'Overview',properties:'Properties',transactions:'Transactions',budget:'Budget',reports:'Reports'};
+  document.getElementById('page-title').textContent=titles[v]||v;
+  const pc=document.getElementById('page-content');
+  if(v==='overview')    renderOverview(pc);
+  else if(v==='properties')  renderProperties(pc);
+  else if(v==='transactions')renderTransactions(pc);
+  else if(v==='budget')      renderBudget(pc);
+  else                       renderReports(pc);
+}
+function setDate(btn,f){
+  document.querySelectorAll('.date-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');S.dateFilter=f;renderView(S.view);
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-overlay').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('open');}
 
-  // Update nav
-  VIEWS.forEach(v=>{
-    const el=document.getElementById('nav-'+v);
-    if(el) el.classList.toggle('active', v===view);
-    const bn=document.getElementById('bn-'+v);
-    if(bn) bn.classList.toggle('active', v===view);
+/* ── HELPERS ── */
+function fmt(n){return'$'+Math.round(n).toLocaleString('en-US');}
+function fmtDate(s){return new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+function propOf(id){return PROPS.find(p=>p.id===id)||{name:id,color:'#64748b',cls:'',city:'',budget:0};}
+
+function filteredTxns(){
+  const now=new Date('2026-06-01');
+  return TXN.filter(t=>{
+    const d=new Date(t.date);
+    if(S.dateFilter==='month') return d.getFullYear()===2026&&d.getMonth()===4;
+    if(S.dateFilter==='3mo')   return d>=new Date('2026-03-01')&&d<=now;
+    if(S.dateFilter==='ytd')   return d.getFullYear()===2026&&d<=now;
+    return true;
   });
-  if(view==='property-detail'){
-    document.getElementById('nav-properties').classList.add('active');
-    document.getElementById('bn-properties')&&document.getElementById('bn-properties').classList.add('active');
-  }
-
-  // Update topbar
-  if(view==='property-detail' && propId){
-    const pr=propById(propId);
-    document.getElementById('topbar-title').textContent=pr.name;
-    document.getElementById('topbar-sub').textContent=pr.city+' · Property Detail';
-  } else {
-    const [t,s]=VIEW_TITLES[view]||['',''];
-    document.getElementById('topbar-title').textContent=t;
-    document.getElementById('topbar-sub').textContent=s;
-  }
-
-  renderView();
-  document.getElementById('content-area').scrollTop=0;
+}
+function sumByProp(txns){return PROPS.map(p=>({...p,total:txns.filter(t=>t.prop===p.id).reduce((s,t)=>s+t.amt,0)}));}
+function sumByCat(txns){return CATS.map(c=>({cat:c,total:txns.filter(t=>t.cat===c).reduce((s,t)=>s+t.amt,0)}));}
+function monthlyTotals(txns){
+  return['2026-01','2026-02','2026-03','2026-04','2026-05'].map(mo=>{
+    const[y,m]=mo.split('-').map(Number);
+    const sum=txns.filter(t=>{const d=new Date(t.date);return d.getFullYear()===y&&(d.getMonth()+1)===m;}).reduce((s,t)=>s+t.amt,0);
+    return{label:new Date(y,m-1,1).toLocaleDateString('en-US',{month:'short'}),sum};
+  });
+}
+function trendBars(monthly,color){
+  const mx=Math.max(...monthly.map(m=>m.sum),1);
+  return monthly.map(m=>{const h=Math.max(Math.round((m.sum/mx)*124),4);return`<div class="trend-col"><div class="trend-bar" style="height:${h}px;background:${color||'var(--navy)'}"><div class="tip">${fmt(m.sum)}</div></div><div class="trend-mo">${m.label}</div><div class="trend-v">${fmt(m.sum)}</div></div>`;}).join('');
 }
 
-function renderView(){
-  switch(currentView){
-    case 'overview':         renderOverview();               break;
-    case 'properties':       renderProperties();             break;
-    case 'property-detail':  renderPropertyDetail(currentPropId); break;
-    case 'transactions':     renderTransactions();           break;
-    case 'budget':           renderBudget();                 break;
-    case 'reports':          renderReports();                break;
-  }
-}
-
-/* ─── EXPORT CSV ───────────────────────────────────────────────── */
-function exportCSV(){
+/* ── OVERVIEW ── */
+function renderOverview(pc){
   const txns=filteredTxns();
-  const rows=[['Date','Merchant','Category','Property','Amount','Card','Notes']];
-  txns.sort((a,b)=>b.date.localeCompare(a.date)).forEach(t=>{
-    rows.push([t.date,t.merchant,t.cat,propById(t.prop).name,t.amt,t.card,t.notes||'']);
-  });
-  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download='raut-properties-export.csv';
-  a.click();
-}
-
-/* ─── OVERVIEW ─────────────────────────────────────────────────── */
-function renderOverview(){
-  const txns   = filteredTxns();
-  const all    = filteredTxns();
-  const mayTxns= TXNS.filter(t=>t.date>='2026-05-01');
-  const aprTxns= TXNS.filter(t=>t.date>='2026-04-01'&&t.date<'2026-05-01');
-  const total  = txns.reduce((s,t)=>s+t.amt,0);
-  const mtd    = mayTxns.reduce((s,t)=>s+t.amt,0);
-  const aprd   = aprTxns.reduce((s,t)=>s+t.amt,0);
-  const mtdChg = aprd ? ((mtd-aprd)/aprd*100).toFixed(1) : '0.0';
-  const totalBudget = PROPS.reduce((s,p)=>s+p.budget,0);
-  const budPct = (total/totalBudget*100).toFixed(1);
-
-  // Per-property totals
-  const propTotals = PROPS.map(p=>({
-    ...p,
-    spent: filteredTxns(p.id).reduce((s,t)=>s+t.amt,0)
-  })).sort((a,b)=>b.spent-a.spent);
-
-  // Monthly totals
-  const months=['2026-01','2026-02','2026-03','2026-04','2026-05'];
-  const mo_labels=['Jan','Feb','Mar','Apr','May'];
-  const monthly = months.map(m=>({
-    label: mo_labels[months.indexOf(m)],
-    v: TXNS.filter(t=>t.date.startsWith(m)).reduce((s,t)=>s+t.amt,0)
-  }));
-  const maxMo = Math.max(...monthly.map(m=>m.v));
-
-  // Recent 10 transactions
-  const recent = [...txns].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
-
-  document.getElementById('content-area').innerHTML = `
-    <div class="kpi-grid">
-      <div class="kpi-card kc-1">
-        <div class="kpi-label">Total Spend</div>
-        <div class="kpi-val">${fmt(total)}</div>
-        <div class="kpi-sub">${txns.length} transactions · ${rangeLabel()}</div>
-        <div class="kpi-trend nt">64.3% of annual budget</div>
-      </div>
-      <div class="kpi-card kc-2">
-        <div class="kpi-label">May 2026 (MTD)</div>
-        <div class="kpi-val">${fmt(mtd)}</div>
-        <div class="kpi-sub">${mayTxns.length} transactions this month</div>
-        <div class="kpi-trend ${+mtdChg>=0?'down':'up'}">${+mtdChg>=0?'↑':'↓'} ${Math.abs(+mtdChg)}% vs April</div>
-      </div>
-      <div class="kpi-card kc-3">
-        <div class="kpi-label">Properties</div>
-        <div class="kpi-val">5</div>
-        <div class="kpi-sub">PA · OH · NJ · Business</div>
-        <div class="kpi-trend nt">3 cards · 2 active projects</div>
-      </div>
-      <div class="kpi-card kc-4">
-        <div class="kpi-label">Budget Used</div>
-        <div class="kpi-val">${budPct}%</div>
-        <div class="kpi-sub">${fmt(total)} of ${fmt(totalBudget)} allocated</div>
-        <div class="kpi-trend nt">${fmt(totalBudget-total)} remaining</div>
-      </div>
-    </div>
-
-    <div class="g2 mb18">
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title">🏘️ Spend by Property</div>
-          <div class="card-badge">${rangeLabel()}</div>
-        </div>
-        <div class="card-body">
-          <div class="bar-chart">
-            ${propTotals.map(p=>{
-              const w=Math.round((p.spent/propTotals[0].spent)*100);
-              return `<div class="bar-row">
-                <div class="bar-lbl" title="${p.name}">
-                  <span class="pdot" style="background:${p.color}"></span>${p.name}
-                </div>
-                <div class="bar-track">
-                  <div class="bar-fill" style="width:${w}%;background:${p.color}">
-                    ${w>18?`<span class="bar-pct">${pct(p.spent,propTotals[0].spent)}%</span>`:''}
-                  </div>
-                </div>
-                <div class="bar-amt">${fmt(p.spent)}</div>
-              </div>`;
-            }).join('')}
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title">📈 Monthly Spend Trend</div>
-          <div class="card-badge">Jan – May 2026</div>
-        </div>
-        <div class="card-body">
-          <div class="trend-wrap">
-            ${monthly.map(m=>{
-              const h=Math.round((m.v/maxMo)*125);
-              return `<div class="trend-col">
-                <div class="trend-bar" style="height:${h}px">
-                  <div class="trend-tip">${fmt(m.v)}</div>
-                </div>
-                <div class="trend-mo">${m.label}</div>
-                <div class="trend-val">${fmt(m.v)}</div>
-              </div>`;
-            }).join('')}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card mb18">
-      <div class="card-hdr">
-        <div class="card-title">⚡ Recent Activity</div>
-        <div class="card-badge">Last 10 transactions</div>
-      </div>
-      <div class="card-body" style="padding-top:8px;padding-bottom:8px">
-        ${recent.map(t=>{
-          const pr=propById(t.prop);
-          return `<div class="feed-item">
-            <div class="feed-dot" style="background:${pr.color}"></div>
-            <div class="feed-body">
-              <div class="feed-title">${t.merchant}</div>
-              <div class="feed-sub">
-                <span class="tag ${pr.tagCls}">${propShort(t.prop)}</span>
-                &nbsp;<span class="tag ${catTagCls(t.cat)}">${catIcon(t.cat)} ${t.cat}</span>
-                &nbsp;${fmtDate(t.date)}
-              </div>
-            </div>
-            <div class="feed-amt">${fmt(t.amt)}</div>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>
-  `;
-}
-
-function rangeLabel(){
-  return {month:'May 2026',q:'Last 3 Months',ytd:'Jan–May 2026',all:'All Time'}[globalRange]||'YTD';
-}
-
-/* ─── PROPERTIES ───────────────────────────────────────────────── */
-function renderProperties(){
-  const html = PROPS.map(p=>{
-    const txns=filteredTxns(p.id);
-    const total=txns.reduce((s,t)=>s+t.amt,0);
-    const cats={};
-    txns.forEach(t=>{ cats[t.cat]=(cats[t.cat]||0)+t.amt; });
-    const topCats=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,3);
-    const budPct=Math.round((total/p.budget)*100);
-    return `
-      <div class="prop-card" style="border-top-color:${p.color}" onclick="navigate('property-detail','${p.id}')">
-        <div class="prop-card-body">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
-            <span class="pdot" style="background:${p.color}"></span>
-            <div class="prop-card-name">${p.name}</div>
-          </div>
-          <div class="prop-card-city">${p.city}</div>
-          <div class="prop-card-amt">${fmt(total)}</div>
-          <div class="prop-card-meta">${txns.length} transactions · budget ${budPct}% used</div>
-          <div class="prop-card-cats">
-            ${topCats.map(([cat,amt])=>`
-              <span class="tag ${catTagCls(cat)}">${catIcon(cat)} ${cat}: ${fmt(amt)}</span>
-            `).join('')}
-          </div>
-          <div class="prop-view-btn">View Detail &rarr;</div>
-        </div>
-      </div>`;
-  }).join('');
-
-  const totals=PROPS.map(p=>filteredTxns(p.id).reduce((s,t)=>s+t.amt,0));
-  const grandTotal=totals.reduce((s,v)=>s+v,0);
-
-  document.getElementById('content-area').innerHTML = `
-    <div class="prop-grid">${html}</div>
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">📊 Portfolio Comparison</div>
-        <div class="card-badge">${rangeLabel()}</div>
-      </div>
-      <div class="card-body">
-        <div class="bar-chart">
-          ${PROPS.map((p,i)=>{
-            const spent=totals[i];
-            const w=grandTotal?Math.round((spent/grandTotal)*100):0;
-            const budPct=Math.round((spent/p.budget)*100);
-            const cls=budPct>=100?'r':budPct>=80?'a':'g';
-            return `<div class="bar-row">
-              <div class="bar-lbl">
-                <span class="pdot" style="background:${p.color}"></span>
-                <span title="${p.name}">${p.name}</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill" style="width:${w}%;background:${p.color}">
-                  ${w>12?`<span class="bar-pct">${w}%</span>`:''}
-                </div>
-              </div>
-              <div class="bar-amt">${fmt(spent)}</div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/* ─── PROPERTY DETAIL ──────────────────────────────────────────── */
-function renderPropertyDetail(propId){
-  if(!propId) return;
-  const pr = propById(propId);
-  if(!pr) return;
-
-  const txns=filteredTxns(propId);
   const total=txns.reduce((s,t)=>s+t.amt,0);
+  const byProp=sumByProp(txns).sort((a,b)=>b.total-a.total);
+  const byCat=sumByCat(txns).filter(c=>c.total>0).sort((a,b)=>b.total-a.total);
+  const monthly=monthlyTotals(txns);
+  const maxP=Math.max(...byProp.map(p=>p.total),1);
+  const maxC=byCat[0]?.total||1;
+  const prev=TXN.filter(t=>{const d=new Date(t.date);return d.getFullYear()===2026&&d.getMonth()===3;}).reduce((s,t)=>s+t.amt,0);
+  const chg=prev>0?((total-prev)/prev*100).toFixed(1):0;
+  const recent=[...txns].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,8);
 
-  // Category breakdown
-  const cats={};
-  txns.forEach(t=>{ cats[t.cat]=(cats[t.cat]||0)+t.amt; });
-  const catEntries=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
-  const maxCat=catEntries.length?catEntries[0][1]:1;
-
-  // Monthly breakdown
-  const moKeys=['2026-01','2026-02','2026-03','2026-04','2026-05'];
-  const moLabels=['Jan','Feb','Mar','Apr','May'];
-  const monthly=moKeys.map((k,i)=>({
-    label:moLabels[i],
-    v:TXNS.filter(t=>t.prop===propId&&t.date.startsWith(k)).reduce((s,t)=>s+t.amt,0)
-  }));
-  const maxMo=Math.max(...monthly.map(m=>m.v),1);
-
-  // Filtered txns by tab
-  const tabTxns = propDetailTab==='all' ? txns
-    : txns.filter(t=>t.cat.toLowerCase()===propDetailTab.toLowerCase());
-
-  const catTabs = ['all',...Object.keys(cats).sort()];
-
-  const budPct = Math.round((total/pr.budget)*100);
-  const budCls = budPct>=100?'r':budPct>=80?'a':'g';
-
-  document.getElementById('content-area').innerHTML = `
-    <div style="margin-bottom:16px">
-      <button class="btn-back" onclick="navigate('properties')">&#8592; Properties</button>
-    </div>
-
-    <div class="det-header">
-      <div class="det-hdr-left">
-        <div class="det-color-bar" style="background:${pr.color}"></div>
-        <div>
-          <div class="det-name">${pr.name}</div>
-          <div class="det-sub">${pr.city} &nbsp;&middot;&nbsp; ${txns.length} transactions &nbsp;&middot;&nbsp; <span style="font-weight:700;color:var(--${budCls==='r'?'red':budCls==='a'?'amber':'green'})">${budPct}% of ${fmt(pr.budget)} budget used</span></div>
-        </div>
-      </div>
-      <div style="text-align:right">
-        <div class="det-total-label">Total Spend · ${rangeLabel()}</div>
-        <div class="det-total" style="color:${pr.color}">${fmt(total)}</div>
+  pc.innerHTML=`
+<div class="kpi-row mb24">
+  <div class="kpi"><div class="kpi-lbl">Total Spend</div><div class="kpi-val">${fmt(total)}</div><div class="kpi-sub">${txns.length} transactions</div><div class="kpi-trend ${Number(chg)>=0?'dn':'up'}">${Number(chg)>=0?'↑':'↓'} ${Math.abs(chg)}% vs prior period</div></div>
+  <div class="kpi"><div class="kpi-lbl">Active Properties</div><div class="kpi-val">${byProp.filter(p=>p.total>0).length}</div><div class="kpi-sub">of ${PROPS.length} entities</div><div class="kpi-trend info">OH &amp; NJ</div></div>
+  <div class="kpi"><div class="kpi-lbl">Avg / Transaction</div><div class="kpi-val">${txns.length?fmt(total/txns.length):'$0'}</div><div class="kpi-sub">per charge</div><div class="kpi-trend info">3 cardholders</div></div>
+  <div class="kpi"><div class="kpi-lbl">Top Property</div><div class="kpi-val" style="font-size:18px">${byProp[0]?.name||'—'}</div><div class="kpi-sub">${fmt(byProp[0]?.total||0)}</div><div class="kpi-trend dn">Active renovation</div></div>
+</div>
+<div class="two-col mb24">
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">🏘️ Spend by Property</div><div class="card-badge">${txns.length} txns</div></div>
+    <div class="card-body">
+      <div class="bar-chart">
+        ${byProp.map(p=>{const w=Math.round((p.total/maxP)*100);return`<div class="bar-row"><div class="bar-lbl" title="${p.name}">${p.name}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${p.color}">${w>18?`<span class="bar-pct">${((p.total/total)*100).toFixed(0)}%</span>`:''}</div></div><div class="bar-amt">${fmt(p.total)}</div></div>`;}).join('')}
       </div>
     </div>
-
-    <div class="g3 mb18">
-      ${catEntries.map(([cat,amt])=>`
-        <div class="kpi-card" style="border-color:${catColor(cat)}">
-          <div class="kpi-label">${catIcon(cat)} ${cat}</div>
-          <div class="kpi-val" style="font-size:20px">${fmt(amt)}</div>
-          <div class="kpi-sub">${pct(amt,total)}% of total · ${txns.filter(t=>t.cat===cat).length} txns</div>
-        </div>
-      `).join('')}
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">📈 Monthly Trend</div><div class="card-badge">2026</div></div>
+    <div class="card-body">
+      <div class="trend-wrap">${trendBars(monthly)}</div>
     </div>
-
-    <div class="g2 mb18">
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title">📈 Monthly Spend</div>
-          <div class="card-badge">${pr.name}</div>
-        </div>
-        <div class="card-body">
-          <div class="trend-wrap" id="det-trend-chart">
-            ${monthly.map(m=>{
-              const h=Math.round((m.v/maxMo)*125);
-              return `<div class="trend-col">
-                <div class="trend-bar" style="height:${h}px;background:${pr.color}80">
-                  <div class="trend-tip">${fmt(m.v)}</div>
-                </div>
-                <div class="trend-mo">${m.label}</div>
-                <div class="trend-val">${fmt(m.v)}</div>
-              </div>`;
-            }).join('')}
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title">📊 By Category</div>
-        </div>
-        <div class="card-body">
-          <div class="bar-chart">
-            ${catEntries.map(([cat,amt])=>`
-              <div class="bar-row">
-                <div class="bar-lbl">${catIcon(cat)} ${cat}</div>
-                <div class="bar-track">
-                  <div class="bar-fill" style="width:${Math.round((amt/maxCat)*100)}%;background:${catColor(cat)}">
-                    ${Math.round((amt/maxCat)*100)>20?`<span class="bar-pct">${pct(amt,total)}%</span>`:''}
-                  </div>
-                </div>
-                <div class="bar-amt">${fmt(amt)}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
+  </div>
+</div>
+<div class="two-col mb24">
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">📂 By Category</div></div>
+    <div class="card-body">
+      <div class="bar-chart">
+        ${byCat.map(c=>{const w=Math.round((c.total/maxC)*100);return`<div class="bar-row"><div class="bar-lbl">${c.cat}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:var(--navy)"></div></div><div class="bar-amt">${fmt(c.total)}</div></div>`;}).join('')}
       </div>
     </div>
-
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">📋 Transactions</div>
-        <div class="card-badge">${tabTxns.length} shown</div>
-      </div>
-      <div class="tabs" style="padding:0 18px;border-bottom:none;border-top:1px solid var(--g100)">
-        ${catTabs.map(c=>`
-          <div class="tab ${propDetailTab===c?'active':''}"
-            onclick="setPropTab('${c}','${propId}')">${c==='all'?'All':catIcon(c)+' '+c}</div>
-        `).join('')}
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr>
-            <th>Date</th>
-            <th>Merchant</th>
-            <th>Category</th>
-            <th>Notes</th>
-            <th>Card</th>
-            <th class="r">Amount</th>
-          </tr></thead>
-          <tbody>
-            ${tabTxns.sort((a,b)=>b.date.localeCompare(a.date)).map(t=>`
-              <tr>
-                <td class="td-m" style="white-space:nowrap">${fmtDate(t.date)}</td>
-                <td class="td-s">${t.merchant}</td>
-                <td><span class="tag ${catTagCls(t.cat)}">${catIcon(t.cat)} ${t.cat}</span></td>
-                <td class="td-m">${t.notes||'—'}</td>
-                <td class="td-m">${t.card}</td>
-                <td class="r td-n">${fmt(t.amt)}</td>
-              </tr>
-            `).join('')}
-            <tr class="tr-total">
-              <td colspan="5" style="font-size:11px">Total</td>
-              <td class="r">${fmt(tabTxns.reduce((s,t)=>s+t.amt,0))}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">🕐 Recent Activity</div><div class="card-badge">Latest 8</div></div>
+    <div class="card-body" style="padding:8px 22px">
+      ${recent.map(t=>{const p=propOf(t.prop);return`<div class="act-item"><div class="act-dot" style="background:${p.color}"></div><div class="act-body"><div class="act-title">${t.merchant}</div><div class="act-meta">${fmtDate(t.date)} · <span class="tag ${p.cls}" style="font-size:10px;padding:1px 6px">${p.name}</span> · ${t.cat}</div></div><div class="act-amt">${fmt(t.amt)}</div></div>`;}).join('')}
     </div>
-  `;
+  </div>
+</div>`;
 }
 
-function setPropTab(tab, propId){
-  propDetailTab=tab;
-  renderPropertyDetail(propId);
-}
-
-/* ─── TRANSACTIONS ─────────────────────────────────────────────── */
-function renderTransactions(){
-  let txns = filteredTxns();
-
-  // Apply local filters
-  if(txnSearch){
-    const q=txnSearch.toLowerCase();
-    txns=txns.filter(t=>
-      t.merchant.toLowerCase().includes(q)||
-      (t.notes||'').toLowerCase().includes(q)||
-      t.cat.toLowerCase().includes(q)
-    );
-  }
-  if(txnPropFilter!=='all') txns=txns.filter(t=>t.prop===txnPropFilter);
-  if(txnCatFilter!=='all')  txns=txns.filter(t=>t.cat===txnCatFilter);
-
-  // Sort
-  const dir = txnSortDir==='asc'?1:-1;
-  txns.sort((a,b)=>{
-    if(txnSortCol==='date')     return dir*(a.date.localeCompare(b.date));
-    if(txnSortCol==='merchant') return dir*(a.merchant.localeCompare(b.merchant));
-    if(txnSortCol==='amount')   return dir*(a.amt-b.amt);
-    if(txnSortCol==='cat')      return dir*(a.cat.localeCompare(b.cat));
-    if(txnSortCol==='prop')     return dir*(a.prop.localeCompare(b.prop));
-    return 0;
-  });
-
-  const total=txns.reduce((s,t)=>s+t.amt,0);
-
-  function thCls(col){ return txnSortCol===col?' sort-'+txnSortDir:''; }
-
-  document.getElementById('content-area').innerHTML = `
-    <div class="filters-bar">
-      <input class="filter-inp" type="search" id="txn-search" placeholder="Search merchant, notes, category…"
-        value="${txnSearch.replace(/"/g,'&quot;')}" oninput="txnSearch=this.value;renderTransactions()">
-      <span class="filter-lbl">Property:</span>
-      <select class="filter-sel" id="txn-prop" onchange="txnPropFilter=this.value;renderTransactions()">
-        <option value="all" ${txnPropFilter==='all'?'selected':''}>All Properties</option>
-        ${PROPS.map(p=>`<option value="${p.id}" ${txnPropFilter===p.id?'selected':''}>${p.name}</option>`).join('')}
-      </select>
-      <span class="filter-lbl">Category:</span>
-      <select class="filter-sel" id="txn-cat" onchange="txnCatFilter=this.value;renderTransactions()">
-        <option value="all" ${txnCatFilter==='all'?'selected':''}>All Categories</option>
-        ${Object.keys(CAT_BUDGETS).map(c=>`<option value="${c}" ${txnCatFilter===c?'selected':''}>${catIcon(c)} ${c}</option>`).join('')}
-      </select>
-      <button class="btn-reset" onclick="txnSearch='';txnPropFilter='all';txnCatFilter='all';renderTransactions()">Reset</button>
-      <span class="txn-count">${txns.length} of ${filteredTxns().length} transactions &nbsp;·&nbsp; ${fmt(total)}</span>
-    </div>
-
-    <div class="card">
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr>
-            <th class="${thCls('date')}" onclick="txnSort('date')">Date</th>
-            <th class="${thCls('merchant')}" onclick="txnSort('merchant')">Merchant</th>
-            <th class="${thCls('prop')}" onclick="txnSort('prop')">Property</th>
-            <th class="${thCls('cat')}" onclick="txnSort('cat')">Category</th>
-            <th>Notes</th>
-            <th>Card</th>
-            <th class="r${thCls('amount')}" onclick="txnSort('amount')">Amount</th>
-          </tr></thead>
-          <tbody>
-            ${txns.length===0
-              ? `<tr><td colspan="7"><div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">No transactions match</div><div class="empty-sub">Try adjusting your filters or date range.</div></div></td></tr>`
-              : txns.map(t=>{
-                const pr=propById(t.prop);
-                return `<tr>
-                  <td class="td-m" style="white-space:nowrap">${fmtDate(t.date)}</td>
-                  <td class="td-s">${t.merchant}</td>
-                  <td><span class="tag ${pr.tagCls}"><span class="pdot" style="background:${pr.color};margin-right:2px"></span>${propShort(t.prop)}</span></td>
-                  <td><span class="tag ${catTagCls(t.cat)}">${catIcon(t.cat)} ${t.cat}</span></td>
-                  <td class="td-m">${t.notes||'—'}</td>
-                  <td class="td-m">${t.card}</td>
-                  <td class="r td-n">${fmt(t.amt)}</td>
-                </tr>`;
-              }).join('')
-            }
-            ${txns.length>0?`<tr class="tr-total">
-              <td colspan="6" style="font-size:11px">Total (${txns.length} transactions)</td>
-              <td class="r">${fmt(total)}</td>
-            </tr>`:''}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-function txnSort(col){
-  if(txnSortCol===col) txnSortDir=txnSortDir==='asc'?'desc':'asc';
-  else { txnSortCol=col; txnSortDir='desc'; }
-  renderTransactions();
-}
-
-/* ─── BUDGET ────────────────────────────────────────────────────── */
-function renderBudget(){
+/* ── PROPERTIES ── */
+function renderProperties(pc){
+  if(S.detailProp) return renderPropertyDetail(pc,S.detailProp);
   const txns=filteredTxns();
-  const grandTotal=txns.reduce((s,t)=>s+t.amt,0);
-  const totalBudget=PROPS.reduce((s,p)=>s+p.budget,0);
+  const byProp=sumByProp(txns);
+  pc.innerHTML=`<div class="prop-grid">${PROPS.map(p=>{
+    const pt=txns.filter(t=>t.prop===p.id);
+    const total=pt.reduce((s,t)=>s+t.amt,0);
+    const byCat=sumByCat(pt).filter(c=>c.total>0).sort((a,b)=>b.total-a.total);
+    const pct=Math.min(Math.round((total/p.budget)*100),100);
+    const fc=pct>=100?'var(--red)':pct>=80?'var(--amber)':'var(--green)';
+    return`<div class="prop-card" style="border-top-color:${p.color}" onclick="drillProp('${p.id}')">
+      <div class="pc-hdr">
+        <div><div class="pc-name">${p.name}</div><div class="pc-city">${p.city}</div></div>
+        <div class="pc-type">${p.type}</div>
+      </div>
+      <div class="pc-body">
+        <div><div class="pc-stat-lbl">Total Spend</div><div class="pc-stat-val">${fmt(total)}</div><div class="pc-stat-sub">${pt.length} transactions</div></div>
+        <div><div class="pc-stat-lbl">Top Category</div><div class="pc-stat-val" style="font-size:14px">${byCat[0]?.cat||'—'}</div><div class="pc-stat-sub">${fmt(byCat[0]?.total||0)}</div></div>
+      </div>
+      <div class="pc-foot">
+        <span style="font-size:11px;color:var(--g500)">${pct}% of ${fmt(p.budget)}</span>
+        <div class="pc-mini-bar"><div class="pc-mini-fill" style="width:${pct}%;background:${fc}"></div></div>
+        <span class="pc-link">View →</span>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
 
-  // Per-property
-  const propData=PROPS.map(p=>{
-    const spent=filteredTxns(p.id).reduce((s,t)=>s+t.amt,0);
-    return { ...p, spent };
-  });
-  const overBudgetProps=propData.filter(p=>p.spent>p.budget);
+function drillProp(id){
+  S.detailProp=id;S.detailTab='All';
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.dataset.view==='properties')n.classList.add('active');else n.classList.remove('active');});
+  document.getElementById('page-title').textContent='Properties';
+  renderPropertyDetail(document.getElementById('page-content'),id);
+}
 
-  // Per-category
-  const catData=Object.entries(CAT_BUDGETS).map(([cat,allocated])=>{
-    const spent=txns.filter(t=>t.cat===cat).reduce((s,t)=>s+t.amt,0);
-    return { cat, allocated, spent };
-  });
-  const overBudgetCats=catData.filter(c=>c.spent>c.allocated);
+function renderPropertyDetail(pc,propId){
+  const p=propOf(propId);
+  const allTxns=filteredTxns().filter(t=>t.prop===propId);
+  const tab=S.detailTab;
+  const tabTxns=tab==='All'?allTxns:allTxns.filter(t=>t.cat===tab);
+  const total=allTxns.reduce((s,t)=>s+t.amt,0);
+  const monthly=monthlyTotals(allTxns);
+  const byCat=sumByCat(allTxns).filter(c=>c.total>0).sort((a,b)=>b.total-a.total);
+  const maxC=byCat[0]?.total||1;
+  const pctBud=Math.round(total/p.budget*100);
+  const budColor=pctBud>=100?'var(--red)':pctBud>=80?'var(--amber)':'var(--green)';
 
-  function budBar(spent,allocated){
-    const p=Math.min(Math.round((spent/allocated)*100),100);
-    const cls=p>=100?'r':p>=80?'a':'g';
+  pc.innerHTML=`
+<button class="back-btn" onclick="backToProps()">← All Properties</button>
+<div class="pd-hdr mb24">
+  <div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+      <div style="width:14px;height:14px;border-radius:50%;background:${p.color};flex-shrink:0"></div>
+      <div class="pd-name">${p.name}</div>
+    </div>
+    <div class="pd-sub">${p.city} &nbsp;·&nbsp; ${p.type}</div>
+  </div>
+  <div class="pd-kpis">
+    <div class="pd-kpi"><div class="pd-kpi-lbl">Spend</div><div class="pd-kpi-val">${fmt(total)}</div></div>
+    <div class="pd-kpi"><div class="pd-kpi-lbl">Transactions</div><div class="pd-kpi-val">${allTxns.length}</div></div>
+    <div class="pd-kpi"><div class="pd-kpi-lbl">Budget</div><div class="pd-kpi-val">${fmt(p.budget)}</div></div>
+    <div class="pd-kpi"><div class="pd-kpi-lbl">Used</div><div class="pd-kpi-val" style="color:${budColor}">${pctBud}%</div></div>
+  </div>
+</div>
+<div class="two-col mb24">
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">📈 Monthly Spend</div></div>
+    <div class="card-body"><div class="trend-wrap">${trendBars(monthly,p.color)}</div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">📂 By Category</div></div>
+    <div class="card-body">
+      <div class="bar-chart">
+        ${byCat.map(c=>{const w=Math.round((c.total/maxC)*100);return`<div class="bar-row"><div class="bar-lbl">${c.cat}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${p.color}"></div></div><div class="bar-amt">${fmt(c.total)}</div></div>`;}).join('')}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-bar mb24">
+  ${['All',...CATS].map(t=>`<button class="tab-btn${tab===t?' active':''}" onclick="setPropTab('${t}')">${t}</button>`).join('')}
+</div>
+<div class="card">
+  <div class="card-hdr"><div class="card-title">📋 Transactions${tab!=='All'?' · '+tab:''}</div><div class="card-badge">${tabTxns.length} records</div></div>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Date</th><th>Merchant</th><th>Category</th><th>Card</th><th class="r">Amount</th></tr></thead>
+      <tbody>
+        ${[...tabTxns].sort((a,b)=>new Date(b.date)-new Date(a.date)).map(t=>`<tr><td class="td-m" style="white-space:nowrap">${fmtDate(t.date)}</td><td class="td-s">${t.merchant}</td><td><span class="tag cat-tag">${t.cat}</span></td><td class="td-m">${t.card}</td><td class="r td-n">${fmt(t.amt)}</td></tr>`).join('')}
+        <tr class="tot-row"><td colspan="4"><strong>Total</strong></td><td class="r td-n">${fmt(tabTxns.reduce((s,t)=>s+t.amt,0))}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>`;
+}
+
+function setPropTab(tab){S.detailTab=tab;renderPropertyDetail(document.getElementById('page-content'),S.detailProp);}
+function backToProps(){S.detailProp=null;renderProperties(document.getElementById('page-content'));}
+
+/* ── TRANSACTIONS ── */
+function renderTransactions(pc){
+  pc.innerHTML=`
+<div class="filters">
+  <input class="search-input" id="txn-q" placeholder="🔍 Search merchant or category…" oninput="filterTxns()">
+  <select class="filter-sel" id="txn-prop" onchange="filterTxns()">
+    <option value="">All Properties</option>
+    ${PROPS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}
+  </select>
+  <select class="filter-sel" id="txn-cat" onchange="filterTxns()">
+    <option value="">All Categories</option>
+    ${CATS.map(c=>`<option value="${c}">${c}</option>`).join('')}
+  </select>
+</div>
+<div class="card">
+  <div class="card-hdr"><div class="card-title">📋 All Transactions</div><div class="card-badge" id="txn-count"></div></div>
+  <div class="tscroll"><table>
+    <thead><tr><th>Date</th><th>Merchant</th><th>Category</th><th>Property</th><th>Card</th><th class="r">Amount</th></tr></thead>
+    <tbody id="txn-tbody"></tbody>
+  </table></div>
+</div>`;
+  drawTxns(filteredTxns());
+}
+
+function filterTxns(){
+  const q=(document.getElementById('txn-q')?.value||'').toLowerCase();
+  const prop=document.getElementById('txn-prop')?.value||'';
+  const cat=document.getElementById('txn-cat')?.value||'';
+  let txns=filteredTxns();
+  if(q)    txns=txns.filter(t=>t.merchant.toLowerCase().includes(q)||t.cat.toLowerCase().includes(q));
+  if(prop) txns=txns.filter(t=>t.prop===prop);
+  if(cat)  txns=txns.filter(t=>t.cat===cat);
+  drawTxns(txns);
+}
+
+function drawTxns(txns){
+  const tbody=document.getElementById('txn-tbody');
+  const ct=document.getElementById('txn-count');
+  if(!tbody) return;
+  if(ct) ct.textContent=txns.length+' records';
+  const sorted=[...txns].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const tot=txns.reduce((s,t)=>s+t.amt,0);
+  tbody.innerHTML=sorted.map(t=>{const p=propOf(t.prop);return`<tr><td class="td-m" style="white-space:nowrap">${fmtDate(t.date)}</td><td class="td-s">${t.merchant}</td><td><span class="tag cat-tag">${t.cat}</span></td><td><span class="tag ${p.cls}">${p.name}</span></td><td class="td-m">${t.card}</td><td class="r td-n">${fmt(t.amt)}</td></tr>`;}).join('')
+    +`<tr class="tot-row"><td colspan="5"><strong>Total (${txns.length})</strong></td><td class="r td-n">${fmt(tot)}</td></tr>`;
+}
+
+/* ── BUDGET ── */
+function renderBudget(pc){
+  const txns=filteredTxns();
+  const byCat=sumByCat(txns);
+  const byProp=sumByProp(txns);
+  function budRow(name,allocated,spent,dot){
+    const pct=Math.min(Math.round((spent/allocated)*100),100);
+    const cls=pct>=100?'r':pct>=80?'a':'g';
     const rem=allocated-spent;
-    return `
-      <div class="bdg-top">
-        <span class="bdg-name">${''}</span>
-        <span class="bdg-amts">${fmt(spent)} spent of ${fmt(allocated)}</span>
+    return`<div class="bud-item">
+      <div class="bud-top">
+        <div class="bud-name">${dot?`<span style="width:10px;height:10px;border-radius:50%;background:${dot};display:inline-block;flex-shrink:0"></span>`:''}${name}</div>
+        <div class="bud-amts">${fmt(spent)} of ${fmt(allocated)}</div>
       </div>
-      <div class="bdg-track"><div class="bdg-fill ${cls}" style="width:${p}%"></div></div>
-      <div class="bdg-bot">
-        <span class="bdg-pct ${cls}">${p}% used</span>
-        <span class="bdg-rem">${rem>=0?fmt(rem)+' left':'Over by '+fmt(-rem)}</span>
-      </div>`;
+      <div class="bud-track"><div class="bud-fill ${cls}" style="width:${pct}%"></div></div>
+      <div class="bud-bot"><div class="bud-pct ${cls}">${pct}% used</div><div class="bud-rem">${rem>=0?fmt(rem)+' left':'Over by '+fmt(Math.abs(rem))}</div></div>
+    </div>`;
   }
-
-  document.getElementById('content-area').innerHTML = `
-    <div class="kpi-grid">
-      <div class="kpi-card kc-1">
-        <div class="kpi-label">Total Spent</div>
-        <div class="kpi-val">${fmt(grandTotal)}</div>
-        <div class="kpi-sub">${rangeLabel()}</div>
-        <div class="kpi-trend nt">${pct(grandTotal,totalBudget)}% of total budget</div>
-      </div>
-      <div class="kpi-card kc-2">
-        <div class="kpi-label">Total Budget</div>
-        <div class="kpi-val">${fmt(totalBudget)}</div>
-        <div class="kpi-sub">Across 5 properties</div>
-        <div class="kpi-trend nt">${fmt(totalBudget-grandTotal)} remaining</div>
-      </div>
-      <div class="kpi-card kc-3">
-        <div class="kpi-label">Over Budget</div>
-        <div class="kpi-val">${overBudgetProps.length+overBudgetCats.length}</div>
-        <div class="kpi-sub">${overBudgetProps.length} properties, ${overBudgetCats.length} categories</div>
-        ${overBudgetProps.length+overBudgetCats.length>0
-          ? `<div class="kpi-trend down">⚠ Action required</div>`
-          : `<div class="kpi-trend up">✓ All within budget</div>`}
-      </div>
-      <div class="kpi-card kc-4">
-        <div class="kpi-label">Largest Budget</div>
-        <div class="kpi-val">${propData.sort((a,b)=>b.spent/b.budget-a.spent/a.budget)[0].name.split(' ')[0]}</div>
-        <div class="kpi-sub">Highest utilisation rate</div>
-        <div class="kpi-trend nt">${Math.round(propData[0].spent/propData[0].budget*100)}% used</div>
-      </div>
-    </div>
-
-    ${overBudgetProps.map(p=>`<div class="alert-r">⚠️ <strong>${p.name}</strong> is over budget — ${fmt(p.spent)} spent vs ${fmt(p.budget)} allocated (${Math.round(p.spent/p.budget*100)}%)</div>`).join('')}
-    ${overBudgetCats.map(c=>`<div class="alert-a">⚠️ <strong>${catIcon(c.cat)} ${c.cat}</strong> category is over budget — ${fmt(c.spent)} spent vs ${fmt(c.allocated)} allocated</div>`).join('')}
-
-    <div class="g2 mb18">
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title">🏘️ Budget by Property</div>
-          <div class="card-badge">${rangeLabel()}</div>
-        </div>
-        <div class="card-body">
-          ${PROPS.map(p=>{
-            const spent=filteredTxns(p.id).reduce((s,t)=>s+t.amt,0);
-            const pp=Math.min(Math.round((spent/p.budget)*100),100);
-            const cls=pp>=100?'r':pp>=80?'a':'g';
-            const rem=p.budget-spent;
-            return `<div class="bdg-item">
-              <div class="bdg-top">
-                <span class="bdg-name"><span class="pdot" style="background:${p.color}"></span> ${p.name}</span>
-                <span class="bdg-amts">${fmt(spent)} / ${fmt(p.budget)}</span>
-              </div>
-              <div class="bdg-track"><div class="bdg-fill ${cls}" style="width:${pp}%"></div></div>
-              <div class="bdg-bot">
-                <span class="bdg-pct ${cls}">${pp}% used</span>
-                <span class="bdg-rem">${rem>=0?fmt(rem)+' remaining':'Over by '+fmt(-rem)}</span>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr">
-          <div class="card-title">📊 Budget by Category</div>
-          <div class="card-badge">${rangeLabel()}</div>
-        </div>
-        <div class="card-body">
-          ${catData.map(c=>{
-            const pp=Math.min(Math.round((c.spent/c.allocated)*100),100);
-            const cls=pp>=100?'r':pp>=80?'a':'g';
-            const rem=c.allocated-c.spent;
-            return `<div class="bdg-item">
-              <div class="bdg-top">
-                <span class="bdg-name">${catIcon(c.cat)} ${c.cat}</span>
-                <span class="bdg-amts">${fmt(c.spent)} / ${fmt(c.allocated)}</span>
-              </div>
-              <div class="bdg-track"><div class="bdg-fill ${cls}" style="width:${pp}%"></div></div>
-              <div class="bdg-bot">
-                <span class="bdg-pct ${cls}">${pp}% used</span>
-                <span class="bdg-rem">${rem>=0?fmt(rem)+' remaining':'Over by '+fmt(-rem)}</span>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-hdr">
-        <div class="card-title">📋 Full Budget Summary</div>
-        <div class="card-badge">All properties</div>
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr>
-            <th>Property</th>
-            <th class="r">Budget</th>
-            <th class="r">Spent</th>
-            <th class="r">Remaining</th>
-            <th class="r">% Used</th>
-            <th>Status</th>
-          </tr></thead>
-          <tbody>
-            ${PROPS.map(p=>{
-              const spent=filteredTxns(p.id).reduce((s,t)=>s+t.amt,0);
-              const pp=Math.round((spent/p.budget)*100);
-              const rem=p.budget-spent;
-              const cls=pp>=100?'r':pp>=80?'a':'g';
-              const badge=pp>=100?'Over Budget':pp>=80?'Watch':'On Track';
-              const badgeCls=pp>=100?'tl':pp>=80?'tu':'tp';
-              return `<tr>
-                <td><span class="pdot" style="background:${p.color}"></span> <span class="td-s">${p.name}</span></td>
-                <td class="r td-m">${fmt(p.budget)}</td>
-                <td class="r td-n">${fmt(spent)}</td>
-                <td class="r ${rem<0?'td-n':'td-m'}" style="${rem<0?'color:var(--red)':''}">${rem>=0?fmt(rem):'-'+fmt(-rem)}</td>
-                <td class="r"><span class="bdg-pct ${cls}">${pp}%</span></td>
-                <td><span class="tag ${badgeCls}">${badge}</span></td>
-              </tr>`;
-            }).join('')}
-            <tr class="tr-total">
-              <td>Portfolio Total</td>
-              <td class="r">${fmt(totalBudget)}</td>
-              <td class="r">${fmt(grandTotal)}</td>
-              <td class="r">${fmt(totalBudget-grandTotal)}</td>
-              <td class="r">${pct(grandTotal,totalBudget)}%</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
+  const totalAlloc=BUDGETS_CAT.reduce((s,b)=>s+b.allocated,0);
+  const totalSpent=txns.reduce((s,t)=>s+t.amt,0);
+  pc.innerHTML=`
+<div class="two-col mb24">
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">🎯 By Category</div><div class="card-badge">2026 Budget</div></div>
+    <div class="card-body">${BUDGETS_CAT.map(b=>budRow(b.name,b.allocated,byCat.find(c=>c.cat===b.name)?.total||0,null)).join('')}</div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">🏘️ By Property</div><div class="card-badge">2026 Budget</div></div>
+    <div class="card-body">${PROPS.map(p=>budRow(p.name,p.budget,byProp.find(x=>x.id===p.id)?.total||0,p.color)).join('')}</div>
+  </div>
+</div>
+<div class="card">
+  <div class="card-hdr"><div class="card-title">📊 Budget Summary</div></div>
+  <div class="tscroll"><table>
+    <thead><tr><th>Category</th><th class="r">Allocated</th><th class="r">Spent</th><th class="r">Remaining</th><th class="r">% Used</th></tr></thead>
+    <tbody>
+      ${BUDGETS_CAT.map(b=>{const spent=byCat.find(c=>c.cat===b.name)?.total||0;const pct=Math.round(spent/b.allocated*100);const rem=b.allocated-spent;const col=pct>=100?'var(--red)':pct>=80?'var(--amber)':'var(--green)';
+        return`<tr><td class="td-s">${b.name}</td><td class="r td-m">${fmt(b.allocated)}</td><td class="r td-n">${fmt(spent)}</td><td class="r" style="color:${rem>=0?'var(--green)':'var(--red)'}">${fmt(Math.abs(rem))}${rem<0?' over':''}</td><td class="r" style="color:${col};font-weight:700">${pct}%</td></tr>`;}).join('')}
+      <tr class="tot-row"><td><strong>Total</strong></td><td class="r td-n">${fmt(totalAlloc)}</td><td class="r td-n">${fmt(totalSpent)}</td><td class="r td-n">${fmt(totalAlloc-totalSpent)}</td><td class="r td-n">${Math.round(totalSpent/totalAlloc*100)}%</td></tr>
+    </tbody>
+  </table></div>
+</div>`;
 }
 
-/* ─── REPORTS ───────────────────────────────────────────────────── */
-function renderReports(){
-  document.getElementById('content-area').innerHTML = `
-    <div class="rp-placeholder">
-      <div class="rp-icon">📄</div>
-      <div class="rp-title">Monthly Reports</div>
-      <div class="rp-sub">
-        Automated monthly PDF expense reports for each property will appear here.
-        Each report includes a full transaction log, category breakdown, budget comparison, and trend analysis —
-        ready to share with investors or accountants.
-      </div>
-      <span class="rp-coming">🚧 Coming Soon</span>
-    </div>
-
-    <div class="g2" style="margin-top:16px">
-      <div class="card">
-        <div class="card-hdr"><div class="card-title">📅 Planned Report Types</div></div>
-        <div class="card-body">
-          <div class="cat-row"><div class="cat-lbl">📊 Monthly Spend Summary</div><span class="tag tp">Planned</span></div>
-          <div class="cat-row"><div class="cat-lbl">🏘️ Per-Property Report</div><span class="tag tp">Planned</span></div>
-          <div class="cat-row"><div class="cat-lbl">🎯 Budget vs Actual</div><span class="tag tp">Planned</span></div>
-          <div class="cat-row"><div class="cat-lbl">📈 YTD Trend Analysis</div><span class="tag tp">Planned</span></div>
-          <div class="cat-row"><div class="cat-lbl">💰 Tax Prep Export</div><span class="tag tu">Roadmap</span></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-hdr"><div class="card-title">📬 Report Delivery</div></div>
-        <div class="card-body">
-          <div class="cat-row" style="margin-bottom:12px"><div class="cat-lbl">Email delivery</div><span class="tag tp">✓ Supported</span></div>
-          <div class="cat-row" style="margin-bottom:12px"><div class="cat-lbl">PDF download</div><span class="tag tp">✓ Supported</span></div>
-          <div class="cat-row" style="margin-bottom:12px"><div class="cat-lbl">Monthly auto-send</div><span class="tag tp">✓ Supported</span></div>
-          <div class="cat-row"><div class="cat-lbl">Slack integration</div><span class="tag tu">Roadmap</span></div>
-        </div>
-      </div>
-    </div>
-  `;
+/* ── REPORTS ── */
+function renderReports(pc){
+  pc.innerHTML=`<div class="coming-soon"><div class="cs-icon">📄</div><div class="cs-title">Reports — Coming Soon</div><div class="cs-sub">PDF export, monthly owner statements, and tax summaries will appear here once Ramp API is connected.</div></div>`;
 }
 
-/* ─── BOOT ──────────────────────────────────────────────────────── */
-function bootApp(){
-  show('app','block');
-  navigate('overview');
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  if(sessionStorage.getItem('rp_ok')==='1'){
-    show('screen-login','none');
-    bootApp();
-  }
-  document.getElementById('l-pass').addEventListener('keydown',e=>{ if(e.key==='Enter')doLogin(); });
-  document.getElementById('l-user').addEventListener('keydown',e=>{ if(e.key==='Enter')document.getElementById('l-pass').focus(); });
+/* ── BOOT ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  if(sessionStorage.getItem('rp_ok')==='1'){show('screen-login','none');openApp();}
+  document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+  document.getElementById('l-user').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('l-pass').focus();});
 });
 </script>
 </body>
