@@ -167,6 +167,43 @@
   .prog-fill.live{background:linear-gradient(90deg,#3ec97a,var(--green))}
   .prog-fill.dev{background:linear-gradient(90deg,#f0b54a,var(--amber))}
 
+  /* agent meta rows */
+  .agent-meta{border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px}
+  .am-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:12.5px}
+  .am-k{color:var(--grey);font-weight:500}
+  .am-v{color:var(--ink);font-weight:600;text-align:right}
+
+  /* activity table */
+  .activity{
+    background:#fff;border-radius:14px;border:1px solid var(--line);
+    box-shadow:0 3px 12px rgba(26,46,74,.05);overflow:hidden;
+  }
+  .activity table{width:100%;border-collapse:collapse;font-size:13px}
+  .activity th{
+    text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+    color:var(--grey);background:#fafbfe;padding:11px 16px;border-bottom:1px solid var(--line);
+  }
+  .activity td{padding:13px 16px;border-bottom:1px solid var(--line);color:#3a4658;vertical-align:top}
+  .activity tr:last-child td{border-bottom:none}
+  .out-approve{color:#0f7a3d;background:#e3f7ec;font-weight:700;font-size:11px;padding:3px 9px;border-radius:6px;white-space:nowrap}
+  .activity .applicant{font-weight:700;color:var(--ink)}
+  .activity .sub{color:var(--grey);font-size:11.5px;margin-top:2px}
+
+  /* recipients */
+  .recip-wrap{
+    background:#fff;border-radius:14px;border:1px solid var(--line);
+    box-shadow:0 3px 12px rgba(26,46,74,.05);padding:20px;
+  }
+  .recip{display:flex;flex-wrap:wrap;gap:12px}
+  .recip-card{
+    flex:1 1 220px;border:1px solid var(--line);border-radius:11px;padding:13px 15px;background:#fbfcfe;
+  }
+  .recip-card .rn{font-size:14px;font-weight:700;color:var(--ink)}
+  .recip-card .re{font-size:12.5px;color:var(--blue);margin-top:3px}
+  .recip-card .rr{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--grey);margin-top:7px}
+  .recip-note{font-size:12.5px;color:var(--grey);margin-top:14px;line-height:1.5}
+  .recip-note a{color:var(--blue);text-decoration:none;font-weight:600}
+
   /* what's next timeline */
   .next-wrap{
     background:#fff;border-radius:14px;border:1px solid var(--line);
@@ -229,7 +266,8 @@
       <div class="brand">UpneX<span class="x">—</span><span class="raut">Peabody Residential</span></div>
       <div class="top-sub">Pilot Agent Dashboard</div>
       <div class="top-meta">
-        <span class="meta-chip">🟢 Pilot ACTIVE — <b>Day 1 (Jun 16, 2026)</b></span>
+        <span class="meta-chip">🟢 Pilot ACTIVE — <b>Day 1 of 15</b></span>
+        <span class="meta-chip">📅 Effective <b>Jun 16, 2026</b></span>
         <span class="meta-chip">🔒 <b>Secure Client View</b></span>
       </div>
     </div>
@@ -238,10 +276,10 @@
   <div class="wrap">
     <!-- stats -->
     <div class="stats">
-      <div class="stat accent"><div class="n">2</div><div class="l">Agents in Pilot</div></div>
-      <div class="stat"><div class="n">1</div><div class="l">Agents LIVE</div></div>
-      <div class="stat"><div class="n">June 16</div><div class="l">Screening Went Live</div></div>
-      <div class="stat accent"><div class="n">Active</div><div class="l">Pilot Status</div></div>
+      <div class="stat accent"><div class="n">1</div><div class="l">Application Screened</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">Agent LIVE</div></div>
+      <div class="stat"><div class="n">Minutes</div><div class="l">Avg Screening Turnaround</div></div>
+      <div class="stat accent"><div class="n">Day 1</div><div class="l">of 15-Day Pilot</div></div>
     </div>
 
     <!-- PILOT AGENTS -->
@@ -255,6 +293,12 @@
         </div>
         <div class="badges"><span class="domain d-tenant">TENANT LIFECYCLE</span></div>
         <div class="c-desc">Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) to Kelly + Jacquelyn — within minutes of submission. Hari CC'd. <i>Need to add more recipients? Email Hari.</i></div>
+        <div class="agent-meta">
+          <div class="am-row"><span class="am-k">Applications screened</span><span class="am-v">1</span></div>
+          <div class="am-row"><span class="am-k">Last screening</span><span class="am-v">Carroll + Kris — <b style="color:#0f7a3d">APPROVE</b></span></div>
+          <div class="am-row"><span class="am-k">Completed</span><span class="am-v">Today · 14:09 PT</span></div>
+          <div class="am-row"><span class="am-k">Avg turnaround</span><span class="am-v">Minutes from submission</span></div>
+        </div>
         <div class="prog">
           <div class="prog-top live">100% — LIVE</div>
           <div class="prog-bar"><div class="prog-fill live" data-pct="100"></div></div>
@@ -274,6 +318,47 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- RECENT SCREENING ACTIVITY -->
+    <div class="sec-head"><span class="sdot g"></span>📋 Recent Screening Activity <span class="count">1 today</span></div>
+    <div class="activity">
+      <table>
+        <thead>
+          <tr><th>Date / Time</th><th>Applicant</th><th>Outcome</th><th>Recipients Notified</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jun 16, 2026<div class="sub">14:09 PT</div></td>
+            <td><div class="applicant">Andrew Carroll + Aidan Kris</div><div class="sub">1793 Jonathan Way #1793-L · $2,495/mo · 5.70× income</div></td>
+            <td><span class="out-approve">✅ APPROVE</span><div class="sub">Low risk · Credit 761 / 742</div></td>
+            <td>Kelly, Jacquelyn<div class="sub">Hari CC'd</div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RECIPIENTS -->
+    <div class="sec-head"><span class="sdot p"></span>👥 Report Recipients <span class="count">2 + 1 CC</span></div>
+    <div class="recip-wrap">
+      <div class="recip">
+        <div class="recip-card">
+          <div class="rn">Kelly Scott</div>
+          <div class="re">kelly@peabodyresidential.com</div>
+          <div class="rr">Primary Recipient</div>
+        </div>
+        <div class="recip-card">
+          <div class="rn">Jacquelyn</div>
+          <div class="re">jacquelyn@peabodyresidential.com</div>
+          <div class="rr">Primary Recipient</div>
+        </div>
+        <div class="recip-card">
+          <div class="rn">Hari Sundar</div>
+          <div class="re">hari@upnexs.com</div>
+          <div class="rr">UpneX · CC</div>
+        </div>
+      </div>
+      <div class="recip-note">Want to add team members to the screening reports? Reply to the launch email or contact <a href="mailto:hari@upnexs.com">hari@upnexs.com</a>.</div>
     </div>
 
     <!-- WHAT HAPPENS NEXT -->
@@ -309,6 +394,11 @@
           <div class="icon">⬜</div>
           <div class="s-title">Day 7 Mid-Pilot Sync</div>
           <div class="s-when">~June 22</div>
+        </div>
+        <div class="step todo">
+          <div class="icon">🎯</div>
+          <div class="s-title">Pilot Concludes → Commercial Term</div>
+          <div class="s-when">Day 15 · ~June 30</div>
         </div>
       </div>
     </div>
