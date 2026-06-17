@@ -295,12 +295,12 @@
           <span class="pill live"><span class="dot"></span>🟢 LIVE — Jun 16</span>
         </div>
         <div class="badges"><span class="domain d-tenant">TENANT LIFECYCLE</span></div>
-        <div class="c-desc">Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) to Kelly + Jacquelyn — within minutes of submission. Hari CC'd. <i>Need to add more recipients? Email Hari.</i></div>
+        <div class="c-desc">Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) to Kelly, Leasing &amp; Tino — within minutes of submission. Hari CC'd. <i>Need to add more recipients? Email Hari.</i></div>
         <div class="agent-meta">
-          <div class="am-row"><span class="am-k">Applications screened</span><span class="am-v">1</span></div>
-          <div class="am-row"><span class="am-k">Last screening</span><span class="am-v">Carroll + Kris — <b style="color:#0f7a3d">APPROVE</b></span></div>
-          <div class="am-row"><span class="am-k">Completed</span><span class="am-v">Today · 14:09 PT</span></div>
-          <div class="am-row"><span class="am-k">Avg turnaround</span><span class="am-v">Minutes from submission</span></div>
+          <div class="am-row"><span class="am-k">Applications screened</span><span class="am-v" id="stat-screened">—</span></div>
+          <div class="am-row"><span class="am-k">Approved</span><span class="am-v" id="stat-approved">—</span></div>
+          <div class="am-row"><span class="am-k">In leasing review</span><span class="am-v" id="stat-review">—</span></div>
+          <div class="am-row"><span class="am-k">Avg turnaround</span><span class="am-v" id="stat-turnaround">Minutes from submission</span></div>
         </div>
         <div class="prog">
           <div class="prog-top live">100% — LIVE</div>
@@ -323,26 +323,22 @@
 
     </div>
 
-    <!-- RECENT SCREENING ACTIVITY -->
-    <div class="sec-head"><span class="sdot g"></span>📋 Recent Screening Activity <span class="count">1 today</span></div>
+    <!-- SCREENING ACTIVITY (de-identified aggregate — no applicant PII) -->
+    <div class="sec-head"><span class="sdot g"></span>📋 Screening Activity <span class="count" id="act-count">—</span></div>
     <div class="activity">
       <table>
         <thead>
-          <tr><th>Date / Time</th><th>Applicant</th><th>Outcome</th><th>Recipients Notified</th></tr>
+          <tr><th>Date</th><th>Outcome</th><th>Recipients Notified</th></tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Jun 16, 2026<div class="sub">14:09 PT</div></td>
-            <td><div class="applicant">Andrew Carroll + Aidan Kris</div><div class="sub">1793 Jonathan Way #1793-L · $2,495/mo · 5.70× income</div></td>
-            <td><span class="out-approve">✅ APPROVE</span><div class="sub">Low risk · Credit 761 / 742</div></td>
-            <td>Kelly, Jacquelyn<div class="sub">Hari CC'd</div></td>
-          </tr>
+        <tbody id="act-body">
+          <tr><td colspan="3" style="color:#8a96a8">Loading latest activity…</td></tr>
         </tbody>
       </table>
+      <div class="sub" style="padding:10px 16px;color:#8a96a8">Applicant names and screening details are intentionally omitted here to protect applicant privacy — full reports are emailed directly to the recipients below.</div>
     </div>
 
     <!-- RECIPIENTS -->
-    <div class="sec-head"><span class="sdot p"></span>👥 Report Recipients <span class="count">2 + 1 CC</span></div>
+    <div class="sec-head"><span class="sdot p"></span>👥 Report Recipients <span class="count">3 + 1 CC</span></div>
     <div class="recip-wrap">
       <div class="recip">
         <div class="recip-card">
@@ -351,9 +347,14 @@
           <div class="rr">Primary Recipient</div>
         </div>
         <div class="recip-card">
-          <div class="rn">Jacquelyn</div>
-          <div class="re">jacquelyn@peabodyresidential.com</div>
-          <div class="rr">Primary Recipient</div>
+          <div class="rn">Leasing</div>
+          <div class="re">leasing@peabodyresidential.com</div>
+          <div class="rr">Recipient</div>
+        </div>
+        <div class="recip-card">
+          <div class="rn">Tino</div>
+          <div class="re">tino@peabodyresidential.com</div>
+          <div class="rr">Recipient</div>
         </div>
         <div class="recip-card">
           <div class="rn">Hari Sundar</div>
@@ -481,6 +482,29 @@
   });
 
   setTimeout(function(){ boxes[0].focus(); },200);
+})();
+
+// ---- Live de-identified stats (auto-updated by the screening pipeline) ----
+(function(){
+  fetch('stats.json?_='+Date.now()).then(function(r){return r.json();}).then(function(s){
+    function set(id,v){var e=document.getElementById(id); if(e!=null && v!=null) e.textContent=v;}
+    set('stat-screened', s.screened);
+    set('stat-approved', s.approved);
+    set('stat-review', s.review);
+    set('stat-turnaround', s.avg_turnaround);
+    var ac=document.getElementById('act-count'); if(ac) ac.textContent=(s.screened||0)+' total';
+    var body=document.getElementById('act-body');
+    if(body && s.recent && s.recent.length){
+      body.innerHTML = s.recent.map(function(r){
+        var col = r.outcome==='APPROVE' ? '#0f7a3d' : (r.outcome==='DECLINE' ? '#b3261e' : '#b8860b');
+        var ico = r.outcome==='APPROVE' ? '✅ APPROVE' : (r.outcome==='DECLINE' ? '❌ DECLINE' : '🔍 IN REVIEW');
+        var rec = r.recipients || 'Kelly, Leasing, Tino · Hari CC';
+        return '<tr><td>'+r.date+'</td><td><span style="color:'+col+';font-weight:700">'+ico+'</span></td><td>'+rec+'</td></tr>';
+      }).join('');
+    } else if (body) {
+      body.innerHTML = '<tr><td colspan="3" style="color:#8a96a8">No screenings yet.</td></tr>';
+    }
+  }).catch(function(e){});
 })();
 </script>
 </body>
