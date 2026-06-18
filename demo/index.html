@@ -6,8 +6,8 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<title>UpneX — Try an AI Property Management Agent</title>
-<meta name="description" content="Property management, run by AI. Walk through a real tenant request in 5 steps — then book your free pilot." />
+<title>UpneX — See an AI Agent Live in 15 Minutes</title>
+<meta name="description" content="Watch an UpneX AI agent handle your hardest property management task, then book a live walkthrough tailored to your portfolio." />
 
 <!-- Meta Pixel Code -->
 <script>
@@ -34,22 +34,20 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
     theme: {
       extend: {
         colors: {
-          ink: '#1D1D1F',            // Apple text black
+          ink:   '#1D1D1F',
           paper: '#FFFFFF',
-          fog: '#F5F5F7',            // Apple section gray
-          mist: '#FAFAFC',           // Slight warm white
-          muted: '#86868B',          // Apple secondary text
-          dim: '#6E6E73',
-          line: '#D2D2D7',           // Apple subtle border
-          ablue: {
-            DEFAULT: '#0071E3',
-            hover: '#0077ED',
-            tint: '#E8F0FE',
-          },
+          fog:   '#F5F5F7',
+          mist:  '#FAFAFC',
+          muted: '#86868B',
+          dim:   '#6E6E73',
+          line:  '#D2D2D7',
+          navy:  '#1a2e4a',
+          accent:'#0066cc',
+          ablue: { DEFAULT: '#0071E3', hover: '#0077ED', tint: '#E8F0FE' },
         },
         fontFamily: {
-          sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-          mono: ['"SF Mono"', 'Menlo', 'Monaco', '"Courier New"', 'monospace'],
+          sans: ['-apple-system','BlinkMacSystemFont','"SF Pro Display"','"SF Pro Text"','"Helvetica Neue"','Helvetica','Arial','sans-serif'],
+          mono: ['"SF Mono"','Menlo','Monaco','"Courier New"','monospace'],
         },
       },
     },
@@ -67,843 +65,656 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
   }
 
   /* ============ TYPOGRAPHY ============ */
-  .display-xl {
-    font-size: clamp(44px, 7vw, 80px);
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-    font-weight: 600;
-  }
-  .display-lg {
-    font-size: clamp(36px, 5vw, 56px);
-    line-height: 1.1;
-    letter-spacing: -0.022em;
-    font-weight: 600;
-  }
-  .display-md {
-    font-size: clamp(28px, 3.5vw, 40px);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    font-weight: 600;
-  }
+  .display-xl { font-size: clamp(36px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.025em; font-weight: 700; }
+  .display-lg { font-size: clamp(28px, 4vw, 52px); line-height: 1.1; letter-spacing: -0.022em; font-weight: 600; }
+  .display-md { font-size: clamp(22px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; }
   .body-lg { font-size: 19px; line-height: 1.55; color: #6E6E73; }
-  .body { font-size: 17px; line-height: 1.5; color: #6E6E73; }
-  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #0071E3; }
+  .body    { font-size: 17px; line-height: 1.5; color: #6E6E73; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #0066cc; }
 
   /* ============ BUTTONS ============ */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 14px 28px;
-    border-radius: 980px;
-    font-weight: 500;
-    font-size: 15px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    line-height: 1;
-    white-space: nowrap;
+    padding: 14px 28px; border-radius: 980px;
+    font-weight: 500; font-size: 15px;
+    transition: all 0.2s ease; cursor: pointer; line-height: 1; white-space: nowrap; text-decoration: none;
   }
-  .btn-blue { background: #0071E3; color: #FFFFFF; }
+  .btn-blue  { background: #0071E3; color: #FFFFFF; }
   .btn-blue:hover { background: #0077ED; }
   .btn-black { background: #1D1D1F; color: #FFFFFF; }
   .btn-black:hover { background: #000000; }
-  .btn-white { background: #FFFFFF; color: #1D1D1F; }
-  .btn-white:hover { background: #F5F5F7; }
-  .btn-ghost-light { background: transparent; color: #0071E3; }
-  .btn-ghost-light:hover { color: #0077ED; }
-  .btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.25); }
-  .btn-ghost-dark:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.4); }
-  .btn-lg { padding: 16px 36px; font-size: 17px; }
-
-  /* ============ LINKS ============ */
-  .link-blue { color: #0071E3; text-decoration: none; }
-  .link-blue:hover { text-decoration: underline; }
+  .btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-ghost-dark:hover { background: rgba(255,255,255,0.08); }
+  .btn-lg    { padding: 16px 36px; font-size: 17px; }
 
   /* ============ NAV ============ */
-  .nav-link { color: #1D1D1F; font-size: 14px; font-weight: 400; transition: color 0.15s; }
-  .nav-link:hover { color: #0071E3; }
+  .nav-link { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 400; transition: color 0.15s; text-decoration: none; }
+  .nav-link:hover { color: #FFFFFF; }
+
+  /* ============ ACCENT BAR ============ */
+  .accent-bar { height: 4px; background: #0066cc; }
+
+  /* ============ BULLETPROOF BOOK BUTTON ============ */
+  .book-btn-wrap { text-align: center; }
+  .book-btn-wrap table { margin: 0 auto; }
+  .book-btn-wrap td {
+    background: #0066cc;
+    border-radius: 10px;
+    mso-padding-alt: 0;
+    padding: 0;
+  }
+  .book-btn {
+    display: inline-block;
+    background: #0066cc;
+    color: #ffffff !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 20px 48px;
+    text-decoration: none !important;
+    border-radius: 10px;
+    border: 2px solid #0066cc;
+    -webkit-text-size-adjust: none;
+    letter-spacing: -0.01em;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .book-btn:hover {
+    background: #0052a3;
+    border-color: #0052a3;
+    transform: translateY(-1px);
+  }
+  @media (max-width: 480px) {
+    .book-btn { font-size: 17px; padding: 18px 28px; display: block; text-align: center; }
+    .book-btn-wrap table, .book-btn-wrap td { width: 100%; }
+  }
+
+  /* ============ VIDEO PLACEHOLDER ============ */
+  .video-shell {
+    position: relative; width: 100%; border-radius: 20px; overflow: hidden;
+    background: #1a2e4a;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+  }
+  .video-shell iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  .video-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; color: rgba(255,255,255,0.7);
+  }
+  .video-play-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
 
   /* ============ CARDS ============ */
   .card-soft {
-    background: #FFFFFF;
-    border-radius: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    background: #FFFFFF; border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
     transition: box-shadow 0.3s, transform 0.3s;
   }
-  .card-soft:hover {
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
-    transform: translateY(-3px);
-  }
-  .card-flat {
-    background: #FFFFFF;
-    border-radius: 24px;
-    border: 1px solid #F5F5F7;
-  }
+  .card-soft:hover { box-shadow: 0 12px 36px rgba(0,0,0,0.11); transform: translateY(-2px); }
+  .card-flat { background: #FFFFFF; border-radius: 20px; border: 1px solid #F5F5F7; }
 
   /* ============ INPUTS ============ */
   .input {
-    width: 100%;
-    padding: 14px 18px;
-    background: #FFFFFF;
-    border: 1.5px solid #D2D2D7;
-    border-radius: 12px;
-    font-size: 16px;
-    color: #1D1D1F;
-    transition: border 0.2s, box-shadow 0.2s;
-    font-family: inherit;
+    width: 100%; padding: 13px 16px;
+    background: #FFFFFF; border: 1.5px solid #D2D2D7; border-radius: 10px;
+    font-size: 15px; color: #1D1D1F; transition: border 0.2s, box-shadow 0.2s; font-family: inherit;
   }
-  .input:focus {
-    outline: none;
-    border-color: #0071E3;
-    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
-  }
+  .input:focus { outline: none; border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0,102,204,0.12); }
   .input::placeholder { color: #86868B; }
-  select.input { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23636366' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; padding-right: 44px; }
+  select.input {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23636366' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
+  }
 
   /* ============ SCROLL REVEAL ============ */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  /* Start at opacity 0.15 so content is never fully invisible (no blank sections) */
+  .reveal { opacity: 0.15; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-d1 { transition-delay: 0.08s; }
-  .reveal-d2 { transition-delay: 0.16s; }
-  .reveal-d3 { transition-delay: 0.24s; }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
 
-  /* ============ DEMO CARD (white on light gray) ============ */
+  /* ============ DEMO WALKTHROUGH ============ */
   .demo-shell {
-    background: #FFFFFF;
-    border-radius: 28px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    background: #FFFFFF; border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
   }
-
-  /* Scenario dropdown — clean Apple style */
   .scenario-select-wrap { position: relative; }
   .scenario-select {
     appearance: none; -webkit-appearance: none; -moz-appearance: none;
-    width: 100%;
-    padding: 16px 50px 16px 18px;
-    background: #FFFFFF;
-    border: 1.5px solid #1D1D1F;
-    border-radius: 14px;
-    color: #1D1D1F;
-    font-size: 16px; font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: inherit;
+    width: 100%; padding: 14px 46px 14px 16px;
+    background: #FFFFFF; border: 1.5px solid #1D1D1F; border-radius: 12px;
+    color: #1D1D1F; font-size: 15px; font-weight: 500; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
   }
-  .scenario-select:hover { background: #FAFAFC; }
-  .scenario-select:focus { outline: none; border-color: #0071E3; box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12); }
-  .scenario-select option { background: #FFFFFF; color: #1D1D1F; padding: 12px; font-weight: 500; }
-  .scenario-select-arrow { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #1D1D1F; }
-
-  /* iMessage-style bubbles */
+  .scenario-select:focus { outline: none; border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0,102,204,0.12); }
+  .scenario-select-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; }
   .bubble-tenant {
-    background: #F5F5F7;
-    border-radius: 22px 22px 22px 6px;
-    padding: 14px 18px;
-    color: #1D1D1F;
-    font-size: 16px;
-    line-height: 1.4;
-    max-width: 100%;
+    background: #F5F5F7; border-radius: 20px 20px 20px 5px;
+    padding: 13px 16px; color: #1D1D1F; font-size: 15px; line-height: 1.4;
   }
   .bubble-agent {
-    background: #0071E3;
-    color: #FFFFFF;
-    border-radius: 22px 22px 6px 22px;
-    padding: 14px 18px;
-    font-size: 16px;
-    line-height: 1.4;
+    background: #0066cc; color: #FFFFFF;
+    border-radius: 20px 20px 5px 20px;
+    padding: 13px 16px; font-size: 15px; line-height: 1.4;
   }
-
-  /* Demo step transitions */
-  .demo-step { animation: stepFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-  @keyframes stepFadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+  .demo-step { animation: stepFadeIn 0.4s cubic-bezier(0.16,1,0.3,1); }
+  @keyframes stepFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .check-item {
+    display: flex; align-items: center; gap: 10px; font-size: 14px; color: #1D1D1F;
+    opacity: 0; transform: translateX(-6px); animation: checkSlideIn 0.35s ease forwards;
   }
-
-  /* Spinner — for form submit state */
+  .check-item .check-icon {
+    width: 20px; height: 20px; border-radius: 50%; background: #1D1D1F;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .check-item .check-icon svg { width: 10px; height: 10px; stroke: #FFFFFF; stroke-width: 4; }
+  @keyframes checkSlideIn { to { opacity: 1; transform: translateX(0); } }
+  .urgency-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  }
+  .urgency-pill.urgent  { background: #FFE5E5; color: #C40C0C; }
+  .urgency-pill.routine { background: #FFF4E0; color: #AA6500; }
   .spinner-lg {
-    width: 44px; height: 44px;
-    border: 3px solid #F5F5F7;
-    border-top-color: #0071E3;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto;
+    width: 40px; height: 40px;
+    border: 3px solid #F5F5F7; border-top-color: #0066cc;
+    border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Investigation check items */
-  .check-item {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 15px; color: #1D1D1F;
-    opacity: 0; transform: translateX(-8px);
-    animation: checkSlideIn 0.4s ease forwards;
+  /* ============ LIVE DOT ============ */
+  .live-dot { position: relative; display: inline-block; width: 8px; height: 8px; background: #34C759; border-radius: 50%; }
+  .live-dot::after {
+    content: ''; position: absolute; inset: -4px; border-radius: 50%;
+    background: #34C759; opacity: 0.4; animation: pulse 2s ease-out infinite;
   }
-  .check-item .check-icon {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: #1D1D1F;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .check-item .check-icon svg { width: 12px; height: 12px; stroke: #FFFFFF; stroke-width: 4; }
-  @keyframes checkSlideIn { to { opacity: 1; transform: translateX(0); } }
+  @keyframes pulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.5); opacity: 0; } }
 
-  /* Urgency pill */
-  .urgency-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 7px 14px; border-radius: 999px;
-    font-size: 13px; font-weight: 600;
-  }
-  .urgency-pill.urgent { background: #FFE5E5; color: #C40C0C; }
-  .urgency-pill.routine { background: #FFF4E0; color: #AA6500; }
-
-  /* Marquee */
-  .marquee { display: flex; gap: 4rem; animation: marquee 40s linear infinite; white-space: nowrap; }
-  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-  /* State chips (Apple-flat) */
-  .state-pill {
-    display: inline-block; padding: 6px 14px; border-radius: 999px;
-    background: #F5F5F7;
-    color: #1D1D1F;
-    font-size: 13px; font-weight: 500;
-    font-family: "SF Mono", Menlo, monospace;
-  }
-
-  /* Pricing card (featured) */
-  .pricing-featured {
-    background: #1D1D1F;
-    color: #FFFFFF;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  }
-
-  /* Sticky mobile CTA */
+  /* ============ STICKY MOBILE CTA ============ */
   .sticky-cta {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    padding: 12px 16px; background: rgba(255,255,255,0.94);
+    backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
     border-top: 1px solid #F5F5F7;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
   }
   .sticky-cta.visible { transform: translateY(0); }
   @media (min-width: 768px) { .sticky-cta { display: none !important; } }
 
-  /* Live dot */
-  .live-dot { position: relative; display: inline-block; width: 8px; height: 8px; background: #34C759; border-radius: 50%; }
-  .live-dot::after {
-    content: ''; position: absolute; inset: -4px; border-radius: 50%;
-    background: #34C759; opacity: 0.4;
-    animation: pulse 2s ease-out infinite;
+  /* ============ QUOTE ============ */
+  .quote-card {
+    background: #1a2e4a; border-radius: 20px;
+    padding: 32px; color: #FFFFFF;
   }
-  @keyframes pulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.5); opacity: 0; } }
+  .quote-mark { font-size: 48px; line-height: 1; color: #0066cc; font-family: Georgia, serif; }
 
-  /* Section labels */
-  .section-rule { width: 40px; height: 2px; background: #0071E3; margin-bottom: 24px; }
+  /* ============ SECTION RULE ============ */
+  .section-rule { width: 36px; height: 3px; background: #0066cc; margin-bottom: 20px; border-radius: 2px; }
 </style>
 </head>
 <body>
 
 <!-- ============ NAVBAR ============ -->
-<nav class="fixed top-0 inset-x-0 z-50 bg-white/85 backdrop-blur border-b border-fog">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8 h-14 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-2 text-ink font-semibold text-lg tracking-tight">UpneX</a>
-    <div class="hidden md:flex items-center gap-9">
-      <a href="#demo" class="nav-link">Demo</a>
-      <a href="#what" class="nav-link">What we do</a>
-      <a href="#results" class="nav-link">Results</a>
-      <a href="#pricing" class="nav-link">Pricing</a>
+<nav style="background:#1a2e4a; position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,0.08);">
+  <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:56px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="https://upnexs.com" style="color:#ffffff; font-weight:700; font-size:18px; text-decoration:none; letter-spacing:-0.02em;">UpneX</a>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <a href="https://upnexs.com" class="nav-link" style="display:none;" id="navHome">← Back to site</a>
+      <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+         target="_blank" rel="noopener"
+         data-cta="book"
+         style="display:inline-block; background:#0066cc; color:#ffffff; font-weight:600; font-size:14px; padding:9px 20px; border-radius:980px; text-decoration:none; border:1px solid #0066cc; transition:background 0.2s;"
+         onmouseover="this.style.background='#0052a3'" onmouseout="this.style.background='#0066cc'">
+        Book a Call
+      </a>
     </div>
-    <a href="#book" class="btn btn-black text-sm" style="padding: 8px 18px;">
-      Book a Call
-    </a>
   </div>
 </nav>
+<script>document.getElementById('navHome').style.display='inline';</script>
 
-<!-- ============ HERO (compact — fits above the fold) ============ -->
-<section id="demo" class="bg-ink text-white pt-20 pb-16 sm:pt-24 sm:pb-20">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+<!-- ============ ACCENT BAR ============ -->
+<div class="accent-bar"></div>
 
-    <!-- Top headline — compact, single line on desktop -->
-    <div class="max-w-4xl mb-8 sm:mb-10">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/8 border border-white/10 text-white/80 text-xs font-medium mb-4">
-        <span class="live-dot"></span>
-        Interactive demo · No signup required
+<!-- ============ HERO ============ -->
+<section style="background:#1a2e4a; padding:64px 24px 56px;">
+  <div style="max-width:860px; margin:0 auto; text-align:center;">
+    <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:999px; padding:6px 14px; margin-bottom:24px;">
+      <span class="live-dot"></span>
+      <span style="color:rgba(255,255,255,0.75); font-size:13px; font-weight:500;">Live demo · No signup required</span>
+    </div>
+    <h1 class="display-xl" style="color:#ffffff; margin-bottom:20px;">
+      See an UpneX AI agent handle your hardest task — in 15 minutes.
+    </h1>
+    <p style="color:rgba(255,255,255,0.65); font-size:20px; line-height:1.5; max-width:640px; margin:0 auto; font-weight:300;">
+      Watch the demo, then book a live walkthrough where we tailor it to your portfolio.
+    </p>
+  </div>
+</section>
+
+<!-- ============ DEMO VIDEO ============ -->
+<section style="background:#f0f4f8; padding:48px 24px;">
+  <div style="max-width:860px; margin:0 auto;">
+    <!-- YOUTUBE_DEMO_URL — replace src below with your YouTube embed URL (one-line change) -->
+    <!-- Example: src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1" -->
+    <div id="demo-video" class="video-shell reveal">
+      <div class="video-placeholder">
+        <div class="video-play-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <p style="font-size:15px; font-weight:500; color:rgba(255,255,255,0.6);">Demo video loading…</p>
+        <p style="font-size:13px; color:rgba(255,255,255,0.4);">Watch an UpneX agent handle a live tenant request end-to-end</p>
       </div>
-      <h1 class="display-lg mb-3">
-        Property management, <span class="text-white/55">run by AI.</span>
-      </h1>
-      <p class="text-white/70 text-lg sm:text-xl leading-snug max-w-2xl font-light">
-        Try a live AI agent below. Then book your free 15-day pilot.
-      </p>
+    </div>
+    <!-- To add the YouTube URL later, replace the demo-video div above with:
+    <div id="demo-video" class="video-shell">
+      <iframe src="YOUR_YOUTUBE_EMBED_URL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- ============ PRIMARY CTA ============ -->
+<section style="background:#ffffff; padding:56px 24px 40px; text-align:center;" id="book-cta">
+  <div style="max-width:640px; margin:0 auto;">
+    <p class="eyebrow" style="margin-bottom:14px;">Ready to see it on your portfolio?</p>
+    <h2 class="display-md" style="color:#1a2e4a; margin-bottom:10px;">
+      Book a 15-min live walkthrough
+    </h2>
+    <p style="color:#6E6E73; font-size:17px; margin-bottom:32px; line-height:1.5;">
+      We'll demo the exact agent that fits your biggest pain point — maintenance triage, leasing, or BD.
+    </p>
+
+    <!-- BULLETPROOF BOOK BUTTON — three #0066cc declarations, display:inline-block -->
+    <div class="book-btn-wrap">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+        <tr>
+          <td align="center" bgcolor="#0066cc" style="border-radius:10px; mso-padding-alt:0; padding:0;">
+            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+               target="_blank"
+               rel="noopener"
+               class="book-btn"
+               data-cta="book"
+               onclick="trackCta('book')">
+              Book a 15-min walkthrough &nbsp;→
+            </a>
+          </td>
+        </tr>
+      </table>
     </div>
 
-    <!-- Demo + Form split -->
-    <div class="grid lg:grid-cols-12 gap-8 items-start">
+    <p style="margin-top:16px; font-size:13px; color:#86868B;">
+      Opens Google Calendar · No prep needed · 15 minutes
+    </p>
+  </div>
+</section>
 
-      <!-- LEFT: Demo card -->
-      <div class="lg:col-span-7">
-        <div class="demo-shell p-6 sm:p-8 text-ink">
-
-          <!-- Scenario dropdown -->
-          <div class="mb-7">
-            <label class="block text-xs font-semibold uppercase tracking-wider text-ablue mb-2.5" for="scenarioSelect">
-              Pick a tenant request
-            </label>
-            <div class="scenario-select-wrap">
-              <select id="scenarioSelect" class="scenario-select" aria-label="Pick a tenant scenario">
-                <optgroup label="🔧  Maintenance Triage Agent">
-                  <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
-                  <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
-                  <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
-                  <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
-                </optgroup>
-                <optgroup label="🏠  Leasing & Screening Agent">
-                  <option value="application">📋  New lead — 312 Maple St inquiry</option>
-                </optgroup>
-              </select>
-              <svg class="scenario-select-arrow" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-            </div>
-            <p class="mt-2 text-xs text-muted">Change anytime to try a different scenario.</p>
-          </div>
-
-          <!-- Divider -->
-          <div class="border-t border-fog -mx-6 sm:-mx-8 mb-7"></div>
-
-          <!-- Walkthrough header -->
-          <div class="flex items-center justify-between mb-3">
-            <div class="text-xs font-semibold uppercase tracking-wider text-muted">Watch AI handle it</div>
-            <div class="text-xs font-mono text-muted" id="stepCounter">Step 1 of 5</div>
-          </div>
-
-          <!-- Progress segments -->
-          <div class="flex items-center gap-1.5 mb-8" id="progressDots">
-            <div class="h-1 flex-1 rounded-full bg-ink transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
-            <div class="h-1 flex-1 rounded-full bg-fog transition-all duration-500"></div>
-          </div>
-
-          <!-- Step content -->
-          <div class="min-h-[340px] mb-7">
-
-            <!-- STEP 1 -->
-            <div class="demo-step" data-step="1">
-              <h3 class="text-2xl font-semibold mb-2">Your tenant texts in.</h3>
-              <p class="body mb-6">Real tenants don't write paragraphs. They fire off short, casual messages. Here's a typical one:</p>
-              <div class="max-w-md">
-                <div class="text-xs font-mono text-muted mb-2" id="step1Meta">Apt 112 · 2:18 PM</div>
-                <div class="bubble-tenant" id="step1Msg">AC broken 🥵 95° in here</div>
-              </div>
-              <p class="text-sm text-muted mt-5">↑ That's the whole message. Now watch what the AI does.</p>
-            </div>
-
-            <!-- STEP 2 -->
-            <div class="demo-step hidden" data-step="2">
-              <h3 class="text-2xl font-semibold mb-2">AI reads it. Pulls context.</h3>
-              <p class="body mb-6">In under a second, the agent investigates everything it needs:</p>
-              <div class="space-y-3 mb-6" id="step2Checks"></div>
-              <div id="step2Result"></div>
-            </div>
-
-            <!-- STEP 3 -->
-            <div class="demo-step hidden" data-step="3">
-              <h3 class="text-2xl font-semibold mb-2">Picks the right vendor. Dispatches.</h3>
-              <p class="body mb-6">From your approved vendor list — scored by rating, distance, response time, and cost.</p>
-              <div class="bg-fog rounded-2xl p-4 mb-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center text-xl flex-shrink-0 shadow-sm">🔧</div>
-                  <div class="flex-1 min-w-0">
-                    <div class="font-semibold text-ink" id="step3Vendor">CoolPro HVAC</div>
-                    <div class="text-sm text-muted" id="step3VendorMeta">4.8★ · 24-hr emergency · 1.2mi away</div>
-                  </div>
-                  <div class="text-ablue text-xs font-semibold uppercase tracking-wider">Dispatched</div>
-                </div>
-              </div>
-              <div class="text-xs font-mono text-muted mb-2 uppercase tracking-wider">SMS sent to vendor</div>
-              <div class="bg-ablue-tint rounded-2xl p-4 text-sm text-ink/85" id="step3Sms"></div>
-            </div>
-
-            <!-- STEP 4 -->
-            <div class="demo-step hidden" data-step="4">
-              <h3 class="text-2xl font-semibold mb-2">Replies — in your brand voice.</h3>
-              <p class="body mb-6">Calm, specific, with next steps. No tenant is up at 2am stressing — they got an answer in 14 seconds.</p>
-              <div class="max-w-md ml-auto">
-                <div class="text-xs font-mono text-muted mb-2 text-right" id="step4Meta">UpneX AI · 2:18 PM</div>
-                <div class="bubble-agent" id="step4Reply"></div>
-              </div>
-            </div>
-
-            <!-- STEP 5 -->
-            <div class="demo-step hidden" data-step="5">
-              <h3 class="text-2xl font-semibold mb-2">Logged in your PM platform.</h3>
-              <p class="body mb-6">Synced to AppFolio / Buildium / wherever you live. Audit trail intact. Owner alerted. You stayed asleep.</p>
-              <div class="bg-ink text-white rounded-2xl p-6">
-                <div class="text-white/50 text-[11px] uppercase tracking-[0.18em] mb-1">Work order created</div>
-                <div class="font-semibold text-3xl mb-1" id="step5WoId">WO-4837</div>
-                <div class="text-white/70 text-sm mb-5" id="step5WoMeta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
-                <div class="border-t border-white/15 pt-4 space-y-2">
-                  <div class="flex justify-between text-sm">
-                    <span class="text-white/60">Time: message → dispatched</span>
-                    <span class="font-mono font-semibold" id="step5Time">14 seconds</span>
-                  </div>
-                  <div class="flex justify-between text-sm">
-                    <span class="text-white/60">Human intervention</span>
-                    <span class="font-mono font-semibold">Zero</span>
-                  </div>
-                  <div class="flex justify-between text-sm">
-                    <span class="text-white/60">Tenant satisfaction</span>
-                    <span class="font-mono font-semibold">★★★★★</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Before/After AI comparison toggle -->
-              <div class="mt-5 pt-5 border-t border-fog">
-                <button id="toggleCompare" class="text-sm font-semibold text-ablue hover:underline flex items-center gap-1.5">
-                  <svg id="compareChevron" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                  See how this would've gone <em class="not-italic font-extrabold">without</em> UpneX
-                </button>
-                <div id="compareBlock" class="hidden mt-5 bg-fog rounded-2xl p-5">
-                  <p class="text-sm font-medium text-ink mb-4" id="compareIntro">How this same scenario would have gone without UpneX:</p>
-                  <ol class="space-y-2.5 mb-5" id="compareTimeline"></ol>
-                  <div class="border-t border-line pt-4 space-y-2 text-sm">
-                    <div class="flex justify-between"><span class="text-muted">Owner time burned</span><span class="font-mono font-semibold text-ink" id="compareOwner">—</span></div>
-                    <div class="flex justify-between"><span class="text-muted">Tenant impact</span><span class="font-mono font-semibold text-ink" id="compareTenant">—</span></div>
-                    <div class="flex justify-between"><span class="text-muted">Likely outcome</span><span class="font-mono font-semibold text-ink" id="compareReviews">—</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Back + Next -->
-          <div class="flex items-center justify-between gap-3 pt-5 border-t border-fog">
-            <button id="backBtn" class="text-muted hover:text-ink text-sm font-medium transition px-2 py-2 invisible">
-              ← Back
-            </button>
-            <button id="nextBtn" class="btn btn-blue btn-lg">
-              <span id="nextBtnText">Next: Watch AI read it</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </button>
-          </div>
+<!-- ============ WHAT YOU'LL SEE ============ -->
+<section style="background:#f0f4f8; padding:48px 24px;">
+  <div style="max-width:760px; margin:0 auto;">
+    <div class="section-rule"></div>
+    <h3 class="display-md" style="color:#1a2e4a; margin-bottom:32px;">What you'll see in the walkthrough</h3>
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <div class="card-soft reveal" style="padding:24px 28px; display:flex; gap:18px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:10px; background:#1a2e4a; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px;">🔍</div>
+        <div>
+          <div style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:4px;">Tenant screening end-to-end</div>
+          <div style="color:#6E6E73; font-size:15px; line-height:1.5;">Lead intake → income check → soft credit pull → score → tour booked. All in under 60 seconds. No manual review.</div>
         </div>
       </div>
-
-      <!-- RIGHT: Form card -->
-      <div class="lg:col-span-5 lg:sticky lg:top-24">
-        <div id="formCard" class="bg-white text-ink rounded-3xl p-7 sm:p-9 shadow-xl">
-
-          <!-- Step progress -->
-          <div class="flex items-center justify-between mb-7 text-sm">
-            <div class="flex items-center gap-2">
-              <span id="stepDot1" class="w-6 h-6 rounded-full bg-ablue text-white font-semibold flex items-center justify-center text-xs">1</span>
-              <span class="font-medium text-ink">Your info</span>
-            </div>
-            <div class="flex-1 mx-3 h-px bg-fog relative">
-              <div id="stepBar" class="absolute inset-y-0 left-0 bg-ablue transition-all duration-500" style="width: 0%;"></div>
-            </div>
-            <div class="flex items-center gap-2">
-              <span id="stepDot2" class="w-6 h-6 rounded-full bg-fog text-muted font-semibold flex items-center justify-center text-xs">2</span>
-              <span class="text-muted">Thank you</span>
-            </div>
-          </div>
-
-          <!-- Step 1: Form -->
-          <div id="formStep1">
-            <h3 class="display-md mb-2">Get Your Free Pilot</h3>
-            <p class="body mb-6 text-base">15 days · $0 cost · No credit card</p>
-
-            <form id="leadForm" class="space-y-4">
-              <div>
-                <label class="block text-sm font-medium mb-1.5 text-ink">Your Name</label>
-                <input type="text" name="name" required class="input" placeholder="Full name" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-1.5 text-ink">Work Email</label>
-                <input type="email" name="email" required class="input" placeholder="you@company.com" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-1.5 text-ink">Phone</label>
-                <input type="tel" name="phone" required class="input" placeholder="Phone number" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-1.5 text-ink">Portfolio Size</label>
-                <select name="portfolio" required class="input">
-                  <option value="">Select range…</option>
-                  <option value="0-200">0–200 units</option>
-                  <option value="201-500">201–500 units</option>
-                  <option value="501-1000">501–1,000 units</option>
-                  <option value="1001-2000">1,001–2,000 units</option>
-                  <option value="2000+">2,000+ units</option>
-                </select>
-              </div>
-
-              <button type="submit" class="btn btn-black btn-lg w-full mt-2">
-                Get My Free Pilot
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </button>
-              <p class="text-xs text-muted text-center">Your info stays private. No spam.</p>
-            </form>
-          </div>
-
-          <!-- Step 2: Sending → Thank you (booking is a separate optional action) -->
-          <div id="formStep2" class="hidden text-center py-8">
-
-            <!-- Sending state -->
-            <div id="sendingState">
-              <div class="spinner-lg mb-6"></div>
-              <h3 class="text-xl font-semibold mb-2">Sending your info…</h3>
-              <p class="text-muted">Just a sec — our team will get this right away.</p>
-            </div>
-
-            <!-- Thank you state -->
-            <div id="successState" class="hidden">
-              <!-- Primary confirmation -->
-              <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-ablue-tint flex items-center justify-center">
-                <svg class="w-9 h-9 text-ablue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
-              </div>
-              <h3 class="text-2xl font-semibold mb-2">Thank you<span id="capturedName"></span>!</h3>
-              <p class="text-muted mb-1">Your details are in.</p>
-              <p class="text-muted text-sm mb-8">Our team will reach out within 24 hours.</p>
-
-              <!-- "OR" divider -->
-              <div class="relative max-w-xs mx-auto mb-7">
-                <div class="border-t border-fog"></div>
-                <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs font-mono uppercase tracking-wider text-muted">Or skip the wait</span>
-              </div>
-
-              <!-- Separate, optional booking action -->
-              <div class="bg-fog rounded-2xl p-5">
-                <p class="text-base font-semibold text-ink mb-1">Want to talk sooner?</p>
-                <p class="text-sm text-muted mb-4">Book a 30-min call directly with our team.</p>
-                <a id="bookCallBtn" href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-blue btn-lg">
-                  📅  Book a Call Now
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </a>
-                <p class="text-xs text-muted mt-3">Opens in a new tab</p>
-              </div>
-
-              <!-- Post-click confirmation -->
-              <div id="bookedConfirm" class="hidden mt-5 text-sm text-ablue font-medium">
-                ✓ Booker opened in a new tab — see you on the call!
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Trust strip -->
-        <div class="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-white/55 text-sm">
-          <span class="flex items-center gap-1.5"><span class="text-ablue">✓</span> $0 cost</span>
-          <span class="flex items-center gap-1.5"><span class="text-ablue">✓</span> Live in 7 days</span>
-          <span class="flex items-center gap-1.5"><span class="text-ablue">✓</span> No commitment</span>
+      <div class="card-soft reveal reveal-d1" style="padding:24px 28px; display:flex; gap:18px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:10px; background:#1a2e4a; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px;">📄</div>
+        <div>
+          <div style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:4px;">Lease renewals + CMAs without your involvement</div>
+          <div style="color:#6E6E73; font-size:15px; line-height:1.5;">Agent pulls comps, drafts the renewal offer, sends to tenant, and tracks the response — you only see the summary.</div>
         </div>
       </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ STATS BAND (own slim section, no longer crowding the hero) ============ -->
-<section class="bg-ink border-t border-white/10 py-8">
-  <div class="max-w-3xl mx-auto px-6 sm:px-8 grid grid-cols-3 gap-8">
-    <div class="text-center">
-      <div class="text-white font-semibold text-2xl sm:text-3xl"><span class="counter" data-target="3500">0</span><span class="text-white/40">+</span></div>
-      <div class="text-white/50 text-[11px] uppercase tracking-wider mt-1">Units managed</div>
-    </div>
-    <div class="text-center border-x border-white/10">
-      <div class="text-white font-semibold text-2xl sm:text-3xl"><span class="counter" data-target="45">0</span></div>
-      <div class="text-white/50 text-[11px] uppercase tracking-wider mt-1">Custom AI agents</div>
-    </div>
-    <div class="text-center">
-      <div class="text-white font-semibold text-2xl sm:text-3xl"><span class="counter" data-target="12">0</span></div>
-      <div class="text-white/50 text-[11px] uppercase tracking-wider mt-1">US states</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ INTEGRATIONS STRIP ============ -->
-<section class="bg-white py-16 overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8">
-    <p class="text-center text-muted text-xs uppercase tracking-[0.25em] mb-8">Plays nicely with your stack</p>
-    <div class="marquee text-muted text-xl sm:text-2xl font-medium">
-      <span>AppFolio</span><span class="text-line">·</span>
-      <span>Buildium</span><span class="text-line">·</span>
-      <span>Rent Manager</span><span class="text-line">·</span>
-      <span>DoorLoop</span><span class="text-line">·</span>
-      <span>Innago</span><span class="text-line">·</span>
-      <span>Monday.com</span><span class="text-line">·</span>
-      <span>Google Workspace</span><span class="text-line">·</span>
-      <span>Zoho</span><span class="text-line">·</span>
-      <span>Custom APIs</span><span class="text-line">·</span>
-      <span>AppFolio</span><span class="text-line">·</span>
-      <span>Buildium</span><span class="text-line">·</span>
-      <span>Rent Manager</span><span class="text-line">·</span>
-      <span>DoorLoop</span><span class="text-line">·</span>
-      <span>Innago</span><span class="text-line">·</span>
-      <span>Monday.com</span><span class="text-line">·</span>
-      <span>Google Workspace</span><span class="text-line">·</span>
-      <span>Zoho</span><span class="text-line">·</span>
-      <span>Custom APIs</span><span class="text-line">·</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STATES ============ -->
-<section class="bg-white pb-12">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8 flex flex-wrap items-center justify-center gap-2">
-    <span class="text-muted text-xs uppercase tracking-[0.2em] font-mono mr-3">Active in</span>
-    <span class="state-pill">OH</span><span class="state-pill">NJ</span><span class="state-pill">NY</span><span class="state-pill">FL</span><span class="state-pill">TN</span><span class="state-pill">NC</span><span class="state-pill">SC</span><span class="state-pill">AR</span><span class="state-pill">WA</span><span class="state-pill">TX</span><span class="state-pill">PA</span><span class="state-pill">GA</span>
-  </div>
-</section>
-
-<!-- ============ WHAT WE DO ============ -->
-<section id="what" class="bg-fog py-28 sm:py-32">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8">
-    <div class="max-w-3xl mb-16 reveal">
-      <div class="section-rule"></div>
-      <div class="eyebrow mb-4">Our agents</div>
-      <h2 class="display-lg mb-5">Four agents.<br />One team running your back-office.</h2>
-      <p class="body-lg max-w-2xl">You just walked through one. Combined, they run leasing, maintenance, BD outreach, and tenant comms — no VAs, no headcount adds.</p>
-    </div>
-
-    <div class="grid sm:grid-cols-2 gap-6">
-
-      <div class="card-soft reveal p-8 relative">
-        <span class="absolute top-6 right-6 text-xs font-semibold uppercase tracking-wider text-ablue bg-ablue-tint px-2.5 py-1 rounded-full">Demoed above</span>
-        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">🔧</div>
-        <h3 class="text-2xl font-semibold mb-2">Maintenance Triage</h3>
-        <p class="body">Work order intake, emergency flagging, vendor dispatch, tenant updates — all without a human in the loop.</p>
-      </div>
-
-      <div class="card-soft reveal reveal-d1 p-8">
-        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">🏠</div>
-        <h3 class="text-2xl font-semibold mb-2">Leasing & Screening</h3>
-        <p class="body">Lead intake, qualification, showing coordination. Applicant scoring 0–100 in under 60 seconds.</p>
-      </div>
-
-      <div class="card-soft reveal reveal-d2 p-8">
-        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">📈</div>
-        <h3 class="text-2xl font-semibold mb-2">BD & Owner Acquisition</h3>
-        <p class="body">Finds self-managing landlords in your markets, enriches contacts, runs personalized outreach sequences.</p>
-      </div>
-
-      <div class="card-soft reveal reveal-d3 p-8">
-        <div class="w-12 h-12 rounded-2xl bg-ink flex items-center justify-center mb-5 text-2xl">💬</div>
-        <h3 class="text-2xl font-semibold mb-2">Tenant Comms & Back-Office</h3>
-        <p class="body">Inbox management, rent collection, lease renewals, owner reporting, utilities, compliance docs.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PROCESS ============ -->
-<section class="bg-white py-28 sm:py-32">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8">
-    <div class="max-w-3xl mb-16 reveal">
-      <div class="section-rule"></div>
-      <div class="eyebrow mb-4">The process</div>
-      <h2 class="display-lg mb-5">First agent live in <span class="text-ablue">7 days.</span></h2>
-      <p class="body-lg max-w-2xl">From kickoff to autonomous agent. Full multi-agent stack deploys in 3 weeks.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="reveal card-flat p-8">
-        <div class="text-xs font-mono text-muted mb-4">PHASE 01 · DAY 1</div>
-        <div class="text-5xl font-semibold mb-5 text-ablue">01</div>
-        <h3 class="text-xl font-semibold mb-2">Discovery</h3>
-        <p class="body text-base">A 30–45 min call to capture your workflow, target markets, existing tools, and #1 pain point. That's all we need.</p>
-      </div>
-      <div class="reveal reveal-d1 card-flat p-8">
-        <div class="text-xs font-mono text-muted mb-4">PHASE 02 · DAYS 2–6</div>
-        <div class="text-5xl font-semibold mb-5 text-ablue">02</div>
-        <h3 class="text-xl font-semibold mb-2">Build, Deploy & Test</h3>
-        <p class="body text-base">Custom agents built from scratch — no templates. Deployed in a controlled environment, calibrated, integrations verified.</p>
-      </div>
-      <div class="reveal reveal-d2 card-flat p-8">
-        <div class="text-xs font-mono text-muted mb-4">PHASE 03 · DAY 7+</div>
-        <div class="text-5xl font-semibold mb-5 text-ablue">03</div>
-        <h3 class="text-xl font-semibold mb-2">Agents Go Live</h3>
-        <p class="body text-base">Agents run autonomously, 24/7. Daily briefing of warm leads, flagged items, completed tasks. We monitor and optimize.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ RESULTS / CASE STUDIES ============ -->
-<section id="results" class="bg-fog py-28 sm:py-32">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8">
-    <div class="max-w-3xl mb-16 reveal">
-      <div class="section-rule"></div>
-      <div class="eyebrow mb-4">Proven results</div>
-      <h2 class="display-lg mb-5">Our clients grow fast.</h2>
-      <p class="body-lg max-w-2xl">Three snapshots of what AI-powered PM operations look like in the wild. Real portfolios, real growth, all currently live.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-
-      <div class="reveal card-soft p-8">
-        <div class="text-xs font-mono text-muted mb-3">CASE 01 · KEYSTONE RESIDENTIAL · PA</div>
-        <div class="display-md mb-2">150 → 225</div>
-        <div class="text-ablue font-semibold text-lg mb-5">+50% portfolio</div>
-        <p class="body text-base mb-6">Plateaued at 150 units. Leasing, maintenance, tenant comms all bottlenecked. Deployed 3 agents — grew 50% without adding headcount.</p>
-        <div class="bg-ink text-white rounded-xl p-4 text-sm space-y-1.5 font-mono">
-          <div class="flex justify-between"><span class="text-white/60">Growth</span><span class="font-semibold">+50%</span></div>
-          <div class="flex justify-between"><span class="text-white/60">Headcount</span><span class="font-semibold">Zero added</span></div>
-          <div class="flex justify-between"><span class="text-white/60">Agents</span><span class="font-semibold">3 live</span></div>
-        </div>
-      </div>
-
-      <div class="reveal reveal-d1 card-soft p-8">
-        <div class="text-xs font-mono text-muted mb-3">CASE 02 · LONE STAR PROPERTY GROUP · TEXAS</div>
-        <div class="display-md mb-2">100 → 175</div>
-        <div class="text-ablue font-semibold text-lg mb-5">+75% in 6 months</div>
-        <p class="body text-base mb-6">Manual BD was capping new doors. Deployed BD prospector + outreach bot — 75% growth in 6 months, all from AI-sourced leads.</p>
-        <div class="bg-ink text-white rounded-xl p-4 text-sm space-y-1.5 font-mono">
-          <div class="flex justify-between"><span class="text-white/60">Time to result</span><span class="font-semibold">6 months</span></div>
-          <div class="flex justify-between"><span class="text-white/60">Growth rate</span><span class="font-semibold">+75%</span></div>
-          <div class="flex justify-between"><span class="text-white/60">BD outreach</span><span class="font-semibold">24/7 auto</span></div>
-        </div>
-      </div>
-
-      <div class="reveal reveal-d2 card-soft p-8">
-        <div class="text-xs font-mono text-muted mb-3">CASE 03 · NORTHSTAR PROPERTIES</div>
-        <div class="display-md mb-2">2 → 35</div>
-        <div class="text-ablue font-semibold text-lg mb-5">+1,650% growth</div>
-        <p class="body text-base mb-6">Started as 2-unit owner-operator. AI-run acquisition + ops scaled to 35 units across multiple markets — zero manual overhead.</p>
-        <div class="bg-ink text-white rounded-xl p-4 text-sm space-y-1.5 font-mono">
-          <div class="flex justify-between"><span class="text-white/60">Portfolio</span><span class="font-semibold">2 → 35</span></div>
-          <div class="flex justify-between"><span class="text-white/60">Markets</span><span class="font-semibold">Multiple</span></div>
-          <div class="flex justify-between"><span class="text-white/60">Ops</span><span class="font-semibold">AI-run</span></div>
+      <div class="card-soft reveal reveal-d2" style="padding:24px 28px; display:flex; gap:18px; align-items:flex-start;">
+        <div style="width:40px; height:40px; border-radius:10px; background:#1a2e4a; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px;">📊</div>
+        <div>
+          <div style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:4px;">Spend categorization for investors</div>
+          <div style="color:#6E6E73; font-size:15px; line-height:1.5;">Every transaction auto-tagged, owner reports generated, anomalies flagged — no spreadsheet updates, ever.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PRICING ============ -->
-<section id="pricing" class="bg-white py-28 sm:py-32">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8">
-    <div class="max-w-3xl mb-16 reveal">
-      <div class="section-rule"></div>
-      <div class="eyebrow mb-4">Pricing</div>
-      <h2 class="display-lg mb-5">Flat per-unit.<br />No surprises.</h2>
-      <p class="body-lg max-w-2xl">Pay for outcomes, not hours. Transparent monthly pricing that scales with your portfolio.</p>
+<!-- ============ SOCIAL PROOF ============ -->
+<section style="background:#ffffff; padding:56px 24px;">
+  <div style="max-width:860px; margin:0 auto;">
+    <div class="section-rule"></div>
+    <h3 class="display-md" style="color:#1a2e4a; margin-bottom:32px;">Who's already running on UpneX</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; margin-bottom:32px;">
+      <div class="card-flat reveal" style="padding:22px 24px;">
+        <div style="font-weight:700; font-size:15px; color:#1a2e4a; margin-bottom:4px;">Peabody Residential</div>
+        <div style="color:#86868B; font-size:13px;">200 units · Virginia</div>
+      </div>
+      <div class="card-flat reveal reveal-d1" style="padding:22px 24px;">
+        <div style="font-weight:700; font-size:15px; color:#1a2e4a; margin-bottom:4px;">LS Properties</div>
+        <div style="color:#86868B; font-size:13px;">Portfolio management · Multi-market</div>
+      </div>
+      <div class="card-flat reveal reveal-d2" style="padding:22px 24px;">
+        <div style="font-weight:700; font-size:15px; color:#1a2e4a; margin-bottom:4px;">Allstar Management</div>
+        <div style="color:#86868B; font-size:13px;">BD automation · Tenant ops</div>
+      </div>
     </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-
-      <div class="reveal card-flat p-8">
-        <div class="text-xs font-mono uppercase tracking-wider text-muted mb-3">AI Ops Only</div>
-        <div class="mb-1"><span class="text-5xl font-semibold">$10</span><span class="text-muted text-lg ml-1">/unit/month</span></div>
-        <p class="text-sm text-muted mb-7">0–200 units · tiers down to $6</p>
-        <ul class="space-y-3 mb-8 text-ink">
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Unlimited AI agents</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>24/7 autonomous operation</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>15–20 hrs/mo tuning</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>All units — occupied & vacant</span></li>
-        </ul>
-        <a href="#book" class="btn btn-ghost-light w-full" style="border: 1.5px solid #1D1D1F; color: #1D1D1F;">
-          Book a Call
-        </a>
-      </div>
-
-      <div class="reveal reveal-d1 pricing-featured rounded-3xl p-8 relative">
-        <div class="absolute top-6 right-6 text-xs font-semibold uppercase tracking-wider bg-ablue text-white px-2.5 py-1 rounded-full">Popular</div>
-        <div class="text-xs font-mono uppercase tracking-wider text-white/55 mb-3">AI Ops + VA</div>
-        <div class="mb-1"><span class="text-5xl font-semibold">$13</span><span class="text-white/65 text-lg ml-1">/unit/month</span></div>
-        <p class="text-sm text-white/55 mb-7">0–200 units · tiers down to $9</p>
-        <ul class="space-y-3 mb-8 text-white/90">
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Everything in AI Ops Only</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Dedicated VA support</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Full PM operations lifecycle</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Owner reporting & financial ops</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Same cost as one traditional VA</span></li>
-        </ul>
-        <a href="#book" class="btn btn-blue w-full">Start Free 15-Day Pilot</a>
-      </div>
-
-      <div class="reveal reveal-d2 card-flat p-8">
-        <div class="text-xs font-mono uppercase tracking-wider text-muted mb-3">BD AI</div>
-        <div class="mb-1"><span class="text-5xl font-semibold">Custom</span></div>
-        <p class="text-sm text-muted mb-7">Owner acquisition & outreach</p>
-        <ul class="space-y-3 mb-8 text-ink">
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>2 custom BD agents</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Owner prospecting in your markets</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Enrichment + outreach sequences</span></li>
-          <li class="flex items-start gap-3"><span class="text-ablue font-semibold mt-0.5">✓</span><span>Warm replies flagged · CRM sync</span></li>
-        </ul>
-        <a href="#book" class="btn w-full" style="border: 1.5px solid #1D1D1F; color: #1D1D1F;">Get a Custom Quote</a>
-      </div>
-
+    <div class="quote-card reveal">
+      <div class="quote-mark">"</div>
+      <blockquote style="font-size:20px; line-height:1.55; color:#ffffff; font-weight:400; margin:12px 0 20px;">
+        It's like having a back-office team that never sleeps.
+      </blockquote>
+      <div style="color:rgba(255,255,255,0.6); font-size:14px; font-weight:500;">— Kelly Scott, Peabody Residential</div>
     </div>
   </div>
 </section>
 
-<!-- ============ FINAL CTA ============ -->
-<section id="book" class="bg-ink text-white py-28 sm:py-32">
-  <div class="max-w-3xl mx-auto px-6 sm:px-8 text-center">
-    <h2 class="display-lg mb-5">Still here? <span class="text-white/55">Book your pilot.</span></h2>
-    <p class="text-white/70 text-xl font-light mb-10 max-w-xl mx-auto">Jump back to the form and pick a time. 30 minutes, no prep, no pressure.</p>
-    <a href="#demo" class="btn btn-blue btn-lg">Take Me to the Form</a>
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-white/55 text-sm">
-      <span>✓ 15-day free pilot · $0 cost</span>
-      <span>✓ First agent live in 7 days</span>
-      <span>✓ No commitment</span>
+<!-- ============ INTERACTIVE DEMO WALKTHROUGH ============ -->
+<section id="demo" style="background:#f0f4f8; padding:56px 24px;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:36px;">
+      <div class="section-rule" style="margin-left:auto; margin-right:auto;"></div>
+      <h2 class="display-md" style="color:#1a2e4a; margin-bottom:10px;">Try the AI agent yourself</h2>
+      <p style="color:#6E6E73; font-size:17px;">Pick any tenant scenario — watch how the agent handles it step by step.</p>
+    </div>
+
+    <div class="demo-shell" style="padding:28px 28px 24px; max-width:720px; margin:0 auto;">
+
+      <!-- Scenario dropdown -->
+      <div style="margin-bottom:24px;">
+        <label style="display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#0066cc; margin-bottom:10px;" for="scenarioSelect">
+          Pick a tenant request
+        </label>
+        <div class="scenario-select-wrap">
+          <select id="scenarioSelect" class="scenario-select" aria-label="Pick a tenant scenario">
+            <optgroup label="🔧  Maintenance Triage Agent">
+              <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
+              <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
+              <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
+              <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
+            </optgroup>
+            <optgroup label="🏠  Leasing & Screening Agent">
+              <option value="application">📋  New lead — 312 Maple St inquiry</option>
+            </optgroup>
+          </select>
+          <svg class="scenario-select-arrow" width="14" height="14" fill="none" stroke="#1D1D1F" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div style="border-top:1px solid #F5F5F7; margin:0 -28px 22px;"></div>
+
+      <!-- Walkthrough header -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#86868B;">Watch AI handle it</div>
+        <div style="font-size:12px; font-family:'SF Mono',Menlo,monospace; color:#86868B;" id="stepCounter">Step 1 of 5</div>
+      </div>
+
+      <!-- Progress bar -->
+      <div style="display:flex; gap:6px; margin-bottom:28px;" id="progressDots">
+        <div style="height:3px; flex:1; border-radius:999px; background:#1a2e4a; transition:background 0.4s;"></div>
+        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
+        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
+        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
+        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
+      </div>
+
+      <!-- Step content -->
+      <div style="min-height:300px; margin-bottom:24px;">
+
+        <!-- STEP 1 -->
+        <div class="demo-step" data-step="1">
+          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Your tenant texts in.</h3>
+          <p class="body" style="margin-bottom:20px;">Real tenants don't write paragraphs. They fire off short, casual messages. Here's a typical one:</p>
+          <div style="max-width:380px;">
+            <div style="font-size:11px; font-family:'SF Mono',Menlo,monospace; color:#86868B; margin-bottom:8px;" id="step1Meta">Apt 112 · 2:18 PM</div>
+            <div class="bubble-tenant" id="step1Msg">AC broken 🥵 95° in here</div>
+          </div>
+          <p style="font-size:13px; color:#86868B; margin-top:16px;">↑ That's the whole message. Now watch what the AI does.</p>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="demo-step hidden" data-step="2">
+          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">AI reads it. Pulls context.</h3>
+          <p class="body" style="margin-bottom:20px;">In under a second, the agent investigates everything it needs:</p>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;" id="step2Checks"></div>
+          <div id="step2Result"></div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="demo-step hidden" data-step="3">
+          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Picks the right vendor. Dispatches.</h3>
+          <p class="body" style="margin-bottom:20px;">From your approved vendor list — scored by rating, distance, response time, and cost.</p>
+          <div style="background:#F5F5F7; border-radius:16px; padding:16px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:44px; height:44px; border-radius:50%; background:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.08);">🔧</div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-weight:600; color:#1D1D1F;" id="step3Vendor">CoolPro HVAC</div>
+                <div style="font-size:13px; color:#86868B;" id="step3VendorMeta">4.8★ · 24-hr emergency · 1.2mi away</div>
+              </div>
+              <div style="color:#0066cc; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">Dispatched</div>
+            </div>
+          </div>
+          <div style="font-size:11px; font-family:'SF Mono',Menlo,monospace; color:#86868B; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">SMS sent to vendor</div>
+          <div style="background:#e8f0fe; border-radius:14px; padding:14px; font-size:14px; color:#1D1D1F; line-height:1.5;" id="step3Sms"></div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="demo-step hidden" data-step="4">
+          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Replies — in your brand voice.</h3>
+          <p class="body" style="margin-bottom:20px;">Calm, specific, with next steps. No tenant is up at 2am stressing — they got an answer in 14 seconds.</p>
+          <div style="max-width:380px; margin-left:auto;">
+            <div style="font-size:11px; font-family:'SF Mono',Menlo,monospace; color:#86868B; margin-bottom:8px; text-align:right;" id="step4Meta">UpneX AI · 2:18 PM</div>
+            <div class="bubble-agent" id="step4Reply"></div>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="demo-step hidden" data-step="5">
+          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Logged in your PM platform.</h3>
+          <p class="body" style="margin-bottom:20px;">Synced to AppFolio / Buildium / wherever you live. Audit trail intact. Owner alerted. You stayed asleep.</p>
+          <div style="background:#1a2e4a; border-radius:16px; padding:22px; color:#FFFFFF;">
+            <div style="color:rgba(255,255,255,0.45); font-size:10px; text-transform:uppercase; letter-spacing:0.18em; margin-bottom:4px;">Work order created</div>
+            <div style="font-weight:600; font-size:28px; margin-bottom:4px;" id="step5WoId">WO-4837</div>
+            <div style="color:rgba(255,255,255,0.65); font-size:13px; margin-bottom:18px;" id="step5WoMeta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
+            <div style="border-top:1px solid rgba(255,255,255,0.12); padding-top:14px; display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; justify-content:space-between; font-size:13px;">
+                <span style="color:rgba(255,255,255,0.55);">Time: message → dispatched</span>
+                <span style="font-family:'SF Mono',Menlo,monospace; font-weight:600;" id="step5Time">14 seconds</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:13px;">
+                <span style="color:rgba(255,255,255,0.55);">Human intervention</span>
+                <span style="font-family:'SF Mono',Menlo,monospace; font-weight:600;">Zero</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:13px;">
+                <span style="color:rgba(255,255,255,0.55);">Tenant satisfaction</span>
+                <span style="font-family:'SF Mono',Menlo,monospace; font-weight:600;">★★★★★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back + Next -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:18px; border-top:1px solid #F5F5F7;">
+        <button id="backBtn" style="color:#86868B; font-size:14px; font-weight:500; background:none; border:none; cursor:pointer; padding:8px; visibility:hidden;">
+          ← Back
+        </button>
+        <button id="nextBtn" style="display:inline-flex; align-items:center; gap:8px; background:#0066cc; color:#ffffff; font-weight:600; font-size:16px; padding:14px 28px; border-radius:980px; border:none; cursor:pointer; transition:background 0.2s;">
+          <span id="nextBtnText">Next: Watch AI investigate</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECOND BOOK-A-CALL CTA ============ -->
+<section style="background:#1a2e4a; padding:64px 24px; text-align:center;">
+  <div style="max-width:640px; margin:0 auto;">
+    <h2 class="display-md" style="color:#ffffff; margin-bottom:12px;">Seen enough? Let's make it yours.</h2>
+    <p style="color:rgba(255,255,255,0.6); font-size:18px; margin-bottom:36px; line-height:1.5;">
+      Book a 15-min call. We'll show you exactly which agent solves your biggest bottleneck.
+    </p>
+    <div class="book-btn-wrap">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+        <tr>
+          <td align="center" bgcolor="#0066cc" style="border-radius:10px; mso-padding-alt:0; padding:0;">
+            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+               target="_blank"
+               rel="noopener"
+               class="book-btn"
+               data-cta="book"
+               onclick="trackCta('book')"
+               style="background:#0066cc; color:#ffffff !important; font-size:19px; padding:18px 44px;">
+              Book a 15-min walkthrough &nbsp;→
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p style="margin-top:14px; font-size:13px; color:rgba(255,255,255,0.4);">No credit card · No commitment · 15 minutes</p>
+  </div>
+</section>
+
+<!-- ============ SECONDARY CTA — EMAIL CAPTURE (below fold) ============ -->
+<section style="background:#f0f4f8; padding:56px 24px;" id="case-study">
+  <div style="max-width:520px; margin:0 auto; text-align:center;">
+    <div class="section-rule" style="margin-left:auto; margin-right:auto;"></div>
+    <h3 style="font-size:22px; font-weight:600; color:#1a2e4a; margin-bottom:8px;">Not ready yet?</h3>
+    <p style="color:#6E6E73; font-size:16px; margin-bottom:28px;">Send me the UpneX case study — real numbers, real portfolios.</p>
+
+    <div id="formCard" class="card-soft" style="padding:28px; text-align:left;">
+      <!-- Step 1: Form -->
+      <div id="formStep1">
+        <form id="leadForm" style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Your Name</label>
+            <input type="text" name="name" required class="input" placeholder="Full name" />
+          </div>
+          <div>
+            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Work Email</label>
+            <input type="email" name="email" required class="input" placeholder="you@company.com" />
+          </div>
+          <div>
+            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Phone</label>
+            <input type="tel" name="phone" required class="input" placeholder="Phone number" />
+          </div>
+          <div>
+            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Portfolio Size</label>
+            <select name="portfolio" required class="input">
+              <option value="">Select range…</option>
+              <option value="0-200">0–200 units</option>
+              <option value="201-500">201–500 units</option>
+              <option value="501-1000">501–1,000 units</option>
+              <option value="1001-2000">1,001–2,000 units</option>
+              <option value="2000+">2,000+ units</option>
+            </select>
+          </div>
+          <button type="submit"
+                  data-cta="email"
+                  onclick="trackCta('email')"
+                  style="display:flex; align-items:center; justify-content:center; gap:8px; background:#1a2e4a; color:#ffffff; font-weight:600; font-size:15px; padding:14px 24px; border-radius:980px; border:none; cursor:pointer; margin-top:4px; transition:background 0.2s;"
+                  onmouseover="this.style.background='#0f1e32'" onmouseout="this.style.background='#1a2e4a'">
+            Send Me the Case Study →
+          </button>
+          <p style="font-size:12px; color:#86868B; text-align:center;">No spam. Unsubscribe anytime.</p>
+        </form>
+      </div>
+
+      <!-- Step 2: Sending / Thank you -->
+      <div id="formStep2" style="display:none; text-align:center; padding:24px 0;">
+        <div id="sendingState">
+          <div class="spinner-lg" style="margin-bottom:20px;"></div>
+          <p style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:6px;">Sending…</p>
+          <p style="color:#86868B; font-size:14px;">Just a sec.</p>
+        </div>
+        <div id="successState" style="display:none;">
+          <div style="width:56px; height:56px; border-radius:50%; background:#e8f0fe; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <svg width="28" height="28" fill="none" stroke="#0066cc" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 style="font-size:20px; font-weight:600; color:#1D1D1F; margin-bottom:6px;">You're in<span id="capturedName"></span>!</h3>
+          <p style="color:#86868B; font-size:14px; margin-bottom:24px;">Case study on its way. Check your inbox.</p>
+          <div style="background:#f0f4f8; border-radius:14px; padding:18px;">
+            <p style="font-weight:600; font-size:15px; color:#1a2e4a; margin-bottom:6px;">Want to talk sooner?</p>
+            <p style="font-size:13px; color:#6E6E73; margin-bottom:14px;">Book a 15-min call directly with Hari.</p>
+            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+               target="_blank" rel="noopener"
+               id="bookCallBtn"
+               data-cta="book"
+               onclick="trackCta('book')"
+               style="display:inline-flex; align-items:center; gap:6px; background:#0066cc; color:#ffffff; font-weight:600; font-size:14px; padding:12px 22px; border-radius:980px; text-decoration:none; transition:background 0.2s;">
+              📅 Book a Call Now
+            </a>
+          </div>
+          <div id="bookedConfirm" style="display:none; margin-top:12px; font-size:13px; color:#0066cc; font-weight:500;">
+            ✓ Calendar opened — see you on the call!
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ============ FOOTER ============ -->
-<footer class="bg-ink border-t border-white/10 py-14">
-  <div class="max-w-7xl mx-auto px-6 sm:px-8">
-    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
-      <div class="max-w-sm">
-        <div class="text-white font-semibold text-lg mb-2">UpneX</div>
-        <p class="text-white/55 text-sm leading-relaxed">AI-powered property management back-office. Operated from India, aligned to US hours.</p>
+<footer style="background:#1a2e4a; border-top:1px solid rgba(255,255,255,0.08); padding:48px 24px;">
+  <div style="max-width:1100px; margin:0 auto;">
+    <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; align-items:flex-start; margin-bottom:32px;">
+      <div style="max-width:280px;">
+        <div style="color:#ffffff; font-weight:700; font-size:17px; margin-bottom:8px;">UpneX</div>
+        <p style="color:rgba(255,255,255,0.5); font-size:14px; line-height:1.6;">AI-powered property management back-office. Operated from India, aligned to US hours.</p>
       </div>
-      <div class="grid grid-cols-2 gap-12 text-sm">
+      <div style="display:flex; gap:40px; flex-wrap:wrap;">
         <div>
-          <div class="text-white/40 text-xs uppercase tracking-wider mb-3">Contact</div>
-          <ul class="space-y-2 text-white/70">
-            <li><a href="mailto:hari@upnexs.com" class="hover:text-white transition">hari@upnexs.com</a></li>
-            <li><a href="https://wa.me/13303385146" target="_blank" rel="noopener" class="hover:text-white transition">+1 (330) 338-5146</a></li>
-          </ul>
+          <div style="color:rgba(255,255,255,0.35); font-size:11px; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:10px;">Contact</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <a href="mailto:hari@upnexs.com" style="color:rgba(255,255,255,0.65); font-size:14px; text-decoration:none; transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">hari@upnexs.com</a>
+            <a href="https://wa.me/13303385146" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.65); font-size:14px; text-decoration:none;">+1 (330) 338-5146</a>
+          </div>
         </div>
         <div>
-          <div class="text-white/40 text-xs uppercase tracking-wider mb-3">US Office</div>
-          <p class="text-white/70">PO Box 350<br />Metuchen, NJ 08840</p>
+          <div style="color:rgba(255,255,255,0.35); font-size:11px; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:10px;">US Office</div>
+          <p style="color:rgba(255,255,255,0.65); font-size:14px; line-height:1.6;">PO Box 350<br>Metuchen, NJ 08840</p>
         </div>
       </div>
     </div>
-    <div class="mt-12 pt-6 border-t border-white/10 text-white/35 text-xs">© 2026 UpneX Solutions OPC Pvt. Ltd. All rights reserved.</div>
+    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:16px; color:rgba(255,255,255,0.3); font-size:12px;">
+      © 2026 UpneX Solutions OPC Pvt. Ltd. All rights reserved.
+    </div>
   </div>
 </footer>
 
 <!-- ============ STICKY MOBILE CTA ============ -->
 <div id="stickyCta" class="sticky-cta">
-  <a href="#book" class="btn btn-black w-full">Book Your Free Pilot →</a>
+  <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+     target="_blank" rel="noopener"
+     data-cta="book"
+     onclick="trackCta('book')"
+     style="display:flex; align-items:center; justify-content:center; gap:8px; background:#0066cc; color:#ffffff; font-weight:700; font-size:16px; padding:14px 24px; border-radius:980px; text-decoration:none; width:100%; box-sizing:border-box;">
+    Book a 15-min walkthrough →
+  </a>
 </div>
 
 <script>
-// ============== EMAILJS CONFIG ==============
-// Sign up free at https://www.emailjs.com (200 emails/month on free tier)
-// Setup steps:
-//   1. Add an email service (Gmail recommended) → copy the SERVICE_ID
-//   2. Create an Email Template using these variables:
-//        {{from_name}}, {{from_email}}, {{phone}}, {{portfolio}}, {{timestamp}}, {{subject}}, {{message}}
-//      Set the template's "To Email" field to: hari@upnexs.com
-//      Copy the TEMPLATE_ID after saving
-//   3. Go to Account → API Keys → copy the Public Key
-//   4. Replace the three placeholders below
-const EMAILJS_CONFIG = {
-  publicKey:  'cQAXNRskNvru4mu4j',      // Account → API Keys
-  serviceId:  'service_vhcikjr',        // Email Services (Gmail)
-  templateId: 'template_ymh1gz9',       // Email Templates (Contact Us)
-};
-const CALENDAR_URL = 'https://calendar.app.google/2juqXrLWWE2q441z6';
+// ============== CTA TRACKING ==============
+function trackCta(type) {
+  console.log('[UpneX] CTA click:', type);
+  if (window.fbq) { fbq('track', type === 'book' ? 'Schedule' : 'Lead'); }
+  if (window.gtag) { gtag('event', type === 'book' ? 'book_click' : 'email_submit', { event_category: 'cta' }); }
+}
 
-// Init EmailJS (no-op if SDK didn't load)
+// ============== EMAILJS CONFIG ==============
+const EMAILJS_CONFIG = {
+  publicKey:  'cQAXNRskNvru4mu4j',
+  serviceId:  'service_vhcikjr',
+  templateId: 'template_ymh1gz9',
+};
+const CALENDAR_URL = 'https://calendar.app.google/9qmnLSzNejCwGSkcA';
+
 if (window.emailjs && EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY_HERE') {
   emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
 }
@@ -911,133 +722,49 @@ if (window.emailjs && EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY_HERE') {
 // ============== SCENARIO DATA ==============
 const scenarios = {
   ac: {
-    apt: 'Apt 112', time: '2:18 PM',
-    msg: 'AC broken 🥵 95° in here',
-    checks: [
-      'Read message · 0.2s',
-      'Weather pulled: 95°F today',
-      'Lease checked: family + infant noted',
-      'History: 2nd HVAC issue this month'
-    ],
-    urgency: { text: 'URGENT — health risk', cls: 'urgent' },
-    vendor: { name: 'CoolPro HVAC', meta: '4.8★ · 24-hr emergency · 1.2mi away' },
-    sms: '"Hi CoolPro — urgent: AC out at Unit 112, family w/ infant inside. Owner pre-approved after-hours rate. Need ETA. Full address sent separately."',
-    reply: "On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours rate approved. Work order #4837 logged. Stay cool — message me if anything changes.",
-    wo: { id: 'WO-4837', meta: 'Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs', secs: '14 seconds' }
+    apt:'Apt 112',time:'2:18 PM',msg:'AC broken 🥵 95° in here',
+    checks:['Read message · 0.2s','Weather pulled: 95°F today','Lease checked: family + infant noted','History: 2nd HVAC issue this month'],
+    urgency:{text:'URGENT — health risk',cls:'urgent'},
+    vendor:{name:'CoolPro HVAC',meta:'4.8★ · 24-hr emergency · 1.2mi away'},
+    sms:'"Hi CoolPro — urgent: AC out at Unit 112, family w/ infant inside. Owner pre-approved after-hours rate. Need ETA. Full address sent separately."',
+    reply:'On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours rate approved. Work order #4837 logged. Stay cool — message me if anything changes.',
+    wo:{id:'WO-4837',meta:'Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs',secs:'14 seconds'}
   },
   leak: {
-    apt: 'Apt 304', time: '11:42 PM',
-    msg: 'sink leaking bad pls help',
-    checks: [
-      'Read message · 0.2s',
-      'Last maintenance: garbage disposal, 3mo ago',
-      'Lease verified: tenant in good standing',
-      'Severity: water damage risk flagged'
-    ],
-    urgency: { text: 'URGENT — property damage risk', cls: 'urgent' },
-    vendor: { name: 'Acme Plumbing', meta: '4.9★ · 24/7 emergency · 2.0mi away' },
-    sms: '"Hi Acme — urgent: sink leak, Apt 304, active water damage risk. Need someone in 45min. Full address sent separately."',
-    reply: "Got it — Acme Plumbing on the way, ETA 45min. Here's the shut-off valve guide in your portal. Work order #4821 logged. Stay safe — message back if it gets worse.",
-    wo: { id: 'WO-4821', meta: 'Apt 304 · URGENT · Acme Plumbing · ETA 45min', secs: '12 seconds' }
+    apt:'Apt 304',time:'11:42 PM',msg:'sink leaking bad pls help',
+    checks:['Read message · 0.2s','Last maintenance: garbage disposal, 3mo ago','Lease verified: tenant in good standing','Severity: water damage risk flagged'],
+    urgency:{text:'URGENT — property damage risk',cls:'urgent'},
+    vendor:{name:'Acme Plumbing',meta:'4.9★ · 24/7 emergency · 2.0mi away'},
+    sms:'"Hi Acme — urgent: sink leak, Apt 304, active water damage risk. Need someone in 45min. Full address sent separately."',
+    reply:'Got it — Acme Plumbing on the way, ETA 45min. Here\'s the shut-off valve guide in your portal. Work order #4821 logged. Stay safe — message back if it gets worse.',
+    wo:{id:'WO-4821',meta:'Apt 304 · URGENT · Acme Plumbing · ETA 45min',secs:'12 seconds'}
   },
   lockout: {
-    apt: 'Apt 207', time: '9:30 AM',
-    msg: 'locked out 207',
-    checks: [
-      'Read message · 0.2s',
-      'Identity verified via phone match',
-      'Lease check: active, no fees owed',
-      'Fee policy: $85 lockout per Section 6.1'
-    ],
-    urgency: { text: 'URGENT — tenant access', cls: 'urgent' },
-    vendor: { name: 'SafeKey Locksmith', meta: '4.7★ · 30min radius · $85 standard' },
-    sms: '"Hi SafeKey — lockout at Apt 207. Tenant identity verified. Standard $85 fee. Need ETA. Address sent separately."',
-    reply: "Lease verified — SafeKey Locksmith on the way, ETA 30min. $85 lockout fee added to your account per Section 6.1. Work order #4842 logged. Hang tight!",
-    wo: { id: 'WO-4842', meta: 'Apt 207 · URGENT · SafeKey · ETA 30min', secs: '11 seconds' }
+    apt:'Apt 207',time:'9:30 AM',msg:'locked out 207',
+    checks:['Read message · 0.2s','Identity verified via phone match','Lease check: active, no fees owed','Fee policy: $85 lockout per Section 6.1'],
+    urgency:{text:'URGENT — tenant access',cls:'urgent'},
+    vendor:{name:'SafeKey Locksmith',meta:'4.7★ · 30min radius · $85 standard'},
+    sms:'"Hi SafeKey — lockout at Apt 207. Tenant identity verified. Standard $85 fee. Need ETA. Address sent separately."',
+    reply:'Lease verified — SafeKey Locksmith on the way, ETA 30min. $85 lockout fee added to your account per Section 6.1. Work order #4842 logged. Hang tight!',
+    wo:{id:'WO-4842',meta:'Apt 207 · URGENT · SafeKey · ETA 30min',secs:'11 seconds'}
   },
   bulb: {
-    apt: 'Apt 415', time: '4:05 PM',
-    msg: 'kitchen light out',
-    checks: [
-      'Read message · 0.2s',
-      'Lease check: bulbs are tenant-replaceable',
-      'Self-help video found in library',
-      'Auto-classified as routine'
-    ],
-    urgency: { text: 'ROUTINE — self-resolvable', cls: 'routine' },
-    vendor: { name: 'No vendor needed', meta: 'Self-help video sent · auto-close enabled' },
-    sms: '(No dispatch — tenant self-resolve recommended. $0 cost.)',
-    reply: "Kitchen bulbs are tenant-replaceable per lease Section 4.2. Here's a 30-second swap video in your portal. Reply 'still broken' and I'll send someone same-day at no charge.",
-    wo: { id: 'AUTO-CLOSED', meta: 'Apt 415 · Self-resolved · $0 vendor cost', secs: '8 seconds' }
-  },
-  // ---------- LEASING & SCREENING AGENT ----------
-  application: {
-    apt: 'New lead', time: '10:14 AM',
-    msg: 'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
-    checks: [
-      'Read inquiry · 0.3s',
-      'Income vs rent: $82k ÷ $1,950 = 3.5x ✓ (target 3x)',
-      'Soft credit pulled: 728 FICO ✓',
-      'Prior landlord check: 24 mo, no late payments ✓'
-    ],
-    urgency: { text: 'QUALIFIED — score 88/100', cls: 'routine' },
-    vendor: { name: 'Tour booked · Saturday 11am', meta: 'Calendar synced · application link sent' },
-    sms: '"Hi — pre-screen passed for 312 Maple. Tour booked Sat 11am. Application + lease draft in your inbox. ID + paystub upload required before tour."',
-    reply: "Great news — you pre-qualified for 312 Maple St (score 88/100). Tour booked Saturday at 11am. Check your email for the full application + lease draft. Bring photo ID + 2 recent paystubs to the tour.",
-    wo: { id: 'LEAD-2034', meta: '312 Maple St · Score 88 · Tour Sat 11am', secs: '22 seconds' }
-  }
-};
-
-// ============== "WITHOUT UPNEX" COMPARISONS — drives ROI home ==============
-const withoutUpneX = {
-  ac: {
-    intro: 'How this same AC emergency would have gone without UpneX:',
-    timeline: [
-      ['11:42 PM', 'Tenant calls owner. Owner asleep — voicemail.'],
-      ['12:30 AM', 'Tenant texts furious follow-up. Owner sees in morning.'],
-      ['8:15 AM', 'Owner Googles HVAC vendors, calls 4 — all busy.'],
-      ['11:00 AM', 'Finally books vendor for next-day visit.'],
-      ['Day 2, 2pm', 'Vendor arrives. Tenant suffered 36+ hours with infant.'],
-    ],
-    cost: { owner: '~2 hrs of stressed work', tenant: '36+ hrs without AC', reviews: 'Likely 1-star review' }
-  },
-  leak: {
-    intro: 'Without UpneX, midnight leaks get expensive fast:',
-    timeline: [
-      ['11:42 PM', 'Tenant texts owner. No response.'],
-      ['1:30 AM', 'Cabinet floor warps. Tenant shuts main water valve.'],
-      ['7:00 AM', 'Owner sees text. Calls plumber — soonest slot 2pm.'],
-      ['2:00 PM', 'Plumber arrives. Floor + cabinet replacement needed.'],
-    ],
-    cost: { owner: '~3 hrs + insurance claim', tenant: 'No water for 14 hrs', reviews: 'Damage bill ~$2,400' }
-  },
-  lockout: {
-    intro: 'Lockouts without UpneX = lost morning + angry tenant:',
-    timeline: [
-      ['9:30 AM', 'Tenant calls 4 numbers. Reaches owner on attempt 5.'],
-      ['9:50 AM', 'Owner drives 30 min to bring spare key.'],
-      ['10:30 AM', 'Owner arrives. Tenant late for work.'],
-    ],
-    cost: { owner: '~1.5 hrs lost', tenant: 'Missed a meeting', reviews: 'Lost fee revenue ($85)' }
-  },
-  bulb: {
-    intro: 'Without UpneX, routine asks still pull a vendor truck:',
-    timeline: [
-      ['4:05 PM', 'Tenant submits ticket via portal.'],
-      ['Day 2, 10am', 'Owner dispatches handyman ($95 min).'],
-      ['Day 3, 1pm', 'Handyman replaces bulb. Bills tenant or owner.'],
-    ],
-    cost: { owner: '$95+ truck-roll fee', tenant: 'Dark kitchen for 2 days', reviews: 'Avoidable expense' }
+    apt:'Apt 415',time:'4:05 PM',msg:'kitchen light out',
+    checks:['Read message · 0.2s','Lease check: bulbs are tenant-replaceable','Self-help video found in library','Auto-classified as routine'],
+    urgency:{text:'ROUTINE — self-resolvable',cls:'routine'},
+    vendor:{name:'No vendor needed',meta:'Self-help video sent · auto-close enabled'},
+    sms:'(No dispatch — tenant self-resolve recommended. $0 cost.)',
+    reply:'Kitchen bulbs are tenant-replaceable per lease Section 4.2. Here\'s a 30-second swap video in your portal. Reply \'still broken\' and I\'ll send someone same-day at no charge.',
+    wo:{id:'AUTO-CLOSED',meta:'Apt 415 · Self-resolved · $0 vendor cost',secs:'8 seconds'}
   },
   application: {
-    intro: 'Without UpneX, hot leads cool off in 24 hrs:',
-    timeline: [
-      ['10:14 AM', 'Lead emails inquiry. Goes to general inbox.'],
-      ['Next day, 9am', 'Owner sees inquiry, sends generic reply.'],
-      ['Day 3', 'Lead has already toured 2 other properties.'],
-      ['Day 4', 'Lead signed with competitor.'],
-    ],
-    cost: { owner: 'Lost prospect', tenant: 'Bad experience', reviews: '40% of leads die from slow response' }
+    apt:'New lead',time:'10:14 AM',msg:'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
+    checks:['Read inquiry · 0.3s','Income vs rent: $82k ÷ $1,950 = 3.5x ✓ (target 3x)','Soft credit pulled: 728 FICO ✓','Prior landlord check: 24 mo, no late payments ✓'],
+    urgency:{text:'QUALIFIED — score 88/100',cls:'routine'},
+    vendor:{name:'Tour booked · Saturday 11am',meta:'Calendar synced · application link sent'},
+    sms:'"Hi — pre-screen passed for 312 Maple. Tour booked Sat 11am. Application + lease draft in your inbox. ID + paystub upload required before tour."',
+    reply:'Great news — you pre-qualified for 312 Maple St (score 88/100). Tour booked Saturday at 11am. Check your email for the full application + lease draft. Bring photo ID + 2 recent paystubs to the tour.',
+    wo:{id:'LEAD-2034',meta:'312 Maple St · Score 88 · Tour Sat 11am',secs:'22 seconds'}
   }
 };
 
@@ -1046,23 +773,21 @@ const nextLabels = [
   'Next: See vendor picked',
   'Next: See tenant reply',
   'Next: See it logged',
-  'Run this on MY portfolio'
+  'Book a call — run this on my portfolio →'
 ];
 
-let state = { scenario: 'ac', step: 1, totalSteps: 5 };
+let state = { scenario:'ac', step:1, totalSteps:5 };
 
 function renderStep() {
   const s = scenarios[state.scenario];
 
   // Progress bar
   document.querySelectorAll('#progressDots > div').forEach((d, i) => {
-    if (i < state.step) { d.classList.remove('bg-fog'); d.classList.add('bg-ink'); }
-    else { d.classList.remove('bg-ink'); d.classList.add('bg-fog'); }
+    d.style.background = i < state.step ? '#1a2e4a' : '#F5F5F7';
   });
 
   document.getElementById('stepCounter').textContent = `Step ${state.step} of ${state.totalSteps}`;
 
-  // Show current step
   document.querySelectorAll('.demo-step').forEach(el => el.classList.add('hidden'));
   const cur = document.querySelector(`.demo-step[data-step="${state.step}"]`);
   cur.classList.remove('hidden');
@@ -1070,23 +795,22 @@ function renderStep() {
   void cur.offsetWidth;
   cur.style.animation = '';
 
-  // Populate per step
   if (state.step === 1) {
     document.getElementById('step1Meta').textContent = `${s.apt} · ${s.time}`;
     document.getElementById('step1Msg').textContent = s.msg;
   } else if (state.step === 2) {
-    const checksEl = document.getElementById('step2Checks');
-    checksEl.innerHTML = '';
+    const el = document.getElementById('step2Checks');
+    el.innerHTML = '';
     s.checks.forEach((c, i) => {
       const item = document.createElement('div');
       item.className = 'check-item';
-      item.style.animationDelay = `${i * 200}ms`;
+      item.style.animationDelay = `${i*180}ms`;
       item.innerHTML = `<div class="check-icon"><svg fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>${c}</span>`;
-      checksEl.appendChild(item);
+      el.appendChild(item);
     });
     const resultEl = document.getElementById('step2Result');
-    resultEl.innerHTML = `<div class="urgency-pill ${s.urgency.cls}" style="opacity:0; transition: opacity 0.4s ease;">${s.urgency.text}</div>`;
-    setTimeout(() => { resultEl.querySelector('.urgency-pill').style.opacity = '1'; }, s.checks.length * 200 + 200);
+    resultEl.innerHTML = `<div class="urgency-pill ${s.urgency.cls}" style="opacity:0;transition:opacity 0.4s;">${s.urgency.text}</div>`;
+    setTimeout(() => { resultEl.querySelector('.urgency-pill').style.opacity='1'; }, s.checks.length*180+200);
   } else if (state.step === 3) {
     document.getElementById('step3Vendor').textContent = s.vendor.name;
     document.getElementById('step3VendorMeta').textContent = s.vendor.meta;
@@ -1098,43 +822,24 @@ function renderStep() {
     document.getElementById('step5WoId').textContent = s.wo.id;
     document.getElementById('step5WoMeta').textContent = s.wo.meta;
     document.getElementById('step5Time').textContent = s.wo.secs;
-    // Populate "without UpneX" comparison (collapsed by default)
-    const w = withoutUpneX[state.scenario];
-    if (w) {
-      document.getElementById('compareIntro').textContent = w.intro;
-      const tl = document.getElementById('compareTimeline');
-      tl.innerHTML = w.timeline.map(([t, label]) =>
-        `<li class="flex gap-3 text-sm"><span class="text-muted font-mono text-xs whitespace-nowrap mt-0.5 w-20 flex-shrink-0">${t}</span><span class="text-ink">${label}</span></li>`
-      ).join('');
-      document.getElementById('compareOwner').textContent = w.cost.owner;
-      document.getElementById('compareTenant').textContent = w.cost.tenant;
-      document.getElementById('compareReviews').textContent = w.cost.reviews;
-    }
-    // Reset toggle state when entering Step 5
-    document.getElementById('compareBlock').classList.add('hidden');
-    document.getElementById('compareChevron').style.transform = '';
   }
 
-  // Back visibility
-  document.getElementById('backBtn').classList.toggle('invisible', state.step === 1);
+  const backBtn = document.getElementById('backBtn');
+  backBtn.style.visibility = state.step === 1 ? 'hidden' : 'visible';
 
-  // Next label
-  document.getElementById('nextBtnText').textContent = nextLabels[state.step - 1];
-  document.getElementById('nextBtn').dataset.action = (state.step === state.totalSteps) ? 'cta' : 'next';
+  const nextBtn = document.getElementById('nextBtn');
+  const nextText = nextLabels[state.step - 1];
+  document.getElementById('nextBtnText').textContent = nextText;
+  nextBtn.dataset.action = state.step === state.totalSteps ? 'cta' : 'next';
 
-  // Sync dropdown
   const dd = document.getElementById('scenarioSelect');
   if (dd && dd.value !== state.scenario) dd.value = state.scenario;
 }
 
-// Next/Back
 document.getElementById('nextBtn').addEventListener('click', (e) => {
   if (e.currentTarget.dataset.action === 'cta') {
-    document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => {
-      const nameInput = document.querySelector('input[name="name"]');
-      if (nameInput) nameInput.focus();
-    }, 600);
+    trackCta('book');
+    window.open(CALENDAR_URL, '_blank', 'noopener');
   } else if (state.step < state.totalSteps) {
     state.step++;
     renderStep();
@@ -1145,7 +850,6 @@ document.getElementById('backBtn').addEventListener('click', () => {
   if (state.step > 1) { state.step--; renderStep(); }
 });
 
-// Dropdown
 document.getElementById('scenarioSelect').addEventListener('change', (e) => {
   state.scenario = e.target.value;
   state.step = 1;
@@ -1157,57 +861,18 @@ renderStep();
 // ============== SCROLL REVEAL ==============
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ============== COUNTERS ==============
-const counterObs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const target = parseInt(el.dataset.target, 10);
-      const duration = 1400;
-      const start = performance.now();
-      function step(now) {
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.floor(eased * target).toLocaleString();
-        if (p < 1) requestAnimationFrame(step);
-        else el.textContent = target.toLocaleString();
-      }
-      requestAnimationFrame(step);
-      counterObs.unobserve(el);
-    }
-  });
-}, { threshold: 0.4 });
-document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
-
-// ============== FORM → EMAIL → CALENDAR REDIRECT ==============
+// ============== FORM → EMAIL → CALENDAR ==============
 const form = document.getElementById('leadForm');
-const step1 = document.getElementById('formStep1');
-const step2 = document.getElementById('formStep2');
-const stepDot1 = document.getElementById('stepDot1');
-const stepDot2 = document.getElementById('stepDot2');
-const stepBar = document.getElementById('stepBar');
+const formStep1 = document.getElementById('formStep1');
+const formStep2 = document.getElementById('formStep2');
 const sendingState = document.getElementById('sendingState');
 const successState = document.getElementById('successState');
 
-function advanceProgress() {
-  stepDot1.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-  stepDot2.classList.remove('bg-fog', 'text-muted');
-  stepDot2.classList.add('bg-ablue', 'text-white');
-  stepBar.style.width = '100%';
-  step1.classList.add('hidden');
-  step2.classList.remove('hidden');
-}
-
-// Send lead via EmailJS. Returns a promise that ALWAYS resolves
-// (never rejects) so the redirect proceeds even if email fails.
 function sendLeadEmail(data) {
   return new Promise((resolve) => {
     const configured =
@@ -1216,10 +881,7 @@ function sendLeadEmail(data) {
       EMAILJS_CONFIG.serviceId !== 'YOUR_SERVICE_ID_HERE' &&
       EMAILJS_CONFIG.templateId !== 'YOUR_TEMPLATE_ID_HERE';
 
-    if (!configured) {
-      console.warn('[UpneX] EmailJS not configured — skipping email send. Lead data:', data);
-      return resolve(false);
-    }
+    if (!configured) { console.warn('[UpneX] EmailJS not configured:', data); return resolve(false); }
 
     const timestamp = new Date().toLocaleString();
     const messageBody =
@@ -1231,26 +893,16 @@ function sendLeadEmail(data) {
       `Submitted:      ${timestamp}\n\n` +
       `Reply to this email to respond directly.`;
 
-    // Send BOTH naming styles so the template's variables resolve regardless of which it uses
     const params = {
-      // Default EmailJS template variables ({{name}}, {{email}}, {{time}}, {{message}})
-      name:       data.name,
-      email:      data.email,
-      time:       timestamp,
-      message:    messageBody,
-      // Plus the explicit names we use in the subject line
-      from_name:  data.name,
-      from_email: data.email,
-      phone:      data.phone,
-      portfolio:  data.portfolio,
-      timestamp:  timestamp,
-      subject:    `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
+      name: data.name, email: data.email, time: timestamp, message: messageBody,
+      from_name: data.name, from_email: data.email, phone: data.phone,
+      portfolio: data.portfolio, timestamp: timestamp,
+      subject: `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
     };
 
-    emailjs
-      .send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params)
+    emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params)
       .then(() => { console.log('[UpneX] Lead email sent ✓'); resolve(true); })
-      .catch((err) => { console.error('[UpneX] EmailJS send failed:', err); resolve(false); });
+      .catch((err) => { console.error('[UpneX] EmailJS error:', err); resolve(false); });
   });
 }
 
@@ -1259,53 +911,37 @@ form.addEventListener('submit', (e) => {
   const data = Object.fromEntries(new FormData(form));
   console.log('[UpneX] Lead captured:', data);
 
-  // Move UI to Step 2 — show "Sending…"
   document.getElementById('capturedName').textContent = data.name ? `, ${data.name.split(' ')[0]}` : '';
-  advanceProgress();
-  sendingState.classList.remove('hidden');
-  successState.classList.add('hidden');
+  formStep1.style.display = 'none';
+  formStep2.style.display = 'block';
+  sendingState.style.display = 'block';
+  successState.style.display = 'none';
 
-  // Fire the email + 1.5s minimum hold so "Sending…" feels intentional
   const emailPromise = sendLeadEmail(data);
   const holdPromise = new Promise((r) => setTimeout(r, 1500));
 
   Promise.all([emailPromise, holdPromise]).then(() => {
-    // Swap to thank-you state — NO auto-redirect. Booking is a separate action below.
-    sendingState.classList.add('hidden');
-    successState.classList.remove('hidden');
+    sendingState.style.display = 'none';
+    successState.style.display = 'block';
   });
 });
 
-// "Book a Call" is a fully separate optional action — confirm to user after click
 const bookCallBtn = document.getElementById('bookCallBtn');
 if (bookCallBtn) {
   bookCallBtn.addEventListener('click', () => {
-    console.log('[UpneX] Booking link opened in new tab');
     setTimeout(() => {
       const confirm = document.getElementById('bookedConfirm');
-      if (confirm) confirm.classList.remove('hidden');
+      if (confirm) confirm.style.display = 'block';
     }, 600);
-  });
-}
-
-// "Without UpneX" comparison toggle (Step 5)
-const toggleCompareBtn = document.getElementById('toggleCompare');
-if (toggleCompareBtn) {
-  toggleCompareBtn.addEventListener('click', () => {
-    const block = document.getElementById('compareBlock');
-    const chev = document.getElementById('compareChevron');
-    const isHidden = block.classList.contains('hidden');
-    block.classList.toggle('hidden');
-    chev.style.transform = isHidden ? 'rotate(90deg)' : '';
   });
 }
 
 // ============== STICKY CTA ==============
 const stickyCta = document.getElementById('stickyCta');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 600) stickyCta.classList.add('visible');
+  if (window.scrollY > 400) stickyCta.classList.add('visible');
   else stickyCta.classList.remove('visible');
-});
+}, { passive: true });
 </script>
 
 </body>
