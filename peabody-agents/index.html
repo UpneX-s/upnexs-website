@@ -301,7 +301,7 @@
       <div class="card">
         <div class="c-row">
           <div class="c-name">Tenant Screening Agent</div>
-          <span class="pill live"><span class="dot"></span>🟢 LIVE — Jun 16</span>
+          <span class="pill live" id="pill-screening"><span class="dot"></span>🟢 LIVE</span>
         </div>
         <div class="badges"><span class="domain d-tenant">TENANT LIFECYCLE</span></div>
         <div class="c-desc">Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) to Kelly, Leasing &amp; Tino — within minutes of submission. Hari CC'd. <i>Need to add more recipients? Email Hari.</i></div>
@@ -322,12 +322,12 @@
       <div class="card">
         <div class="c-row">
           <div class="c-name">Lease Renewal Agent</div>
-          <span class="pill dev"><span class="dot"></span>🟡 ON HOLD</span>
+          <span class="pill dev" id="pill-renewal"><span class="dot"></span>🟡 ON HOLD</span>
         </div>
         <div class="badges"><span class="domain d-tenant">TENANT LIFECYCLE</span></div>
         <div class="c-desc">Manages the full lease renewal cycle — expiration notices, follow-ups, and owner approval. <b>Paused pending Kelly's reply</b> to 3 questions: CMA approach, inspection backend, and how deep the Renewals tab should go. Build resumes as soon as we hear back.</div>
         <div class="agent-meta">
-          <div class="am-row"><span class="am-k">Status</span><span class="am-v">Awaiting Kelly's input</span></div>
+          <div class="am-row"><span class="am-k">Status</span><span class="am-v" id="renewal-status">Awaiting Kelly's input</span></div>
           <div class="am-row"><span class="am-k">Last sync</span><span class="am-v" id="sync-renewal">—</span></div>
         </div>
         <div class="prog">
@@ -447,15 +447,17 @@
 
 <script>
 // ===================================================================
-//  PEABODY PILOT — auto-calculated dates. EDIT ONLY THESE CONSTANTS.
-//  Everything date-driven on the page computes from here on each load.
-//  No manual edits needed for day count, progress, mid-check or end date.
+//  PEABODY DASHBOARD — thin renderer.
+//  All real data lives in activity.json (single source of truth):
+//    pilot{effectiveDate,totalDays,midCheckDay} · agents[] · activity[]
+//  This file just fetches it and paints. Fallback constants below are
+//  used ONLY if activity.json can't be fetched, so the page never blanks.
 // ===================================================================
-var PEABODY_PILOT = {
-  effectiveDate:          new Date('2026-06-16T00:00:00-04:00'),  // ET (Peabody is in VA)
-  totalDays:              15,
-  midCheckDay:            7,
-  screeningAgentLiveDate: new Date('2026-06-16T18:09:00-04:00')   // Screening Agent went live
+var FALLBACK = {
+  pilot: { effectiveDate: '2026-06-16', totalDays: 15, midCheckDay: 7 },
+  agents: [{ name: 'Tenant Screening Agent', status: 'LIVE', liveSince: '2026-06-16T18:09:00-04:00', lastEventAt: null }],
+  activity: [],
+  lastUpdated: null
 };
 
 (function(){
@@ -466,46 +468,109 @@ var PEABODY_PILOT = {
     return Date.UTC(+p.year, +p.month - 1, +p.day);
   }
   function dayDiff(a, b){ return Math.round((etMidnight(b) - etMidnight(a)) / 86400000); }
-  function getCurrentPilotDay(){
-    var day = dayDiff(PEABODY_PILOT.effectiveDate, new Date()) + 1;
-    return Math.min(Math.max(day, 1), PEABODY_PILOT.totalDays);
-  }
   function addDays(base, n){ var d = new Date(base); d.setDate(d.getDate() + n); return d; }
-  function getMidCheckDate(){ return addDays(PEABODY_PILOT.effectiveDate, PEABODY_PILOT.midCheckDay - 1); }
-  function getPilotEndDate(){ return addDays(PEABODY_PILOT.effectiveDate, PEABODY_PILOT.totalDays - 1); }
-  function getPilotProgressPercent(){ return Math.round((getCurrentPilotDay() / PEABODY_PILOT.totalDays) * 100); }
   function fmtDate(d){ return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', timeZone: TZ }); }
-  function set(id, txt){ var e = document.getElementById(id); if(e) e.textContent = txt; }
+  function fmtStamp(d){ return d.toLocaleString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', timeZone: TZ }); }
+  function set(id, txt){ var e = document.getElementById(id); if(e && txt!=null) e.textContent = txt; }
+  // effectiveDate is a date-only string; anchor it at ET midnight
+  function parseEff(s){ return new Date((s||'2026-06-16') + 'T00:00:00-04:00'); }
 
-  var day = getCurrentPilotDay();
-  var pct = getPilotProgressPercent();
-  var now = new Date();
+  function renderPilot(pilot, agents){
+    var eff = parseEff(pilot.effectiveDate);
+    var totalDays = pilot.totalDays || 15;
+    var midDay = pilot.midCheckDay || 7;
+    var now = new Date();
 
-  // header chips + stat card
-  set('chip-pilot-day', 'Day ' + day + ' of ' + PEABODY_PILOT.totalDays);
-  set('chip-effective', fmtDate(PEABODY_PILOT.effectiveDate));
-  set('stat-pilot-day', 'Day ' + day);
-  set('pilot-prog-pct', pct + '%');
-  set('pilot-end-date', fmtDate(getPilotEndDate()));
+    var day = Math.min(Math.max(dayDiff(eff, now) + 1, 1), totalDays);
+    var pct = Math.round((day / totalDays) * 100);
+    var midDate = addDays(eff, midDay - 1);
+    var endDate = addDays(eff, totalDays - 1);
 
-  // pilot progress bar (animate in slightly after load)
-  var pf = document.getElementById('pilot-prog-fill');
-  if(pf){ setTimeout(function(){ pf.style.width = pct + '%'; }, 450); }
+    set('chip-pilot-day', 'Day ' + day + ' of ' + totalDays);
+    set('chip-effective', fmtDate(eff));
+    set('stat-pilot-day', 'Day ' + day);
+    set('pilot-prog-pct', pct + '%');
+    set('pilot-end-date', fmtDate(endDate));
+    var pf = document.getElementById('pilot-prog-fill');
+    if(pf){ setTimeout(function(){ pf.style.width = pct + '%'; }, 450); }
 
-  // screening agent live-since duration
-  var liveDays = dayDiff(PEABODY_PILOT.screeningAgentLiveDate, now) + 1;
-  set('stat-live-since', fmtDate(PEABODY_PILOT.screeningAgentLiveDate) + ' · ' + liveDays + (liveDays === 1 ? ' day' : ' days') + ' live');
+    set('tl-midcheck', '~' + fmtDate(midDate));
+    set('tl-end', '~' + fmtDate(endDate));
 
-  // timeline dates
-  set('tl-deploy', fmtDate(PEABODY_PILOT.screeningAgentLiveDate));
-  set('tl-midcheck', '~' + fmtDate(getMidCheckDate()));
-  set('tl-end', '~' + fmtDate(getPilotEndDate()));
+    // ---- agent cards driven by agents[] ----
+    var screening = (agents||[]).filter(function(a){ return /screening/i.test(a.name); })[0];
+    if(screening){
+      var live = screening.liveSince ? new Date(screening.liveSince) : eff;
+      var liveDays = dayDiff(live, now) + 1;
+      set('stat-live-since', fmtDate(live) + ' · ' + liveDays + (liveDays === 1 ? ' day' : ' days') + ' live');
+      set('tl-deploy', fmtDate(live));
+      var ps = document.getElementById('pill-screening');
+      if(ps) ps.innerHTML = '<span class="dot"></span>🟢 ' + (screening.status || 'LIVE') + ' — ' + fmtDate(live);
+      set('sync-screening', screening.lastEventAt ? fmtStamp(new Date(screening.lastEventAt)) : fmtStamp(now));
+    }
+    var renewal = (agents||[]).filter(function(a){ return /renewal/i.test(a.name); })[0];
+    if(renewal){
+      var pr = document.getElementById('pill-renewal');
+      var onHold = (renewal.status || '').toUpperCase().indexOf('HOLD') >= 0;
+      if(pr) pr.innerHTML = '<span class="dot"></span>' + (onHold ? '🟡 ON HOLD' : '🟢 ' + renewal.status);
+      if(renewal.blockedReason) set('renewal-status', 'Awaiting Kelly’s input');
+      set('sync-renewal', renewal.lastEventAt ? fmtStamp(new Date(renewal.lastEventAt)) : fmtStamp(now));
+    } else {
+      set('sync-renewal', fmtStamp(now));
+    }
+  }
 
-  // last-sync labels + footer timestamp (now, on every page load)
-  var stamp = now.toLocaleString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
-  set('sync-screening', stamp);
-  set('sync-renewal', stamp);
-  set('last-updated', stamp);
+  function renderActivity(data){
+    var acts = data.activity || [];
+    // distinct application per subject; latest outcome wins (drafted -> sent)
+    var latest = {};
+    acts.forEach(function(e){
+      var k = e.subject || e.id;
+      if(!latest[k] || (e.ts||'') > (latest[k].ts||'')) latest[k] = e;
+    });
+    var apps = Object.keys(latest).map(function(k){ return latest[k]; });
+    var screened = apps.length;
+    var approved = apps.filter(function(e){ return e.outcome==='APPROVE'; }).length;
+    var review   = apps.filter(function(e){ return e.outcome==='REVIEW'; }).length;
+
+    set('stat-screened', screened);
+    set('stat-screened-top', screened);
+    set('stat-approved', approved);
+    set('stat-review', review);
+    var ac = document.getElementById('act-count'); if(ac) ac.textContent = screened + ' total';
+
+    var body = document.getElementById('act-body');
+    var top = acts.slice(0, 10); // already most-recent-first; cap at 10
+    if(body && top.length){
+      body.innerHTML = top.map(function(r){
+        var d = r.ts ? fmtDate(new Date(r.ts)) : '';
+        var col = r.outcome==='APPROVE' ? '#0f7a3d' : (r.outcome==='DECLINE' ? '#b3261e' : '#b8860b');
+        var ico = r.outcome==='APPROVE' ? '✅ APPROVE' : (r.outcome==='DECLINE' ? '❌ DECLINE' : '🔍 IN REVIEW');
+        var status = r.status || 'Delivered';
+        var isDraft = /draft/i.test(status);
+        var sCol = isDraft ? '#b8860b' : '#0f7a3d';
+        var sBg  = isDraft ? '#fdf1d8' : '#e3f7ec';
+        var sCell = '<span style="color:'+sCol+';background:'+sBg+';font-weight:700;font-size:11px;padding:3px 9px;border-radius:6px;white-space:nowrap">'+status+'</span>';
+        var subj = '<div class="sub">'+(r.subject||'')+' · '+(r.action||'')+'</div>';
+        return '<tr><td>'+d+'</td><td><span style="color:'+col+';font-weight:700">'+ico+'</span>'+subj+'</td><td>Kelly, Leasing, Tino · Hari CC</td><td>'+sCell+'</td></tr>';
+      }).join('');
+    } else if (body){
+      body.innerHTML = '<tr><td colspan="4" style="color:#8a96a8">No screenings yet.</td></tr>';
+    }
+
+    set('stat-turnaround', 'Minutes from submission');
+    set('last-updated', data.lastUpdated ? fmtStamp(new Date(data.lastUpdated)) : fmtStamp(new Date()));
+  }
+
+  function render(data){
+    try { renderPilot(data.pilot || FALLBACK.pilot, data.agents || FALLBACK.agents); } catch(e){}
+    try { renderActivity(data); } catch(e){}
+  }
+
+  fetch('activity.json?_='+Date.now())
+    .then(function(r){ return r.json(); })
+    .then(render)
+    .catch(function(){ render(FALLBACK); });
 })();
 
 (function(){
@@ -575,34 +640,6 @@ var PEABODY_PILOT = {
   setTimeout(function(){ boxes[0].focus(); },200);
 })();
 
-// ---- Live de-identified stats (auto-updated by the screening pipeline) ----
-(function(){
-  fetch('stats.json?_='+Date.now()).then(function(r){return r.json();}).then(function(s){
-    function set(id,v){var e=document.getElementById(id); if(e!=null && v!=null) e.textContent=v;}
-    set('stat-screened', s.screened);
-    set('stat-screened-top', s.screened);
-    set('stat-approved', s.approved);
-    set('stat-review', s.review);
-    set('stat-turnaround', s.avg_turnaround);
-    var ac=document.getElementById('act-count'); if(ac) ac.textContent=(s.screened||0)+' total';
-    var body=document.getElementById('act-body');
-    if(body && s.recent && s.recent.length){
-      body.innerHTML = s.recent.map(function(r){
-        var col = r.outcome==='APPROVE' ? '#0f7a3d' : (r.outcome==='DECLINE' ? '#b3261e' : '#b8860b');
-        var ico = r.outcome==='APPROVE' ? '✅ APPROVE' : (r.outcome==='DECLINE' ? '❌ DECLINE' : '🔍 IN REVIEW');
-        var rec = r.recipients || 'Kelly, Leasing, Tino · Hari CC';
-        var status = r.status || 'Delivered';
-        var isDraft = /draft/i.test(status);
-        var sCol = isDraft ? '#b8860b' : '#0f7a3d';
-        var sBg  = isDraft ? '#fdf1d8' : '#e3f7ec';
-        var sCell = '<span style="color:'+sCol+';background:'+sBg+';font-weight:700;font-size:11px;padding:3px 9px;border-radius:6px;white-space:nowrap">'+status+'</span>';
-        return '<tr><td>'+r.date+'</td><td><span style="color:'+col+';font-weight:700">'+ico+'</span></td><td>'+rec+'</td><td>'+sCell+'</td></tr>';
-      }).join('');
-    } else if (body) {
-      body.innerHTML = '<tr><td colspan="4" style="color:#8a96a8">No screenings yet.</td></tr>';
-    }
-  }).catch(function(e){});
-})();
 </script>
 </body>
 </html>
