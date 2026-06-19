@@ -4,342 +4,392 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<title>UpneX — See an AI Agent Live in 15 Minutes</title>
-<meta name="description" content="Watch an UpneX AI agent handle your hardest property management task, then book a live walkthrough tailored to your portfolio." />
+<title>UpneX — Book a 15-min Live Demo</title>
+<meta name="description" content="See an UpneX AI agent handle your hardest PM task live — maintenance, leasing, BD, or tenant comms. Book a 15-min tailored walkthrough." />
 
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '946905738177488');
-fbq('track', 'PageView');
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','946905738177488');fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
 
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          ink:   '#1D1D1F',
-          paper: '#FFFFFF',
-          fog:   '#F5F5F7',
-          mist:  '#FAFAFC',
-          muted: '#86868B',
-          dim:   '#6E6E73',
-          line:  '#D2D2D7',
-          navy:  '#1a2e4a',
-          accent:'#0066cc',
-          ablue: { DEFAULT: '#0071E3', hover: '#0077ED', tint: '#E8F0FE' },
-        },
-        fontFamily: {
-          sans: ['-apple-system','BlinkMacSystemFont','"SF Pro Display"','"SF Pro Text"','"Helvetica Neue"','Helvetica','Arial','sans-serif'],
-          mono: ['"SF Mono"','Menlo','Monaco','"Courier New"','monospace'],
-        },
-      },
-    },
-  };
-</script>
+
 <style>
-  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #1D1D1F;
-    background: #FFFFFF;
-    overflow-x: hidden;
-    letter-spacing: -0.003em;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #1a2e4a;
+  background: #fff;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
 
-  /* ============ TYPOGRAPHY ============ */
-  .display-xl { font-size: clamp(36px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.025em; font-weight: 700; }
-  .display-lg { font-size: clamp(28px, 4vw, 52px); line-height: 1.1; letter-spacing: -0.022em; font-weight: 600; }
-  .display-md { font-size: clamp(22px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; }
-  .body-lg { font-size: 19px; line-height: 1.55; color: #6E6E73; }
-  .body    { font-size: 17px; line-height: 1.5; color: #6E6E73; }
-  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #0066cc; }
+/* ── TOKENS ─────────────────────────────────── */
+:root {
+  --navy:   #1a2e4a;
+  --blue:   #0066cc;
+  --blue2:  #0052a3;
+  --white:  #ffffff;
+  --gray:   #f0f4f8;
+  --text:   #1a2e4a;
+  --sub:    #4a6278;
+  --muted:  #7a94aa;
+  --line:   #dde5ed;
+}
 
-  /* ============ BUTTONS ============ */
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 14px 28px; border-radius: 980px;
-    font-weight: 500; font-size: 15px;
-    transition: all 0.2s ease; cursor: pointer; line-height: 1; white-space: nowrap; text-decoration: none;
-  }
-  .btn-blue  { background: #0071E3; color: #FFFFFF; }
-  .btn-blue:hover { background: #0077ED; }
-  .btn-black { background: #1D1D1F; color: #FFFFFF; }
-  .btn-black:hover { background: #000000; }
-  .btn-ghost-dark { background: transparent; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.3); }
-  .btn-ghost-dark:hover { background: rgba(255,255,255,0.08); }
-  .btn-lg    { padding: 16px 36px; font-size: 17px; }
+/* ── NAV ─────────────────────────────────────── */
+.nav {
+  background: var(--navy);
+  position: sticky; top: 0; z-index: 60;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.nav-inner {
+  max-width: 1080px; margin: 0 auto;
+  padding: 0 24px; height: 54px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { color: #fff; font-weight: 700; font-size: 18px; text-decoration: none; letter-spacing: -0.02em; }
+.nav-back  { color: rgba(255,255,255,0.55); font-size: 13px; text-decoration: none; margin-right: 16px; transition: color .15s; }
+.nav-back:hover { color: #fff; }
 
-  /* ============ NAV ============ */
-  .nav-link { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 400; transition: color 0.15s; text-decoration: none; }
-  .nav-link:hover { color: #FFFFFF; }
+/* ── BOOK BUTTON — the ONE primary action ─────── */
+/* Three #0066cc declarations + bulletproof inline-block */
+.btn-book {
+  display: inline-block;
+  background: #0066cc;
+  color: #ffffff !important;
+  border: 2px solid #0066cc;
+  border-radius: 8px;
+  padding: 15px 36px;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none !important;
+  text-align: center;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .15s, box-shadow .2s;
+  -webkit-text-size-adjust: none;
+  mso-padding-alt: 0;
+  white-space: nowrap;
+}
+.btn-book:hover {
+  background: #0052a3;
+  border-color: #0052a3;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,102,204,0.3);
+}
+.btn-book-lg {
+  font-size: 20px;
+  padding: 19px 52px;
+  border-radius: 10px;
+}
+.btn-book-full {
+  display: block;
+  width: 100%;
+}
 
-  /* ============ ACCENT BAR ============ */
-  .accent-bar { height: 4px; background: #0066cc; }
+/* ── SECONDARY BUTTON ───────────────────────── */
+.btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  background: var(--navy);
+  color: #fff !important;
+  border: none; border-radius: 8px;
+  padding: 14px 28px; font-size: 15px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  transition: background .2s;
+  width: 100%;
+}
+.btn-secondary:hover { background: #0f1e32; }
 
-  /* ============ BULLETPROOF BOOK BUTTON ============ */
-  .book-btn-wrap { text-align: center; }
-  .book-btn-wrap table { margin: 0 auto; }
-  .book-btn-wrap td {
-    background: #0066cc;
-    border-radius: 10px;
-    mso-padding-alt: 0;
-    padding: 0;
-  }
-  .book-btn {
-    display: inline-block;
-    background: #0066cc;
-    color: #ffffff !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.2;
-    padding: 20px 48px;
-    text-decoration: none !important;
-    border-radius: 10px;
-    border: 2px solid #0066cc;
-    -webkit-text-size-adjust: none;
-    letter-spacing: -0.01em;
-    transition: background 0.2s, border-color 0.2s, transform 0.15s;
-  }
-  .book-btn:hover {
-    background: #0052a3;
-    border-color: #0052a3;
-    transform: translateY(-1px);
-  }
-  @media (max-width: 480px) {
-    .book-btn { font-size: 17px; padding: 18px 28px; display: block; text-align: center; }
-    .book-btn-wrap table, .book-btn-wrap td { width: 100%; }
-  }
+/* ── ACCENT BAR ─────────────────────────────── */
+.accent-bar { height: 3px; background: var(--blue); }
 
-  /* ============ VIDEO PLACEHOLDER ============ */
-  .video-shell {
-    position: relative; width: 100%; border-radius: 20px; overflow: hidden;
-    background: #1a2e4a;
-    aspect-ratio: 16 / 9;
-    box-shadow: 0 12px 48px rgba(0,0,0,0.15);
-  }
-  .video-shell iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-  .video-placeholder {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 16px; color: rgba(255,255,255,0.7);
-  }
-  .video-play-icon {
-    width: 72px; height: 72px; border-radius: 50%;
-    background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.3);
-    display: flex; align-items: center; justify-content: center;
-  }
+/* ── SECTION HELPERS ────────────────────────── */
+.section       { padding: 64px 24px; }
+.section-sm    { padding: 48px 24px; }
+.section-navy  { background: var(--navy); }
+.section-white { background: #fff; }
+.section-gray  { background: var(--gray); }
+.wrap          { max-width: 920px; margin: 0 auto; }
+.wrap-sm       { max-width: 600px; margin: 0 auto; }
+.text-center   { text-align: center; }
 
-  /* ============ CARDS ============ */
-  .card-soft {
-    background: #FFFFFF; border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-    transition: box-shadow 0.3s, transform 0.3s;
-  }
-  .card-soft:hover { box-shadow: 0 12px 36px rgba(0,0,0,0.11); transform: translateY(-2px); }
-  .card-flat { background: #FFFFFF; border-radius: 20px; border: 1px solid #F5F5F7; }
+/* ── TYPOGRAPHY ─────────────────────────────── */
+.label {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue);
+  margin-bottom: 14px;
+}
+.h1 {
+  font-size: clamp(32px, 5.5vw, 60px);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
+  color: #fff;
+}
+.h2 {
+  font-size: clamp(26px, 4vw, 44px);
+  font-weight: 700; letter-spacing: -0.025em; line-height: 1.1;
+  color: var(--navy);
+}
+.h3 { font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.25; }
+.sub-hero { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.65); font-weight: 300; }
+.sub      { font-size: 16px; line-height: 1.6; color: var(--sub); }
 
-  /* ============ INPUTS ============ */
-  .input {
-    width: 100%; padding: 13px 16px;
-    background: #FFFFFF; border: 1.5px solid #D2D2D7; border-radius: 10px;
-    font-size: 15px; color: #1D1D1F; transition: border 0.2s, box-shadow 0.2s; font-family: inherit;
-  }
-  .input:focus { outline: none; border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0,102,204,0.12); }
-  .input::placeholder { color: #86868B; }
-  select.input {
-    appearance: none; -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23636366' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
-  }
+/* ── TRUST STRIP ────────────────────────────── */
+.trust-strip {
+  display: flex; flex-wrap: wrap; gap: 8px 24px;
+  margin-top: 20px; justify-content: center;
+}
+.trust-item { font-size: 13px; color: rgba(255,255,255,.5); display: flex; align-items: center; gap: 6px; }
+.trust-item svg { flex-shrink: 0; }
 
-  /* ============ SCROLL REVEAL ============ */
-  /* Start at opacity 0.15 so content is never fully invisible (no blank sections) */
-  .reveal { opacity: 0.15; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-d1 { transition-delay: 0.1s; }
-  .reveal-d2 { transition-delay: 0.2s; }
+/* ── QUOTE CARD ─────────────────────────────── */
+.quote-card {
+  background: var(--navy); border-radius: 16px;
+  padding: 32px 36px;
+}
+.quote-mark { font-size: 52px; line-height: .8; color: var(--blue); font-family: Georgia, serif; margin-bottom: 8px; }
+.quote-text { font-size: 20px; line-height: 1.55; color: #fff; font-weight: 400; font-style: italic; }
+.quote-attr { margin-top: 18px; font-size: 14px; color: rgba(255,255,255,.5); font-weight: 500; }
 
-  /* ============ DEMO WALKTHROUGH ============ */
-  .demo-shell {
-    background: #FFFFFF; border-radius: 24px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
-  }
-  .scenario-select-wrap { position: relative; }
-  .scenario-select {
-    appearance: none; -webkit-appearance: none; -moz-appearance: none;
-    width: 100%; padding: 14px 46px 14px 16px;
-    background: #FFFFFF; border: 1.5px solid #1D1D1F; border-radius: 12px;
-    color: #1D1D1F; font-size: 15px; font-weight: 500; cursor: pointer;
-    transition: all 0.2s; font-family: inherit;
-  }
-  .scenario-select:focus { outline: none; border-color: #0066cc; box-shadow: 0 0 0 4px rgba(0,102,204,0.12); }
-  .scenario-select-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; }
-  .bubble-tenant {
-    background: #F5F5F7; border-radius: 20px 20px 20px 5px;
-    padding: 13px 16px; color: #1D1D1F; font-size: 15px; line-height: 1.4;
-  }
-  .bubble-agent {
-    background: #0066cc; color: #FFFFFF;
-    border-radius: 20px 20px 5px 20px;
-    padding: 13px 16px; font-size: 15px; line-height: 1.4;
-  }
-  .demo-step { animation: stepFadeIn 0.4s cubic-bezier(0.16,1,0.3,1); }
-  @keyframes stepFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-  .check-item {
-    display: flex; align-items: center; gap: 10px; font-size: 14px; color: #1D1D1F;
-    opacity: 0; transform: translateX(-6px); animation: checkSlideIn 0.35s ease forwards;
-  }
-  .check-item .check-icon {
-    width: 20px; height: 20px; border-radius: 50%; background: #1D1D1F;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .check-item .check-icon svg { width: 10px; height: 10px; stroke: #FFFFFF; stroke-width: 4; }
-  @keyframes checkSlideIn { to { opacity: 1; transform: translateX(0); } }
-  .urgency-pill {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
-  }
-  .urgency-pill.urgent  { background: #FFE5E5; color: #C40C0C; }
-  .urgency-pill.routine { background: #FFF4E0; color: #AA6500; }
-  .spinner-lg {
-    width: 40px; height: 40px;
-    border: 3px solid #F5F5F7; border-top-color: #0066cc;
-    border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* ── LOGO ROW ───────────────────────────────── */
+.logo-row {
+  display: flex; flex-wrap: wrap; gap: 10px 16px;
+  margin-top: 28px; align-items: center;
+}
+.logo-pill {
+  background: #fff; border: 1.5px solid var(--line);
+  border-radius: 999px; padding: 8px 20px;
+  font-size: 14px; font-weight: 600; color: var(--navy);
+  white-space: nowrap;
+}
 
-  /* ============ LIVE DOT ============ */
-  .live-dot { position: relative; display: inline-block; width: 8px; height: 8px; background: #34C759; border-radius: 50%; }
-  .live-dot::after {
-    content: ''; position: absolute; inset: -4px; border-radius: 50%;
-    background: #34C759; opacity: 0.4; animation: pulse 2s ease-out infinite;
-  }
-  @keyframes pulse { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.5); opacity: 0; } }
+/* ── FEATURE BULLETS ────────────────────────── */
+.bullets { display: flex; flex-direction: column; gap: 16px; }
+.bullet-row {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: #fff; border-radius: 14px; padding: 20px 22px;
+  box-shadow: 0 2px 12px rgba(26,46,74,.06);
+}
+.bullet-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: var(--navy); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.bullet-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.bullet-desc  { font-size: 14px; color: var(--sub); line-height: 1.5; }
 
-  /* ============ STICKY MOBILE CTA ============ */
-  .sticky-cta {
-    position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
-    padding: 12px 16px; background: rgba(255,255,255,0.94);
-    backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-top: 1px solid #F5F5F7;
-    transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-  }
-  .sticky-cta.visible { transform: translateY(0); }
-  @media (min-width: 768px) { .sticky-cta { display: none !important; } }
+/* ── DEMO WALKTHROUGH ───────────────────────── */
+.demo-shell {
+  background: #fff; border-radius: 20px;
+  box-shadow: 0 4px 32px rgba(26,46,74,.1);
+  padding: 28px;
+}
+.demo-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue);
+}
+.scenario-select {
+  width: 100%; padding: 13px 44px 13px 14px; margin-top: 8px;
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231a2e4a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 14px center;
+  border: 1.5px solid var(--navy); border-radius: 10px;
+  color: var(--navy); font-size: 15px; font-weight: 500;
+  appearance: none; -webkit-appearance: none; font-family: inherit; cursor: pointer;
+}
+.scenario-select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,102,204,.12); }
+.demo-progress {
+  display: flex; gap: 5px; margin: 18px 0 22px;
+}
+.demo-progress-bar {
+  height: 3px; flex: 1; border-radius: 999px;
+  background: var(--line); transition: background .4s;
+}
+.demo-step { animation: fadein .35s ease; }
+.demo-step.hidden { display: none; }
+@keyframes fadein { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.demo-step-title { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.demo-step-sub   { font-size: 14px; color: var(--sub); margin-bottom: 18px; line-height: 1.5; }
+.bubble-in  { background: var(--gray); border-radius: 18px 18px 18px 4px; padding: 12px 16px; font-size: 15px; max-width: 320px; }
+.bubble-out { background: var(--blue); color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 16px; font-size: 15px; max-width: 320px; margin-left: auto; }
+.check-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 14px; }
+.check-row  {
+  display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--navy);
+  opacity: 0; transform: translateX(-5px); animation: slidein .3s ease forwards;
+}
+.check-dot  { width: 20px; height: 20px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.check-dot svg { width: 9px; height: 9px; stroke: #fff; stroke-width: 3.5; }
+@keyframes slidein { to { opacity: 1; transform: translateX(0); } }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+}
+.badge-urgent  { background: #ffe5e5; color: #c00; }
+.badge-routine { background: #fff4e0; color: #a65200; }
+.vendor-row {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--gray); border-radius: 12px; padding: 14px;
+}
+.vendor-icon { font-size: 22px; }
+.vendor-name { font-weight: 700; font-size: 15px; color: var(--navy); }
+.vendor-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.vendor-tag  { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .06em; }
+.sms-box { background: #e8f0fe; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: var(--navy); line-height: 1.5; margin-top: 10px; }
+.log-box {
+  background: var(--navy); border-radius: 14px; padding: 20px; color: #fff;
+}
+.log-box-id   { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 2px; }
+.log-box-meta { font-size: 13px; color: rgba(255,255,255,.5); margin-bottom: 16px; }
+.log-row { display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0; border-top: 1px solid rgba(255,255,255,.1); }
+.log-row span:first-child { color: rgba(255,255,255,.5); }
+.log-row span:last-child  { font-weight: 700; font-family: monospace; }
+.demo-nav { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; border-top: 1px solid var(--line); margin-top: 18px; }
+.btn-back { background: none; border: none; color: var(--muted); font-size: 14px; font-weight: 500; cursor: pointer; padding: 8px; visibility: hidden; }
+.btn-next {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--blue); color: #fff; border: none; border-radius: 8px;
+  padding: 13px 24px; font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: background .2s;
+}
+.btn-next:hover { background: var(--blue2); }
 
-  /* ============ QUOTE ============ */
-  .quote-card {
-    background: #1a2e4a; border-radius: 20px;
-    padding: 32px; color: #FFFFFF;
-  }
-  .quote-mark { font-size: 48px; line-height: 1; color: #0066cc; font-family: Georgia, serif; }
+/* ── URGENCY BAND ───────────────────────────── */
+.urgency-band {
+  background: #fff7e6; border: 1.5px solid #ffd580;
+  border-radius: 10px; padding: 12px 18px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: #7a4f00; font-weight: 500;
+  margin-bottom: 24px;
+}
+.urgency-dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
 
-  /* ============ SECTION RULE ============ */
-  .section-rule { width: 36px; height: 3px; background: #0066cc; margin-bottom: 20px; border-radius: 2px; }
+/* ── FORM ───────────────────────────────────── */
+.form-wrap { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(26,46,74,.08); }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 13px; font-weight: 600; color: var(--navy); }
+.form-input {
+  padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 8px;
+  font-size: 15px; color: var(--navy); font-family: inherit;
+  transition: border .2s, box-shadow .2s; background: #fff;
+}
+.form-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,102,204,.12); }
+.form-input::placeholder { color: var(--muted); }
+select.form-input {
+  appearance: none; -webkit-appearance: none;
+  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231a2e4a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 14px center;
+  padding-right: 38px; cursor: pointer;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
+.form-privacy { font-size: 12px; color: var(--muted); text-align: center; margin-top: 4px; }
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--line); border-top-color: var(--blue);
+  border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.success-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #e8f0fe; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+}
+
+/* ── LIVE DOT ───────────────────────────────── */
+.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; position: relative; }
+.live-dot::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  background: #22c55e; opacity: .4; animation: ping 2s ease-out infinite;
+}
+@keyframes ping { 0% { transform: scale(1); opacity: .4; } 100% { transform: scale(2.4); opacity: 0; } }
+
+/* ── STICKY MOBILE CTA ──────────────────────── */
+.sticky-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 70;
+  padding: 12px 16px; background: rgba(255,255,255,.95);
+  backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-top: 1px solid var(--line);
+  transform: translateY(100%); transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.sticky-bar.show { transform: translateY(0); }
+@media (min-width: 768px) { .sticky-bar { display: none !important; } }
+
+/* ── FOOTER ─────────────────────────────────── */
+.footer { background: var(--navy); padding: 48px 24px 32px; border-top: 1px solid rgba(255,255,255,.06); }
+.footer-inner { max-width: 1080px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; }
+@media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
+.footer-logo { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.footer-sub  { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.6; max-width: 240px; }
+.footer-links { display: flex; gap: 32px; }
+.footer-col-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 10px; }
+.footer-link { display: block; font-size: 13px; color: rgba(255,255,255,.55); text-decoration: none; margin-bottom: 8px; transition: color .15s; }
+.footer-link:hover { color: #fff; }
+.footer-copy { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); font-size: 11px; color: rgba(255,255,255,.25); }
+
+/* ── UTILS ──────────────────────────────────── */
+.divider { width: 40px; height: 3px; background: var(--blue); border-radius: 2px; margin-bottom: 20px; }
+.mt4  { margin-top: 4px; }
+.mt8  { margin-top: 8px; }
+.mt12 { margin-top: 12px; }
+.mt16 { margin-top: 16px; }
+.mt24 { margin-top: 24px; }
+.mt32 { margin-top: 32px; }
+.mt40 { margin-top: 40px; }
+.flex-center { display: flex; align-items: center; gap: 8px; }
+.gap-stack { display: flex; flex-direction: column; gap: 16px; }
+
+/* ── GRID ───────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<!-- ============ NAVBAR ============ -->
-<nav style="background:#1a2e4a; position:sticky; top:0; z-index:50; border-bottom:1px solid rgba(255,255,255,0.08);">
-  <div style="max-width:1200px; margin:0 auto; padding:0 24px; height:56px; display:flex; align-items:center; justify-content:space-between;">
-    <a href="https://upnexs.com" style="color:#ffffff; font-weight:700; font-size:18px; text-decoration:none; letter-spacing:-0.02em;">UpneX</a>
-    <div style="display:flex; align-items:center; gap:12px;">
-      <a href="https://upnexs.com" class="nav-link" style="display:none;" id="navHome">← Back to site</a>
+<!-- ═══ NAV ═══════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">UpneX</a>
+    <div style="display:flex;align-items:center;">
+      <a href="https://upnexs.com" class="nav-back">← Site</a>
       <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
          target="_blank" rel="noopener"
+         class="btn-book"
          data-cta="book"
-         style="display:inline-block; background:#0066cc; color:#ffffff; font-weight:600; font-size:14px; padding:9px 20px; border-radius:980px; text-decoration:none; border:1px solid #0066cc; transition:background 0.2s;"
-         onmouseover="this.style.background='#0052a3'" onmouseout="this.style.background='#0066cc'">
+         style="padding:9px 20px;font-size:14px;border-radius:6px;"
+         onclick="track('book')">
         Book a Call
       </a>
     </div>
   </div>
 </nav>
-<script>document.getElementById('navHome').style.display='inline';</script>
-
-<!-- ============ ACCENT BAR ============ -->
 <div class="accent-bar"></div>
 
-<!-- ============ HERO ============ -->
-<section style="background:#1a2e4a; padding:64px 24px 56px;">
-  <div style="max-width:860px; margin:0 auto; text-align:center;">
-    <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:999px; padding:6px 14px; margin-bottom:24px;">
+<!-- ═══ HERO ═══════════════════════════════════════ -->
+<section class="section section-navy text-center" style="padding-bottom:72px;">
+  <div class="wrap-sm">
+    <div class="flex-center" style="justify-content:center;margin-bottom:20px;">
       <span class="live-dot"></span>
-      <span style="color:rgba(255,255,255,0.75); font-size:13px; font-weight:500;">Live demo · No signup required</span>
+      <span style="font-size:13px;color:rgba(255,255,255,.6);font-weight:500;">Live demo · No signup · 15 minutes</span>
     </div>
-    <h1 class="display-xl" style="color:#ffffff; margin-bottom:20px;">
-      See an UpneX AI agent handle your hardest task — in 15 minutes.
+
+    <h1 class="h1">
+      Your PM back-office,<br>on autopilot.
     </h1>
-    <p style="color:rgba(255,255,255,0.65); font-size:20px; line-height:1.5; max-width:640px; margin:0 auto; font-weight:300;">
-      Watch the demo, then book a live walkthrough where we tailor it to your portfolio.
-    </p>
-  </div>
-</section>
-
-<!-- ============ DEMO VIDEO ============ -->
-<section style="background:#f0f4f8; padding:48px 24px;">
-  <div style="max-width:860px; margin:0 auto;">
-    <!-- YOUTUBE_DEMO_URL — replace src below with your YouTube embed URL (one-line change) -->
-    <!-- Example: src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1" -->
-    <div id="demo-video" class="video-shell reveal">
-      <div class="video-placeholder">
-        <div class="video-play-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <p style="font-size:15px; font-weight:500; color:rgba(255,255,255,0.6);">Demo video loading…</p>
-        <p style="font-size:13px; color:rgba(255,255,255,0.4);">Watch an UpneX agent handle a live tenant request end-to-end</p>
-      </div>
-    </div>
-    <!-- To add the YouTube URL later, replace the demo-video div above with:
-    <div id="demo-video" class="video-shell">
-      <iframe src="YOUR_YOUTUBE_EMBED_URL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-    -->
-  </div>
-</section>
-
-<!-- ============ PRIMARY CTA ============ -->
-<section style="background:#ffffff; padding:56px 24px 40px; text-align:center;" id="book-cta">
-  <div style="max-width:640px; margin:0 auto;">
-    <p class="eyebrow" style="margin-bottom:14px;">Ready to see it on your portfolio?</p>
-    <h2 class="display-md" style="color:#1a2e4a; margin-bottom:10px;">
-      Book a 15-min live walkthrough
-    </h2>
-    <p style="color:#6E6E73; font-size:17px; margin-bottom:32px; line-height:1.5;">
-      We'll demo the exact agent that fits your biggest pain point — maintenance triage, leasing, or BD.
+    <p class="sub-hero mt16" style="max-width:520px;margin-left:auto;margin-right:auto;">
+      Book a 15-min call — we'll demo the exact AI agent that solves your biggest bottleneck, live, tailored to your portfolio.
     </p>
 
-    <!-- BULLETPROOF BOOK BUTTON — three #0066cc declarations, display:inline-block -->
-    <div class="book-btn-wrap">
-      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+    <div class="mt32" style="display:flex;justify-content:center;">
+      <!-- BULLETPROOF BOOK BUTTON — three #0066cc declarations, mso-padding-alt, display:inline-block -->
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td align="center" bgcolor="#0066cc" style="border-radius:10px; mso-padding-alt:0; padding:0;">
+          <td align="center" bgcolor="#0066cc" style="border-radius:10px;mso-padding-alt:0;padding:0;">
             <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-               target="_blank"
-               rel="noopener"
-               class="book-btn"
+               target="_blank" rel="noopener"
+               class="btn-book btn-book-lg"
                data-cta="book"
-               onclick="trackCta('book')">
+               onclick="track('book')">
               Book a 15-min walkthrough &nbsp;→
             </a>
           </td>
@@ -347,312 +397,307 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
       </table>
     </div>
 
-    <p style="margin-top:16px; font-size:13px; color:#86868B;">
-      Opens Google Calendar · No prep needed · 15 minutes
-    </p>
-  </div>
-</section>
-
-<!-- ============ WHAT YOU'LL SEE ============ -->
-<section style="background:#f0f4f8; padding:48px 24px;">
-  <div style="max-width:760px; margin:0 auto;">
-    <div class="section-rule"></div>
-    <h3 class="display-md" style="color:#1a2e4a; margin-bottom:32px;">What you'll see in the walkthrough</h3>
-    <div style="display:flex; flex-direction:column; gap:20px;">
-      <div class="card-soft reveal" style="padding:24px 28px; display:flex; gap:18px; align-items:flex-start;">
-        <div style="width:40px; height:40px; border-radius:10px; background:#1a2e4a; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px;">🔍</div>
-        <div>
-          <div style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:4px;">Tenant screening end-to-end</div>
-          <div style="color:#6E6E73; font-size:15px; line-height:1.5;">Lead intake → income check → soft credit pull → score → tour booked. All in under 60 seconds. No manual review.</div>
-        </div>
-      </div>
-      <div class="card-soft reveal reveal-d1" style="padding:24px 28px; display:flex; gap:18px; align-items:flex-start;">
-        <div style="width:40px; height:40px; border-radius:10px; background:#1a2e4a; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px;">📄</div>
-        <div>
-          <div style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:4px;">Lease renewals + CMAs without your involvement</div>
-          <div style="color:#6E6E73; font-size:15px; line-height:1.5;">Agent pulls comps, drafts the renewal offer, sends to tenant, and tracks the response — you only see the summary.</div>
-        </div>
-      </div>
-      <div class="card-soft reveal reveal-d2" style="padding:24px 28px; display:flex; gap:18px; align-items:flex-start;">
-        <div style="width:40px; height:40px; border-radius:10px; background:#1a2e4a; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px;">📊</div>
-        <div>
-          <div style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:4px;">Spend categorization for investors</div>
-          <div style="color:#6E6E73; font-size:15px; line-height:1.5;">Every transaction auto-tagged, owner reports generated, anomalies flagged — no spreadsheet updates, ever.</div>
-        </div>
-      </div>
+    <div class="trust-strip">
+      <span class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        3,500+ units managed
+      </span>
+      <span class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        12 US states
+      </span>
+      <span class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        No commitment
+      </span>
     </div>
   </div>
 </section>
 
-<!-- ============ SOCIAL PROOF ============ -->
-<section style="background:#ffffff; padding:56px 24px;">
-  <div style="max-width:860px; margin:0 auto;">
-    <div class="section-rule"></div>
-    <h3 class="display-md" style="color:#1a2e4a; margin-bottom:32px;">Who's already running on UpneX</h3>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; margin-bottom:32px;">
-      <div class="card-flat reveal" style="padding:22px 24px;">
-        <div style="font-weight:700; font-size:15px; color:#1a2e4a; margin-bottom:4px;">Peabody Residential</div>
-        <div style="color:#86868B; font-size:13px;">200 units · Virginia</div>
-      </div>
-      <div class="card-flat reveal reveal-d1" style="padding:22px 24px;">
-        <div style="font-weight:700; font-size:15px; color:#1a2e4a; margin-bottom:4px;">LS Properties</div>
-        <div style="color:#86868B; font-size:13px;">Portfolio management · Multi-market</div>
-      </div>
-      <div class="card-flat reveal reveal-d2" style="padding:22px 24px;">
-        <div style="font-weight:700; font-size:15px; color:#1a2e4a; margin-bottom:4px;">Allstar Management</div>
-        <div style="color:#86868B; font-size:13px;">BD automation · Tenant ops</div>
-      </div>
-    </div>
-    <div class="quote-card reveal">
+<!-- ═══ SOCIAL PROOF ════════════════════════════════ -->
+<section class="section-sm section-white">
+  <div class="wrap">
+    <div class="quote-card">
       <div class="quote-mark">"</div>
-      <blockquote style="font-size:20px; line-height:1.55; color:#ffffff; font-weight:400; margin:12px 0 20px;">
-        It's like having a back-office team that never sleeps.
-      </blockquote>
-      <div style="color:rgba(255,255,255,0.6); font-size:14px; font-weight:500;">— Kelly Scott, Peabody Residential</div>
+      <p class="quote-text">It's like having a back-office team that never sleeps. Maintenance handled itself at 2am — I didn't lift a finger.</p>
+      <p class="quote-attr">— Kelly Scott, Peabody Residential &nbsp;·&nbsp; 200 units, Virginia</p>
+    </div>
+
+    <div class="logo-row mt24">
+      <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-right:4px;">Clients</span>
+      <span class="logo-pill">Peabody Residential</span>
+      <span class="logo-pill">LS Properties</span>
+      <span class="logo-pill">Allstar Management</span>
+      <span class="logo-pill">Tipped</span>
     </div>
   </div>
 </section>
 
-<!-- ============ INTERACTIVE DEMO WALKTHROUGH ============ -->
-<section id="demo" style="background:#f0f4f8; padding:56px 24px;">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div style="text-align:center; margin-bottom:36px;">
-      <div class="section-rule" style="margin-left:auto; margin-right:auto;"></div>
-      <h2 class="display-md" style="color:#1a2e4a; margin-bottom:10px;">Try the AI agent yourself</h2>
-      <p style="color:#6E6E73; font-size:17px;">Pick any tenant scenario — watch how the agent handles it step by step.</p>
-    </div>
+<!-- ═══ WHAT YOU'LL SEE ══════════════════════════════ -->
+<section class="section section-gray">
+  <div class="wrap">
+    <div class="divider"></div>
+    <h2 class="h2">What you'll see in 15 minutes</h2>
+    <p class="sub mt8">No deck. No pitch. We open the agent and run it live.</p>
 
-    <div class="demo-shell" style="padding:28px 28px 24px; max-width:720px; margin:0 auto;">
-
-      <!-- Scenario dropdown -->
-      <div style="margin-bottom:24px;">
-        <label style="display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#0066cc; margin-bottom:10px;" for="scenarioSelect">
-          Pick a tenant request
-        </label>
-        <div class="scenario-select-wrap">
-          <select id="scenarioSelect" class="scenario-select" aria-label="Pick a tenant scenario">
-            <optgroup label="🔧  Maintenance Triage Agent">
-              <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
-              <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
-              <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
-              <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
-            </optgroup>
-            <optgroup label="🏠  Leasing & Screening Agent">
-              <option value="application">📋  New lead — 312 Maple St inquiry</option>
-            </optgroup>
-          </select>
-          <svg class="scenario-select-arrow" width="14" height="14" fill="none" stroke="#1D1D1F" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    <div class="bullets mt32">
+      <div class="bullet-row">
+        <div class="bullet-icon">🔍</div>
+        <div>
+          <div class="bullet-title">Tenant screening, end-to-end in 60 seconds</div>
+          <div class="bullet-desc">Lead comes in → income check → soft credit pull → applicant scored → tour booked automatically. You never touch it.</div>
         </div>
       </div>
+      <div class="bullet-row">
+        <div class="bullet-icon">📄</div>
+        <div>
+          <div class="bullet-title">Lease renewals + rent CMAs — without your involvement</div>
+          <div class="bullet-desc">Agent pulls market comps, drafts the renewal at the right price, sends to tenant, tracks the response. You get a summary.</div>
+        </div>
+      </div>
+      <div class="bullet-row">
+        <div class="bullet-icon">🔧</div>
+        <div>
+          <div class="bullet-title">Maintenance at 2am — dispatched in 14 seconds</div>
+          <div class="bullet-desc">Tenant texts. Agent reads it, checks urgency, picks vendor, dispatches, replies — and logs the work order. You stay asleep.</div>
+        </div>
+      </div>
+      <div class="bullet-row">
+        <div class="bullet-icon">📊</div>
+        <div>
+          <div class="bullet-title">Owner reporting + spend tracking, automated</div>
+          <div class="bullet-desc">Every transaction auto-categorized. Owner reports generated. Anomalies flagged. No manual spreadsheet work.</div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Divider -->
-      <div style="border-top:1px solid #F5F5F7; margin:0 -28px 22px;"></div>
+    <div class="mt40 text-center">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+        <tr>
+          <td align="center" bgcolor="#0066cc" style="border-radius:10px;mso-padding-alt:0;padding:0;">
+            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+               target="_blank" rel="noopener"
+               class="btn-book btn-book-lg"
+               data-cta="book"
+               onclick="track('book')">
+              Book a 15-min walkthrough &nbsp;→
+            </a>
+          </td>
+        </tr>
+      </table>
+      <p style="font-size:13px;color:var(--muted);margin-top:10px;">Opens Google Calendar · Free · No prep needed</p>
+    </div>
+  </div>
+</section>
 
-      <!-- Walkthrough header -->
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-        <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#86868B;">Watch AI handle it</div>
-        <div style="font-size:12px; font-family:'SF Mono',Menlo,monospace; color:#86868B;" id="stepCounter">Step 1 of 5</div>
+<!-- ═══ INTERACTIVE DEMO ══════════════════════════════ -->
+<section class="section section-white" id="demo">
+  <div class="wrap">
+    <div class="text-center" style="margin-bottom:32px;">
+      <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+      <h2 class="h2">Try it yourself right now</h2>
+      <p class="sub mt8">Pick any scenario — watch the agent work through it in real time.</p>
+    </div>
+
+    <div class="demo-shell" style="max-width:680px;margin:0 auto;">
+
+      <!-- Scenario picker -->
+      <div class="demo-label">Pick a tenant request</div>
+      <select id="scenarioSelect" class="scenario-select" aria-label="Pick a scenario">
+        <optgroup label="🔧  Maintenance Triage">
+          <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
+          <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
+          <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
+          <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
+        </optgroup>
+        <optgroup label="🏠  Leasing & Screening">
+          <option value="application">📋  New rental inquiry — 312 Maple St</option>
+        </optgroup>
+      </select>
+
+      <div class="demo-progress" id="progressBar">
+        <div class="demo-progress-bar" style="background:var(--navy);"></div>
+        <div class="demo-progress-bar"></div>
+        <div class="demo-progress-bar"></div>
+        <div class="demo-progress-bar"></div>
+        <div class="demo-progress-bar"></div>
       </div>
 
-      <!-- Progress bar -->
-      <div style="display:flex; gap:6px; margin-bottom:28px;" id="progressDots">
-        <div style="height:3px; flex:1; border-radius:999px; background:#1a2e4a; transition:background 0.4s;"></div>
-        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
-        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
-        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
-        <div style="height:3px; flex:1; border-radius:999px; background:#F5F5F7; transition:background 0.4s;"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+        <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">AI handles it</span>
+        <span id="stepCounter" style="font-size:12px;font-family:monospace;color:var(--muted);">Step 1 of 5</span>
       </div>
 
-      <!-- Step content -->
-      <div style="min-height:300px; margin-bottom:24px;">
+      <div style="min-height:260px;" id="stepArea">
 
         <!-- STEP 1 -->
         <div class="demo-step" data-step="1">
-          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Your tenant texts in.</h3>
-          <p class="body" style="margin-bottom:20px;">Real tenants don't write paragraphs. They fire off short, casual messages. Here's a typical one:</p>
-          <div style="max-width:380px;">
-            <div style="font-size:11px; font-family:'SF Mono',Menlo,monospace; color:#86868B; margin-bottom:8px;" id="step1Meta">Apt 112 · 2:18 PM</div>
-            <div class="bubble-tenant" id="step1Msg">AC broken 🥵 95° in here</div>
-          </div>
-          <p style="font-size:13px; color:#86868B; margin-top:16px;">↑ That's the whole message. Now watch what the AI does.</p>
+          <div class="demo-step-title">Tenant texts in.</div>
+          <div class="demo-step-sub">Real tenants send short, messy messages — not emails. Here's what just came in:</div>
+          <div class="mt4" style="font-size:11px;font-family:monospace;color:var(--muted);margin-bottom:8px;" id="s1meta">Apt 112 · 2:18 PM</div>
+          <div class="bubble-in" id="s1msg">AC broken 🥵 95° in here</div>
+          <p style="font-size:12px;color:var(--muted);margin-top:12px;">↑ That's the entire message. Watch what happens next.</p>
         </div>
 
         <!-- STEP 2 -->
         <div class="demo-step hidden" data-step="2">
-          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">AI reads it. Pulls context.</h3>
-          <p class="body" style="margin-bottom:20px;">In under a second, the agent investigates everything it needs:</p>
-          <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:18px;" id="step2Checks"></div>
-          <div id="step2Result"></div>
+          <div class="demo-step-title">AI reads it. Investigates.</div>
+          <div class="demo-step-sub">In under a second, the agent pulls everything it needs:</div>
+          <div class="check-list" id="s2checks"></div>
+          <div id="s2badge"></div>
         </div>
 
         <!-- STEP 3 -->
         <div class="demo-step hidden" data-step="3">
-          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Picks the right vendor. Dispatches.</h3>
-          <p class="body" style="margin-bottom:20px;">From your approved vendor list — scored by rating, distance, response time, and cost.</p>
-          <div style="background:#F5F5F7; border-radius:16px; padding:16px; margin-bottom:16px;">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <div style="width:44px; height:44px; border-radius:50%; background:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.08);">🔧</div>
-              <div style="flex:1; min-width:0;">
-                <div style="font-weight:600; color:#1D1D1F;" id="step3Vendor">CoolPro HVAC</div>
-                <div style="font-size:13px; color:#86868B;" id="step3VendorMeta">4.8★ · 24-hr emergency · 1.2mi away</div>
-              </div>
-              <div style="color:#0066cc; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em;">Dispatched</div>
+          <div class="demo-step-title">Picks vendor. Dispatches.</div>
+          <div class="demo-step-sub">From your approved vendor list — ranked by rating, distance, and response time.</div>
+          <div class="vendor-row">
+            <div class="vendor-icon">🔧</div>
+            <div>
+              <div class="vendor-name" id="s3vendor">CoolPro HVAC</div>
+              <div class="vendor-meta" id="s3meta">4.8★ · 24-hr emergency · 1.2mi</div>
             </div>
+            <div class="vendor-tag">Dispatched</div>
           </div>
-          <div style="font-size:11px; font-family:'SF Mono',Menlo,monospace; color:#86868B; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.1em;">SMS sent to vendor</div>
-          <div style="background:#e8f0fe; border-radius:14px; padding:14px; font-size:14px; color:#1D1D1F; line-height:1.5;" id="step3Sms"></div>
+          <div style="margin-top:10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">SMS to vendor</div>
+          <div class="sms-box" id="s3sms"></div>
         </div>
 
         <!-- STEP 4 -->
         <div class="demo-step hidden" data-step="4">
-          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Replies — in your brand voice.</h3>
-          <p class="body" style="margin-bottom:20px;">Calm, specific, with next steps. No tenant is up at 2am stressing — they got an answer in 14 seconds.</p>
-          <div style="max-width:380px; margin-left:auto;">
-            <div style="font-size:11px; font-family:'SF Mono',Menlo,monospace; color:#86868B; margin-bottom:8px; text-align:right;" id="step4Meta">UpneX AI · 2:18 PM</div>
-            <div class="bubble-agent" id="step4Reply"></div>
-          </div>
+          <div class="demo-step-title">Replies to tenant.</div>
+          <div class="demo-step-sub">Calm, specific, with next steps. The tenant got a reply in 14 seconds — at 2am.</div>
+          <div style="font-size:11px;font-family:monospace;color:var(--muted);margin-bottom:8px;text-align:right;" id="s4meta">UpneX AI · 2:18 PM</div>
+          <div class="bubble-out" id="s4reply"></div>
         </div>
 
         <!-- STEP 5 -->
         <div class="demo-step hidden" data-step="5">
-          <h3 style="font-size:22px; font-weight:600; margin-bottom:8px; color:#1D1D1F;">Logged in your PM platform.</h3>
-          <p class="body" style="margin-bottom:20px;">Synced to AppFolio / Buildium / wherever you live. Audit trail intact. Owner alerted. You stayed asleep.</p>
-          <div style="background:#1a2e4a; border-radius:16px; padding:22px; color:#FFFFFF;">
-            <div style="color:rgba(255,255,255,0.45); font-size:10px; text-transform:uppercase; letter-spacing:0.18em; margin-bottom:4px;">Work order created</div>
-            <div style="font-weight:600; font-size:28px; margin-bottom:4px;" id="step5WoId">WO-4837</div>
-            <div style="color:rgba(255,255,255,0.65); font-size:13px; margin-bottom:18px;" id="step5WoMeta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
-            <div style="border-top:1px solid rgba(255,255,255,0.12); padding-top:14px; display:flex; flex-direction:column; gap:10px;">
-              <div style="display:flex; justify-content:space-between; font-size:13px;">
-                <span style="color:rgba(255,255,255,0.55);">Time: message → dispatched</span>
-                <span style="font-family:'SF Mono',Menlo,monospace; font-weight:600;" id="step5Time">14 seconds</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; font-size:13px;">
-                <span style="color:rgba(255,255,255,0.55);">Human intervention</span>
-                <span style="font-family:'SF Mono',Menlo,monospace; font-weight:600;">Zero</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; font-size:13px;">
-                <span style="color:rgba(255,255,255,0.55);">Tenant satisfaction</span>
-                <span style="font-family:'SF Mono',Menlo,monospace; font-weight:600;">★★★★★</span>
-              </div>
-            </div>
+          <div class="demo-step-title">Logged. Owner alerted.</div>
+          <div class="demo-step-sub">Synced to AppFolio / Buildium. Audit trail. You stayed asleep.</div>
+          <div class="log-box">
+            <div class="log-box-id" id="s5id">WO-4837</div>
+            <div class="log-box-meta" id="s5meta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
+            <div class="log-row"><span>Message → dispatched</span><span id="s5time">14 seconds</span></div>
+            <div class="log-row"><span>Human steps</span><span>Zero</span></div>
+            <div class="log-row"><span>Tenant rating</span><span>★★★★★</span></div>
           </div>
         </div>
-      </div>
+      </div><!-- /stepArea -->
 
-      <!-- Back + Next -->
-      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:18px; border-top:1px solid #F5F5F7;">
-        <button id="backBtn" style="color:#86868B; font-size:14px; font-weight:500; background:none; border:none; cursor:pointer; padding:8px; visibility:hidden;">
-          ← Back
-        </button>
-        <button id="nextBtn" style="display:inline-flex; align-items:center; gap:8px; background:#0066cc; color:#ffffff; font-weight:600; font-size:16px; padding:14px 28px; border-radius:980px; border:none; cursor:pointer; transition:background 0.2s;">
-          <span id="nextBtnText">Next: Watch AI investigate</span>
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      <div class="demo-nav">
+        <button class="btn-back" id="backBtn" onclick="go(-1)">← Back</button>
+        <button class="btn-next" id="nextBtn" onclick="go(1)">
+          <span id="nextLabel">Next: AI investigates</span>
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ SECOND BOOK-A-CALL CTA ============ -->
-<section style="background:#1a2e4a; padding:64px 24px; text-align:center;">
-  <div style="max-width:640px; margin:0 auto;">
-    <h2 class="display-md" style="color:#ffffff; margin-bottom:12px;">Seen enough? Let's make it yours.</h2>
-    <p style="color:rgba(255,255,255,0.6); font-size:18px; margin-bottom:36px; line-height:1.5;">
-      Book a 15-min call. We'll show you exactly which agent solves your biggest bottleneck.
+<!-- ═══ SECOND BOOK CTA ══════════════════════════════ -->
+<section class="section section-navy text-center">
+  <div class="wrap-sm">
+    <div class="urgency-band" style="max-width:480px;margin:0 auto 28px;">
+      <span class="urgency-dot"></span>
+      We take 4–6 demo calls per month. Spots fill fast.
+    </div>
+    <h2 class="h2" style="color:#fff;">Seen enough? Let's run it on your portfolio.</h2>
+    <p class="sub-hero mt12" style="max-width:440px;margin-left:auto;margin-right:auto;">
+      15 minutes. No deck. No prep. Just Hari and the live agent.
     </p>
-    <div class="book-btn-wrap">
-      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+    <div class="mt32" style="display:flex;justify-content:center;">
+      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td align="center" bgcolor="#0066cc" style="border-radius:10px; mso-padding-alt:0; padding:0;">
+          <td align="center" bgcolor="#0066cc" style="border-radius:10px;mso-padding-alt:0;padding:0;">
             <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-               target="_blank"
-               rel="noopener"
-               class="book-btn"
+               target="_blank" rel="noopener"
+               class="btn-book btn-book-lg"
                data-cta="book"
-               onclick="trackCta('book')"
-               style="background:#0066cc; color:#ffffff !important; font-size:19px; padding:18px 44px;">
+               onclick="track('book')">
               Book a 15-min walkthrough &nbsp;→
             </a>
           </td>
         </tr>
       </table>
     </div>
-    <p style="margin-top:14px; font-size:13px; color:rgba(255,255,255,0.4);">No credit card · No commitment · 15 minutes</p>
+    <p style="font-size:13px;color:rgba(255,255,255,.35);margin-top:12px;">Opens Google Calendar · $0 cost · Cancel anytime</p>
   </div>
 </section>
 
-<!-- ============ SECONDARY CTA — EMAIL CAPTURE (below fold) ============ -->
-<section style="background:#f0f4f8; padding:56px 24px;" id="case-study">
-  <div style="max-width:520px; margin:0 auto; text-align:center;">
-    <div class="section-rule" style="margin-left:auto; margin-right:auto;"></div>
-    <h3 style="font-size:22px; font-weight:600; color:#1a2e4a; margin-bottom:8px;">Not ready yet?</h3>
-    <p style="color:#6E6E73; font-size:16px; margin-bottom:28px;">Send me the UpneX case study — real numbers, real portfolios.</p>
+<!-- ═══ SECONDARY — EMAIL FORM ═══════════════════════ -->
+<section class="section section-gray" id="case-study">
+  <div class="wrap-sm">
+    <div class="text-center" style="margin-bottom:28px;">
+      <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+      <h2 class="h2">Not ready for a call yet?</h2>
+      <p class="sub mt8">Drop your info — I'll send you the full UpneX case study with real numbers.</p>
+    </div>
 
-    <div id="formCard" class="card-soft" style="padding:28px; text-align:left;">
-      <!-- Step 1: Form -->
+    <div class="form-wrap">
+      <!-- Step 1: form -->
       <div id="formStep1">
-        <form id="leadForm" style="display:flex; flex-direction:column; gap:14px;">
-          <div>
-            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Your Name</label>
-            <input type="text" name="name" required class="input" placeholder="Full name" />
-          </div>
-          <div>
-            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Work Email</label>
-            <input type="email" name="email" required class="input" placeholder="you@company.com" />
-          </div>
-          <div>
-            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Phone</label>
-            <input type="tel" name="phone" required class="input" placeholder="Phone number" />
-          </div>
-          <div>
-            <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px; color:#1D1D1F;">Portfolio Size</label>
-            <select name="portfolio" required class="input">
-              <option value="">Select range…</option>
-              <option value="0-200">0–200 units</option>
-              <option value="201-500">201–500 units</option>
-              <option value="501-1000">501–1,000 units</option>
-              <option value="1001-2000">1,001–2,000 units</option>
-              <option value="2000+">2,000+ units</option>
-            </select>
+        <form id="leadForm" style="display:flex;flex-direction:column;gap:16px;">
+          <div class="form-grid">
+            <div class="form-field">
+              <label class="form-label" for="f-name">Your Name</label>
+              <input id="f-name" class="form-input" type="text" name="name" required placeholder="Full name" />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="f-email">Work Email</label>
+              <input id="f-email" class="form-input" type="email" name="email" required placeholder="you@company.com" />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="f-phone">Phone</label>
+              <input id="f-phone" class="form-input" type="tel" name="phone" required placeholder="+1 (000) 000-0000" />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="f-portfolio">Portfolio Size</label>
+              <select id="f-portfolio" class="form-input" name="portfolio" required>
+                <option value="">Select…</option>
+                <option value="0-50">Under 50 units</option>
+                <option value="50-200">50–200 units</option>
+                <option value="200-500">200–500 units</option>
+                <option value="500-1000">500–1,000 units</option>
+                <option value="1000+">1,000+ units</option>
+              </select>
+            </div>
           </div>
           <button type="submit"
+                  class="btn-secondary"
                   data-cta="email"
-                  onclick="trackCta('email')"
-                  style="display:flex; align-items:center; justify-content:center; gap:8px; background:#1a2e4a; color:#ffffff; font-weight:600; font-size:15px; padding:14px 24px; border-radius:980px; border:none; cursor:pointer; margin-top:4px; transition:background 0.2s;"
-                  onmouseover="this.style.background='#0f1e32'" onmouseout="this.style.background='#1a2e4a'">
+                  onclick="track('email')">
             Send Me the Case Study →
           </button>
-          <p style="font-size:12px; color:#86868B; text-align:center;">No spam. Unsubscribe anytime.</p>
+          <p class="form-privacy">Your info stays private. No spam, ever.</p>
         </form>
       </div>
 
-      <!-- Step 2: Sending / Thank you -->
-      <div id="formStep2" style="display:none; text-align:center; padding:24px 0;">
+      <!-- Step 2: sending / success -->
+      <div id="formStep2" style="display:none;text-align:center;padding:20px 0;">
         <div id="sendingState">
-          <div class="spinner-lg" style="margin-bottom:20px;"></div>
-          <p style="font-weight:600; font-size:17px; color:#1D1D1F; margin-bottom:6px;">Sending…</p>
-          <p style="color:#86868B; font-size:14px;">Just a sec.</p>
+          <div class="spinner" style="margin-bottom:16px;"></div>
+          <p style="font-weight:600;color:var(--navy);">Sending…</p>
         </div>
         <div id="successState" style="display:none;">
-          <div style="width:56px; height:56px; border-radius:50%; background:#e8f0fe; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
-            <svg width="28" height="28" fill="none" stroke="#0066cc" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <div class="success-icon">
+            <svg width="26" height="26" fill="none" stroke="#0066cc" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h3 style="font-size:20px; font-weight:600; color:#1D1D1F; margin-bottom:6px;">You're in<span id="capturedName"></span>!</h3>
-          <p style="color:#86868B; font-size:14px; margin-bottom:24px;">Case study on its way. Check your inbox.</p>
-          <div style="background:#f0f4f8; border-radius:14px; padding:18px;">
-            <p style="font-weight:600; font-size:15px; color:#1a2e4a; margin-bottom:6px;">Want to talk sooner?</p>
-            <p style="font-size:13px; color:#6E6E73; margin-bottom:14px;">Book a 15-min call directly with Hari.</p>
+          <h3 class="h3">Done<span id="capturedName"></span>!</h3>
+          <p class="sub mt8">Case study on its way — check your inbox in a few minutes.</p>
+          <div style="background:var(--gray);border-radius:12px;padding:20px;margin-top:20px;">
+            <p style="font-weight:700;color:var(--navy);font-size:15px;margin-bottom:6px;">Ready to see it live?</p>
+            <p class="sub" style="font-size:13px;margin-bottom:14px;">Book a 15-min call while you have the momentum.</p>
             <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
                target="_blank" rel="noopener"
+               class="btn-book"
                id="bookCallBtn"
                data-cta="book"
-               onclick="trackCta('book')"
-               style="display:inline-flex; align-items:center; gap:6px; background:#0066cc; color:#ffffff; font-weight:600; font-size:14px; padding:12px 22px; border-radius:980px; text-decoration:none; transition:background 0.2s;">
-              📅 Book a Call Now
+               onclick="track('book')"
+               style="display:inline-flex;align-items:center;gap:6px;padding:12px 24px;font-size:14px;">
+              📅 &nbsp;Book a Call Now
             </a>
-          </div>
-          <div id="bookedConfirm" style="display:none; margin-top:12px; font-size:13px; color:#0066cc; font-weight:500;">
-            ✓ Calendar opened — see you on the call!
           </div>
         </div>
       </div>
@@ -660,289 +705,219 @@ src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
-<footer style="background:#1a2e4a; border-top:1px solid rgba(255,255,255,0.08); padding:48px 24px;">
-  <div style="max-width:1100px; margin:0 auto;">
-    <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; align-items:flex-start; margin-bottom:32px;">
-      <div style="max-width:280px;">
-        <div style="color:#ffffff; font-weight:700; font-size:17px; margin-bottom:8px;">UpneX</div>
-        <p style="color:rgba(255,255,255,0.5); font-size:14px; line-height:1.6;">AI-powered property management back-office. Operated from India, aligned to US hours.</p>
+<!-- ═══ FOOTER ═══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">UpneX</div>
+        <p class="footer-sub">AI-powered property management back-office. Operated from India, aligned to US hours.</p>
       </div>
-      <div style="display:flex; gap:40px; flex-wrap:wrap;">
+      <div class="footer-links">
         <div>
-          <div style="color:rgba(255,255,255,0.35); font-size:11px; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:10px;">Contact</div>
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <a href="mailto:hari@upnexs.com" style="color:rgba(255,255,255,0.65); font-size:14px; text-decoration:none; transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">hari@upnexs.com</a>
-            <a href="https://wa.me/13303385146" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.65); font-size:14px; text-decoration:none;">+1 (330) 338-5146</a>
-          </div>
+          <div class="footer-col-label">Contact</div>
+          <a href="mailto:hari@upnexs.com" class="footer-link">hari@upnexs.com</a>
+          <a href="https://wa.me/13303385146" target="_blank" rel="noopener" class="footer-link">+1 (330) 338-5146</a>
         </div>
         <div>
-          <div style="color:rgba(255,255,255,0.35); font-size:11px; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:10px;">US Office</div>
-          <p style="color:rgba(255,255,255,0.65); font-size:14px; line-height:1.6;">PO Box 350<br>Metuchen, NJ 08840</p>
+          <div class="footer-col-label">US Office</div>
+          <p class="footer-link" style="cursor:default;pointer-events:none;">PO Box 350<br>Metuchen, NJ 08840</p>
         </div>
       </div>
     </div>
-    <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:16px; color:rgba(255,255,255,0.3); font-size:12px;">
-      © 2026 UpneX Solutions OPC Pvt. Ltd. All rights reserved.
-    </div>
+    <p class="footer-copy">© 2026 UpneX Solutions OPC Pvt. Ltd. All rights reserved.</p>
   </div>
 </footer>
 
-<!-- ============ STICKY MOBILE CTA ============ -->
-<div id="stickyCta" class="sticky-cta">
+<!-- ═══ STICKY MOBILE BOOK BAR ═══════════════════════ -->
+<div class="sticky-bar" id="stickyBar">
   <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
      target="_blank" rel="noopener"
+     class="btn-book btn-book-full"
      data-cta="book"
-     onclick="trackCta('book')"
-     style="display:flex; align-items:center; justify-content:center; gap:8px; background:#0066cc; color:#ffffff; font-weight:700; font-size:16px; padding:14px 24px; border-radius:980px; text-decoration:none; width:100%; box-sizing:border-box;">
+     onclick="track('book')"
+     style="font-size:16px;padding:16px;">
     Book a 15-min walkthrough →
   </a>
 </div>
 
+<!-- ═══ SCRIPTS ═══════════════════════════════════════ -->
 <script>
-// ============== CTA TRACKING ==============
-function trackCta(type) {
-  console.log('[UpneX] CTA click:', type);
-  if (window.fbq) { fbq('track', type === 'book' ? 'Schedule' : 'Lead'); }
-  if (window.gtag) { gtag('event', type === 'book' ? 'book_click' : 'email_submit', { event_category: 'cta' }); }
+// ── CTA tracking ─────────────────────────────────────
+function track(type) {
+  if (window.fbq) fbq('track', type === 'book' ? 'Schedule' : 'Lead');
+  console.log('[UpneX] cta:', type);
 }
 
-// ============== EMAILJS CONFIG ==============
-const EMAILJS_CONFIG = {
-  publicKey:  'cQAXNRskNvru4mu4j',
-  serviceId:  'service_vhcikjr',
-  templateId: 'template_ymh1gz9',
-};
-const CALENDAR_URL = 'https://calendar.app.google/9qmnLSzNejCwGSkcA';
+// ── Sticky bar ────────────────────────────────────────
+const stickyBar = document.getElementById('stickyBar');
+window.addEventListener('scroll', () => {
+  stickyBar.classList.toggle('show', window.scrollY > 300);
+}, { passive: true });
 
-if (window.emailjs && EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY_HERE') {
-  emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+// ── EmailJS ───────────────────────────────────────────
+const EJSCFG = { pub: 'cQAXNRskNvru4mu4j', svc: 'service_vhcikjr', tpl: 'template_ymh1gz9' };
+if (window.emailjs) emailjs.init({ publicKey: EJSCFG.pub });
+
+function sendLead(data) {
+  return new Promise(resolve => {
+    if (!window.emailjs) return resolve(false);
+    const ts = new Date().toLocaleString();
+    emailjs.send(EJSCFG.svc, EJSCFG.tpl, {
+      name: data.name, email: data.email, time: ts,
+      from_name: data.name, from_email: data.email,
+      phone: data.phone, portfolio: data.portfolio, timestamp: ts,
+      subject: `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
+      message: `New lead from upnexs.com/demo/\n\nName: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nPortfolio: ${data.portfolio}\nTime: ${ts}`,
+    }).then(() => resolve(true)).catch(() => resolve(false));
+  });
 }
 
-// ============== SCENARIO DATA ==============
-const scenarios = {
+const leadForm  = document.getElementById('leadForm');
+const fStep1    = document.getElementById('formStep1');
+const fStep2    = document.getElementById('formStep2');
+const sendingEl = document.getElementById('sendingState');
+const successEl = document.getElementById('successState');
+
+leadForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(leadForm));
+  document.getElementById('capturedName').textContent = data.name ? `, ${data.name.split(' ')[0]}` : '';
+  fStep1.style.display = 'none';
+  fStep2.style.display = 'block';
+  sendingEl.style.display = 'block';
+  successEl.style.display = 'none';
+  Promise.all([sendLead(data), new Promise(r => setTimeout(r, 1400))]).then(() => {
+    sendingEl.style.display = 'none';
+    successEl.style.display = 'block';
+  });
+});
+
+// ── Scenario data ─────────────────────────────────────
+const S = {
   ac: {
-    apt:'Apt 112',time:'2:18 PM',msg:'AC broken 🥵 95° in here',
-    checks:['Read message · 0.2s','Weather pulled: 95°F today','Lease checked: family + infant noted','History: 2nd HVAC issue this month'],
-    urgency:{text:'URGENT — health risk',cls:'urgent'},
-    vendor:{name:'CoolPro HVAC',meta:'4.8★ · 24-hr emergency · 1.2mi away'},
-    sms:'"Hi CoolPro — urgent: AC out at Unit 112, family w/ infant inside. Owner pre-approved after-hours rate. Need ETA. Full address sent separately."',
-    reply:'On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours rate approved. Work order #4837 logged. Stay cool — message me if anything changes.',
-    wo:{id:'WO-4837',meta:'Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs',secs:'14 seconds'}
+    meta:'Apt 112 · 2:18 PM', msg:'AC broken 🥵 95° in here',
+    checks:['Read message · 0.2s','Weather: 95°F today confirmed','Lease: family with infant noted','History: 2nd HVAC call this month'],
+    badge:{t:'URGENT — health risk',c:'badge-urgent'},
+    vendor:'CoolPro HVAC', vmeta:'4.8★ · 24-hr emergency · 1.2mi',
+    sms:'"Hi CoolPro — urgent: AC out, Unit 112, family with infant. Owner pre-approved after-hours rate. Need ETA ASAP."',
+    reply:'On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours approved. Work order #4837 logged. Stay cool — text me if anything changes.',
+    id:'WO-4837', imeta:'Unit 112 · URGENT · CoolPro · ETA 2hrs', time:'14 seconds',
   },
   leak: {
-    apt:'Apt 304',time:'11:42 PM',msg:'sink leaking bad pls help',
-    checks:['Read message · 0.2s','Last maintenance: garbage disposal, 3mo ago','Lease verified: tenant in good standing','Severity: water damage risk flagged'],
-    urgency:{text:'URGENT — property damage risk',cls:'urgent'},
-    vendor:{name:'Acme Plumbing',meta:'4.9★ · 24/7 emergency · 2.0mi away'},
-    sms:'"Hi Acme — urgent: sink leak, Apt 304, active water damage risk. Need someone in 45min. Full address sent separately."',
-    reply:'Got it — Acme Plumbing on the way, ETA 45min. Here\'s the shut-off valve guide in your portal. Work order #4821 logged. Stay safe — message back if it gets worse.',
-    wo:{id:'WO-4821',meta:'Apt 304 · URGENT · Acme Plumbing · ETA 45min',secs:'12 seconds'}
+    meta:'Apt 304 · 11:42 PM', msg:'sink leaking bad pls help',
+    checks:['Read message · 0.2s','History: disposal repair 3mo ago','Lease: tenant in good standing','Severity: active water damage risk'],
+    badge:{t:'URGENT — water damage risk',c:'badge-urgent'},
+    vendor:'Acme Plumbing', vmeta:'4.9★ · 24/7 emergency · 2.0mi',
+    sms:'"Hi Acme — urgent: active sink leak, Apt 304, water damage risk. Need someone in 45min. Full address sent separately."',
+    reply:'Got it — Acme Plumbing on the way, ETA 45min. Shut-off valve guide in your portal. Work order #4821 logged. Text me if it gets worse.',
+    id:'WO-4821', imeta:'Apt 304 · URGENT · Acme Plumbing · ETA 45min', time:'12 seconds',
   },
   lockout: {
-    apt:'Apt 207',time:'9:30 AM',msg:'locked out 207',
-    checks:['Read message · 0.2s','Identity verified via phone match','Lease check: active, no fees owed','Fee policy: $85 lockout per Section 6.1'],
-    urgency:{text:'URGENT — tenant access',cls:'urgent'},
-    vendor:{name:'SafeKey Locksmith',meta:'4.7★ · 30min radius · $85 standard'},
-    sms:'"Hi SafeKey — lockout at Apt 207. Tenant identity verified. Standard $85 fee. Need ETA. Address sent separately."',
-    reply:'Lease verified — SafeKey Locksmith on the way, ETA 30min. $85 lockout fee added to your account per Section 6.1. Work order #4842 logged. Hang tight!',
-    wo:{id:'WO-4842',meta:'Apt 207 · URGENT · SafeKey · ETA 30min',secs:'11 seconds'}
+    meta:'Apt 207 · 9:30 AM', msg:'locked out 207',
+    checks:['Read message · 0.2s','Identity: verified via phone match','Lease: active, no balance owed','Policy: $85 fee per Section 6.1'],
+    badge:{t:'URGENT — tenant locked out',c:'badge-urgent'},
+    vendor:'SafeKey Locksmith', vmeta:'4.7★ · 30-min radius · $85 flat',
+    sms:'"Hi SafeKey — lockout at Apt 207, identity verified. Standard $85 fee. Need ETA. Address sent."',
+    reply:'Verified — SafeKey on the way, ETA 30min. $85 lockout fee added per Section 6.1. Work order #4842 logged. Hang tight!',
+    id:'WO-4842', imeta:'Apt 207 · URGENT · SafeKey · ETA 30min', time:'11 seconds',
   },
   bulb: {
-    apt:'Apt 415',time:'4:05 PM',msg:'kitchen light out',
-    checks:['Read message · 0.2s','Lease check: bulbs are tenant-replaceable','Self-help video found in library','Auto-classified as routine'],
-    urgency:{text:'ROUTINE — self-resolvable',cls:'routine'},
-    vendor:{name:'No vendor needed',meta:'Self-help video sent · auto-close enabled'},
-    sms:'(No dispatch — tenant self-resolve recommended. $0 cost.)',
-    reply:'Kitchen bulbs are tenant-replaceable per lease Section 4.2. Here\'s a 30-second swap video in your portal. Reply \'still broken\' and I\'ll send someone same-day at no charge.',
-    wo:{id:'AUTO-CLOSED',meta:'Apt 415 · Self-resolved · $0 vendor cost',secs:'8 seconds'}
+    meta:'Apt 415 · 4:05 PM', msg:'kitchen light out',
+    checks:['Read message · 0.2s','Lease: bulbs are tenant-replaceable','Self-help video found in library','Classified: routine / self-resolve'],
+    badge:{t:'ROUTINE — self-resolvable',c:'badge-routine'},
+    vendor:'No vendor needed', vmeta:'Self-help video sent · $0 cost',
+    sms:'(No dispatch — tenant self-resolve path triggered. $0 cost.)',
+    reply:"Bulbs in your unit are tenant-replaceable per lease Section 4.2. Here's a 30-sec swap video in your portal. Reply 'still broken' and I'll send someone same-day at no charge.",
+    id:'AUTO-CLOSED', imeta:'Apt 415 · Self-resolved · $0 vendor cost', time:'8 seconds',
   },
   application: {
-    apt:'New lead',time:'10:14 AM',msg:'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
-    checks:['Read inquiry · 0.3s','Income vs rent: $82k ÷ $1,950 = 3.5x ✓ (target 3x)','Soft credit pulled: 728 FICO ✓','Prior landlord check: 24 mo, no late payments ✓'],
-    urgency:{text:'QUALIFIED — score 88/100',cls:'routine'},
-    vendor:{name:'Tour booked · Saturday 11am',meta:'Calendar synced · application link sent'},
-    sms:'"Hi — pre-screen passed for 312 Maple. Tour booked Sat 11am. Application + lease draft in your inbox. ID + paystub upload required before tour."',
-    reply:'Great news — you pre-qualified for 312 Maple St (score 88/100). Tour booked Saturday at 11am. Check your email for the full application + lease draft. Bring photo ID + 2 recent paystubs to the tour.',
-    wo:{id:'LEAD-2034',meta:'312 Maple St · Score 88 · Tour Sat 11am',secs:'22 seconds'}
-  }
+    meta:'New lead · 10:14 AM', msg:'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
+    checks:['Read inquiry · 0.3s','Income check: $82k ÷ $1,950 = 3.5× ✓','Soft credit: 728 FICO ✓','Landlord history: 24mo, zero late payments ✓'],
+    badge:{t:'QUALIFIED — score 88/100',c:'badge-routine'},
+    vendor:'Tour booked · Sat 11am', vmeta:'Calendar synced · application link sent',
+    sms:'"Pre-screen passed for 312 Maple. Tour confirmed Sat 11am. Application + lease draft in inbox. ID + paystubs required before tour."',
+    reply:'Great news — you pre-qualified (score 88/100). Tour: Saturday 11am. Check your email for the full application + lease draft. Bring photo ID + 2 recent paystubs.',
+    id:'LEAD-2034', imeta:'312 Maple St · Score 88 · Tour Sat 11am', time:'22 seconds',
+  },
 };
 
-const nextLabels = [
+const NEXT_LABELS = [
   'Next: Watch AI investigate',
-  'Next: See vendor picked',
+  'Next: See vendor dispatched',
   'Next: See tenant reply',
   'Next: See it logged',
-  'Book a call — run this on my portfolio →'
+  'Book a call — run this on my portfolio',
 ];
 
-let state = { scenario:'ac', step:1, totalSteps:5 };
+let cur = 'ac', step = 1;
 
 function renderStep() {
-  const s = scenarios[state.scenario];
-
-  // Progress bar
-  document.querySelectorAll('#progressDots > div').forEach((d, i) => {
-    d.style.background = i < state.step ? '#1a2e4a' : '#F5F5F7';
+  const s = S[cur];
+  // Progress
+  document.querySelectorAll('.demo-progress-bar').forEach((b, i) => {
+    b.style.background = i < step ? 'var(--navy)' : 'var(--line)';
   });
+  document.getElementById('stepCounter').textContent = `Step ${step} of 5`;
 
-  document.getElementById('stepCounter').textContent = `Step ${state.step} of ${state.totalSteps}`;
-
+  // Steps
   document.querySelectorAll('.demo-step').forEach(el => el.classList.add('hidden'));
-  const cur = document.querySelector(`.demo-step[data-step="${state.step}"]`);
-  cur.classList.remove('hidden');
-  cur.style.animation = 'none';
-  void cur.offsetWidth;
-  cur.style.animation = '';
+  const el = document.querySelector(`.demo-step[data-step="${step}"]`);
+  el.classList.remove('hidden');
+  el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
 
-  if (state.step === 1) {
-    document.getElementById('step1Meta').textContent = `${s.apt} · ${s.time}`;
-    document.getElementById('step1Msg').textContent = s.msg;
-  } else if (state.step === 2) {
-    const el = document.getElementById('step2Checks');
-    el.innerHTML = '';
+  if (step === 1) {
+    document.getElementById('s1meta').textContent = s.meta;
+    document.getElementById('s1msg').textContent  = s.msg;
+  } else if (step === 2) {
+    const cl = document.getElementById('s2checks');
+    cl.innerHTML = '';
     s.checks.forEach((c, i) => {
-      const item = document.createElement('div');
-      item.className = 'check-item';
-      item.style.animationDelay = `${i*180}ms`;
-      item.innerHTML = `<div class="check-icon"><svg fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>${c}</span>`;
-      el.appendChild(item);
+      const d = document.createElement('div');
+      d.className = 'check-row';
+      d.style.animationDelay = `${i * 170}ms`;
+      d.innerHTML = `<div class="check-dot"><svg fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>${c}</span>`;
+      cl.appendChild(d);
     });
-    const resultEl = document.getElementById('step2Result');
-    resultEl.innerHTML = `<div class="urgency-pill ${s.urgency.cls}" style="opacity:0;transition:opacity 0.4s;">${s.urgency.text}</div>`;
-    setTimeout(() => { resultEl.querySelector('.urgency-pill').style.opacity='1'; }, s.checks.length*180+200);
-  } else if (state.step === 3) {
-    document.getElementById('step3Vendor').textContent = s.vendor.name;
-    document.getElementById('step3VendorMeta').textContent = s.vendor.meta;
-    document.getElementById('step3Sms').textContent = s.sms;
-  } else if (state.step === 4) {
-    document.getElementById('step4Meta').textContent = `UpneX AI · ${s.time}`;
-    document.getElementById('step4Reply').textContent = s.reply;
-  } else if (state.step === 5) {
-    document.getElementById('step5WoId').textContent = s.wo.id;
-    document.getElementById('step5WoMeta').textContent = s.wo.meta;
-    document.getElementById('step5Time').textContent = s.wo.secs;
+    const bEl = document.getElementById('s2badge');
+    bEl.innerHTML = `<span class="badge ${s.badge.c}" style="opacity:0;transition:opacity .4s;">${s.badge.t}</span>`;
+    setTimeout(() => bEl.querySelector('.badge').style.opacity = '1', s.checks.length * 170 + 200);
+  } else if (step === 3) {
+    document.getElementById('s3vendor').textContent = s.vendor;
+    document.getElementById('s3meta').textContent   = s.vmeta;
+    document.getElementById('s3sms').textContent    = s.sms;
+  } else if (step === 4) {
+    document.getElementById('s4meta').textContent  = `UpneX AI · ${s.meta.split(' · ')[1]}`;
+    document.getElementById('s4reply').textContent = s.reply;
+  } else if (step === 5) {
+    document.getElementById('s5id').textContent   = s.id;
+    document.getElementById('s5meta').textContent = s.imeta;
+    document.getElementById('s5time').textContent = s.time;
   }
 
-  const backBtn = document.getElementById('backBtn');
-  backBtn.style.visibility = state.step === 1 ? 'hidden' : 'visible';
-
-  const nextBtn = document.getElementById('nextBtn');
-  const nextText = nextLabels[state.step - 1];
-  document.getElementById('nextBtnText').textContent = nextText;
-  nextBtn.dataset.action = state.step === state.totalSteps ? 'cta' : 'next';
+  document.getElementById('backBtn').style.visibility = step === 1 ? 'hidden' : 'visible';
+  document.getElementById('nextLabel').textContent = NEXT_LABELS[step - 1];
+  document.getElementById('nextBtn').dataset.action = step === 5 ? 'book' : 'next';
 
   const dd = document.getElementById('scenarioSelect');
-  if (dd && dd.value !== state.scenario) dd.value = state.scenario;
+  if (dd.value !== cur) dd.value = cur;
 }
 
-document.getElementById('nextBtn').addEventListener('click', (e) => {
-  if (e.currentTarget.dataset.action === 'cta') {
-    trackCta('book');
-    window.open(CALENDAR_URL, '_blank', 'noopener');
-  } else if (state.step < state.totalSteps) {
-    state.step++;
-    renderStep();
+function go(dir) {
+  if (document.getElementById('nextBtn').dataset.action === 'book' && dir === 1) {
+    track('book');
+    window.open('https://calendar.app.google/9qmnLSzNejCwGSkcA', '_blank', 'noopener');
+    return;
   }
-});
-
-document.getElementById('backBtn').addEventListener('click', () => {
-  if (state.step > 1) { state.step--; renderStep(); }
-});
-
-document.getElementById('scenarioSelect').addEventListener('change', (e) => {
-  state.scenario = e.target.value;
-  state.step = 1;
+  step = Math.min(5, Math.max(1, step + dir));
   renderStep();
+}
+
+document.getElementById('scenarioSelect').addEventListener('change', e => {
+  cur = e.target.value; step = 1; renderStep();
 });
 
 renderStep();
-
-// ============== SCROLL REVEAL ==============
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// ============== FORM → EMAIL → CALENDAR ==============
-const form = document.getElementById('leadForm');
-const formStep1 = document.getElementById('formStep1');
-const formStep2 = document.getElementById('formStep2');
-const sendingState = document.getElementById('sendingState');
-const successState = document.getElementById('successState');
-
-function sendLeadEmail(data) {
-  return new Promise((resolve) => {
-    const configured =
-      window.emailjs &&
-      EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY_HERE' &&
-      EMAILJS_CONFIG.serviceId !== 'YOUR_SERVICE_ID_HERE' &&
-      EMAILJS_CONFIG.templateId !== 'YOUR_TEMPLATE_ID_HERE';
-
-    if (!configured) { console.warn('[UpneX] EmailJS not configured:', data); return resolve(false); }
-
-    const timestamp = new Date().toLocaleString();
-    const messageBody =
-      `🔔 New lead from upnexs.com/demo/\n\n` +
-      `Name:           ${data.name}\n` +
-      `Email:          ${data.email}\n` +
-      `Phone:          ${data.phone}\n` +
-      `Portfolio Size: ${data.portfolio} units\n` +
-      `Submitted:      ${timestamp}\n\n` +
-      `Reply to this email to respond directly.`;
-
-    const params = {
-      name: data.name, email: data.email, time: timestamp, message: messageBody,
-      from_name: data.name, from_email: data.email, phone: data.phone,
-      portfolio: data.portfolio, timestamp: timestamp,
-      subject: `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
-    };
-
-    emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params)
-      .then(() => { console.log('[UpneX] Lead email sent ✓'); resolve(true); })
-      .catch((err) => { console.error('[UpneX] EmailJS error:', err); resolve(false); });
-  });
-}
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(form));
-  console.log('[UpneX] Lead captured:', data);
-
-  document.getElementById('capturedName').textContent = data.name ? `, ${data.name.split(' ')[0]}` : '';
-  formStep1.style.display = 'none';
-  formStep2.style.display = 'block';
-  sendingState.style.display = 'block';
-  successState.style.display = 'none';
-
-  const emailPromise = sendLeadEmail(data);
-  const holdPromise = new Promise((r) => setTimeout(r, 1500));
-
-  Promise.all([emailPromise, holdPromise]).then(() => {
-    sendingState.style.display = 'none';
-    successState.style.display = 'block';
-  });
-});
-
-const bookCallBtn = document.getElementById('bookCallBtn');
-if (bookCallBtn) {
-  bookCallBtn.addEventListener('click', () => {
-    setTimeout(() => {
-      const confirm = document.getElementById('bookedConfirm');
-      if (confirm) confirm.style.display = 'block';
-    }, 600);
-  });
-}
-
-// ============== STICKY CTA ==============
-const stickyCta = document.getElementById('stickyCta');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) stickyCta.classList.add('visible');
-  else stickyCta.classList.remove('visible');
-}, { passive: true });
 </script>
-
 </body>
 </html>
