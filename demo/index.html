@@ -244,239 +244,123 @@ select.field-input option{background:#1a2e4a;color:#fff;}
 /* ═══ RIGHT PANEL ════════════════════════════ */
 .right-panel{
   display:flex;align-items:center;justify-content:center;
-  padding:32px 40px 32px 24px;
+  padding:32px 56px 32px 24px;
   position:relative;overflow:hidden;
 }
-
-/* Ambient glow behind card */
-.glow{
+.rp-glow{
   position:absolute;
-  width:500px;height:500px;
-  background:radial-gradient(ellipse,rgba(0,102,204,0.18) 0%,transparent 70%);
+  width:560px;height:560px;
+  background:radial-gradient(ellipse,rgba(0,102,204,0.14) 0%,transparent 65%);
   border-radius:50%;pointer-events:none;
   top:50%;left:50%;transform:translate(-50%,-50%);
-  animation:glow-pulse 4s ease-in-out infinite;
-}
-@keyframes glow-pulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
-
-/* Perspective wrapper */
-.perspective-wrap{
-  perspective:1400px;
-  width:100%;max-width:560px;
-  position:relative;
 }
 
-/* THE 3D CARD */
-.demo-3d{
-  background:linear-gradient(145deg,#111d30 0%,#0d1726 60%,#091220 100%);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:20px;
-  overflow:hidden;
-  transform:rotateY(-18deg) rotateX(6deg) translateZ(0);
-  transform-style:preserve-3d;
-  transition:transform .5s cubic-bezier(.16,1,.3,1);
+/* Stack wrapper — origin for floating badge */
+.agent-stack{position:relative;width:100%;max-width:440px;}
+
+/* Main conversation card */
+.agent-card{
+  background:linear-gradient(160deg,#141f33 0%,#0d1726 100%);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:18px;overflow:hidden;
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.05),
-    30px 30px 80px rgba(0,0,0,0.7),
-    60px 60px 120px rgba(0,0,0,0.4),
-    -10px -10px 40px rgba(0,102,204,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-  animation:float 7s ease-in-out infinite;
-  will-change:transform;
+    inset 0 1px 0 rgba(255,255,255,0.07),
+    0 28px 70px rgba(0,0,0,0.55),
+    0 8px 20px rgba(0,0,0,0.3);
 }
-@keyframes float{
-  0%,100%{transform:rotateY(-18deg) rotateX(6deg) translateY(0);}
-  50%{transform:rotateY(-18deg) rotateX(6deg) translateY(-14px);}
-}
-.demo-3d.no-anim{animation:none;}
-
-/* Window chrome */
-.win-chrome{
-  display:flex;align-items:center;gap:0;
-  padding:14px 16px;
-  background:rgba(255,255,255,0.03);
-  border-bottom:1px solid rgba(255,255,255,0.06);
-}
-.win-dots{display:flex;gap:6px;margin-right:14px;}
-.win-dot{width:11px;height:11px;border-radius:50%;}
-.win-dot.r{background:#ff5f57;}
-.win-dot.y{background:#febc2e;}
-.win-dot.g{background:#28c840;}
-.win-title{
-  flex:1;text-align:center;
-  font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);
-  letter-spacing:.02em;
-}
-.win-live{
-  display:flex;align-items:center;gap:5px;
-  font-size:11px;font-weight:600;color:#22c55e;
-  background:rgba(34,197,94,0.1);
-  border:1px solid rgba(34,197,94,0.2);
-  border-radius:999px;padding:3px 9px;
-}
-
-/* Scenario tabs */
-.scenario-tabs{
-  display:flex;gap:6px;padding:12px 14px;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-  overflow-x:auto;scrollbar-width:none;
-}
-.scenario-tabs::-webkit-scrollbar{display:none;}
-.stab{
-  padding:5px 10px;border-radius:6px;
-  font-size:11px;font-weight:600;cursor:pointer;
-  background:transparent;border:1px solid rgba(255,255,255,0.07);
-  color:rgba(255,255,255,0.35);
-  transition:all .2s;white-space:nowrap;
-}
-.stab:hover{border-color:rgba(0,102,204,.4);color:rgba(255,255,255,.6);}
-.stab.active{
-  background:rgba(0,102,204,0.2);
-  border-color:rgba(0,102,204,0.5);
-  color:#60a5fa;
-}
-
-/* Progress track */
-.progress-track{
-  display:flex;gap:4px;padding:12px 14px 8px;
-}
-.progress-seg{
-  flex:1;height:2px;border-radius:999px;
-  background:rgba(255,255,255,0.08);
-  transition:background .4s;
-}
-.progress-seg.done{background:#0066cc;}
-
-/* Step area */
-.step-area{
-  padding:14px 16px 10px;
-  min-height:260px;
-}
-.step-slide{
-  animation:slide-in .35s cubic-bezier(.16,1,.3,1);
-}
-.step-slide.hidden{display:none;}
-@keyframes slide-in{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-
-/* Step header */
-.step-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(0,102,204,0.15);border:1px solid rgba(0,102,204,0.25);
-  border-radius:6px;padding:3px 8px;
-  font-size:10px;font-weight:700;color:#60a5fa;
-  letter-spacing:.06em;text-transform:uppercase;
-  margin-bottom:10px;
-}
-.step-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-0.02em;}
-.step-sub{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:14px;}
-
-/* Tenant message */
-.msg-time{font-size:10px;color:rgba(255,255,255,0.25);font-family:monospace;margin-bottom:6px;}
-.bubble-in{
-  display:inline-block;max-width:80%;
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px 16px 16px 4px;
-  padding:10px 14px;font-size:14px;color:#fff;line-height:1.4;
-}
-.bubble-out{
-  display:inline-block;max-width:80%;
-  background:linear-gradient(135deg,#0066cc,#0052a3);
-  border-radius:16px 16px 4px 16px;
-  padding:10px 14px;font-size:13px;color:#fff;line-height:1.4;
-  margin-left:auto;
-  box-shadow:0 4px 16px rgba(0,102,204,0.3);
-}
-.msg-row{display:flex;}
-.msg-row.right{justify-content:flex-end;}
-
-/* Analysis checklist */
-.check-list{display:flex;flex-direction:column;gap:8px;}
-.check-row{
-  display:flex;align-items:center;gap:9px;font-size:13px;color:rgba(255,255,255,0.7);
-  opacity:0;transform:translateX(-6px);animation:slide-check .3s ease forwards;
-}
-@keyframes slide-check{to{opacity:1;transform:translateX(0);}}
-.check-ico{
-  width:18px;height:18px;border-radius:50%;
-  background:linear-gradient(135deg,#0066cc,#60a5fa);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.check-ico svg{width:9px;height:9px;stroke:#fff;stroke-width:3.5;}
-.alert-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;
-  margin-top:10px;opacity:0;transition:opacity .4s;
-}
-.badge-urgent {background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);color:#f87171;}
-.badge-ok     {background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);color:#4ade80;}
-
-/* Vendor card */
-.vendor-card{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:12px;padding:12px;
-  display:flex;align-items:center;gap:12px;
-  margin-bottom:10px;
-}
-.vendor-emoji{font-size:22px;}
-.vendor-name{font-size:14px;font-weight:700;color:#fff;}
-.vendor-meta{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;}
-.dispatched-tag{
-  margin-left:auto;
-  background:rgba(0,102,204,0.2);border:1px solid rgba(0,102,204,0.35);
-  border-radius:999px;padding:4px 10px;
-  font-size:10px;font-weight:700;color:#60a5fa;
-  letter-spacing:.06em;white-space:nowrap;
-}
-.sms-preview{
-  background:rgba(0,102,204,0.08);
-  border:1px solid rgba(0,102,204,0.15);
-  border-radius:10px;padding:10px 12px;
-  font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;
-}
-.sms-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(0,102,204,0.6);margin-bottom:5px;}
-
-/* Log card */
-.log-card{
-  background:linear-gradient(135deg,rgba(0,102,204,0.12),rgba(0,102,204,0.05));
-  border:1px solid rgba(0,102,204,0.2);
-  border-radius:14px;padding:16px;
-}
-.log-id{font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.03em;}
-.log-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;margin-bottom:12px;}
-.log-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:7px 0;border-top:1px solid rgba(255,255,255,0.06);
-  font-size:12px;
-}
-.log-row span:first-child{color:rgba(255,255,255,0.35);}
-.log-row span:last-child{font-family:monospace;font-weight:700;color:#60a5fa;}
-
-/* Demo nav */
-.demo-nav{
+.ac-header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:10px 16px 14px;
-  border-top:1px solid rgba(255,255,255,0.05);
+  padding:14px 18px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.025);
 }
-.btn-back-demo{
-  background:none;border:none;color:rgba(255,255,255,0.25);
-  font-size:13px;font-weight:500;cursor:pointer;padding:6px;
-  visibility:hidden;transition:color .2s;font-family:inherit;
+.ac-brand{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:-0.01em;}
+.ac-live{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;color:#22c55e;
+  background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);
+  border-radius:999px;padding:3px 9px;letter-spacing:.04em;
 }
-.btn-back-demo:hover{color:rgba(255,255,255,.5);}
-.btn-next-demo{
-  display:inline-flex;align-items:center;gap:7px;
-  background:#0066cc;color:#fff;
-  border:none;border-radius:8px;
-  padding:10px 18px;font-size:13px;font-weight:700;
-  cursor:pointer;transition:background .2s,transform .15s;
-  font-family:inherit;
+.ac-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;animation:ping 2s ease-out infinite;}
+.ac-scenario{
+  padding:12px 18px 0;
+  font-size:10px;font-weight:700;
+  color:rgba(255,255,255,0.3);letter-spacing:.06em;text-transform:uppercase;
 }
-.btn-next-demo:hover{background:#0052a3;transform:translateY(-1px);}
+.chat-thread{
+  padding:14px 18px 20px;
+  display:flex;flex-direction:column;gap:10px;
+  min-height:220px;
+}
+.sender-label{
+  font-size:10px;font-weight:600;
+  color:rgba(255,255,255,0.25);letter-spacing:.04em;text-transform:uppercase;
+  margin-bottom:3px;
+}
+.t-bubble{
+  display:inline-block;max-width:85%;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.09);
+  border-radius:14px 14px 14px 3px;
+  padding:10px 14px;font-size:14px;color:#e5e7eb;line-height:1.45;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .4s ease,transform .4s ease;
+}
+.t-bubble.show{opacity:1;transform:none;}
+.typing-ind{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(0,102,204,0.12);border:1px solid rgba(0,102,204,0.2);
+  border-radius:999px;padding:6px 14px;
+  opacity:0;transition:opacity .3s ease;width:fit-content;
+}
+.typing-ind.show{opacity:1;}
+.typing-ind span{
+  width:5px;height:5px;border-radius:50%;background:#60a5fa;
+  animation:td .9s ease-in-out infinite;
+}
+.typing-ind span:nth-child(2){animation-delay:.18s;}
+.typing-ind span:nth-child(3){animation-delay:.36s;}
+@keyframes td{0%,80%,100%{transform:scale(1);opacity:.5}40%{transform:scale(1.3);opacity:1}}
+.typing-label{font-size:11px;color:#60a5fa;font-weight:600;margin-left:4px;}
+.ai-bubble-wrap{display:flex;flex-direction:column;align-items:flex-end;}
+.ai-bubble{
+  display:inline-block;max-width:90%;
+  background:linear-gradient(135deg,#0066cc,#004fa3);
+  border-radius:14px 14px 3px 14px;
+  padding:11px 15px;font-size:13px;color:#fff;line-height:1.5;
+  box-shadow:0 6px 20px rgba(0,102,204,0.35);
+  opacity:0;transform:translateY(8px);
+  transition:opacity .4s ease,transform .4s ease;
+}
+.ai-bubble.show{opacity:1;transform:none;}
+.resolved-row{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);
+  border-radius:8px;padding:8px 12px;
+  opacity:0;transition:opacity .4s ease;width:fit-content;
+}
+.resolved-row.show{opacity:1;}
+.resolved-row span{font-size:12px;font-weight:700;color:#4ade80;}
 
-/* Step counter */
-.step-count{font-size:11px;color:rgba(255,255,255,.2);font-family:monospace;}
+/* Floating stat badge — appears "in front" for depth */
+.stat-badge{
+  position:absolute;bottom:-22px;right:-32px;
+  background:linear-gradient(135deg,#0066cc,#0052a3);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:14px;padding:14px 18px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 20px 50px rgba(0,102,204,0.45),0 6px 16px rgba(0,0,0,0.4);
+  animation:stat-float 5s ease-in-out infinite;
+  z-index:10;min-width:210px;
+}
+@keyframes stat-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.stat-ico{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(255,255,255,0.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.stat-val{font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,0.65);margin-top:2px;line-height:1.3;}
 
 /* ═══ MOBILE STICKY ══════════════════════════ */
 .mobile-sticky{
@@ -593,120 +477,31 @@ select.field-input option{background:#1a2e4a;color:#fff;}
 
   </div><!-- /left-panel -->
 
-  <!-- ── RIGHT: 3D Demo Card ── -->
+  <!-- ── RIGHT: Auto-play Agent Demo ── -->
   <div class="right-panel">
-    <div class="glow"></div>
-    <div class="perspective-wrap" id="perspectiveWrap">
-      <div class="demo-3d" id="card3d">
+    <div class="rp-glow"></div>
+    <div class="agent-stack">
 
-        <!-- Window chrome -->
-        <div class="win-chrome">
-          <div class="win-dots">
-            <span class="win-dot r"></span>
-            <span class="win-dot y"></span>
-            <span class="win-dot g"></span>
-          </div>
-          <div class="win-title">UpneX Agent Dashboard</div>
-          <div class="win-live">
-            <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;"></span>
-            Live
-          </div>
+      <!-- Main chat card -->
+      <div class="agent-card">
+        <div class="ac-header">
+          <span class="ac-brand">UpneX Agent</span>
+          <span class="ac-live"><span class="ac-dot"></span>LIVE</span>
         </div>
+        <div class="ac-scenario" id="acScenario">AC EMERGENCY · APT 112</div>
+        <div class="chat-thread" id="chatThread"></div>
+      </div>
 
-        <!-- Scenario tabs -->
-        <div class="scenario-tabs" id="scenarioTabs">
-          <button class="stab active" data-s="ac" onclick="setScenario('ac')">🥵 AC Emergency</button>
-          <button class="stab" data-s="leak" onclick="setScenario('leak')">💧 Water Leak</button>
-          <button class="stab" data-s="lockout" onclick="setScenario('lockout')">🔑 Lockout</button>
-          <button class="stab" data-s="application" onclick="setScenario('application')">📋 New Lead</button>
-          <button class="stab" data-s="bulb" onclick="setScenario('bulb')">💡 Routine</button>
+      <!-- Floating stat badge -->
+      <div class="stat-badge">
+        <div class="stat-ico" id="statIco">⚡</div>
+        <div>
+          <div class="stat-val" id="statVal">14 sec</div>
+          <div class="stat-lbl" id="statLbl">tenant → vendor dispatched</div>
         </div>
+      </div>
 
-        <!-- Progress -->
-        <div class="progress-track" id="progressTrack">
-          <div class="progress-seg done"></div>
-          <div class="progress-seg"></div>
-          <div class="progress-seg"></div>
-          <div class="progress-seg"></div>
-          <div class="progress-seg"></div>
-        </div>
-
-        <!-- Step content -->
-        <div class="step-area" id="stepArea">
-
-          <!-- STEP 1: Message received -->
-          <div class="step-slide" data-step="1">
-            <div class="step-badge">Step 1 · Tenant sends message</div>
-            <div class="step-title">Request comes in.</div>
-            <div class="step-sub">Real tenants send short, messy texts — not email. The agent reads it instantly.</div>
-            <div class="msg-time" id="s1time">Apt 112 · 2:18 PM</div>
-            <div class="msg-row"><div class="bubble-in" id="s1msg">AC broken 🥵 95° in here</div></div>
-            <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:10px;">↑ That's the entire message. Watch what happens next →</p>
-          </div>
-
-          <!-- STEP 2: AI investigates -->
-          <div class="step-slide hidden" data-step="2">
-            <div class="step-badge">Step 2 · AI investigates</div>
-            <div class="step-title">Reads it. Pulls context.</div>
-            <div class="step-sub">In under a second, the agent checks everything it needs:</div>
-            <div class="check-list" id="s2list"></div>
-            <div id="s2badge" style="margin-top:10px;"></div>
-          </div>
-
-          <!-- STEP 3: Dispatch -->
-          <div class="step-slide hidden" data-step="3">
-            <div class="step-badge">Step 3 · Vendor dispatched</div>
-            <div class="step-title">Picks vendor. Sends job.</div>
-            <div class="step-sub">From your approved list, ranked by rating, distance, and availability.</div>
-            <div class="vendor-card">
-              <div class="vendor-emoji">🔧</div>
-              <div>
-                <div class="vendor-name" id="s3name">CoolPro HVAC</div>
-                <div class="vendor-meta" id="s3meta">4.8★ · 24-hr emergency · 1.2mi away</div>
-              </div>
-              <div class="dispatched-tag">✓ DISPATCHED</div>
-            </div>
-            <div class="sms-label">SMS sent to vendor</div>
-            <div class="sms-preview" id="s3sms"></div>
-          </div>
-
-          <!-- STEP 4: Tenant reply -->
-          <div class="step-slide hidden" data-step="4">
-            <div class="step-badge">Step 4 · Tenant notified</div>
-            <div class="step-title">Replies in your brand voice.</div>
-            <div class="step-sub">Calm. Specific. In 14 seconds. At 2am. You didn't move.</div>
-            <div class="msg-row right"><div class="bubble-out" id="s4reply"></div></div>
-            <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:10px;" id="s4time">UpneX AI · 2:18 PM · 14 seconds to resolve</p>
-          </div>
-
-          <!-- STEP 5: Work order -->
-          <div class="step-slide hidden" data-step="5">
-            <div class="step-badge">Step 5 · Logged &amp; synced</div>
-            <div class="step-title">Work order created. Owner alerted.</div>
-            <div class="step-sub">Synced to AppFolio / Buildium. You slept through the whole thing.</div>
-            <div class="log-card">
-              <div class="log-id" id="s5id">WO-4837</div>
-              <div class="log-sub" id="s5sub">Unit 112 · URGENT · CoolPro HVAC</div>
-              <div class="log-row"><span>Message → dispatched</span><span id="s5time">14 seconds</span></div>
-              <div class="log-row"><span>Human steps taken</span><span>Zero</span></div>
-              <div class="log-row"><span>Tenant rating</span><span>★★★★★</span></div>
-            </div>
-          </div>
-
-        </div><!-- /step-area -->
-
-        <!-- Demo navigation -->
-        <div class="demo-nav">
-          <button class="btn-back-demo" id="backBtn" onclick="step(-1)">← Back</button>
-          <span class="step-count" id="stepCount">Step 1 of 5</span>
-          <button class="btn-next-demo" id="nextBtn" onclick="step(1)">
-            <span id="nextLabel">Watch AI investigate</span>
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          </button>
-        </div>
-
-      </div><!-- /demo-3d -->
-    </div><!-- /perspective-wrap -->
+    </div><!-- /agent-stack -->
   </div><!-- /right-panel -->
 
 </div><!-- /hero -->
@@ -746,155 +541,84 @@ function cta(type){
 const ms = document.getElementById('mobileSticky');
 window.addEventListener('scroll',()=>ms.classList.toggle('show',window.scrollY>200),{passive:true});
 
-/* ─── 3D mouse tracking ──────────────────────────────── */
-const wrap3d = document.getElementById('perspectiveWrap');
-const card3d = document.getElementById('card3d');
-let hov3d = false;
+/* ─── Auto-play conversation demo ───────────────────── */
+const DEMO=[
+  {label:'AC EMERGENCY · APT 112',
+   tenant:'AC broken 🥵 its 95° in here with my baby',
+   ai:'On it — CoolPro HVAC dispatched, ETA 2 hrs. Work order #4837 logged. Owner notified.',
+   resolved:'Resolved in 14 seconds',
+   ico:'⚡',val:'14 sec',lbl:'tenant → vendor dispatched'},
+  {label:'WATER LEAK · APT 304',
+   tenant:'sink leaking really bad pls help 😭',
+   ai:'Acme Plumbing on the way, ETA 45 min. Shut-off valve guide sent to your phone. WO #4821.',
+   resolved:'Resolved in 12 seconds',
+   ico:'💧',val:'12 sec',lbl:'message → plumber en route'},
+  {label:'LOCKOUT · APT 207',
+   tenant:'locked out forgot my key unit 207',
+   ai:'Identity verified ✓ SafeKey Locksmith dispatched, ETA 30 min. $85 fee per lease §6.1.',
+   resolved:'Resolved in 11 seconds',
+   ico:'🔑',val:'11 sec',lbl:'locked out → locksmith coming'},
+  {label:'NEW RENTAL LEAD',
+   tenant:'Saw 312 Maple on Zillow. 2 adults, $82k income. Want to apply.',
+   ai:'Pre-qualified ✓ (score 88/100). Tour booked Saturday 11am. Application link sent.',
+   resolved:'Qualified & booked in 22 seconds',
+   ico:'📋',val:'22 sec',lbl:'inquiry → tour booked'},
+  {label:'ROUTINE · APT 415',
+   tenant:'kitchen light is out',
+   ai:'Tenant-replaceable per §4.2. 30-sec swap video sent. Auto-closed — $0 vendor cost.',
+   resolved:'Auto-resolved, $0 vendor cost',
+   ico:'💡',val:'$0',lbl:'self-resolved, no dispatch'}
+];
 
-wrap3d.addEventListener('mouseenter',()=>{
-  hov3d=true;
-  card3d.classList.add('no-anim');
-});
-wrap3d.addEventListener('mouseleave',()=>{
-  hov3d=false;
-  card3d.style.transform='';
-  card3d.style.transition='transform .6s cubic-bezier(.16,1,.3,1)';
+let demoIdx=0;
+
+function runDemo(){
+  const d=DEMO[demoIdx%DEMO.length];
+  const thread=document.getElementById('chatThread');
+  document.getElementById('acScenario').textContent=d.label;
+  thread.innerHTML='';
+  thread.style.opacity='1';
+
+  const tenantWrap=document.createElement('div');
+  tenantWrap.innerHTML=`<div class="sender-label">Tenant</div><div class="t-bubble" id="tB">${d.tenant}</div>`;
+
+  const typingWrap=document.createElement('div');
+  typingWrap.innerHTML=`<div class="sender-label">UpneX AI</div><div class="typing-ind" id="tInd"><span></span><span></span><span></span><span class="typing-label">analyzing…</span></div>`;
+
+  const aiWrap=document.createElement('div');
+  aiWrap.className='ai-bubble-wrap';
+  aiWrap.innerHTML=`<div class="ai-bubble" id="aiB">${d.ai}</div>`;
+
+  const resolvedWrap=document.createElement('div');
+  resolvedWrap.innerHTML=`<div class="resolved-row" id="resR"><svg width="14" height="14" fill="none" stroke="#4ade80" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>${d.resolved}</span></div>`;
+
+  thread.append(tenantWrap,typingWrap,aiWrap,resolvedWrap);
+
+  setTimeout(()=>document.getElementById('tB').classList.add('show'),200);
+  setTimeout(()=>document.getElementById('tInd').classList.add('show'),900);
   setTimeout(()=>{
-    card3d.classList.remove('no-anim');
-    card3d.style.transform='';
-    card3d.style.transition='';
-  },600);
-});
-wrap3d.addEventListener('mousemove',e=>{
-  if(!hov3d) return;
-  const r=wrap3d.getBoundingClientRect();
-  const x=((e.clientX-r.left)/r.width-.5)*2;
-  const y=((e.clientY-r.top)/r.height-.5)*2;
-  card3d.style.transform=`rotateY(${-18+x*12}deg) rotateX(${6-y*8}deg) translateY(-8px)`;
-  card3d.style.transition='transform .08s ease';
-});
+    document.getElementById('tInd').classList.remove('show');
+    document.getElementById('aiB').classList.add('show');
+  },2300);
+  setTimeout(()=>{
+    document.getElementById('resR').classList.add('show');
+    document.getElementById('statIco').textContent=d.ico;
+    document.getElementById('statVal').textContent=d.val;
+    document.getElementById('statLbl').textContent=d.lbl;
+  },3000);
 
-/* ─── Scenario data ──────────────────────────────────── */
-const S = {
-  ac:{
-    s1t:'Apt 112 · 2:18 PM',s1m:'AC broken 🥵 95° in here',
-    checks:['Message read · 0.2s','Weather API: 95°F today confirmed','Lease: family with infant noted','History: 2nd HVAC call this month'],
-    badge:{t:'URGENT — health risk',c:'badge-urgent'},
-    s3n:'CoolPro HVAC',s3m:'4.8★ · 24-hr emergency · 1.2mi away',
-    s3s:'"Hi CoolPro — urgent: AC failure, Unit 112. Family with infant inside. Owner pre-approved after-hours. Need ETA now."',
-    s4r:'On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified + approved. Work order #4837 logged. Stay cool — text me if anything changes.',
-    s4t:'UpneX AI · 2:18 PM · 14 seconds to resolve',
-    s5i:'WO-4837',s5s:'Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs',s5time:'14 seconds'
-  },
-  leak:{
-    s1t:'Apt 304 · 11:42 PM',s1m:'sink leaking bad pls help',
-    checks:['Message read · 0.2s','History: disposal repair 3mo ago','Severity: active water damage risk','Lease: tenant in good standing'],
-    badge:{t:'URGENT — water damage risk',c:'badge-urgent'},
-    s3n:'Acme Plumbing',s3m:'4.9★ · 24/7 emergency · 2.0mi away',
-    s3s:'"Hi Acme — urgent: active sink leak, Apt 304. Water damage risk. Need someone in 45min. Full address sent separately."',
-    s4r:'Got it — Acme Plumbing on the way, ETA 45min. Shut-off valve guide is in your portal. Work order #4821 logged. Stay safe.',
-    s4t:'UpneX AI · 11:42 PM · 12 seconds to resolve',
-    s5i:'WO-4821',s5s:'Apt 304 · URGENT · Acme Plumbing · ETA 45min',s5time:'12 seconds'
-  },
-  lockout:{
-    s1t:'Apt 207 · 9:30 AM',s1m:'locked out 207',
-    checks:['Message read · 0.2s','Identity: verified via phone match','Lease: active, no balance owed','Policy: $85 lockout fee per §6.1'],
-    badge:{t:'URGENT — tenant locked out',c:'badge-urgent'},
-    s3n:'SafeKey Locksmith',s3m:'4.7★ · 30-min radius · $85 flat rate',
-    s3s:'"Hi SafeKey — lockout at Apt 207, identity verified. Standard $85 fee applies. Need ETA. Address sent."',
-    s4r:'Verified — SafeKey Locksmith on the way, ETA 30min. $85 fee added per §6.1. Work order #4842 logged. Hang tight!',
-    s4t:'UpneX AI · 9:30 AM · 11 seconds to resolve',
-    s5i:'WO-4842',s5s:'Apt 207 · URGENT · SafeKey Locksmith · ETA 30min',s5time:'11 seconds'
-  },
-  application:{
-    s1t:'New lead · 10:14 AM',s1m:'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
-    checks:['Inquiry read · 0.3s','Income: $82k ÷ $1,950 = 3.5× ✓ (target 3×)','Credit: 728 FICO ✓','Landlord history: 24mo, zero lates ✓'],
-    badge:{t:'QUALIFIED — score 88/100',c:'badge-ok'},
-    s3n:'Tour booked · Saturday 11am',s3m:'Calendar synced · application link sent',
-    s3s:'"Pre-screen passed for 312 Maple. Tour confirmed Sat 11am. Full application + lease draft in your inbox. Bring ID + 2 paystubs."',
-    s4r:'Great news — you pre-qualified (score 88/100)! Tour: Saturday at 11am. Check your email for the full application + lease draft.',
-    s4t:'UpneX AI · 10:14 AM · 22 seconds end-to-end',
-    s5i:'LEAD-2034',s5s:'312 Maple St · Score 88 · Tour Sat 11am',s5time:'22 seconds'
-  },
-  bulb:{
-    s1t:'Apt 415 · 4:05 PM',s1m:'kitchen light out',
-    checks:['Message read · 0.2s','Lease: bulbs are tenant-replaceable','Self-help video found in library','Classified: routine / no vendor needed'],
-    badge:{t:'ROUTINE — self-resolvable ($0)',c:'badge-ok'},
-    s3n:'No vendor dispatched',s3m:'Self-help video sent · $0 cost · auto-close enabled',
-    s3s:'(No dispatch — tenant self-resolve path triggered. Auto-closed in 8 seconds. $0 cost.)',
-    s4r:"Kitchen bulbs are tenant-replaceable per §4.2. Here's a 30-sec swap video in your portal. Reply 'still broken' and I'll send someone same-day.",
-    s4t:'UpneX AI · 4:05 PM · 8 seconds to resolve',
-    s5i:'AUTO-CLOSED',s5s:'Apt 415 · Routine · $0 vendor cost · Self-resolved',s5time:'8 seconds'
-  }
-};
-
-const NEXT = ['Watch AI investigate','See vendor dispatched','See tenant reply','See work order','Book a call →'];
-
-let curS = 'ac', curStep = 1;
-
-function render(){
-  const s = S[curS];
-  // Progress bars
-  document.querySelectorAll('.progress-seg').forEach((b,i)=>b.classList.toggle('done',i<curStep));
-  // Step counter
-  document.getElementById('stepCount').textContent=`Step ${curStep} of 5`;
-  // Show correct slide
-  document.querySelectorAll('.step-slide').forEach(el=>{
-    el.classList.toggle('hidden',el.dataset.step!=curStep);
-    if(el.dataset.step==curStep){ el.style.animation='none'; void el.offsetWidth; el.style.animation=''; }
-  });
-
-  if(curStep===1){
-    document.getElementById('s1time').textContent=s.s1t;
-    document.getElementById('s1msg').textContent=s.s1m;
-  } else if(curStep===2){
-    const el=document.getElementById('s2list');
-    el.innerHTML='';
-    s.checks.forEach((c,i)=>{
-      const d=document.createElement('div');
-      d.className='check-row';
-      d.style.animationDelay=`${i*160}ms`;
-      d.innerHTML=`<div class="check-ico"><svg fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>${c}</span>`;
-      el.appendChild(d);
-    });
-    const b=document.getElementById('s2badge');
-    b.innerHTML=`<span class="alert-badge ${s.badge.c}" id="abadge">${s.badge.t}</span>`;
-    setTimeout(()=>{ const ab=document.getElementById('abadge'); if(ab) ab.style.opacity='1'; }, s.checks.length*160+200);
-  } else if(curStep===3){
-    document.getElementById('s3name').textContent=s.s3n;
-    document.getElementById('s3meta').textContent=s.s3m;
-    document.getElementById('s3sms').textContent=s.s3s;
-  } else if(curStep===4){
-    document.getElementById('s4reply').textContent=s.s4r;
-    document.getElementById('s4time').textContent=s.s4t;
-  } else if(curStep===5){
-    document.getElementById('s5id').textContent=s.s5i;
-    document.getElementById('s5sub').textContent=s.s5s;
-    document.getElementById('s5time').textContent=s.s5time;
-  }
-
-  document.getElementById('backBtn').style.visibility=curStep===1?'hidden':'visible';
-  document.getElementById('nextLabel').textContent=NEXT[curStep-1];
-  document.getElementById('nextBtn').dataset.a=curStep===5?'book':'next';
+  setTimeout(()=>{
+    thread.style.transition='opacity .45s ease';
+    thread.style.opacity='0';
+    setTimeout(()=>{
+      thread.style.transition='';
+      demoIdx++;
+      runDemo();
+    },500);
+  },6800);
 }
 
-function step(dir){
-  if(document.getElementById('nextBtn').dataset.a==='book' && dir===1){
-    cta('book');
-    window.open('https://calendar.app.google/9qmnLSzNejCwGSkcA','_blank','noopener');
-    return;
-  }
-  curStep=Math.min(5,Math.max(1,curStep+dir));
-  render();
-}
-
-function setScenario(s){
-  curS=s; curStep=1;
-  document.querySelectorAll('.stab').forEach(b=>b.classList.toggle('active',b.dataset.s===s));
-  render();
-}
-
-render();
+runDemo();
 
 </script>
 </body>
