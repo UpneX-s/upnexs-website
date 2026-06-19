@@ -15,7 +15,7 @@ fbq('init','946905738177488');fbq('track','PageView');
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow-x:hidden;}
+html,body{overflow-x:hidden;}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   background:#060f1e;
@@ -376,6 +376,82 @@ select.field-input option{background:#1a2e4a;color:#fff;}
 .mobile-sticky.show{transform:translateY(0);}
 @media(max-width:900px){.mobile-sticky{display:block;}}
 
+/* ═══ STATS BAR ═════════════════════════════ */
+.stats-bar{
+  display:flex;
+  border-top:1px solid rgba(255,255,255,0.06);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.018);
+}
+.stat-cell{
+  flex:1;padding:28px 20px;text-align:center;
+  border-right:1px solid rgba(255,255,255,0.06);
+}
+.stat-cell:last-child{border-right:none;}
+.stat-num{
+  font-size:32px;font-weight:800;letter-spacing:-0.04em;
+  color:#fff;line-height:1;
+}
+.stat-num em{
+  font-style:normal;
+  background:linear-gradient(90deg,#60a5fa,#0066cc);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.stat-desc{font-size:12px;color:rgba(255,255,255,0.35);margin-top:6px;font-weight:500;}
+
+/* ═══ MARKETS MAP ════════════════════════════ */
+.markets-section{
+  padding:56px 40px 64px;
+  text-align:center;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.markets-title{
+  font-size:22px;font-weight:700;letter-spacing:-0.025em;
+  color:#fff;margin-bottom:6px;
+}
+.markets-sub{
+  font-size:13px;color:rgba(255,255,255,0.35);
+  max-width:480px;margin:0 auto 36px;line-height:1.6;
+}
+.map-wrap{
+  max-width:640px;margin:0 auto;
+  position:relative;
+}
+.us-map{
+  width:100%;display:block;overflow:visible;
+}
+.us-land{
+  fill:rgba(0,102,204,0.07);
+  stroke:rgba(0,102,204,0.28);
+  stroke-width:1.4;
+  stroke-linejoin:round;
+}
+.city-group{}
+.city-core{fill:#0066cc;}
+.city-ring{
+  fill:none;stroke:#0066cc;stroke-width:1.5;
+  animation:city-ping 2.4s ease-out infinite;
+  transform-box:fill-box;transform-origin:center;
+}
+.city-group:nth-child(2) .city-ring{animation-delay:.4s;}
+.city-group:nth-child(3) .city-ring{animation-delay:.8s;}
+.city-group:nth-child(4) .city-ring{animation-delay:1.2s;}
+.city-group:nth-child(5) .city-ring{animation-delay:1.6s;}
+@keyframes city-ping{0%{r:6;opacity:.7}100%{r:18;opacity:0}}
+.city-label{
+  font-size:10px;font-weight:700;
+  fill:rgba(255,255,255,0.6);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  letter-spacing:.02em;
+}
+
+@media(max-width:900px){
+  .stats-bar{flex-wrap:wrap;}
+  .stat-cell{flex:1 1 50%;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .stat-cell:nth-child(2){border-right:none;}
+  .markets-section{padding:40px 20px 48px;}
+}
+
 /* ═══ FOOTER ══════════════════════════════════ */
 .footer{
   background:rgba(255,255,255,0.02);
@@ -505,6 +581,92 @@ select.field-input option{background:#1a2e4a;color:#fff;}
   </div><!-- /right-panel -->
 
 </div><!-- /hero -->
+
+<!-- ═══ STATS BAR ═══════════════════════════════════════ -->
+<section class="stats-bar">
+  <div class="stat-cell">
+    <div class="stat-num"><em>3,500</em>+</div>
+    <div class="stat-desc">units managed</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num"><em>6</em></div>
+    <div class="stat-desc">US markets</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num"><em>14</em> sec</div>
+    <div class="stat-desc">avg AI response time</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num"><em>$0</em></div>
+    <div class="stat-desc">admin overtime cost</div>
+  </div>
+</section>
+
+<!-- ═══ MARKETS MAP ═══════════════════════════════════════ -->
+<section class="markets-section">
+  <h2 class="markets-title">Where we operate</h2>
+  <p class="markets-sub">Growing PM companies in these markets trust UpneX for their back-office operations.</p>
+  <div class="map-wrap">
+    <svg viewBox="0 0 600 365" class="us-map" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Continental US outline (clockwise from NW) -->
+      <path class="us-land" d="
+        M 0,14
+        L 76,6 L 215,6 L 287,6
+        L 390,52 L 433,70 L 474,91
+        L 505,64 L 547,64 L 594,27
+        L 600,65 L 568,111 L 526,126 L 522,145
+        L 510,162 L 502,181
+        L 500,214 L 510,204
+        L 451,250 L 446,276
+        L 458,302 L 462,341 L 445,360
+        L 444,329 L 438,310 L 433,293 L 412,285
+        L 405,277 L 389,274 L 380,270 L 359,282 L 310,290
+        L 286,312 L 283,340
+        L 261,316 L 190,254
+        L 111,261 L 78,244
+        L 41,215 L 3,130 L 5,87 L 9,46
+        L 0,14 Z
+      "/>
+
+      <!-- Phoenix AZ -->
+      <g class="city-group">
+        <circle class="city-ring" cx="131" cy="230" r="6"/>
+        <circle class="city-core" cx="131" cy="230" r="5"/>
+        <text class="city-label" x="120" y="228" text-anchor="end">Phoenix AZ</text>
+      </g>
+
+      <!-- Austin TX -->
+      <g class="city-group">
+        <circle class="city-ring" cx="280" cy="276" r="6"/>
+        <circle class="city-core" cx="280" cy="276" r="5"/>
+        <text class="city-label" x="280" y="294" text-anchor="middle">Austin TX</text>
+      </g>
+
+      <!-- Atlanta GA -->
+      <g class="city-group">
+        <circle class="city-ring" cx="418" cy="226" r="6"/>
+        <circle class="city-core" cx="418" cy="226" r="5"/>
+        <text class="city-label" x="418" y="215" text-anchor="middle">Atlanta GA</text>
+      </g>
+
+      <!-- Tampa FL -->
+      <g class="city-group">
+        <circle class="city-ring" cx="438" cy="310" r="6"/>
+        <circle class="city-core" cx="438" cy="310" r="5"/>
+        <text class="city-label" x="426" y="325" text-anchor="end">Tampa FL</text>
+      </g>
+
+      <!-- Cleveland OH -->
+      <g class="city-group">
+        <circle class="city-ring" cx="446" cy="114" r="6"/>
+        <circle class="city-core" cx="446" cy="114" r="5"/>
+        <text class="city-label" x="446" y="104" text-anchor="middle">Cleveland OH</text>
+      </g>
+
+    </svg>
+  </div>
+</section>
 
 <!-- ═══ FOOTER ═══════════════════════════════════════ -->
 <footer class="footer">
