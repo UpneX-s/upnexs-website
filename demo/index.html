@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>UpneX — Book a 15-min Live Demo</title>
-<meta name="description" content="See an UpneX AI agent handle your hardest PM task live — maintenance, leasing, BD, or tenant comms. Book a 15-min tailored walkthrough." />
+<meta name="description" content="See an UpneX AI agent handle your toughest PM task live — tenant screening, maintenance, BD. Book a 15-min tailored walkthrough."/>
 
 <!-- Meta Pixel -->
 <script>
@@ -13,911 +12,982 @@
 fbq('init','946905738177488');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
-
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  color: #1a2e4a;
-  background: #fff;
-  overflow-x: hidden;
-  line-height: 1.5;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow-x:hidden;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  background:#060f1e;
+  color:#fff;
+  min-height:100vh;
+  /* Subtle dot-grid background */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(0,102,204,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0,102,204,0.08) 0%, transparent 50%),
+    radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:100% 100%, 100% 100%, 28px 28px;
 }
 
-/* ── TOKENS ─────────────────────────────────── */
-:root {
-  --navy:   #1a2e4a;
-  --blue:   #0066cc;
-  --blue2:  #0052a3;
-  --white:  #ffffff;
-  --gray:   #f0f4f8;
-  --text:   #1a2e4a;
-  --sub:    #4a6278;
-  --muted:  #7a94aa;
-  --line:   #dde5ed;
+/* ═══ NAV ═══════════════════════════════════ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:52px;
+  background:rgba(6,15,30,0.85);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+}
+.nav-logo{
+  font-size:17px;font-weight:800;letter-spacing:-0.03em;
+  background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;
+}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-link{color:rgba(255,255,255,0.45);font-size:13px;text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:rgba(255,255,255,0.8);}
+.nav-btn{
+  background:#0066cc;color:#fff;
+  padding:8px 18px;border-radius:6px;
+  font-size:13px;font-weight:600;text-decoration:none;
+  transition:background .2s,transform .15s;
+  display:inline-block;
+}
+.nav-btn:hover{background:#0052a3;transform:translateY(-1px);}
+
+/* ═══ PAGE LAYOUT ════════════════════════════ */
+.page{
+  min-height:100vh;
+  padding:52px 0 0; /* below nav */
+  display:flex;flex-direction:column;
+}
+.hero{
+  flex:1;
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:0;
+  min-height:calc(100vh - 52px);
+}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto;}
 }
 
-/* ── NAV ─────────────────────────────────────── */
-.nav {
-  background: var(--navy);
-  position: sticky; top: 0; z-index: 60;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+/* ═══ LEFT PANEL ═════════════════════════════ */
+.left-panel{
+  padding:36px 32px 32px;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  border-right:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  backdrop-filter:blur(4px);
 }
-.nav-inner {
-  max-width: 1080px; margin: 0 auto;
-  padding: 0 24px; height: 54px;
-  display: flex; align-items: center; justify-content: space-between;
+.brand-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,102,204,0.15);
+  border:1px solid rgba(0,102,204,0.3);
+  border-radius:999px;padding:5px 12px;
+  font-size:12px;font-weight:600;color:#60a5fa;
+  margin-bottom:20px;width:fit-content;
 }
-.nav-logo { color: #fff; font-weight: 700; font-size: 18px; text-decoration: none; letter-spacing: -0.02em; }
-.nav-back  { color: rgba(255,255,255,0.55); font-size: 13px; text-decoration: none; margin-right: 16px; transition: color .15s; }
-.nav-back:hover { color: #fff; }
+.live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#22c55e;position:relative;flex-shrink:0;
+}
+.live-dot::after{
+  content:'';position:absolute;inset:-3px;border-radius:50%;
+  background:#22c55e;opacity:.4;animation:ping 2s ease-out infinite;
+}
+@keyframes ping{0%{transform:scale(1);opacity:.4}100%{transform:scale(2.4);opacity:0}}
 
-/* ── BOOK BUTTON — the ONE primary action ─────── */
-/* Three #0066cc declarations + bulletproof inline-block */
-.btn-book {
-  display: inline-block;
-  background: #0066cc;
-  color: #ffffff !important;
-  border: 2px solid #0066cc;
-  border-radius: 8px;
-  padding: 15px 36px;
-  font-size: 17px;
-  font-weight: 700;
-  text-decoration: none !important;
-  text-align: center;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  transition: background .2s, border-color .2s, transform .15s, box-shadow .2s;
-  -webkit-text-size-adjust: none;
-  mso-padding-alt: 0;
-  white-space: nowrap;
+.h1{
+  font-size:clamp(28px,3.8vw,46px);
+  font-weight:800;letter-spacing:-0.035em;line-height:1.08;
+  margin-bottom:12px;
 }
-.btn-book:hover {
-  background: #0052a3;
-  border-color: #0052a3;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0,102,204,0.3);
+.h1 em{
+  font-style:normal;
+  background:linear-gradient(90deg,#60a5fa,#0066cc);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.btn-book-lg {
-  font-size: 20px;
-  padding: 19px 52px;
-  border-radius: 10px;
-}
-.btn-book-full {
-  display: block;
-  width: 100%;
+.sub{
+  font-size:14px;line-height:1.6;
+  color:rgba(255,255,255,0.5);margin-bottom:24px;
 }
 
-/* ── SECONDARY BUTTON ───────────────────────── */
-.btn-secondary {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  background: var(--navy);
-  color: #fff !important;
-  border: none; border-radius: 8px;
-  padding: 14px 28px; font-size: 15px; font-weight: 600;
-  text-decoration: none; cursor: pointer;
-  transition: background .2s;
-  width: 100%;
+/* BOOK BUTTON — three #0066cc, bulletproof */
+.book-btn{
+  display:block;width:100%;
+  background:#0066cc;
+  color:#ffffff !important;
+  border:2px solid #0066cc;
+  border-radius:10px;
+  padding:16px 24px;
+  font-size:17px;font-weight:800;
+  text-decoration:none !important;
+  text-align:center;
+  letter-spacing:-0.01em;
+  transition:background .2s,border-color .2s,transform .15s,box-shadow .2s;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+  mso-padding-alt:0;
 }
-.btn-secondary:hover { background: #0f1e32; }
+.book-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.book-btn:hover{
+  background:#0052a3;border-color:#0052a3;
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(0,102,204,0.45);
+}
+.book-btn:hover::before{opacity:1;}
+.book-btn svg{display:inline;vertical-align:middle;margin-left:6px;}
 
-/* ── ACCENT BAR ─────────────────────────────── */
-.accent-bar { height: 3px; background: var(--blue); }
+.or-line{
+  display:flex;align-items:center;gap:10px;
+  margin:18px 0;color:rgba(255,255,255,0.2);font-size:12px;font-weight:500;
+}
+.or-line::before,.or-line::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.1);}
 
-/* ── SECTION HELPERS ────────────────────────── */
-.section       { padding: 64px 24px; }
-.section-sm    { padding: 48px 24px; }
-.section-navy  { background: var(--navy); }
-.section-white { background: #fff; }
-.section-gray  { background: var(--gray); }
-.wrap          { max-width: 920px; margin: 0 auto; }
-.wrap-sm       { max-width: 600px; margin: 0 auto; }
-.text-center   { text-align: center; }
+/* Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+@media(max-width:480px){.form-grid{grid-template-columns:1fr;}}
+.field-label{
+  display:block;font-size:11px;font-weight:600;
+  color:rgba(255,255,255,0.4);letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:5px;
+}
+.field-input{
+  width:100%;padding:11px 13px;
+  background:rgba(255,255,255,0.05);
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:8px;
+  font-size:14px;color:#fff;font-family:inherit;
+  transition:border .2s,background .2s,box-shadow .2s;
+}
+.field-input:focus{
+  outline:none;
+  border-color:#0066cc;
+  background:rgba(0,102,204,0.08);
+  box-shadow:0 0 0 3px rgba(0,102,204,0.15);
+}
+.field-input::placeholder{color:rgba(255,255,255,0.2);}
+select.field-input{
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  background-color:rgba(255,255,255,0.05);
+  padding-right:34px;cursor:pointer;
+}
+select.field-input option{background:#1a2e4a;color:#fff;}
+.form-submit{
+  width:100%;padding:13px;
+  background:rgba(255,255,255,0.08);
+  border:1.5px solid rgba(255,255,255,0.12);
+  border-radius:8px;
+  color:#fff;font-size:14px;font-weight:600;
+  cursor:pointer;transition:background .2s,border .2s;
+  font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.form-submit:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);}
+.privacy-note{font-size:11px;color:rgba(255,255,255,0.2);text-align:center;margin-top:8px;}
 
-/* ── TYPOGRAPHY ─────────────────────────────── */
-.label {
-  display: inline-block;
-  font-size: 11px; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--blue);
-  margin-bottom: 14px;
-}
-.h1 {
-  font-size: clamp(32px, 5.5vw, 60px);
-  font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
-  color: #fff;
-}
-.h2 {
-  font-size: clamp(26px, 4vw, 44px);
-  font-weight: 700; letter-spacing: -0.025em; line-height: 1.1;
-  color: var(--navy);
-}
-.h3 { font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.25; }
-.sub-hero { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.65); font-weight: 300; }
-.sub      { font-size: 16px; line-height: 1.6; color: var(--sub); }
-
-/* ── TRUST STRIP ────────────────────────────── */
-.trust-strip {
-  display: flex; flex-wrap: wrap; gap: 8px 24px;
-  margin-top: 20px; justify-content: center;
-}
-.trust-item { font-size: 13px; color: rgba(255,255,255,.5); display: flex; align-items: center; gap: 6px; }
-.trust-item svg { flex-shrink: 0; }
-
-/* ── QUOTE CARD ─────────────────────────────── */
-.quote-card {
-  background: var(--navy); border-radius: 16px;
-  padding: 32px 36px;
-}
-.quote-mark { font-size: 52px; line-height: .8; color: var(--blue); font-family: Georgia, serif; margin-bottom: 8px; }
-.quote-text { font-size: 20px; line-height: 1.55; color: #fff; font-weight: 400; font-style: italic; }
-.quote-attr { margin-top: 18px; font-size: 14px; color: rgba(255,255,255,.5); font-weight: 500; }
-
-/* ── LOGO ROW ───────────────────────────────── */
-.logo-row {
-  display: flex; flex-wrap: wrap; gap: 10px 16px;
-  margin-top: 28px; align-items: center;
-}
-.logo-pill {
-  background: #fff; border: 1.5px solid var(--line);
-  border-radius: 999px; padding: 8px 20px;
-  font-size: 14px; font-weight: 600; color: var(--navy);
-  white-space: nowrap;
-}
-
-/* ── FEATURE BULLETS ────────────────────────── */
-.bullets { display: flex; flex-direction: column; gap: 16px; }
-.bullet-row {
-  display: flex; gap: 16px; align-items: flex-start;
-  background: #fff; border-radius: 14px; padding: 20px 22px;
-  box-shadow: 0 2px 12px rgba(26,46,74,.06);
-}
-.bullet-icon {
-  width: 42px; height: 42px; border-radius: 10px;
-  background: var(--navy); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; flex-shrink: 0;
-}
-.bullet-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-.bullet-desc  { font-size: 14px; color: var(--sub); line-height: 1.5; }
-
-/* ── DEMO WALKTHROUGH ───────────────────────── */
-.demo-shell {
-  background: #fff; border-radius: 20px;
-  box-shadow: 0 4px 32px rgba(26,46,74,.1);
-  padding: 28px;
-}
-.demo-label {
-  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue);
-}
-.scenario-select {
-  width: 100%; padding: 13px 44px 13px 14px; margin-top: 8px;
-  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231a2e4a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 14px center;
-  border: 1.5px solid var(--navy); border-radius: 10px;
-  color: var(--navy); font-size: 15px; font-weight: 500;
-  appearance: none; -webkit-appearance: none; font-family: inherit; cursor: pointer;
-}
-.scenario-select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,102,204,.12); }
-.demo-progress {
-  display: flex; gap: 5px; margin: 18px 0 22px;
-}
-.demo-progress-bar {
-  height: 3px; flex: 1; border-radius: 999px;
-  background: var(--line); transition: background .4s;
-}
-.demo-step { animation: fadein .35s ease; }
-.demo-step.hidden { display: none; }
-@keyframes fadein { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-.demo-step-title { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-.demo-step-sub   { font-size: 14px; color: var(--sub); margin-bottom: 18px; line-height: 1.5; }
-.bubble-in  { background: var(--gray); border-radius: 18px 18px 18px 4px; padding: 12px 16px; font-size: 15px; max-width: 320px; }
-.bubble-out { background: var(--blue); color: #fff; border-radius: 18px 18px 4px 18px; padding: 12px 16px; font-size: 15px; max-width: 320px; margin-left: auto; }
-.check-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 14px; }
-.check-row  {
-  display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--navy);
-  opacity: 0; transform: translateX(-5px); animation: slidein .3s ease forwards;
-}
-.check-dot  { width: 20px; height: 20px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.check-dot svg { width: 9px; height: 9px; stroke: #fff; stroke-width: 3.5; }
-@keyframes slidein { to { opacity: 1; transform: translateX(0); } }
-.badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
-}
-.badge-urgent  { background: #ffe5e5; color: #c00; }
-.badge-routine { background: #fff4e0; color: #a65200; }
-.vendor-row {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--gray); border-radius: 12px; padding: 14px;
-}
-.vendor-icon { font-size: 22px; }
-.vendor-name { font-weight: 700; font-size: 15px; color: var(--navy); }
-.vendor-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.vendor-tag  { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .06em; }
-.sms-box { background: #e8f0fe; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: var(--navy); line-height: 1.5; margin-top: 10px; }
-.log-box {
-  background: var(--navy); border-radius: 14px; padding: 20px; color: #fff;
-}
-.log-box-id   { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 2px; }
-.log-box-meta { font-size: 13px; color: rgba(255,255,255,.5); margin-bottom: 16px; }
-.log-row { display: flex; justify-content: space-between; font-size: 13px; padding: 8px 0; border-top: 1px solid rgba(255,255,255,.1); }
-.log-row span:first-child { color: rgba(255,255,255,.5); }
-.log-row span:last-child  { font-weight: 700; font-family: monospace; }
-.demo-nav { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; border-top: 1px solid var(--line); margin-top: 18px; }
-.btn-back { background: none; border: none; color: var(--muted); font-size: 14px; font-weight: 500; cursor: pointer; padding: 8px; visibility: hidden; }
-.btn-next {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--blue); color: #fff; border: none; border-radius: 8px;
-  padding: 13px 24px; font-size: 15px; font-weight: 700; cursor: pointer;
-  transition: background .2s;
-}
-.btn-next:hover { background: var(--blue2); }
-
-/* ── URGENCY BAND ───────────────────────────── */
-.urgency-band {
-  background: #fff7e6; border: 1.5px solid #ffd580;
-  border-radius: 10px; padding: 12px 18px;
-  display: flex; align-items: center; gap: 10px;
-  font-size: 14px; color: #7a4f00; font-weight: 500;
-  margin-bottom: 24px;
-}
-.urgency-dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
-
-/* ── FORM ───────────────────────────────────── */
-.form-wrap { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(26,46,74,.08); }
-.form-field { display: flex; flex-direction: column; gap: 6px; }
-.form-label { font-size: 13px; font-weight: 600; color: var(--navy); }
-.form-input {
-  padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 8px;
-  font-size: 15px; color: var(--navy); font-family: inherit;
-  transition: border .2s, box-shadow .2s; background: #fff;
-}
-.form-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,102,204,.12); }
-.form-input::placeholder { color: var(--muted); }
-select.form-input {
-  appearance: none; -webkit-appearance: none;
-  background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231a2e4a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 14px center;
-  padding-right: 38px; cursor: pointer;
-}
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media (max-width: 520px) { .form-grid { grid-template-columns: 1fr; } }
-.form-privacy { font-size: 12px; color: var(--muted); text-align: center; margin-top: 4px; }
-.spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--line); border-top-color: var(--blue);
-  border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.success-icon {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: #e8f0fe; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+/* Success state */
+.success-panel{display:none;text-align:center;padding:16px 0;}
+.success-check{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(0,102,204,0.2);border:2px solid rgba(0,102,204,0.4);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 14px;
 }
 
-/* ── LIVE DOT ───────────────────────────────── */
-.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; position: relative; }
-.live-dot::after {
-  content: ''; position: absolute; inset: -4px; border-radius: 50%;
-  background: #22c55e; opacity: .4; animation: ping 2s ease-out infinite;
+/* Trust strip */
+.trust-row{
+  display:flex;flex-wrap:wrap;gap:6px 16px;
+  margin-top:16px;
 }
-@keyframes ping { 0% { transform: scale(1); opacity: .4; } 100% { transform: scale(2.4); opacity: 0; } }
-
-/* ── STICKY MOBILE CTA ──────────────────────── */
-.sticky-bar {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 70;
-  padding: 12px 16px; background: rgba(255,255,255,.95);
-  backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-top: 1px solid var(--line);
-  transform: translateY(100%); transition: transform .35s cubic-bezier(.16,1,.3,1);
+.trust-item{
+  font-size:12px;color:rgba(255,255,255,0.3);
+  display:flex;align-items:center;gap:5px;
 }
-.sticky-bar.show { transform: translateY(0); }
-@media (min-width: 768px) { .sticky-bar { display: none !important; } }
+.trust-item svg{color:rgba(0,102,204,0.7);}
 
-/* ── FOOTER ─────────────────────────────────── */
-.footer { background: var(--navy); padding: 48px 24px 32px; border-top: 1px solid rgba(255,255,255,.06); }
-.footer-inner { max-width: 1080px; margin: 0 auto; }
-.footer-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; }
-@media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
-.footer-logo { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-.footer-sub  { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.6; max-width: 240px; }
-.footer-links { display: flex; gap: 32px; }
-.footer-col-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 10px; }
-.footer-link { display: block; font-size: 13px; color: rgba(255,255,255,.55); text-decoration: none; margin-bottom: 8px; transition: color .15s; }
-.footer-link:hover { color: #fff; }
-.footer-copy { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); font-size: 11px; color: rgba(255,255,255,.25); }
+/* Quote pill */
+.quote-pill{
+  display:flex;align-items:flex-start;gap:10px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px;padding:12px 14px;
+  margin-top:14px;
+}
+.quote-pill p{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;font-style:italic;}
+.quote-pill strong{color:rgba(255,255,255,0.35);font-size:11px;font-style:normal;display:block;margin-top:4px;}
+.quote-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,#0066cc,#60a5fa);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;flex-shrink:0;
+}
 
-/* ── UTILS ──────────────────────────────────── */
-.divider { width: 40px; height: 3px; background: var(--blue); border-radius: 2px; margin-bottom: 20px; }
-.mt4  { margin-top: 4px; }
-.mt8  { margin-top: 8px; }
-.mt12 { margin-top: 12px; }
-.mt16 { margin-top: 16px; }
-.mt24 { margin-top: 24px; }
-.mt32 { margin-top: 32px; }
-.mt40 { margin-top: 40px; }
-.flex-center { display: flex; align-items: center; gap: 8px; }
-.gap-stack { display: flex; flex-direction: column; gap: 16px; }
+/* Spinner */
+.spinner{
+  width:32px;height:32px;
+  border:3px solid rgba(255,255,255,0.1);border-top-color:#0066cc;
+  border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── GRID ───────────────────────────────────── */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+/* ═══ RIGHT PANEL ════════════════════════════ */
+.right-panel{
+  display:flex;align-items:center;justify-content:center;
+  padding:32px 40px 32px 24px;
+  position:relative;overflow:hidden;
+}
+
+/* Ambient glow behind card */
+.glow{
+  position:absolute;
+  width:500px;height:500px;
+  background:radial-gradient(ellipse,rgba(0,102,204,0.18) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  animation:glow-pulse 4s ease-in-out infinite;
+}
+@keyframes glow-pulse{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+
+/* Perspective wrapper */
+.perspective-wrap{
+  perspective:1400px;
+  width:100%;max-width:560px;
+  position:relative;
+}
+
+/* THE 3D CARD */
+.demo-3d{
+  background:linear-gradient(145deg,#111d30 0%,#0d1726 60%,#091220 100%);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:20px;
+  overflow:hidden;
+  transform:rotateY(-18deg) rotateX(6deg) translateZ(0);
+  transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.16,1,.3,1);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.05),
+    30px 30px 80px rgba(0,0,0,0.7),
+    60px 60px 120px rgba(0,0,0,0.4),
+    -10px -10px 40px rgba(0,102,204,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  animation:float 7s ease-in-out infinite;
+  will-change:transform;
+}
+@keyframes float{
+  0%,100%{transform:rotateY(-18deg) rotateX(6deg) translateY(0);}
+  50%{transform:rotateY(-18deg) rotateX(6deg) translateY(-14px);}
+}
+.demo-3d.no-anim{animation:none;}
+
+/* Window chrome */
+.win-chrome{
+  display:flex;align-items:center;gap:0;
+  padding:14px 16px;
+  background:rgba(255,255,255,0.03);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.win-dots{display:flex;gap:6px;margin-right:14px;}
+.win-dot{width:11px;height:11px;border-radius:50%;}
+.win-dot.r{background:#ff5f57;}
+.win-dot.y{background:#febc2e;}
+.win-dot.g{background:#28c840;}
+.win-title{
+  flex:1;text-align:center;
+  font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);
+  letter-spacing:.02em;
+}
+.win-live{
+  display:flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:600;color:#22c55e;
+  background:rgba(34,197,94,0.1);
+  border:1px solid rgba(34,197,94,0.2);
+  border-radius:999px;padding:3px 9px;
+}
+
+/* Scenario tabs */
+.scenario-tabs{
+  display:flex;gap:6px;padding:12px 14px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  overflow-x:auto;scrollbar-width:none;
+}
+.scenario-tabs::-webkit-scrollbar{display:none;}
+.stab{
+  padding:5px 10px;border-radius:6px;
+  font-size:11px;font-weight:600;cursor:pointer;
+  background:transparent;border:1px solid rgba(255,255,255,0.07);
+  color:rgba(255,255,255,0.35);
+  transition:all .2s;white-space:nowrap;
+}
+.stab:hover{border-color:rgba(0,102,204,.4);color:rgba(255,255,255,.6);}
+.stab.active{
+  background:rgba(0,102,204,0.2);
+  border-color:rgba(0,102,204,0.5);
+  color:#60a5fa;
+}
+
+/* Progress track */
+.progress-track{
+  display:flex;gap:4px;padding:12px 14px 8px;
+}
+.progress-seg{
+  flex:1;height:2px;border-radius:999px;
+  background:rgba(255,255,255,0.08);
+  transition:background .4s;
+}
+.progress-seg.done{background:#0066cc;}
+
+/* Step area */
+.step-area{
+  padding:14px 16px 10px;
+  min-height:260px;
+}
+.step-slide{
+  animation:slide-in .35s cubic-bezier(.16,1,.3,1);
+}
+.step-slide.hidden{display:none;}
+@keyframes slide-in{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* Step header */
+.step-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,102,204,0.15);border:1px solid rgba(0,102,204,0.25);
+  border-radius:6px;padding:3px 8px;
+  font-size:10px;font-weight:700;color:#60a5fa;
+  letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.step-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-0.02em;}
+.step-sub{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:14px;}
+
+/* Tenant message */
+.msg-time{font-size:10px;color:rgba(255,255,255,0.25);font-family:monospace;margin-bottom:6px;}
+.bubble-in{
+  display:inline-block;max-width:80%;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px 16px 16px 4px;
+  padding:10px 14px;font-size:14px;color:#fff;line-height:1.4;
+}
+.bubble-out{
+  display:inline-block;max-width:80%;
+  background:linear-gradient(135deg,#0066cc,#0052a3);
+  border-radius:16px 16px 4px 16px;
+  padding:10px 14px;font-size:13px;color:#fff;line-height:1.4;
+  margin-left:auto;
+  box-shadow:0 4px 16px rgba(0,102,204,0.3);
+}
+.msg-row{display:flex;}
+.msg-row.right{justify-content:flex-end;}
+
+/* Analysis checklist */
+.check-list{display:flex;flex-direction:column;gap:8px;}
+.check-row{
+  display:flex;align-items:center;gap:9px;font-size:13px;color:rgba(255,255,255,0.7);
+  opacity:0;transform:translateX(-6px);animation:slide-check .3s ease forwards;
+}
+@keyframes slide-check{to{opacity:1;transform:translateX(0);}}
+.check-ico{
+  width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(135deg,#0066cc,#60a5fa);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.check-ico svg{width:9px;height:9px;stroke:#fff;stroke-width:3.5;}
+.alert-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;
+  margin-top:10px;opacity:0;transition:opacity .4s;
+}
+.badge-urgent {background:rgba(220,38,38,0.15);border:1px solid rgba(220,38,38,0.3);color:#f87171;}
+.badge-ok     {background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);color:#4ade80;}
+
+/* Vendor card */
+.vendor-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;padding:12px;
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:10px;
+}
+.vendor-emoji{font-size:22px;}
+.vendor-name{font-size:14px;font-weight:700;color:#fff;}
+.vendor-meta{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;}
+.dispatched-tag{
+  margin-left:auto;
+  background:rgba(0,102,204,0.2);border:1px solid rgba(0,102,204,0.35);
+  border-radius:999px;padding:4px 10px;
+  font-size:10px;font-weight:700;color:#60a5fa;
+  letter-spacing:.06em;white-space:nowrap;
+}
+.sms-preview{
+  background:rgba(0,102,204,0.08);
+  border:1px solid rgba(0,102,204,0.15);
+  border-radius:10px;padding:10px 12px;
+  font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;
+}
+.sms-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(0,102,204,0.6);margin-bottom:5px;}
+
+/* Log card */
+.log-card{
+  background:linear-gradient(135deg,rgba(0,102,204,0.12),rgba(0,102,204,0.05));
+  border:1px solid rgba(0,102,204,0.2);
+  border-radius:14px;padding:16px;
+}
+.log-id{font-size:26px;font-weight:800;color:#fff;letter-spacing:-0.03em;}
+.log-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;margin-bottom:12px;}
+.log-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 0;border-top:1px solid rgba(255,255,255,0.06);
+  font-size:12px;
+}
+.log-row span:first-child{color:rgba(255,255,255,0.35);}
+.log-row span:last-child{font-family:monospace;font-weight:700;color:#60a5fa;}
+
+/* Demo nav */
+.demo-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px 14px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.btn-back-demo{
+  background:none;border:none;color:rgba(255,255,255,0.25);
+  font-size:13px;font-weight:500;cursor:pointer;padding:6px;
+  visibility:hidden;transition:color .2s;font-family:inherit;
+}
+.btn-back-demo:hover{color:rgba(255,255,255,.5);}
+.btn-next-demo{
+  display:inline-flex;align-items:center;gap:7px;
+  background:#0066cc;color:#fff;
+  border:none;border-radius:8px;
+  padding:10px 18px;font-size:13px;font-weight:700;
+  cursor:pointer;transition:background .2s,transform .15s;
+  font-family:inherit;
+}
+.btn-next-demo:hover{background:#0052a3;transform:translateY(-1px);}
+
+/* Step counter */
+.step-count{font-size:11px;color:rgba(255,255,255,.2);font-family:monospace;}
+
+/* ═══ MOBILE STICKY ══════════════════════════ */
+.mobile-sticky{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:90;
+  padding:10px 14px;
+  background:rgba(6,15,30,0.95);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,0.06);
+  transform:translateY(100%);
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.mobile-sticky.show{transform:translateY(0);}
+@media(max-width:900px){.mobile-sticky{display:block;}}
+
+/* ═══ FOOTER ══════════════════════════════════ */
+.footer{
+  background:rgba(255,255,255,0.02);
+  border-top:1px solid rgba(255,255,255,0.05);
+  padding:24px;
+  display:flex;flex-wrap:wrap;gap:16px;
+  align-items:center;justify-content:space-between;
+}
+.footer-logo{font-size:15px;font-weight:700;color:rgba(255,255,255,.5);}
+.footer-links{display:flex;gap:20px;}
+.footer-link{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .15s;}
+.footer-link:hover{color:rgba(255,255,255,.6);}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.2);}
+
+/* ═══ MOBILE LAYOUT ══════════════════════════ */
+@media(max-width:900px){
+  .hero{min-height:auto;} /* kill the full-vh stretch */
+  .left-panel{padding:24px 20px 28px;border-right:none;border-bottom:1px solid rgba(255,255,255,.06);}
+  .right-panel{display:none;}
+  .h1{font-size:28px;}
+}
 </style>
 </head>
 <body>
 
 <!-- ═══ NAV ═══════════════════════════════════════ -->
 <nav class="nav">
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">UpneX</a>
-    <div style="display:flex;align-items:center;">
-      <a href="https://upnexs.com" class="nav-back">← Site</a>
-      <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-         target="_blank" rel="noopener"
-         class="btn-book"
-         data-cta="book"
-         style="padding:9px 20px;font-size:14px;border-radius:6px;"
-         onclick="track('book')">
-        Book a Call
-      </a>
-    </div>
+  <a href="https://upnexs.com" class="nav-logo">UpneX</a>
+  <div class="nav-right">
+    <a href="https://upnexs.com" class="nav-link">← Back to site</a>
+    <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+       target="_blank" rel="noopener"
+       class="nav-btn" data-cta="book" onclick="cta('book')">
+      Book a Call
+    </a>
   </div>
 </nav>
-<div class="accent-bar"></div>
 
-<!-- ═══ HERO ═══════════════════════════════════════ -->
-<section class="section section-navy text-center" style="padding-bottom:72px;">
-  <div class="wrap-sm">
-    <div class="flex-center" style="justify-content:center;margin-bottom:20px;">
+<!-- ═══ HERO (two-column, above fold) ════════════════ -->
+<div class="page">
+<div class="hero">
+
+  <!-- ── LEFT: CTA + Form ── -->
+  <div class="left-panel">
+
+    <div class="brand-badge">
       <span class="live-dot"></span>
-      <span style="font-size:13px;color:rgba(255,255,255,.6);font-weight:500;">Live demo · No signup · 15 minutes</span>
+      Live demo &nbsp;·&nbsp; 15 minutes &nbsp;·&nbsp; No signup
     </div>
 
     <h1 class="h1">
-      Your PM back-office,<br>on autopilot.
+      Your PM back-office,<br>
+      <em>running on AI.</em>
     </h1>
-    <p class="sub-hero mt16" style="max-width:520px;margin-left:auto;margin-right:auto;">
-      Book a 15-min call — we'll demo the exact AI agent that solves your biggest bottleneck, live, tailored to your portfolio.
+    <p class="sub">
+      Book a 15-min call — we'll run the exact agent that solves your #1 bottleneck, live and tailored to your portfolio.
     </p>
 
-    <div class="mt32" style="display:flex;justify-content:center;">
-      <!-- BULLETPROOF BOOK BUTTON — three #0066cc declarations, mso-padding-alt, display:inline-block -->
-      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td align="center" bgcolor="#0066cc" style="border-radius:10px;mso-padding-alt:0;padding:0;">
-            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-               target="_blank" rel="noopener"
-               class="btn-book btn-book-lg"
-               data-cta="book"
-               onclick="track('book')">
-              Book a 15-min walkthrough &nbsp;→
-            </a>
-          </td>
-        </tr>
-      </table>
+    <!-- PRIMARY: Book a call -->
+    <!-- Bulletproof button — three #0066cc declarations, display:block, mso-padding-alt -->
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
+      <tr>
+        <td align="center" bgcolor="#0066cc" style="border-radius:10px;mso-padding-alt:0;padding:0;">
+          <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+             target="_blank" rel="noopener"
+             class="book-btn"
+             data-cta="book"
+             onclick="cta('book')">
+            Book a 15-min walkthrough
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="margin-left:4px;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <!-- SECONDARY: Email form -->
+    <div class="or-line">or get the case study</div>
+
+    <div id="formWrap">
+      <form id="leadForm" autocomplete="on">
+        <div class="form-grid">
+          <div>
+            <label class="field-label" for="fn">Name</label>
+            <input id="fn" class="field-input" type="text" name="name" required placeholder="Full name" autocomplete="name"/>
+          </div>
+          <div>
+            <label class="field-label" for="fe">Email</label>
+            <input id="fe" class="field-input" type="email" name="email" required placeholder="you@company.com" autocomplete="email"/>
+          </div>
+          <div>
+            <label class="field-label" for="fp">Phone</label>
+            <input id="fp" class="field-input" type="tel" name="phone" required placeholder="+1 (000) 000-0000" autocomplete="tel"/>
+          </div>
+          <div>
+            <label class="field-label" for="fs">Portfolio</label>
+            <select id="fs" class="field-input" name="portfolio" required>
+              <option value="">Units…</option>
+              <option value="under-50">Under 50</option>
+              <option value="50-200">50–200</option>
+              <option value="200-500">200–500</option>
+              <option value="500-1000">500–1,000</option>
+              <option value="1000+">1,000+</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="form-submit" data-cta="email" onclick="cta('email')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Send Me the Case Study →
+        </button>
+        <p class="privacy-note">No spam · Unsubscribe anytime</p>
+      </form>
+
+      <div id="formSending" style="display:none;text-align:center;padding:20px 0;">
+        <div class="spinner"></div>
+        <p style="font-size:14px;color:rgba(255,255,255,.5);">Sending…</p>
+      </div>
+
+      <div id="formSuccess" class="success-panel">
+        <div class="success-check">
+          <svg width="24" height="24" fill="none" stroke="#0066cc" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p style="font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;">On its way<span id="capturedName"></span>!</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:18px;">Case study landing in your inbox now.</p>
+        <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+           target="_blank" rel="noopener"
+           class="book-btn"
+           style="font-size:15px;padding:13px;"
+           data-cta="book" onclick="cta('book')">
+          📅 &nbsp;Book a Call While You're Here
+        </a>
+      </div>
     </div>
 
-    <div class="trust-strip">
+    <!-- Trust + social proof -->
+    <div class="trust-row">
       <span class="trust-item">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         3,500+ units managed
       </span>
       <span class="trust-item">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         12 US states
       </span>
       <span class="trust-item">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         No commitment
       </span>
     </div>
-  </div>
-</section>
 
-<!-- ═══ SOCIAL PROOF ════════════════════════════════ -->
-<section class="section-sm section-white">
-  <div class="wrap">
-    <div class="quote-card">
-      <div class="quote-mark">"</div>
-      <p class="quote-text">It's like having a back-office team that never sleeps. Maintenance handled itself at 2am — I didn't lift a finger.</p>
-      <p class="quote-attr">— Kelly Scott, Peabody Residential &nbsp;·&nbsp; 200 units, Virginia</p>
-    </div>
-
-    <div class="logo-row mt24">
-      <span style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-right:4px;">Clients</span>
-      <span class="logo-pill">Peabody Residential</span>
-      <span class="logo-pill">LS Properties</span>
-      <span class="logo-pill">Allstar Management</span>
-      <span class="logo-pill">Tipped</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ WHAT YOU'LL SEE ══════════════════════════════ -->
-<section class="section section-gray">
-  <div class="wrap">
-    <div class="divider"></div>
-    <h2 class="h2">What you'll see in 15 minutes</h2>
-    <p class="sub mt8">No deck. No pitch. We open the agent and run it live.</p>
-
-    <div class="bullets mt32">
-      <div class="bullet-row">
-        <div class="bullet-icon">🔍</div>
-        <div>
-          <div class="bullet-title">Tenant screening, end-to-end in 60 seconds</div>
-          <div class="bullet-desc">Lead comes in → income check → soft credit pull → applicant scored → tour booked automatically. You never touch it.</div>
-        </div>
-      </div>
-      <div class="bullet-row">
-        <div class="bullet-icon">📄</div>
-        <div>
-          <div class="bullet-title">Lease renewals + rent CMAs — without your involvement</div>
-          <div class="bullet-desc">Agent pulls market comps, drafts the renewal at the right price, sends to tenant, tracks the response. You get a summary.</div>
-        </div>
-      </div>
-      <div class="bullet-row">
-        <div class="bullet-icon">🔧</div>
-        <div>
-          <div class="bullet-title">Maintenance at 2am — dispatched in 14 seconds</div>
-          <div class="bullet-desc">Tenant texts. Agent reads it, checks urgency, picks vendor, dispatches, replies — and logs the work order. You stay asleep.</div>
-        </div>
-      </div>
-      <div class="bullet-row">
-        <div class="bullet-icon">📊</div>
-        <div>
-          <div class="bullet-title">Owner reporting + spend tracking, automated</div>
-          <div class="bullet-desc">Every transaction auto-categorized. Owner reports generated. Anomalies flagged. No manual spreadsheet work.</div>
-        </div>
+    <div class="quote-pill">
+      <div class="quote-avatar">K</div>
+      <div>
+        <p>"It's like a back-office team that never sleeps."</p>
+        <strong>Kelly Scott · Peabody Residential · 200 units, VA</strong>
       </div>
     </div>
 
-    <div class="mt40 text-center">
-      <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin:0 auto;">
-        <tr>
-          <td align="center" bgcolor="#0066cc" style="border-radius:10px;mso-padding-alt:0;padding:0;">
-            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-               target="_blank" rel="noopener"
-               class="btn-book btn-book-lg"
-               data-cta="book"
-               onclick="track('book')">
-              Book a 15-min walkthrough &nbsp;→
-            </a>
-          </td>
-        </tr>
-      </table>
-      <p style="font-size:13px;color:var(--muted);margin-top:10px;">Opens Google Calendar · Free · No prep needed</p>
-    </div>
-  </div>
-</section>
+  </div><!-- /left-panel -->
 
-<!-- ═══ INTERACTIVE DEMO ══════════════════════════════ -->
-<section class="section section-white" id="demo">
-  <div class="wrap">
-    <div class="text-center" style="margin-bottom:32px;">
-      <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
-      <h2 class="h2">Try it yourself right now</h2>
-      <p class="sub mt8">Pick any scenario — watch the agent work through it in real time.</p>
-    </div>
+  <!-- ── RIGHT: 3D Demo Card ── -->
+  <div class="right-panel">
+    <div class="glow"></div>
+    <div class="perspective-wrap" id="perspectiveWrap">
+      <div class="demo-3d" id="card3d">
 
-    <div class="demo-shell" style="max-width:680px;margin:0 auto;">
-
-      <!-- Scenario picker -->
-      <div class="demo-label">Pick a tenant request</div>
-      <select id="scenarioSelect" class="scenario-select" aria-label="Pick a scenario">
-        <optgroup label="🔧  Maintenance Triage">
-          <option value="ac">🥵  AC broken — Apt 112 · 2:18 PM</option>
-          <option value="leak">💧  Sink leaking — Apt 304 · 11:42 PM</option>
-          <option value="lockout">🔑  Locked out — Apt 207 · 9:30 AM</option>
-          <option value="bulb">💡  Light bulb out — Apt 415 · 4:05 PM</option>
-        </optgroup>
-        <optgroup label="🏠  Leasing & Screening">
-          <option value="application">📋  New rental inquiry — 312 Maple St</option>
-        </optgroup>
-      </select>
-
-      <div class="demo-progress" id="progressBar">
-        <div class="demo-progress-bar" style="background:var(--navy);"></div>
-        <div class="demo-progress-bar"></div>
-        <div class="demo-progress-bar"></div>
-        <div class="demo-progress-bar"></div>
-        <div class="demo-progress-bar"></div>
-      </div>
-
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
-        <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">AI handles it</span>
-        <span id="stepCounter" style="font-size:12px;font-family:monospace;color:var(--muted);">Step 1 of 5</span>
-      </div>
-
-      <div style="min-height:260px;" id="stepArea">
-
-        <!-- STEP 1 -->
-        <div class="demo-step" data-step="1">
-          <div class="demo-step-title">Tenant texts in.</div>
-          <div class="demo-step-sub">Real tenants send short, messy messages — not emails. Here's what just came in:</div>
-          <div class="mt4" style="font-size:11px;font-family:monospace;color:var(--muted);margin-bottom:8px;" id="s1meta">Apt 112 · 2:18 PM</div>
-          <div class="bubble-in" id="s1msg">AC broken 🥵 95° in here</div>
-          <p style="font-size:12px;color:var(--muted);margin-top:12px;">↑ That's the entire message. Watch what happens next.</p>
-        </div>
-
-        <!-- STEP 2 -->
-        <div class="demo-step hidden" data-step="2">
-          <div class="demo-step-title">AI reads it. Investigates.</div>
-          <div class="demo-step-sub">In under a second, the agent pulls everything it needs:</div>
-          <div class="check-list" id="s2checks"></div>
-          <div id="s2badge"></div>
-        </div>
-
-        <!-- STEP 3 -->
-        <div class="demo-step hidden" data-step="3">
-          <div class="demo-step-title">Picks vendor. Dispatches.</div>
-          <div class="demo-step-sub">From your approved vendor list — ranked by rating, distance, and response time.</div>
-          <div class="vendor-row">
-            <div class="vendor-icon">🔧</div>
-            <div>
-              <div class="vendor-name" id="s3vendor">CoolPro HVAC</div>
-              <div class="vendor-meta" id="s3meta">4.8★ · 24-hr emergency · 1.2mi</div>
-            </div>
-            <div class="vendor-tag">Dispatched</div>
+        <!-- Window chrome -->
+        <div class="win-chrome">
+          <div class="win-dots">
+            <span class="win-dot r"></span>
+            <span class="win-dot y"></span>
+            <span class="win-dot g"></span>
           </div>
-          <div style="margin-top:10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">SMS to vendor</div>
-          <div class="sms-box" id="s3sms"></div>
-        </div>
-
-        <!-- STEP 4 -->
-        <div class="demo-step hidden" data-step="4">
-          <div class="demo-step-title">Replies to tenant.</div>
-          <div class="demo-step-sub">Calm, specific, with next steps. The tenant got a reply in 14 seconds — at 2am.</div>
-          <div style="font-size:11px;font-family:monospace;color:var(--muted);margin-bottom:8px;text-align:right;" id="s4meta">UpneX AI · 2:18 PM</div>
-          <div class="bubble-out" id="s4reply"></div>
-        </div>
-
-        <!-- STEP 5 -->
-        <div class="demo-step hidden" data-step="5">
-          <div class="demo-step-title">Logged. Owner alerted.</div>
-          <div class="demo-step-sub">Synced to AppFolio / Buildium. Audit trail. You stayed asleep.</div>
-          <div class="log-box">
-            <div class="log-box-id" id="s5id">WO-4837</div>
-            <div class="log-box-meta" id="s5meta">Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs</div>
-            <div class="log-row"><span>Message → dispatched</span><span id="s5time">14 seconds</span></div>
-            <div class="log-row"><span>Human steps</span><span>Zero</span></div>
-            <div class="log-row"><span>Tenant rating</span><span>★★★★★</span></div>
+          <div class="win-title">UpneX Agent Dashboard</div>
+          <div class="win-live">
+            <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;"></span>
+            Live
           </div>
         </div>
-      </div><!-- /stepArea -->
 
-      <div class="demo-nav">
-        <button class="btn-back" id="backBtn" onclick="go(-1)">← Back</button>
-        <button class="btn-next" id="nextBtn" onclick="go(1)">
-          <span id="nextLabel">Next: AI investigates</span>
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
+        <!-- Scenario tabs -->
+        <div class="scenario-tabs" id="scenarioTabs">
+          <button class="stab active" data-s="ac" onclick="setScenario('ac')">🥵 AC Emergency</button>
+          <button class="stab" data-s="leak" onclick="setScenario('leak')">💧 Water Leak</button>
+          <button class="stab" data-s="lockout" onclick="setScenario('lockout')">🔑 Lockout</button>
+          <button class="stab" data-s="application" onclick="setScenario('application')">📋 New Lead</button>
+          <button class="stab" data-s="bulb" onclick="setScenario('bulb')">💡 Routine</button>
+        </div>
 
-<!-- ═══ SECOND BOOK CTA ══════════════════════════════ -->
-<section class="section section-navy text-center">
-  <div class="wrap-sm">
-    <div class="urgency-band" style="max-width:480px;margin:0 auto 28px;">
-      <span class="urgency-dot"></span>
-      We take 4–6 demo calls per month. Spots fill fast.
-    </div>
-    <h2 class="h2" style="color:#fff;">Seen enough? Let's run it on your portfolio.</h2>
-    <p class="sub-hero mt12" style="max-width:440px;margin-left:auto;margin-right:auto;">
-      15 minutes. No deck. No prep. Just Hari and the live agent.
-    </p>
-    <div class="mt32" style="display:flex;justify-content:center;">
-      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td align="center" bgcolor="#0066cc" style="border-radius:10px;mso-padding-alt:0;padding:0;">
-            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-               target="_blank" rel="noopener"
-               class="btn-book btn-book-lg"
-               data-cta="book"
-               onclick="track('book')">
-              Book a 15-min walkthrough &nbsp;→
-            </a>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <p style="font-size:13px;color:rgba(255,255,255,.35);margin-top:12px;">Opens Google Calendar · $0 cost · Cancel anytime</p>
-  </div>
-</section>
+        <!-- Progress -->
+        <div class="progress-track" id="progressTrack">
+          <div class="progress-seg done"></div>
+          <div class="progress-seg"></div>
+          <div class="progress-seg"></div>
+          <div class="progress-seg"></div>
+          <div class="progress-seg"></div>
+        </div>
 
-<!-- ═══ SECONDARY — EMAIL FORM ═══════════════════════ -->
-<section class="section section-gray" id="case-study">
-  <div class="wrap-sm">
-    <div class="text-center" style="margin-bottom:28px;">
-      <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
-      <h2 class="h2">Not ready for a call yet?</h2>
-      <p class="sub mt8">Drop your info — I'll send you the full UpneX case study with real numbers.</p>
-    </div>
+        <!-- Step content -->
+        <div class="step-area" id="stepArea">
 
-    <div class="form-wrap">
-      <!-- Step 1: form -->
-      <div id="formStep1">
-        <form id="leadForm" style="display:flex;flex-direction:column;gap:16px;">
-          <div class="form-grid">
-            <div class="form-field">
-              <label class="form-label" for="f-name">Your Name</label>
-              <input id="f-name" class="form-input" type="text" name="name" required placeholder="Full name" />
+          <!-- STEP 1: Message received -->
+          <div class="step-slide" data-step="1">
+            <div class="step-badge">Step 1 · Tenant sends message</div>
+            <div class="step-title">Request comes in.</div>
+            <div class="step-sub">Real tenants send short, messy texts — not email. The agent reads it instantly.</div>
+            <div class="msg-time" id="s1time">Apt 112 · 2:18 PM</div>
+            <div class="msg-row"><div class="bubble-in" id="s1msg">AC broken 🥵 95° in here</div></div>
+            <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:10px;">↑ That's the entire message. Watch what happens next →</p>
+          </div>
+
+          <!-- STEP 2: AI investigates -->
+          <div class="step-slide hidden" data-step="2">
+            <div class="step-badge">Step 2 · AI investigates</div>
+            <div class="step-title">Reads it. Pulls context.</div>
+            <div class="step-sub">In under a second, the agent checks everything it needs:</div>
+            <div class="check-list" id="s2list"></div>
+            <div id="s2badge" style="margin-top:10px;"></div>
+          </div>
+
+          <!-- STEP 3: Dispatch -->
+          <div class="step-slide hidden" data-step="3">
+            <div class="step-badge">Step 3 · Vendor dispatched</div>
+            <div class="step-title">Picks vendor. Sends job.</div>
+            <div class="step-sub">From your approved list, ranked by rating, distance, and availability.</div>
+            <div class="vendor-card">
+              <div class="vendor-emoji">🔧</div>
+              <div>
+                <div class="vendor-name" id="s3name">CoolPro HVAC</div>
+                <div class="vendor-meta" id="s3meta">4.8★ · 24-hr emergency · 1.2mi away</div>
+              </div>
+              <div class="dispatched-tag">✓ DISPATCHED</div>
             </div>
-            <div class="form-field">
-              <label class="form-label" for="f-email">Work Email</label>
-              <input id="f-email" class="form-input" type="email" name="email" required placeholder="you@company.com" />
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="f-phone">Phone</label>
-              <input id="f-phone" class="form-input" type="tel" name="phone" required placeholder="+1 (000) 000-0000" />
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="f-portfolio">Portfolio Size</label>
-              <select id="f-portfolio" class="form-input" name="portfolio" required>
-                <option value="">Select…</option>
-                <option value="0-50">Under 50 units</option>
-                <option value="50-200">50–200 units</option>
-                <option value="200-500">200–500 units</option>
-                <option value="500-1000">500–1,000 units</option>
-                <option value="1000+">1,000+ units</option>
-              </select>
+            <div class="sms-label">SMS sent to vendor</div>
+            <div class="sms-preview" id="s3sms"></div>
+          </div>
+
+          <!-- STEP 4: Tenant reply -->
+          <div class="step-slide hidden" data-step="4">
+            <div class="step-badge">Step 4 · Tenant notified</div>
+            <div class="step-title">Replies in your brand voice.</div>
+            <div class="step-sub">Calm. Specific. In 14 seconds. At 2am. You didn't move.</div>
+            <div class="msg-row right"><div class="bubble-out" id="s4reply"></div></div>
+            <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:10px;" id="s4time">UpneX AI · 2:18 PM · 14 seconds to resolve</p>
+          </div>
+
+          <!-- STEP 5: Work order -->
+          <div class="step-slide hidden" data-step="5">
+            <div class="step-badge">Step 5 · Logged &amp; synced</div>
+            <div class="step-title">Work order created. Owner alerted.</div>
+            <div class="step-sub">Synced to AppFolio / Buildium. You slept through the whole thing.</div>
+            <div class="log-card">
+              <div class="log-id" id="s5id">WO-4837</div>
+              <div class="log-sub" id="s5sub">Unit 112 · URGENT · CoolPro HVAC</div>
+              <div class="log-row"><span>Message → dispatched</span><span id="s5time">14 seconds</span></div>
+              <div class="log-row"><span>Human steps taken</span><span>Zero</span></div>
+              <div class="log-row"><span>Tenant rating</span><span>★★★★★</span></div>
             </div>
           </div>
-          <button type="submit"
-                  class="btn-secondary"
-                  data-cta="email"
-                  onclick="track('email')">
-            Send Me the Case Study →
+
+        </div><!-- /step-area -->
+
+        <!-- Demo navigation -->
+        <div class="demo-nav">
+          <button class="btn-back-demo" id="backBtn" onclick="step(-1)">← Back</button>
+          <span class="step-count" id="stepCount">Step 1 of 5</span>
+          <button class="btn-next-demo" id="nextBtn" onclick="step(1)">
+            <span id="nextLabel">Watch AI investigate</span>
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           </button>
-          <p class="form-privacy">Your info stays private. No spam, ever.</p>
-        </form>
-      </div>
+        </div>
 
-      <!-- Step 2: sending / success -->
-      <div id="formStep2" style="display:none;text-align:center;padding:20px 0;">
-        <div id="sendingState">
-          <div class="spinner" style="margin-bottom:16px;"></div>
-          <p style="font-weight:600;color:var(--navy);">Sending…</p>
-        </div>
-        <div id="successState" style="display:none;">
-          <div class="success-icon">
-            <svg width="26" height="26" fill="none" stroke="#0066cc" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3 class="h3">Done<span id="capturedName"></span>!</h3>
-          <p class="sub mt8">Case study on its way — check your inbox in a few minutes.</p>
-          <div style="background:var(--gray);border-radius:12px;padding:20px;margin-top:20px;">
-            <p style="font-weight:700;color:var(--navy);font-size:15px;margin-bottom:6px;">Ready to see it live?</p>
-            <p class="sub" style="font-size:13px;margin-bottom:14px;">Book a 15-min call while you have the momentum.</p>
-            <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-               target="_blank" rel="noopener"
-               class="btn-book"
-               id="bookCallBtn"
-               data-cta="book"
-               onclick="track('book')"
-               style="display:inline-flex;align-items:center;gap:6px;padding:12px 24px;font-size:14px;">
-              📅 &nbsp;Book a Call Now
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </div><!-- /demo-3d -->
+    </div><!-- /perspective-wrap -->
+  </div><!-- /right-panel -->
+
+</div><!-- /hero -->
 
 <!-- ═══ FOOTER ═══════════════════════════════════════ -->
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-logo">UpneX</div>
-        <p class="footer-sub">AI-powered property management back-office. Operated from India, aligned to US hours.</p>
-      </div>
-      <div class="footer-links">
-        <div>
-          <div class="footer-col-label">Contact</div>
-          <a href="mailto:hari@upnexs.com" class="footer-link">hari@upnexs.com</a>
-          <a href="https://wa.me/13303385146" target="_blank" rel="noopener" class="footer-link">+1 (330) 338-5146</a>
-        </div>
-        <div>
-          <div class="footer-col-label">US Office</div>
-          <p class="footer-link" style="cursor:default;pointer-events:none;">PO Box 350<br>Metuchen, NJ 08840</p>
-        </div>
-      </div>
-    </div>
-    <p class="footer-copy">© 2026 UpneX Solutions OPC Pvt. Ltd. All rights reserved.</p>
+  <span class="footer-logo">UpneX</span>
+  <div class="footer-links">
+    <a href="mailto:hari@upnexs.com" class="footer-link">hari@upnexs.com</a>
+    <a href="https://wa.me/13303385146" target="_blank" rel="noopener" class="footer-link">WhatsApp</a>
+    <a href="https://upnexs.com" class="footer-link">upnexs.com</a>
   </div>
+  <span class="footer-copy">© 2026 UpneX Solutions OPC Pvt. Ltd.</span>
 </footer>
+</div><!-- /page -->
 
-<!-- ═══ STICKY MOBILE BOOK BAR ═══════════════════════ -->
-<div class="sticky-bar" id="stickyBar">
+<!-- ═══ MOBILE STICKY BAR ════════════════════════════ -->
+<div class="mobile-sticky" id="mobileSticky">
   <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
      target="_blank" rel="noopener"
-     class="btn-book btn-book-full"
-     data-cta="book"
-     onclick="track('book')"
-     style="font-size:16px;padding:16px;">
+     class="book-btn"
+     style="font-size:16px;padding:15px;"
+     data-cta="book" onclick="cta('book')">
     Book a 15-min walkthrough →
   </a>
 </div>
 
 <!-- ═══ SCRIPTS ═══════════════════════════════════════ -->
 <script>
-// ── CTA tracking ─────────────────────────────────────
-function track(type) {
-  if (window.fbq) fbq('track', type === 'book' ? 'Schedule' : 'Lead');
-  console.log('[UpneX] cta:', type);
+/* ─── CTA tracking ───────────────────────────────────── */
+function cta(type){
+  if(window.fbq) fbq('track', type==='book'?'Schedule':'Lead');
+  console.log('[UpneX] cta:',type);
 }
 
-// ── Sticky bar ────────────────────────────────────────
-const stickyBar = document.getElementById('stickyBar');
-window.addEventListener('scroll', () => {
-  stickyBar.classList.toggle('show', window.scrollY > 300);
-}, { passive: true });
+/* ─── Mobile sticky ──────────────────────────────────── */
+const ms = document.getElementById('mobileSticky');
+window.addEventListener('scroll',()=>ms.classList.toggle('show',window.scrollY>200),{passive:true});
 
-// ── EmailJS ───────────────────────────────────────────
-const EJSCFG = { pub: 'cQAXNRskNvru4mu4j', svc: 'service_vhcikjr', tpl: 'template_ymh1gz9' };
-if (window.emailjs) emailjs.init({ publicKey: EJSCFG.pub });
+/* ─── 3D mouse tracking ──────────────────────────────── */
+const wrap3d = document.getElementById('perspectiveWrap');
+const card3d = document.getElementById('card3d');
+let hov3d = false;
 
-function sendLead(data) {
-  return new Promise(resolve => {
-    if (!window.emailjs) return resolve(false);
-    const ts = new Date().toLocaleString();
-    emailjs.send(EJSCFG.svc, EJSCFG.tpl, {
-      name: data.name, email: data.email, time: ts,
-      from_name: data.name, from_email: data.email,
-      phone: data.phone, portfolio: data.portfolio, timestamp: ts,
-      subject: `🔔 New UpneX Lead — ${data.name} (${data.portfolio} units)`,
-      message: `New lead from upnexs.com/demo/\n\nName: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nPortfolio: ${data.portfolio}\nTime: ${ts}`,
-    }).then(() => resolve(true)).catch(() => resolve(false));
-  });
-}
-
-const leadForm  = document.getElementById('leadForm');
-const fStep1    = document.getElementById('formStep1');
-const fStep2    = document.getElementById('formStep2');
-const sendingEl = document.getElementById('sendingState');
-const successEl = document.getElementById('successState');
-
-leadForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(leadForm));
-  document.getElementById('capturedName').textContent = data.name ? `, ${data.name.split(' ')[0]}` : '';
-  fStep1.style.display = 'none';
-  fStep2.style.display = 'block';
-  sendingEl.style.display = 'block';
-  successEl.style.display = 'none';
-  Promise.all([sendLead(data), new Promise(r => setTimeout(r, 1400))]).then(() => {
-    sendingEl.style.display = 'none';
-    successEl.style.display = 'block';
-  });
+wrap3d.addEventListener('mouseenter',()=>{
+  hov3d=true;
+  card3d.classList.add('no-anim');
+});
+wrap3d.addEventListener('mouseleave',()=>{
+  hov3d=false;
+  card3d.style.transform='';
+  card3d.style.transition='transform .6s cubic-bezier(.16,1,.3,1)';
+  setTimeout(()=>{
+    card3d.classList.remove('no-anim');
+    card3d.style.transform='';
+    card3d.style.transition='';
+  },600);
+});
+wrap3d.addEventListener('mousemove',e=>{
+  if(!hov3d) return;
+  const r=wrap3d.getBoundingClientRect();
+  const x=((e.clientX-r.left)/r.width-.5)*2;
+  const y=((e.clientY-r.top)/r.height-.5)*2;
+  card3d.style.transform=`rotateY(${-18+x*12}deg) rotateX(${6-y*8}deg) translateY(-8px)`;
+  card3d.style.transition='transform .08s ease';
 });
 
-// ── Scenario data ─────────────────────────────────────
+/* ─── Scenario data ──────────────────────────────────── */
 const S = {
-  ac: {
-    meta:'Apt 112 · 2:18 PM', msg:'AC broken 🥵 95° in here',
-    checks:['Read message · 0.2s','Weather: 95°F today confirmed','Lease: family with infant noted','History: 2nd HVAC call this month'],
+  ac:{
+    s1t:'Apt 112 · 2:18 PM',s1m:'AC broken 🥵 95° in here',
+    checks:['Message read · 0.2s','Weather API: 95°F today confirmed','Lease: family with infant noted','History: 2nd HVAC call this month'],
     badge:{t:'URGENT — health risk',c:'badge-urgent'},
-    vendor:'CoolPro HVAC', vmeta:'4.8★ · 24-hr emergency · 1.2mi',
-    sms:'"Hi CoolPro — urgent: AC out, Unit 112, family with infant. Owner pre-approved after-hours rate. Need ETA ASAP."',
-    reply:'On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified, after-hours approved. Work order #4837 logged. Stay cool — text me if anything changes.',
-    id:'WO-4837', imeta:'Unit 112 · URGENT · CoolPro · ETA 2hrs', time:'14 seconds',
+    s3n:'CoolPro HVAC',s3m:'4.8★ · 24-hr emergency · 1.2mi away',
+    s3s:'"Hi CoolPro — urgent: AC failure, Unit 112. Family with infant inside. Owner pre-approved after-hours. Need ETA now."',
+    s4r:'On it — CoolPro HVAC dispatched, ETA 2hrs. Owner notified + approved. Work order #4837 logged. Stay cool — text me if anything changes.',
+    s4t:'UpneX AI · 2:18 PM · 14 seconds to resolve',
+    s5i:'WO-4837',s5s:'Unit 112 · URGENT · CoolPro HVAC · ETA 2hrs',s5time:'14 seconds'
   },
-  leak: {
-    meta:'Apt 304 · 11:42 PM', msg:'sink leaking bad pls help',
-    checks:['Read message · 0.2s','History: disposal repair 3mo ago','Lease: tenant in good standing','Severity: active water damage risk'],
+  leak:{
+    s1t:'Apt 304 · 11:42 PM',s1m:'sink leaking bad pls help',
+    checks:['Message read · 0.2s','History: disposal repair 3mo ago','Severity: active water damage risk','Lease: tenant in good standing'],
     badge:{t:'URGENT — water damage risk',c:'badge-urgent'},
-    vendor:'Acme Plumbing', vmeta:'4.9★ · 24/7 emergency · 2.0mi',
-    sms:'"Hi Acme — urgent: active sink leak, Apt 304, water damage risk. Need someone in 45min. Full address sent separately."',
-    reply:'Got it — Acme Plumbing on the way, ETA 45min. Shut-off valve guide in your portal. Work order #4821 logged. Text me if it gets worse.',
-    id:'WO-4821', imeta:'Apt 304 · URGENT · Acme Plumbing · ETA 45min', time:'12 seconds',
+    s3n:'Acme Plumbing',s3m:'4.9★ · 24/7 emergency · 2.0mi away',
+    s3s:'"Hi Acme — urgent: active sink leak, Apt 304. Water damage risk. Need someone in 45min. Full address sent separately."',
+    s4r:'Got it — Acme Plumbing on the way, ETA 45min. Shut-off valve guide is in your portal. Work order #4821 logged. Stay safe.',
+    s4t:'UpneX AI · 11:42 PM · 12 seconds to resolve',
+    s5i:'WO-4821',s5s:'Apt 304 · URGENT · Acme Plumbing · ETA 45min',s5time:'12 seconds'
   },
-  lockout: {
-    meta:'Apt 207 · 9:30 AM', msg:'locked out 207',
-    checks:['Read message · 0.2s','Identity: verified via phone match','Lease: active, no balance owed','Policy: $85 fee per Section 6.1'],
+  lockout:{
+    s1t:'Apt 207 · 9:30 AM',s1m:'locked out 207',
+    checks:['Message read · 0.2s','Identity: verified via phone match','Lease: active, no balance owed','Policy: $85 lockout fee per §6.1'],
     badge:{t:'URGENT — tenant locked out',c:'badge-urgent'},
-    vendor:'SafeKey Locksmith', vmeta:'4.7★ · 30-min radius · $85 flat',
-    sms:'"Hi SafeKey — lockout at Apt 207, identity verified. Standard $85 fee. Need ETA. Address sent."',
-    reply:'Verified — SafeKey on the way, ETA 30min. $85 lockout fee added per Section 6.1. Work order #4842 logged. Hang tight!',
-    id:'WO-4842', imeta:'Apt 207 · URGENT · SafeKey · ETA 30min', time:'11 seconds',
+    s3n:'SafeKey Locksmith',s3m:'4.7★ · 30-min radius · $85 flat rate',
+    s3s:'"Hi SafeKey — lockout at Apt 207, identity verified. Standard $85 fee applies. Need ETA. Address sent."',
+    s4r:'Verified — SafeKey Locksmith on the way, ETA 30min. $85 fee added per §6.1. Work order #4842 logged. Hang tight!',
+    s4t:'UpneX AI · 9:30 AM · 11 seconds to resolve',
+    s5i:'WO-4842',s5s:'Apt 207 · URGENT · SafeKey Locksmith · ETA 30min',s5time:'11 seconds'
   },
-  bulb: {
-    meta:'Apt 415 · 4:05 PM', msg:'kitchen light out',
-    checks:['Read message · 0.2s','Lease: bulbs are tenant-replaceable','Self-help video found in library','Classified: routine / self-resolve'],
-    badge:{t:'ROUTINE — self-resolvable',c:'badge-routine'},
-    vendor:'No vendor needed', vmeta:'Self-help video sent · $0 cost',
-    sms:'(No dispatch — tenant self-resolve path triggered. $0 cost.)',
-    reply:"Bulbs in your unit are tenant-replaceable per lease Section 4.2. Here's a 30-sec swap video in your portal. Reply 'still broken' and I'll send someone same-day at no charge.",
-    id:'AUTO-CLOSED', imeta:'Apt 415 · Self-resolved · $0 vendor cost', time:'8 seconds',
+  application:{
+    s1t:'New lead · 10:14 AM',s1m:'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
+    checks:['Inquiry read · 0.3s','Income: $82k ÷ $1,950 = 3.5× ✓ (target 3×)','Credit: 728 FICO ✓','Landlord history: 24mo, zero lates ✓'],
+    badge:{t:'QUALIFIED — score 88/100',c:'badge-ok'},
+    s3n:'Tour booked · Saturday 11am',s3m:'Calendar synced · application link sent',
+    s3s:'"Pre-screen passed for 312 Maple. Tour confirmed Sat 11am. Full application + lease draft in your inbox. Bring ID + 2 paystubs."',
+    s4r:'Great news — you pre-qualified (score 88/100)! Tour: Saturday at 11am. Check your email for the full application + lease draft.',
+    s4t:'UpneX AI · 10:14 AM · 22 seconds end-to-end',
+    s5i:'LEAD-2034',s5s:'312 Maple St · Score 88 · Tour Sat 11am',s5time:'22 seconds'
   },
-  application: {
-    meta:'New lead · 10:14 AM', msg:'Saw 312 Maple St on Zillow. Want to apply. 2 adults, no pets, $82k household.',
-    checks:['Read inquiry · 0.3s','Income check: $82k ÷ $1,950 = 3.5× ✓','Soft credit: 728 FICO ✓','Landlord history: 24mo, zero late payments ✓'],
-    badge:{t:'QUALIFIED — score 88/100',c:'badge-routine'},
-    vendor:'Tour booked · Sat 11am', vmeta:'Calendar synced · application link sent',
-    sms:'"Pre-screen passed for 312 Maple. Tour confirmed Sat 11am. Application + lease draft in inbox. ID + paystubs required before tour."',
-    reply:'Great news — you pre-qualified (score 88/100). Tour: Saturday 11am. Check your email for the full application + lease draft. Bring photo ID + 2 recent paystubs.',
-    id:'LEAD-2034', imeta:'312 Maple St · Score 88 · Tour Sat 11am', time:'22 seconds',
-  },
+  bulb:{
+    s1t:'Apt 415 · 4:05 PM',s1m:'kitchen light out',
+    checks:['Message read · 0.2s','Lease: bulbs are tenant-replaceable','Self-help video found in library','Classified: routine / no vendor needed'],
+    badge:{t:'ROUTINE — self-resolvable ($0)',c:'badge-ok'},
+    s3n:'No vendor dispatched',s3m:'Self-help video sent · $0 cost · auto-close enabled',
+    s3s:'(No dispatch — tenant self-resolve path triggered. Auto-closed in 8 seconds. $0 cost.)',
+    s4r:"Kitchen bulbs are tenant-replaceable per §4.2. Here's a 30-sec swap video in your portal. Reply 'still broken' and I'll send someone same-day.",
+    s4t:'UpneX AI · 4:05 PM · 8 seconds to resolve',
+    s5i:'AUTO-CLOSED',s5s:'Apt 415 · Routine · $0 vendor cost · Self-resolved',s5time:'8 seconds'
+  }
 };
 
-const NEXT_LABELS = [
-  'Next: Watch AI investigate',
-  'Next: See vendor dispatched',
-  'Next: See tenant reply',
-  'Next: See it logged',
-  'Book a call — run this on my portfolio',
-];
+const NEXT = ['Watch AI investigate','See vendor dispatched','See tenant reply','See work order','Book a call →'];
 
-let cur = 'ac', step = 1;
+let curS = 'ac', curStep = 1;
 
-function renderStep() {
-  const s = S[cur];
-  // Progress
-  document.querySelectorAll('.demo-progress-bar').forEach((b, i) => {
-    b.style.background = i < step ? 'var(--navy)' : 'var(--line)';
+function render(){
+  const s = S[curS];
+  // Progress bars
+  document.querySelectorAll('.progress-seg').forEach((b,i)=>b.classList.toggle('done',i<curStep));
+  // Step counter
+  document.getElementById('stepCount').textContent=`Step ${curStep} of 5`;
+  // Show correct slide
+  document.querySelectorAll('.step-slide').forEach(el=>{
+    el.classList.toggle('hidden',el.dataset.step!=curStep);
+    if(el.dataset.step==curStep){ el.style.animation='none'; void el.offsetWidth; el.style.animation=''; }
   });
-  document.getElementById('stepCounter').textContent = `Step ${step} of 5`;
 
-  // Steps
-  document.querySelectorAll('.demo-step').forEach(el => el.classList.add('hidden'));
-  const el = document.querySelector(`.demo-step[data-step="${step}"]`);
-  el.classList.remove('hidden');
-  el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
-
-  if (step === 1) {
-    document.getElementById('s1meta').textContent = s.meta;
-    document.getElementById('s1msg').textContent  = s.msg;
-  } else if (step === 2) {
-    const cl = document.getElementById('s2checks');
-    cl.innerHTML = '';
-    s.checks.forEach((c, i) => {
-      const d = document.createElement('div');
-      d.className = 'check-row';
-      d.style.animationDelay = `${i * 170}ms`;
-      d.innerHTML = `<div class="check-dot"><svg fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>${c}</span>`;
-      cl.appendChild(d);
+  if(curStep===1){
+    document.getElementById('s1time').textContent=s.s1t;
+    document.getElementById('s1msg').textContent=s.s1m;
+  } else if(curStep===2){
+    const el=document.getElementById('s2list');
+    el.innerHTML='';
+    s.checks.forEach((c,i)=>{
+      const d=document.createElement('div');
+      d.className='check-row';
+      d.style.animationDelay=`${i*160}ms`;
+      d.innerHTML=`<div class="check-ico"><svg fill="none" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div><span>${c}</span>`;
+      el.appendChild(d);
     });
-    const bEl = document.getElementById('s2badge');
-    bEl.innerHTML = `<span class="badge ${s.badge.c}" style="opacity:0;transition:opacity .4s;">${s.badge.t}</span>`;
-    setTimeout(() => bEl.querySelector('.badge').style.opacity = '1', s.checks.length * 170 + 200);
-  } else if (step === 3) {
-    document.getElementById('s3vendor').textContent = s.vendor;
-    document.getElementById('s3meta').textContent   = s.vmeta;
-    document.getElementById('s3sms').textContent    = s.sms;
-  } else if (step === 4) {
-    document.getElementById('s4meta').textContent  = `UpneX AI · ${s.meta.split(' · ')[1]}`;
-    document.getElementById('s4reply').textContent = s.reply;
-  } else if (step === 5) {
-    document.getElementById('s5id').textContent   = s.id;
-    document.getElementById('s5meta').textContent = s.imeta;
-    document.getElementById('s5time').textContent = s.time;
+    const b=document.getElementById('s2badge');
+    b.innerHTML=`<span class="alert-badge ${s.badge.c}" id="abadge">${s.badge.t}</span>`;
+    setTimeout(()=>{ const ab=document.getElementById('abadge'); if(ab) ab.style.opacity='1'; }, s.checks.length*160+200);
+  } else if(curStep===3){
+    document.getElementById('s3name').textContent=s.s3n;
+    document.getElementById('s3meta').textContent=s.s3m;
+    document.getElementById('s3sms').textContent=s.s3s;
+  } else if(curStep===4){
+    document.getElementById('s4reply').textContent=s.s4r;
+    document.getElementById('s4time').textContent=s.s4t;
+  } else if(curStep===5){
+    document.getElementById('s5id').textContent=s.s5i;
+    document.getElementById('s5sub').textContent=s.s5s;
+    document.getElementById('s5time').textContent=s.s5time;
   }
 
-  document.getElementById('backBtn').style.visibility = step === 1 ? 'hidden' : 'visible';
-  document.getElementById('nextLabel').textContent = NEXT_LABELS[step - 1];
-  document.getElementById('nextBtn').dataset.action = step === 5 ? 'book' : 'next';
-
-  const dd = document.getElementById('scenarioSelect');
-  if (dd.value !== cur) dd.value = cur;
+  document.getElementById('backBtn').style.visibility=curStep===1?'hidden':'visible';
+  document.getElementById('nextLabel').textContent=NEXT[curStep-1];
+  document.getElementById('nextBtn').dataset.a=curStep===5?'book':'next';
 }
 
-function go(dir) {
-  if (document.getElementById('nextBtn').dataset.action === 'book' && dir === 1) {
-    track('book');
-    window.open('https://calendar.app.google/9qmnLSzNejCwGSkcA', '_blank', 'noopener');
+function step(dir){
+  if(document.getElementById('nextBtn').dataset.a==='book' && dir===1){
+    cta('book');
+    window.open('https://calendar.app.google/9qmnLSzNejCwGSkcA','_blank','noopener');
     return;
   }
-  step = Math.min(5, Math.max(1, step + dir));
-  renderStep();
+  curStep=Math.min(5,Math.max(1,curStep+dir));
+  render();
 }
 
-document.getElementById('scenarioSelect').addEventListener('change', e => {
-  cur = e.target.value; step = 1; renderStep();
-});
+function setScenario(s){
+  curS=s; curStep=1;
+  document.querySelectorAll('.stab').forEach(b=>b.classList.toggle('active',b.dataset.s===s));
+  render();
+}
 
-renderStep();
+render();
+
+/* ─── EmailJS ────────────────────────────────────────── */
+const EJS={pub:'cQAXNRskNvru4mu4j',svc:'service_vhcikjr',tpl:'template_ymh1gz9'};
+if(window.emailjs) emailjs.init({publicKey:EJS.pub});
+
+function sendEmail(d){
+  return new Promise(res=>{
+    if(!window.emailjs) return res(false);
+    const ts=new Date().toLocaleString();
+    emailjs.send(EJS.svc,EJS.tpl,{
+      name:d.name,email:d.email,time:ts,
+      from_name:d.name,from_email:d.email,
+      phone:d.phone,portfolio:d.portfolio,timestamp:ts,
+      subject:`🔔 New UpneX Lead — ${d.name} (${d.portfolio} units)`,
+      message:`Lead from upnexs.com/demo\nName: ${d.name}\nEmail: ${d.email}\nPhone: ${d.phone}\nPortfolio: ${d.portfolio}\nTime: ${ts}`
+    }).then(()=>res(true)).catch(()=>res(false));
+  });
+}
+
+const form=document.getElementById('leadForm');
+const sendingEl=document.getElementById('formSending');
+const successEl=document.getElementById('formSuccess');
+
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const d=Object.fromEntries(new FormData(form));
+  document.getElementById('capturedName').textContent=d.name?`, ${d.name.split(' ')[0]}`:'';
+  form.style.display='none';
+  sendingEl.style.display='block';
+  Promise.all([sendEmail(d),new Promise(r=>setTimeout(r,1200))]).then(()=>{
+    sendingEl.style.display='none';
+    successEl.style.display='block';
+  });
+});
 </script>
 </body>
 </html>
