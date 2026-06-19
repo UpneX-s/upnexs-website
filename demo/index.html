@@ -12,7 +12,6 @@
 fbq('init','946905738177488');fbq('track','PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -568,64 +567,6 @@ select.field-input option{background:#1a2e4a;color:#fff;}
       </tr>
     </table>
 
-    <!-- SECONDARY: Email form -->
-    <div class="or-line">or get the case study</div>
-
-    <div id="formWrap">
-      <form id="leadForm" autocomplete="on">
-        <div class="form-grid">
-          <div>
-            <label class="field-label" for="fn">Name</label>
-            <input id="fn" class="field-input" type="text" name="name" required placeholder="Full name" autocomplete="name"/>
-          </div>
-          <div>
-            <label class="field-label" for="fe">Email</label>
-            <input id="fe" class="field-input" type="email" name="email" required placeholder="you@company.com" autocomplete="email"/>
-          </div>
-          <div>
-            <label class="field-label" for="fp">Phone</label>
-            <input id="fp" class="field-input" type="tel" name="phone" required placeholder="+1 (000) 000-0000" autocomplete="tel"/>
-          </div>
-          <div>
-            <label class="field-label" for="fs">Portfolio</label>
-            <select id="fs" class="field-input" name="portfolio" required>
-              <option value="">Units…</option>
-              <option value="under-50">Under 50</option>
-              <option value="50-200">50–200</option>
-              <option value="200-500">200–500</option>
-              <option value="500-1000">500–1,000</option>
-              <option value="1000+">1,000+</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="form-submit" data-cta="email" onclick="cta('email')">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          Send Me the Case Study →
-        </button>
-        <p class="privacy-note">No spam · Unsubscribe anytime</p>
-      </form>
-
-      <div id="formSending" style="display:none;text-align:center;padding:20px 0;">
-        <div class="spinner"></div>
-        <p style="font-size:14px;color:rgba(255,255,255,.5);">Sending…</p>
-      </div>
-
-      <div id="formSuccess" class="success-panel">
-        <div class="success-check">
-          <svg width="24" height="24" fill="none" stroke="#0066cc" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <p style="font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;">On its way<span id="capturedName"></span>!</p>
-        <p style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:18px;">Case study landing in your inbox now.</p>
-        <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
-           target="_blank" rel="noopener"
-           class="book-btn"
-           style="font-size:15px;padding:13px;"
-           data-cta="book" onclick="cta('book')">
-          📅 &nbsp;Book a Call While You're Here
-        </a>
-      </div>
-    </div>
-
     <!-- Trust + social proof -->
     <div class="trust-row">
       <span class="trust-item">
@@ -643,10 +584,10 @@ select.field-input option{background:#1a2e4a;color:#fff;}
     </div>
 
     <div class="quote-pill">
-      <div class="quote-avatar">K</div>
+      <div class="quote-avatar">PM</div>
       <div>
         <p>"It's like a back-office team that never sleeps."</p>
-        <strong>Kelly Scott · Peabody Residential · 200 units, VA</strong>
+        <strong>Property Manager · 200-unit portfolio, Mid-Atlantic</strong>
       </div>
     </div>
 
@@ -955,39 +896,6 @@ function setScenario(s){
 
 render();
 
-/* ─── EmailJS ────────────────────────────────────────── */
-const EJS={pub:'cQAXNRskNvru4mu4j',svc:'service_vhcikjr',tpl:'template_ymh1gz9'};
-if(window.emailjs) emailjs.init({publicKey:EJS.pub});
-
-function sendEmail(d){
-  return new Promise(res=>{
-    if(!window.emailjs) return res(false);
-    const ts=new Date().toLocaleString();
-    emailjs.send(EJS.svc,EJS.tpl,{
-      name:d.name,email:d.email,time:ts,
-      from_name:d.name,from_email:d.email,
-      phone:d.phone,portfolio:d.portfolio,timestamp:ts,
-      subject:`🔔 New UpneX Lead — ${d.name} (${d.portfolio} units)`,
-      message:`Lead from upnexs.com/demo\nName: ${d.name}\nEmail: ${d.email}\nPhone: ${d.phone}\nPortfolio: ${d.portfolio}\nTime: ${ts}`
-    }).then(()=>res(true)).catch(()=>res(false));
-  });
-}
-
-const form=document.getElementById('leadForm');
-const sendingEl=document.getElementById('formSending');
-const successEl=document.getElementById('formSuccess');
-
-form.addEventListener('submit',e=>{
-  e.preventDefault();
-  const d=Object.fromEntries(new FormData(form));
-  document.getElementById('capturedName').textContent=d.name?`, ${d.name.split(' ')[0]}`:'';
-  form.style.display='none';
-  sendingEl.style.display='block';
-  Promise.all([sendEmail(d),new Promise(r=>setTimeout(r,1200))]).then(()=>{
-    sendingEl.style.display='none';
-    successEl.style.display='block';
-  });
-});
 </script>
 </body>
 </html>
