@@ -1082,31 +1082,10 @@ body{
      onclick="trackCTA('mobile-sticky-book')">📅 Book Call</a>
 </div>
 
-<!-- EmailJS — sends sample screening report to visitor's inbox -->
-<!-- SETUP (one-time, 10 min): -->
-<!--   1. Sign up free at emailjs.com                            -->
-<!--   2. Add Gmail service → copy Service ID                    -->
-<!--   3. Create template with {{to_email}} var → copy Template ID -->
-<!--   4. Copy Public Key from Account → API Keys                -->
-<!--   5. Fill the 3 values below and you're live               -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-(function(){
-  // ── Replace these 3 values after EmailJS setup ──────────────
-  var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // emailjs.com → Account → API Keys
-  var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // emailjs.com → Email Services
-  var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // emailjs.com → Email Templates
-  // ────────────────────────────────────────────────────────────
-
-  window._ejsCfg = {pub: EMAILJS_PUBLIC_KEY, svc: EMAILJS_SERVICE_ID, tpl: EMAILJS_TEMPLATE_ID};
-  if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-    window._ejsReady = true;
-  }
-})();
-</script>
-
 <!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
+<!-- Formsubmit.co handles email — no account or API key needed.   -->
+<!-- ONE-TIME activation: first submission triggers a verification  -->
+<!-- email to hari@upnexs.com — click Confirm once, then it's live -->
 <script>
 /* ── Demo peak form submit ─────────────────────────────── */
 function submitBooking(e) {
@@ -1117,27 +1096,61 @@ function submitBooking(e) {
   btn.textContent = 'Sending…';
   btn.disabled = true;
 
-  function onDone() {
+  var reportBody = [
+    'Thanks for watching the UpneX screening demo!',
+    '',
+    'Here is exactly what we delivered in 30 seconds:',
+    '',
+    'APPLICANT: Alex Morgan  |  4821 Maple Dr, Austin TX',
+    '──────────────────────────────────────────────────',
+    '✓  CREDIT SCORE:       742  (Tier A — Excellent)',
+    '✓  BACKGROUND CHECK:   Clean record, no criminal flags',
+    '✓  INCOME RATIO:       3.2× rent — verified employment',
+    '✓  EVICTION HISTORY:   No prior evictions found',
+    '──────────────────────────────────────────────────',
+    '✅  DECISION: APPROVED',
+    '    Landlord letter drafted and ready to send',
+    '──────────────────────────────────────────────────',
+    '',
+    'This is the exact output your landlord clients receive',
+    'within 30 seconds of every application — 24/7.',
+    '',
+    'Ready to set this up for your portfolio?',
+    '',
+    '→ Book a 15-min walkthrough:',
+    'https://calendar.app.google/9qmnLSzNejCwGSkcA',
+    '',
+    '— Hari | UpneX',
+    'hari@upnexs.com  |  upnexs.com'
+  ].join('\n');
+
+  function showDone() {
     document.getElementById('bpForm').style.display = 'none';
     document.getElementById('bpSuccess').style.display = 'block';
     trackCTA('demo-peak-submit');
     if (window.fbq) fbq('track', 'Lead', {content_name: 'demo_peak_email'});
-    /* Open calendar automatically after brief success moment */
     setTimeout(function() {
       window.open('https://calendar.app.google/9qmnLSzNejCwGSkcA', '_blank');
     }, 900);
   }
 
-  if (window._ejsReady) {
-    emailjs.send(window._ejsCfg.svc, window._ejsCfg.tpl, {
-      to_email: email,
-      reply_to: 'hari@upnexs.com',
-      from_name: 'Hari at UpneX'
-    }).then(onDone, onDone); /* open calendar even if email fails */
-  } else {
-    /* EmailJS not configured yet — still open the calendar */
-    onDone();
-  }
+  fetch('https://formsubmit.co/ajax/hari@upnexs.com', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({
+      email: email,
+      name: 'Demo visitor',
+      message: 'Demo completed at upnexs.com/demo. Lead email: ' + email,
+      _subject: '🎯 New demo lead from upnexs.com/demo',
+      _autoresponse: reportBody,
+      _replyto: email,
+      _captcha: 'false',
+      _template: 'box'
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(showDone)
+  .catch(showDone); /* still open calendar if network fails */
 }
 
 /* ── Tracking ──────────────────────────────────────────── */
