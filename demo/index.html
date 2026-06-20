@@ -1082,11 +1082,26 @@ body{
      onclick="trackCTA('mobile-sticky-book')">📅 Book Call</a>
 </div>
 
+<!-- EmailJS — sends screening report to visitor inbox -->
+<!-- SETUP (10 min, one-time):                                           -->
+<!--   1. emailjs.com → Sign Up free                                     -->
+<!--   2. Email Services → Add Service → Gmail → connect → copy ID       -->
+<!--   3. Email Templates → Create New → set:                            -->
+<!--        To email: {{to_email}}                                        -->
+<!--        Subject:  Your UpneX tenant screening report (sample)        -->
+<!--        Content:  paste the report text you want visitors to receive  -->
+<!--   4. Account → API Keys → copy Public Key                           -->
+<!--   5. Fill the 3 vars below, commit, push — done                     -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
-<!-- Formsubmit.co handles email — no account or API key needed.   -->
-<!-- ONE-TIME activation: first submission triggers a verification  -->
-<!-- email to hari@upnexs.com — click Confirm once, then it's live -->
 <script>
+/* ── EmailJS credentials (fill in after setup) ─────────── */
+var _EJS_PUB = 'YOUR_PUBLIC_KEY';   /* Account → API Keys            */
+var _EJS_SVC = 'YOUR_SERVICE_ID';   /* Email Services → your service  */
+var _EJS_TPL = 'YOUR_TEMPLATE_ID';  /* Email Templates → your template */
+if (_EJS_PUB !== 'YOUR_PUBLIC_KEY') { emailjs.init({publicKey: _EJS_PUB}); }
+
 /* ── Demo peak form submit ─────────────────────────────── */
 function submitBooking(e) {
   e.preventDefault();
@@ -1095,34 +1110,6 @@ function submitBooking(e) {
   var btn = document.getElementById('bpSubmit');
   btn.textContent = 'Sending…';
   btn.disabled = true;
-
-  var reportBody = [
-    'Thanks for watching the UpneX screening demo!',
-    '',
-    'Here is exactly what we delivered in 30 seconds:',
-    '',
-    'APPLICANT: Alex Morgan  |  4821 Maple Dr, Austin TX',
-    '──────────────────────────────────────────────────',
-    '✓  CREDIT SCORE:       742  (Tier A — Excellent)',
-    '✓  BACKGROUND CHECK:   Clean record, no criminal flags',
-    '✓  INCOME RATIO:       3.2× rent — verified employment',
-    '✓  EVICTION HISTORY:   No prior evictions found',
-    '──────────────────────────────────────────────────',
-    '✅  DECISION: APPROVED',
-    '    Landlord letter drafted and ready to send',
-    '──────────────────────────────────────────────────',
-    '',
-    'This is the exact output your landlord clients receive',
-    'within 30 seconds of every application — 24/7.',
-    '',
-    'Ready to set this up for your portfolio?',
-    '',
-    '→ Book a 15-min walkthrough:',
-    'https://calendar.app.google/9qmnLSzNejCwGSkcA',
-    '',
-    '— Hari | UpneX',
-    'hari@upnexs.com  |  upnexs.com'
-  ].join('\n');
 
   function showDone() {
     document.getElementById('bpForm').style.display = 'none';
@@ -1134,15 +1121,21 @@ function submitBooking(e) {
     }, 900);
   }
 
+  /* 1 — Send visitor the screening report (EmailJS → Gmail) */
+  if (_EJS_PUB !== 'YOUR_PUBLIC_KEY') {
+    emailjs.send(_EJS_SVC, _EJS_TPL, {to_email: email});
+    /* fire-and-forget — showDone is driven by the Formsubmit call below */
+  }
+
+  /* 2 — Notify Hari (Formsubmit, already verified and working) */
   fetch('https://formsubmit.co/ajax/hari@upnexs.com', {
     method: 'POST',
     headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     body: JSON.stringify({
       email: email,
       name: 'Demo visitor',
-      message: 'Demo completed at upnexs.com/demo. Lead email: ' + email,
+      message: 'Demo completed at upnexs.com/demo — lead email: ' + email,
       _subject: '🎯 New demo lead from upnexs.com/demo',
-      _autoresponse: reportBody,
       _replyto: email,
       _captcha: 'false',
       _template: 'box'
@@ -1150,7 +1143,7 @@ function submitBooking(e) {
   })
   .then(function(r) { return r.json(); })
   .then(showDone)
-  .catch(showDone); /* still open calendar if network fails */
+  .catch(showDone);
 }
 
 /* ── Tracking ──────────────────────────────────────────── */
