@@ -393,36 +393,78 @@ body{
 .comparison-section{background:#1a2e4a;padding:88px 40px;}
 .comparison-section .section-title{color:#fff;}
 .comparison-section .section-eyebrow{color:#60a5fa;}
-.ctable-wrap{max-width:820px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-.ctable{
-  width:100%;border-collapse:separate;border-spacing:0;
-  border-radius:14px;overflow:hidden;
-  border:1px solid rgba(255,255,255,0.08);
-  min-width:520px;
+
+.compare-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;max-width:940px;margin:0 auto 36px;
 }
-.ctable th{
-  padding:13px 18px;
-  font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
-  color:rgba(255,255,255,0.35);
+.compare-card{
+  border-radius:16px;padding:28px 22px;
+  display:flex;flex-direction:column;gap:0;
+  position:relative;
+}
+.compare-card.muted{
   background:rgba(255,255,255,0.04);
-  border-bottom:1px solid rgba(255,255,255,0.07);text-align:left;
+  border:1px solid rgba(255,255,255,0.08);
 }
-.ctable th.hl{
-  background:linear-gradient(135deg,rgba(0,102,204,0.28),rgba(0,102,204,0.16));
-  color:#60a5fa;border-bottom:1px solid rgba(0,102,204,0.22);
+.compare-card.featured{
+  background:linear-gradient(160deg,#0a4d99 0%,#003875 100%);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 24px 64px rgba(0,102,204,0.4);
 }
-.ctable td{
-  padding:15px 18px;font-size:14px;
-  color:rgba(255,255,255,0.5);
-  border-bottom:1px solid rgba(255,255,255,0.05);vertical-align:middle;
+.featured-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:#22c55e;color:#fff;
+  font-size:11px;font-weight:700;letter-spacing:.05em;
+  padding:4px 14px;border-radius:999px;white-space:nowrap;
 }
-.ctable td.hl{
-  background:rgba(0,102,204,0.09);
-  color:#fff;font-weight:700;
-  border-bottom:1px solid rgba(0,102,204,0.14);
+.cc-plan{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:10px;
 }
-.ctable tr:last-child td{border-bottom:none;}
-.ctable td:first-child{font-size:13px;font-weight:600;color:rgba(255,255,255,0.38);}
+.compare-card.featured .cc-plan{color:rgba(255,255,255,0.55);}
+.cc-price{
+  font-size:30px;font-weight:800;letter-spacing:-0.04em;
+  color:rgba(255,255,255,0.6);line-height:1;margin-bottom:4px;
+}
+.compare-card.featured .cc-price{color:#60a5fa;}
+.cc-period{font-size:14px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,0.35);}
+.compare-card.featured .cc-period{color:rgba(255,255,255,0.55);}
+.cc-divider{height:1px;background:rgba(255,255,255,0.07);margin:18px 0;}
+.cc-rows{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;flex:1;}
+.cc-row{display:flex;align-items:center;gap:9px;}
+.cci{
+  width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;flex-shrink:0;line-height:1;
+}
+.cci.g{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3);}
+.cci.b{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.2);}
+.cci.m{background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid rgba(251,191,36,0.2);}
+.cc-row-text{font-size:13px;color:rgba(255,255,255,0.42);line-height:1.3;}
+.compare-card.featured .cc-row-text{color:rgba(255,255,255,0.8);}
+.cc-cta{
+  display:block;text-align:center;
+  background:rgba(255,255,255,0.12);
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:8px;padding:11px;
+  font-size:14px;font-weight:700;
+  text-decoration:none!important;
+  transition:background .2s;
+}
+.cc-cta:hover{background:rgba(255,255,255,0.2);}
+
+/* savings banner */
+.savings-banner{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:20px 48px;
+  max-width:940px;margin:0 auto;padding:28px 32px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);border-radius:16px;
+}
+.sb-item{text-align:center;}
+.sb-num{font-size:34px;font-weight:800;letter-spacing:-0.04em;color:#60a5fa;line-height:1;}
+.sb-desc{font-size:12px;color:rgba(255,255,255,0.38);margin-top:5px;max-width:150px;line-height:1.4;}
 
 /* ─── PROOF ─────────────────────────────────────── */
 .proof-section{background:#f0f4f8;padding:72px 40px;}
@@ -510,6 +552,59 @@ body{
 .final-sub a{color:rgba(255,255,255,0.44);text-decoration:none;}
 .final-sub a:hover{color:rgba(255,255,255,0.72);}
 
+/* ─── EMAIL CAPTURE ─────────────────────────────── */
+.ec-wrap{
+  margin-top:44px;padding-top:36px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  position:relative;
+}
+.ec-or{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  background:#1a2e4a;padding:0 14px;
+  font-size:12px;color:rgba(255,255,255,0.25);font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.ec-label{
+  font-size:16px;font-weight:600;color:rgba(255,255,255,0.6);
+  margin-bottom:16px;
+}
+.ec-form{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  max-width:460px;margin:0 auto;
+}
+.ec-input{
+  flex:1;min-width:200px;
+  padding:14px 16px;
+  background:rgba(255,255,255,0.07);
+  border:1.5px solid rgba(255,255,255,0.14);
+  border-radius:10px;
+  color:#fff;font-size:14px;font-family:inherit;
+  transition:border .2s,background .2s;
+}
+.ec-input:focus{
+  outline:none;
+  border-color:#0066cc;
+  background:rgba(0,102,204,0.1);
+}
+.ec-input::placeholder{color:rgba(255,255,255,0.25);}
+.ec-btn{
+  padding:14px 22px;
+  background:#fff;color:#1a2e4a!important;
+  border:none;border-radius:10px;
+  font-size:14px;font-weight:800;cursor:pointer;
+  font-family:inherit;white-space:nowrap;
+  transition:background .2s,transform .15s;
+}
+.ec-btn:hover{background:#f0f4f8;transform:translateY(-1px);}
+.ec-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.ec-note{font-size:12px;color:rgba(255,255,255,0.22);margin-top:10px;}
+.ec-success{
+  display:none;
+  font-size:14px;font-weight:600;color:#4ade80;margin-top:12px;
+  background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);
+  border-radius:8px;padding:10px 16px;display:none;
+}
+
 /* ─── FOOTER ────────────────────────────────────── */
 .footer{
   background:#f0f4f8;border-top:1px solid #e2e8f0;
@@ -564,6 +659,10 @@ body{
   .agents-section{padding:64px 20px;}
   .agents-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
   .comparison-section{padding:64px 20px;}
+  .compare-grid{grid-template-columns:1fr;}
+  .compare-card.muted{display:none;}
+  .compare-card.featured{margin-top:12px;}
+  .savings-banner{gap:16px 32px;padding:22px 20px;}
   .proof-section{padding:52px 20px;}
   .faq-section{padding:64px 20px;}
   .final-cta{padding:80px 20px;}
@@ -617,10 +716,13 @@ body{
     We built the back office for property managers. Tenant screening. Lease renewals. Maintenance triage. Investor reporting. All handled by AI agents that work 24/7 and never make excuses.
   </p>
 
-  <a href="#" class="run-demo-btn" id="heroRunBtn" onclick="startDemo();return false;">
-    <span>▶</span> Run the Demo
+  <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+     target="_blank" rel="noopener"
+     class="run-demo-btn" id="heroRunBtn"
+     onclick="trackCTA('hero-book')">
+    📅 Book a 15-min Demo
   </a>
-  <a href="#book" class="hero-secondary">Or book a walkthrough →</a>
+  <a href="#" class="hero-secondary" onclick="startDemo();return false;">▶ Watch a 30-sec preview first</a>
 
   <div class="hero-proof">
     <span class="proof-item">
@@ -681,10 +783,10 @@ body{
       <div class="demo-report">
         <div class="rpt-head">Screening Report</div>
         <div class="rpt-applicant">
-          <div class="rpt-avatar">KS</div>
+          <div class="rpt-avatar">AM</div>
           <div>
-            <div class="rpt-name">Kelly Scott</div>
-            <div class="rpt-addr">10008 Manor Pl, Fairfax VA</div>
+            <div class="rpt-name">Alex Morgan</div>
+            <div class="rpt-addr">4821 Maple Dr, Austin TX</div>
           </div>
         </div>
 
@@ -752,7 +854,7 @@ body{
       <span class="agent-icon">🏠</span>
       <div class="agent-name">Tenant Screening</div>
       <div class="agent-val">Full credit, background &amp; eviction check in 30 seconds. Automated approval letters. Zero manual review time.</div>
-      <span class="agent-client">Peabody Residential</span>
+      <span class="agent-client">200-unit PM · Mid-Atlantic</span>
     </div>
     <div class="agent-card">
       <span class="agent-icon">📝</span>
@@ -777,58 +879,87 @@ body{
 
 <!-- ═══ SECTION: COMPARISON ══════════════════════════════ -->
 <section class="comparison-section">
-  <div class="section-eyebrow">The ROI is obvious</div>
+  <div class="section-eyebrow">The math is obvious</div>
   <h2 class="section-title">Why teams switch to UpneX</h2>
-  <div class="ctable-wrap">
-    <table class="ctable">
-      <thead>
-        <tr>
-          <th></th>
-          <th>US Ops Manager</th>
-          <th>Virtual Assistant</th>
-          <th class="hl">UpneX Agents</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Cost / month</td>
-          <td>$4,500+</td>
-          <td>$1,500</td>
-          <td class="hl">$800–$1,600</td>
-        </tr>
-        <tr>
-          <td>Hours / day</td>
-          <td>8</td>
-          <td>8</td>
-          <td class="hl">24</td>
-        </tr>
-        <tr>
-          <td>Setup time</td>
-          <td>4 weeks</td>
-          <td>2 weeks</td>
-          <td class="hl">48 hrs</td>
-        </tr>
-        <tr>
-          <td>Audit-gated quality</td>
-          <td>Variable</td>
-          <td>Variable</td>
-          <td class="hl">Always</td>
-        </tr>
-        <tr>
-          <td>Sick days / turnover</td>
-          <td>Yes</td>
-          <td>Yes</td>
-          <td class="hl">Never</td>
-        </tr>
-      </tbody>
-    </table>
+
+  <div class="compare-grid">
+
+    <!-- Card 1: Ops Manager -->
+    <div class="compare-card muted">
+      <div class="cc-plan">US Ops Manager</div>
+      <div class="cc-price">$4,500<span class="cc-period">+/mo</span></div>
+      <div class="cc-divider"></div>
+      <div class="cc-rows">
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">8 hrs/day only</span></div>
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">4-week onboarding</span></div>
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">Quality varies by day</span></div>
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">Sick days &amp; PTO</span></div>
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">High turnover risk</span></div>
+      </div>
+    </div>
+
+    <!-- Card 2: VA -->
+    <div class="compare-card muted">
+      <div class="cc-plan">Virtual Assistant</div>
+      <div class="cc-price">$1,500<span class="cc-period">/mo</span></div>
+      <div class="cc-divider"></div>
+      <div class="cc-rows">
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">8 hrs/day, 1 timezone</span></div>
+        <div class="cc-row"><span class="cci m">~</span><span class="cc-row-text">2-week onboarding</span></div>
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">Quality varies by person</span></div>
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">No audit trail</span></div>
+        <div class="cc-row"><span class="cci b">✗</span><span class="cc-row-text">High churn, retraining</span></div>
+      </div>
+    </div>
+
+    <!-- Card 3: UpneX — featured -->
+    <div class="compare-card featured">
+      <div class="featured-badge">⭐ Best Value</div>
+      <div class="cc-plan">UpneX AI Agents</div>
+      <div class="cc-price">$800<span class="cc-period">–$1,600/mo</span></div>
+      <div class="cc-divider"></div>
+      <div class="cc-rows">
+        <div class="cc-row"><span class="cci g">✓</span><span class="cc-row-text"><strong>24 hrs/day · 7 days/week</strong></span></div>
+        <div class="cc-row"><span class="cci g">✓</span><span class="cc-row-text"><strong>Live in 48 hours</strong></span></div>
+        <div class="cc-row"><span class="cci g">✓</span><span class="cc-row-text"><strong>Audit-gated, always consistent</strong></span></div>
+        <div class="cc-row"><span class="cci g">✓</span><span class="cc-row-text"><strong>Full audit trail every task</strong></span></div>
+        <div class="cc-row"><span class="cci g">✓</span><span class="cc-row-text"><strong>Zero downtime, ever</strong></span></div>
+      </div>
+      <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
+         target="_blank" rel="noopener"
+         class="cc-cta" onclick="trackCTA('compare-book')">
+        Get started →
+      </a>
+    </div>
+
   </div>
+
+  <!-- Savings callout -->
+  <div class="savings-banner">
+    <div class="sb-item">
+      <div class="sb-num">3×</div>
+      <div class="sb-desc">more coverage hours than a VA for the same price</div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-num">$33k+</div>
+      <div class="sb-desc">saved per year vs. a US ops manager</div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-num">48 hrs</div>
+      <div class="sb-desc">from "yes" to fully operational</div>
+    </div>
+    <div class="sb-item">
+      <div class="sb-num">$0</div>
+      <div class="sb-desc">setup fee, no long-term contract</div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ═══ SECTION: PROOF ═══════════════════════════════════ -->
 <section class="proof-section">
   <div class="proof-clients">
-    <div class="proof-client">Peabody Residential</div>
+    <div class="proof-client">PM Client · Mid-Atlantic</div>
     <div class="proof-client">LS Properties</div>
     <div class="proof-client">Tipped</div>
     <div class="proof-client">Allstar Management</div>
@@ -836,7 +967,7 @@ body{
   <div class="proof-quote">
     <span class="proof-stars">★★★★★</span>
     <blockquote>"It's like having a back-office team that never sleeps."</blockquote>
-    <cite>Kelly Scott, Peabody Residential · 200-unit portfolio, Mid-Atlantic</cite>
+    <cite>Property Manager · 200-unit portfolio, Mid-Atlantic</cite>
   </div>
 </section>
 
@@ -908,6 +1039,20 @@ body{
   </table>
 
   <span class="final-sub">Or email Hari directly: <a href="mailto:hari@upnexs.com">hari@upnexs.com</a></span>
+
+  <!-- Email capture: send sample report -->
+  <div class="ec-wrap">
+    <span class="ec-or">or</span>
+    <p class="ec-label">Get a real sample screening report in your inbox</p>
+    <form class="ec-form" id="ecForm" onsubmit="sendReport(event)">
+      <input type="email" id="ecEmail" class="ec-input"
+             placeholder="your@email.com" required autocomplete="email"/>
+      <button type="submit" class="ec-btn" id="ecBtn">Send it →</button>
+    </form>
+    <p class="ec-note">One email. No spam. See exactly what your landlord clients receive.</p>
+    <div class="ec-success" id="ecSuccess">✓ On its way — check your inbox in a few minutes.</div>
+  </div>
+
 </section>
 
 <!-- ═══ FOOTER ═══════════════════════════════════════════ -->
@@ -923,15 +1068,72 @@ body{
 
 <!-- ═══ MOBILE STICKY ════════════════════════════════════ -->
 <div class="mobile-sticky" id="mobileSticky">
-  <a href="#" class="ms-demo-btn" onclick="startDemo();return false;">▶ Run Demo</a>
+  <a href="#" class="ms-demo-btn" onclick="startDemo();return false;">▶ Preview</a>
   <a href="https://calendar.app.google/9qmnLSzNejCwGSkcA"
      target="_blank" rel="noopener"
      class="ms-book-btn"
-     onclick="trackCTA('mobile-sticky-book')">📅 Book Call</a>
+     onclick="trackCTA('mobile-sticky-book')">📅 Book a Demo</a>
 </div>
+
+<!-- EmailJS — sends sample screening report to visitor's inbox -->
+<!-- SETUP (one-time, 10 min): -->
+<!--   1. Sign up free at emailjs.com                            -->
+<!--   2. Add Gmail service → copy Service ID                    -->
+<!--   3. Create template with {{to_email}} var → copy Template ID -->
+<!--   4. Copy Public Key from Account → API Keys                -->
+<!--   5. Fill the 3 values below and you're live               -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+(function(){
+  // ── Replace these 3 values after EmailJS setup ──────────────
+  var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // emailjs.com → Account → API Keys
+  var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // emailjs.com → Email Services
+  var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // emailjs.com → Email Templates
+  // ────────────────────────────────────────────────────────────
+
+  window._ejsCfg = {pub: EMAILJS_PUBLIC_KEY, svc: EMAILJS_SERVICE_ID, tpl: EMAILJS_TEMPLATE_ID};
+  if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    window._ejsReady = true;
+  }
+})();
+</script>
 
 <!-- ═══ SCRIPTS ══════════════════════════════════════════ -->
 <script>
+/* ── Email report ──────────────────────────────────────── */
+function sendReport(e) {
+  e.preventDefault();
+  var email = document.getElementById('ecEmail').value.trim();
+  if (!email) return;
+  var btn = document.getElementById('ecBtn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  function showSuccess() {
+    document.getElementById('ecSuccess').style.display = 'block';
+    document.getElementById('ecForm').style.display = 'none';
+    if (window.gtag) gtag('event', 'report_requested', {event_label: email});
+    if (window.fbq) fbq('track', 'Lead', {content_name: 'sample_report'});
+  }
+
+  if (window._ejsReady) {
+    emailjs.send(window._ejsCfg.svc, window._ejsCfg.tpl, {
+      to_email: email,
+      reply_to: 'hari@upnexs.com',
+      from_name: 'Hari at UpneX'
+    }).then(showSuccess, function() {
+      btn.textContent = 'Send it →';
+      btn.disabled = false;
+      alert('Could not send automatically — email hari@upnexs.com directly.');
+    });
+  } else {
+    // EmailJS not configured yet: open mailto so Hari is notified
+    window.open('mailto:hari@upnexs.com?subject=Sample report request&body=Please send the sample screening report to: ' + encodeURIComponent(email));
+    showSuccess();
+  }
+}
+
 /* ── Tracking ──────────────────────────────────────────── */
 function trackCTA(label) {
   if (window.fbq) fbq('track', 'Schedule', {content_name: label});
@@ -971,7 +1173,7 @@ var STEPS = [
   {delay:18400, ts:'[12:00:27]', text:'🚨 Cross-reference: prior eviction check...', type:'t-warn'},
   {delay:20600, ts:'[12:00:30]', text:'✓ No prior evictions found', type:'t-success', report:'eviction'},
   {delay:22800, ts:'[12:00:31]', text:'📊 Generating screening report...', type:'t-action'},
-  {delay:24800, ts:'[12:00:32]', text:'✅ APPROVED — Report drafted for Kelly Scott', type:'t-approved', report:'final'},
+  {delay:24800, ts:'[12:00:32]', text:'✅ APPROVED — Screening report ready for landlord review', type:'t-approved', report:'final'},
 ];
 
 function startDemo() {
