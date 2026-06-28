@@ -10,7 +10,7 @@
       "name": "Tenant Screening Agent",
       "status": "LIVE",
       "liveSince": "2026-06-16T18:09:00-04:00",
-      "lastEventAt": "2026-06-27T16:53:09-04:00"
+      "lastEventAt": "2026-06-27T20:30:04-04:00"
     },
     {
       "name": "Lease Renewal Agent",
@@ -22,6 +22,42 @@
     }
   ],
   "activity": [
+    {
+      "id": "evt-07cda5ef81c7",
+      "ts": "2026-06-27T20:30:04-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 273",
+      "outcome": "REVIEW",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-b7af850ed79d",
+      "ts": "2026-06-27T20:30:04-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 272",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-cd13b0252c02",
+      "ts": "2026-06-27T20:30:04-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 271",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-e0590415e723",
+      "ts": "2026-06-27T20:30:04-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 270",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
     {
       "id": "evt-90e4a99baab8",
       "ts": "2026-06-27T16:53:09-04:00",
@@ -284,5 +320,5 @@
       "status": "Delivered (launch test)"
     }
   ],
-  "lastUpdated": "2026-06-27T16:53:09-04:00"
+  "lastUpdated": "2026-06-27T20:30:04-04:00"
 }
