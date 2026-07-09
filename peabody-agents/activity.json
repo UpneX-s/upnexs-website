@@ -10,7 +10,7 @@
       "name": "Tenant Screening Agent",
       "status": "LIVE",
       "liveSince": "2026-06-16T18:09:00-04:00",
-      "lastEventAt": "2026-07-09T17:41:31-04:00"
+      "lastEventAt": "2026-07-09T18:30:00-04:00"
     },
     {
       "name": "Lease Renewal Agent",
@@ -22,6 +22,15 @@
     }
   ],
   "activity": [
+    {
+      "id": "evt-51fc08e0637a",
+      "ts": "2026-07-09T18:30:00-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening sent to client",
+      "subject": "New application",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
     {
       "id": "evt-c94c1ab81835",
       "ts": "2026-07-09T17:41:31-04:00",
@@ -462,16 +471,7 @@
       "subject": "Application 255",
       "outcome": "DECLINE",
       "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-98dc5d728a9d",
-      "ts": "2026-06-22T15:52:12-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening sent to client",
-      "subject": "Application 255",
-      "outcome": "APPROVE",
-      "status": "Delivered"
     }
   ],
-  "lastUpdated": "2026-07-09T17:41:31-04:00"
+  "lastUpdated": "2026-07-09T18:30:00-04:00"
 }
