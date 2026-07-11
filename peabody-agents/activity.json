@@ -10,7 +10,7 @@
       "name": "Tenant Screening Agent",
       "status": "LIVE",
       "liveSince": "2026-06-16T18:09:00-04:00",
-      "lastEventAt": "2026-07-10T18:14:47-04:00"
+      "lastEventAt": "2026-07-10T20:30:05-04:00"
     },
     {
       "name": "Lease Renewal Agent",
@@ -22,6 +22,60 @@
     }
   ],
   "activity": [
+    {
+      "id": "evt-7e4bcb8d557c",
+      "ts": "2026-07-10T20:30:05-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 327",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-15c15e03b7ac",
+      "ts": "2026-07-10T20:30:05-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 305",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-b626e99e9f7a",
+      "ts": "2026-07-10T20:30:05-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 304",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-ad69e9b76c9a",
+      "ts": "2026-07-10T20:30:05-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 303",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-8765f18a5c0f",
+      "ts": "2026-07-10T20:30:05-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 302",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-797b8305bc69",
+      "ts": "2026-07-10T20:30:05-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 300",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
     {
       "id": "evt-256a96a460cf",
       "ts": "2026-07-10T08:53:15-04:00",
@@ -417,61 +471,7 @@
       "subject": "Application 247",
       "outcome": "REVIEW",
       "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-586dce01ae0d",
-      "ts": "2026-07-08T20:30:04-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 246",
-      "outcome": "APPROVE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-d61b5472843a",
-      "ts": "2026-07-07T22:48:13-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening sent to client",
-      "subject": "Application 310",
-      "outcome": "APPROVE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-5e864b5dc791",
-      "ts": "2026-07-07T20:30:02-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 305",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-9a9e288a5ed8",
-      "ts": "2026-07-07T20:30:02-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 304",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-2c40c3e6098d",
-      "ts": "2026-07-07T20:30:02-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 303",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-084c4165ff13",
-      "ts": "2026-07-07T20:30:02-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 302",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
     }
   ],
-  "lastUpdated": "2026-07-10T18:14:47-04:00"
+  "lastUpdated": "2026-07-10T20:30:05-04:00"
 }
