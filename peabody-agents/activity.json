@@ -9,16 +9,59 @@
     {
       "name": "Tenant Screening Agent",
       "status": "LIVE",
+      "domain": "tenant",
+      "description": "Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) within minutes of submission.",
       "liveSince": "2026-06-16T18:09:00-04:00",
       "lastEventAt": "2026-07-15T09:26:07-04:00"
     },
     {
       "name": "Lease Renewal Agent",
       "status": "ON_HOLD",
+      "domain": "tenant",
+      "description": "Manages the full lease renewal cycle — expiration notices, follow-ups, and owner approval.",
       "blockedReason": "Awaiting Kelly's answers on CMA source + inspection backend + Renewals tab depth",
       "blockedSince": "2026-06-17",
       "liveSince": null,
       "lastEventAt": null
+    },
+    {
+      "name": "Owner Attrition Report",
+      "status": "LIVE",
+      "domain": "owner",
+      "description": "Weekly scoring of owner sentiment/risk across the portfolio (rent trends, complaints, tenure) — emails a flagged watchlist to Kelly.",
+      "liveSince": "2026-07-09T00:00:00-04:00",
+      "lastEventAt": "2026-07-15T00:00:00-04:00",
+      "metric": "295 owners tracked · 16 flagged yellow · 0 red"
+    },
+    {
+      "name": "Owner Onboarding Agent",
+      "status": "DEV_TESTING",
+      "domain": "owner",
+      "description": "Triggered by AppFolio onboarding emails; walks a new resident through document and checklist completion automatically.",
+      "startedSince": "2026-07-13T00:00:00-04:00",
+      "lastEventAt": "2026-07-13T00:00:00-04:00",
+      "blockedReason": "First live test case has been stuck in progress since Jul 13 — debugging before wider rollout",
+      "metric": "1 test case in progress"
+    },
+    {
+      "name": "Vacancy Report",
+      "status": "DEV_TESTING",
+      "domain": "lease",
+      "description": "Weekly scan of vacant and at-risk units with pricing recommendations, generated from live AppFolio data.",
+      "startedSince": "2026-07-15T00:00:00-04:00",
+      "lastEventAt": "2026-07-15T00:00:00-04:00",
+      "blockedReason": "Report generation confirmed working on real data — no live send to Peabody yet, still running in dry-run mode",
+      "metric": "46 vacant units scanned · 3 critical"
+    },
+    {
+      "name": "Relist Agent",
+      "status": "DEV_TESTING",
+      "domain": "lease",
+      "description": "Audits underperforming listings portfolio-wide and recommends relist pricing and changes.",
+      "startedSince": "2026-07-11T00:00:00-04:00",
+      "lastEventAt": "2026-07-11T00:00:00-04:00",
+      "blockedReason": "One manual audit run completed, under internal review by UpneX before going client-facing — no schedule live yet",
+      "metric": "48 units audited · 16 flagged"
     }
   ],
   "activity": [

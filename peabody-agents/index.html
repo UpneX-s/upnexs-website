@@ -289,53 +289,15 @@
     <!-- stats -->
     <div class="stats">
       <div class="stat accent"><div class="n" id="stat-screened-top">—</div><div class="l">Applications Screened</div></div>
-      <div class="stat"><div class="n">1</div><div class="l">Agent LIVE</div></div>
+      <div class="stat"><div class="n" id="stat-live-count">—</div><div class="l">Agents LIVE</div></div>
       <div class="stat"><div class="n">Minutes</div><div class="l">Avg Screening Turnaround</div></div>
       <div class="stat accent"><div class="n" id="stat-pilot-day">Day —</div><div class="l">of 15-Day Pilot</div></div>
     </div>
 
-    <!-- PILOT AGENTS -->
-    <div class="sec-head"><span class="sdot g"></span>⚙ Pilot Agents — Tenant Lifecycle <span class="count">1 LIVE · 1 in build</span></div>
-    <div class="cards">
-
-      <div class="card">
-        <div class="c-row">
-          <div class="c-name">Tenant Screening Agent</div>
-          <span class="pill live" id="pill-screening"><span class="dot"></span>🟢 LIVE</span>
-        </div>
-        <div class="badges"><span class="domain d-tenant">TENANT LIFECYCLE</span></div>
-        <div class="c-desc">Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) to Kelly, Leasing &amp; Tino — within minutes of submission. Hari CC'd. <i>Need to add more recipients? Email Hari.</i></div>
-        <div class="agent-meta">
-          <div class="am-row"><span class="am-k">Applications screened</span><span class="am-v" id="stat-screened">—</span></div>
-          <div class="am-row"><span class="am-k">Approved</span><span class="am-v" id="stat-approved">—</span></div>
-          <div class="am-row"><span class="am-k">In leasing review</span><span class="am-v" id="stat-review">—</span></div>
-          <div class="am-row"><span class="am-k">Avg turnaround</span><span class="am-v" id="stat-turnaround">Minutes from submission</span></div>
-          <div class="am-row"><span class="am-k">Live since</span><span class="am-v" id="stat-live-since">—</span></div>
-          <div class="am-row"><span class="am-k">Last sync</span><span class="am-v" id="sync-screening">—</span></div>
-        </div>
-        <div class="prog">
-          <div class="prog-top live">100% — LIVE</div>
-          <div class="prog-bar"><div class="prog-fill live" data-pct="100"></div></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="c-row">
-          <div class="c-name">Lease Renewal Agent</div>
-          <span class="pill dev" id="pill-renewal"><span class="dot"></span>🟡 ON HOLD</span>
-        </div>
-        <div class="badges"><span class="domain d-tenant">TENANT LIFECYCLE</span></div>
-        <div class="c-desc">Manages the full lease renewal cycle — expiration notices, follow-ups, and owner approval. <b>Paused pending Kelly's reply</b> to 3 questions: CMA approach, inspection backend, and how deep the Renewals tab should go. Build resumes as soon as we hear back.</div>
-        <div class="agent-meta">
-          <div class="am-row"><span class="am-k">Status</span><span class="am-v" id="renewal-status">Awaiting Kelly's input</span></div>
-          <div class="am-row"><span class="am-k">Last sync</span><span class="am-v" id="sync-renewal">—</span></div>
-        </div>
-        <div class="prog">
-          <div class="prog-top dev">On hold — awaiting input</div>
-          <div class="prog-bar"><div class="prog-fill dev" data-pct="40"></div></div>
-        </div>
-      </div>
-
+    <!-- AGENTS (rendered from activity.json agents[] — see renderAgentCards in script) -->
+    <div class="sec-head"><span class="sdot g"></span>⚙ Agents Built for Peabody <span class="count" id="agent-count">—</span></div>
+    <div class="cards" id="agent-cards">
+      <div class="card"><div class="c-desc">Loading agents…</div></div>
     </div>
 
     <!-- SCREENING ACTIVITY (de-identified aggregate — no applicant PII) -->
@@ -497,27 +459,75 @@ var FALLBACK = {
     set('tl-midcheck', '~' + fmtDate(midDate));
     set('tl-end', '~' + fmtDate(endDate));
 
-    // ---- agent cards driven by agents[] ----
+    // ---- screening deploy date still drives the "What happens next" timeline ----
     var screening = (agents||[]).filter(function(a){ return /screening/i.test(a.name); })[0];
     if(screening){
       var live = screening.liveSince ? new Date(screening.liveSince) : eff;
-      var liveDays = dayDiff(live, now) + 1;
-      set('stat-live-since', fmtDate(live) + ' · ' + liveDays + (liveDays === 1 ? ' day' : ' days') + ' live');
       set('tl-deploy', fmtDate(live));
-      var ps = document.getElementById('pill-screening');
-      if(ps) ps.innerHTML = '<span class="dot"></span>🟢 ' + (screening.status || 'LIVE') + ' — ' + fmtDate(live);
-      set('sync-screening', screening.lastEventAt ? fmtStamp(new Date(screening.lastEventAt)) : fmtStamp(now));
     }
-    var renewal = (agents||[]).filter(function(a){ return /renewal/i.test(a.name); })[0];
-    if(renewal){
-      var pr = document.getElementById('pill-renewal');
-      var onHold = (renewal.status || '').toUpperCase().indexOf('HOLD') >= 0;
-      if(pr) pr.innerHTML = '<span class="dot"></span>' + (onHold ? '🟡 ON HOLD' : '🟢 ' + renewal.status);
-      if(renewal.blockedReason) set('renewal-status', 'Awaiting Kelly’s input');
-      set('sync-renewal', renewal.lastEventAt ? fmtStamp(new Date(renewal.lastEventAt)) : fmtStamp(now));
-    } else {
-      set('sync-renewal', fmtStamp(now));
-    }
+
+    renderAgentCards(agents||[], now);
+  }
+
+  var DOMAIN_LABEL = { tenant:'TENANT LIFECYCLE', owner:'OWNER RELATIONS', lease:'LEASING' };
+
+  function statusPill(status){
+    var s = (status||'').toUpperCase();
+    if(s === 'LIVE') return { cls:'live', label:'🟢 LIVE' };
+    if(s.indexOf('HOLD') >= 0) return { cls:'dev', label:'🟡 ON HOLD' };
+    return { cls:'dev', label:'🟡 IN BUILD' }; // DEV_TESTING or anything else
+  }
+
+  function renderAgentCards(agents, now){
+    var live = 0, other = 0;
+    var html = agents.map(function(a){
+      var p = statusPill(a.status);
+      if(p.cls === 'live') live++; else other++;
+
+      var domainCls = 'd-' + (a.domain || 'internal');
+      var domainLabel = DOMAIN_LABEL[a.domain] || 'INTERNAL';
+
+      var metaRows = '';
+      if(p.cls === 'live'){
+        var liveDate = a.liveSince ? new Date(a.liveSince) : null;
+        if(liveDate){
+          var liveDays = dayDiff(liveDate, now) + 1;
+          metaRows += '<div class="am-row"><span class="am-k">Live since</span><span class="am-v">' + fmtDate(liveDate) + ' · ' + liveDays + (liveDays===1?' day':' days') + ' live</span></div>';
+        }
+      } else if((a.status||'').toUpperCase().indexOf('HOLD') >= 0){
+        metaRows += '<div class="am-row"><span class="am-k">Status</span><span class="am-v">On hold' + (a.blockedSince ? (' since ' + fmtDate(new Date(a.blockedSince + 'T00:00:00-04:00'))) : '') + '</span></div>';
+      } else {
+        metaRows += '<div class="am-row"><span class="am-k">Status</span><span class="am-v">In development / testing</span></div>';
+      }
+      if(a.metric){
+        metaRows += '<div class="am-row"><span class="am-k">Latest</span><span class="am-v">' + a.metric + '</span></div>';
+      }
+      metaRows += '<div class="am-row"><span class="am-k">Last activity</span><span class="am-v">' + (a.lastEventAt ? fmtStamp(new Date(a.lastEventAt)) : '—') + '</span></div>';
+
+      var desc = a.description || '';
+      if(a.blockedReason){ desc += ' <b>' + a.blockedReason + '</b>'; }
+
+      var progTop, progPct;
+      if(p.cls === 'live'){ progTop = '100% — LIVE'; progPct = 100; }
+      else if((a.status||'').toUpperCase().indexOf('HOLD') >= 0){ progTop = 'On hold — awaiting input'; progPct = 40; }
+      else { progTop = 'In development / testing'; progPct = 60; }
+
+      return '' +
+        '<div class="card">' +
+          '<div class="c-row"><div class="c-name">' + a.name + '</div>' +
+            '<span class="pill ' + p.cls + '"><span class="dot"></span>' + p.label + '</span></div>' +
+          '<div class="badges"><span class="domain ' + domainCls + '">' + domainLabel + '</span></div>' +
+          '<div class="c-desc">' + desc + '</div>' +
+          '<div class="agent-meta">' + metaRows + '</div>' +
+          '<div class="prog"><div class="prog-top ' + p.cls + '">' + progTop + '</div>' +
+            '<div class="prog-bar"><div class="prog-fill ' + p.cls + '" data-pct="' + progPct + '" style="width:' + progPct + '%"></div></div></div>' +
+        '</div>';
+    }).join('');
+
+    var container = document.getElementById('agent-cards');
+    if(container) container.innerHTML = html;
+    set('agent-count', live + ' LIVE · ' + other + ' in build/on hold');
+    set('stat-live-count', live);
   }
 
   function renderActivity(data){
