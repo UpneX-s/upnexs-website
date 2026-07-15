@@ -64,6 +64,15 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
 
+<!-- Google tag (gtag.js) — Google Ads AW-18312920511 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18312920511"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18312920511');
+</script>
+
 <style>
   *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
   html{scroll-behavior:smooth}
@@ -1331,7 +1340,36 @@ trialForm.addEventListener('submit', (e) => {
     fireConfetti();
     setTimeout(fireConfetti, 700);
     if (typeof fbq !== 'undefined') fbq('track', 'StartTrial', { value: 0, currency: 'USD' });
+    // Google Ads conversion — trial signup counts as a booked engagement
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18312920511/qO1DCNjCydAcEL_7o5xE',
+        'value': 1.0,
+        'currency': 'INR',
+        'transaction_id': 'trial_' + Date.now(),
+      });
+      console.log('[UpneX] Google Ads conversion fired: Trial signup');
+    }
   });
+});
+
+// ============ GOOGLE ADS CONVERSION TRACKING ============
+// Fires the "Book appointment" conversion when Calendly booking completes
+// (works for the inline widget at the bottom of the page)
+window.addEventListener('message', function(e) {
+  if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') {
+    console.log('[UpneX] Calendly booking completed:', e.data.payload);
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18312920511/qO1DCNjCydAcEL_7o5xE',
+        'value': 1.0,
+        'currency': 'INR',
+        'transaction_id': 'calendly_' + Date.now(),
+      });
+      console.log('[UpneX] Google Ads conversion fired: Book appointment');
+    }
+    if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
+  }
 });
 
 // ============ STICKY MOBILE CTA ============
