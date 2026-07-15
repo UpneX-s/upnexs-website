@@ -14,6 +14,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<!-- Calendly widget -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
   tailwind.config = {
     theme: {
@@ -215,25 +218,10 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 <!-- ============ NAV ============ -->
 <nav class="fixed top-0 inset-x-0 z-50 bg-white/85 backdrop-blur border-b border-line">
   <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2.5" aria-label="UpneX AI home">
-      <!-- Two-building logo: matches the UpneX brand mark -->
-      <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M45 50 L45 20 L60 8 L75 20 L75 50 Z" fill="#111827"/>
-        <g fill="#FFFFFF">
-          <rect x="50" y="26" width="4" height="4"/><rect x="58" y="26" width="4" height="4"/><rect x="66" y="26" width="4" height="4"/>
-          <rect x="50" y="33" width="4" height="4"/><rect x="58" y="33" width="4" height="4"/><rect x="66" y="33" width="4" height="4"/>
-          <rect x="50" y="40" width="4" height="4"/><rect x="58" y="40" width="4" height="4"/><rect x="66" y="40" width="4" height="4"/>
-        </g>
-        <path d="M25 50 L25 80 L40 92 L55 80 L55 50 Z" fill="#111827"/>
-        <g fill="#FFFFFF">
-          <rect x="30" y="56" width="4" height="4"/><rect x="38" y="56" width="4" height="4"/><rect x="46" y="56" width="4" height="4"/>
-          <rect x="30" y="63" width="4" height="4"/><rect x="38" y="63" width="4" height="4"/><rect x="46" y="63" width="4" height="4"/>
-          <rect x="30" y="70" width="4" height="4"/><rect x="38" y="70" width="4" height="4"/><rect x="46" y="70" width="4" height="4"/>
-        </g>
-      </svg>
-      <span class="font-bold text-lg tracking-tight leading-none">
+    <a href="/" class="flex items-center" aria-label="UpneX AI home">
+      <span class="font-bold text-xl tracking-tight leading-none">
         <span class="text-ink">UpneX</span>
-        <span class="text-brand mx-0.5">·</span>
+        <span class="text-brand mx-1">·</span>
         <span class="text-brand">AI</span>
       </span>
     </a>
@@ -243,7 +231,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
       <a href="#roi" class="nav-link">ROI</a>
       <a href="#faq" class="nav-link">FAQ</a>
     </div>
-    <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary text-sm" style="padding:9px 18px">Book Free Demo</a>
+    <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-primary text-sm" style="padding:9px 18px">Book Free Demo</a>
   </div>
 </nav>
 
@@ -266,7 +254,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
           Automate maintenance, leasing, tenant communication, applications, and back-office ops with AI that works 24/7 alongside your existing PM software.
         </p>
         <div class="flex flex-wrap items-center gap-3 mb-6">
-          <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+          <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
             Book Free Demo
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
           </a>
@@ -648,7 +636,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 
       <div class="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
         <p class="text-white/60 text-sm">Estimates based on typical mid-market PM operators. Actual savings vary by portfolio and workflow.</p>
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn" style="background:#2ED3B7;color:#111827;box-shadow:0 4px 16px rgba(46,211,183,0.4);padding:14px 24px">
+        <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn" style="background:#2ED3B7;color:#111827;box-shadow:0 4px 16px rgba(46,211,183,0.4);padding:14px 24px">
           See it live on your portfolio
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
@@ -1019,33 +1007,39 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
   </div>
 </section>
 
-<!-- ============ FINAL CTA (no form — direct to calendar + trial modal) ============ -->
+<!-- ============ FINAL CTA — Calendly inline widget ============ -->
 <section id="book" class="py-24 sm:py-28 bg-ink text-white relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none opacity-30" style="background:radial-gradient(circle at 20% 20%,rgba(15,98,254,0.4) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(46,211,183,0.25) 0%,transparent 50%)"></div>
 
-  <div class="relative max-w-4xl mx-auto px-5 sm:px-8 text-center">
-    <div class="badge mb-6 reveal" style="background:rgba(46,211,183,0.15);color:#2ED3B7">
-      <span class="badge-dot"></span>
-      Free strategy session · 15 minutes
+  <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="badge mb-6 reveal" style="background:rgba(46,211,183,0.15);color:#2ED3B7">
+        <span class="badge-dot"></span>
+        Free strategy session · 30 minutes
+      </div>
+      <h2 class="display-lg mb-5 reveal reveal-d1" style="color:#FFFFFF">Ready to Add AI Employees to Your PM Team?</h2>
+      <p class="text-white/70 text-lg mx-auto mb-6 reveal reveal-d2">
+        Pick a time below that works for you. We'll scope your #1 pain point live and walk you through exactly how UpneX would work for your operation.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 mb-8 reveal reveal-d3">
+        <span class="flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>No prep required</span>
+        <span class="flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>No sales pitch</span>
+        <span class="flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Written action plan</span>
+      </div>
     </div>
-    <h2 class="display-lg mb-5 reveal reveal-d1" style="color:#FFFFFF">Ready to Add AI Employees to Your PM Team?</h2>
-    <p class="text-white/70 text-lg max-w-2xl mx-auto mb-10 reveal reveal-d2">
-      Book a free 15-minute call. We'll scope your #1 pain point live and walk you through exactly how UpneX would work for your operation.
-    </p>
-    <div class="flex flex-wrap items-center justify-center gap-4 mb-10 reveal reveal-d2">
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-lg" style="background:#FFFFFF;color:#111827;padding:16px 32px;font-size:17px;box-shadow:0 4px 24px rgba(255,255,255,0.15)">
-        📅  Book Your Free Demo
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-      </a>
-      <button id="trialTriggerFooter" class="btn btn-trial btn-lg" style="padding:16px 32px;font-size:17px">
-        🎁  Start 7-Day Free Trial
+
+    <!-- Calendly inline widget -->
+    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl reveal reveal-d1 max-w-5xl mx-auto">
+      <div class="calendly-inline-widget"
+           data-url="https://calendly.com/hari-upnexs/30min?hide_gdpr_banner=1&primary_color=0f62fe"
+           style="min-width:320px;height:720px;"></div>
+    </div>
+
+    <div class="text-center mt-8 reveal reveal-d2">
+      <p class="text-white/60 text-sm mb-4">Prefer a different flow?</p>
+      <button id="trialTriggerFooter" class="btn btn-trial btn-lg" style="padding:14px 28px">
+        🎁  Or start a 7-Day Free Trial instead
       </button>
-    </div>
-    <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-white/60 reveal reveal-d3">
-      <span class="flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>No prep required</span>
-      <span class="flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>No sales pitch</span>
-      <span class="flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Written action plan</span>
-      <span class="flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Opens Google Calendar</span>
     </div>
   </div>
 </section>
@@ -1055,25 +1049,10 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="grid md:grid-cols-4 gap-10 mb-12">
       <div class="md:col-span-2">
-        <div class="flex items-center gap-2.5 mb-4">
-          <!-- Two-building logo (white on dark for footer) -->
-          <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M45 50 L45 20 L60 8 L75 20 L75 50 Z" fill="#FFFFFF"/>
-            <g fill="#111827">
-              <rect x="50" y="26" width="4" height="4"/><rect x="58" y="26" width="4" height="4"/><rect x="66" y="26" width="4" height="4"/>
-              <rect x="50" y="33" width="4" height="4"/><rect x="58" y="33" width="4" height="4"/><rect x="66" y="33" width="4" height="4"/>
-              <rect x="50" y="40" width="4" height="4"/><rect x="58" y="40" width="4" height="4"/><rect x="66" y="40" width="4" height="4"/>
-            </g>
-            <path d="M25 50 L25 80 L40 92 L55 80 L55 50 Z" fill="#FFFFFF"/>
-            <g fill="#111827">
-              <rect x="30" y="56" width="4" height="4"/><rect x="38" y="56" width="4" height="4"/><rect x="46" y="56" width="4" height="4"/>
-              <rect x="30" y="63" width="4" height="4"/><rect x="38" y="63" width="4" height="4"/><rect x="46" y="63" width="4" height="4"/>
-              <rect x="30" y="70" width="4" height="4"/><rect x="38" y="70" width="4" height="4"/><rect x="46" y="70" width="4" height="4"/>
-            </g>
-          </svg>
-          <span class="font-bold text-lg leading-none">
+        <div class="mb-4">
+          <span class="font-bold text-xl leading-none">
             <span class="text-white">UpneX</span>
-            <span class="text-accent mx-0.5">·</span>
+            <span class="text-accent mx-1">·</span>
             <span class="text-accent">AI</span>
           </span>
         </div>
@@ -1108,7 +1087,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
       <div>
         <div class="text-xs uppercase tracking-wider text-white/40 font-semibold mb-4">Get in touch</div>
         <ul class="space-y-2.5">
-          <li><a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="footer-link">📅 Book Demo</a></li>
+          <li><a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="footer-link">📅 Book Demo</a></li>
           <li><a href="mailto:hari@upnexs.com" class="footer-link">hari@upnexs.com</a></li>
           <li><a href="https://wa.me/13303385146" target="_blank" rel="noopener" class="footer-link">+1 (330) 338-5146</a></li>
           <li><a href="https://www.linkedin.com/company/109027074" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
@@ -1127,7 +1106,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 
 <!-- ============ STICKY MOBILE CTA ============ -->
 <div id="stickyCta" class="sticky-cta">
-  <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary w-full">📅  Book Free Demo</a>
+  <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-primary w-full">📅  Book Free Demo</a>
 </div>
 
 <!-- ============ TRIAL MODAL (full field set) ============ -->
@@ -1214,7 +1193,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
     <p class="text-xl text-white/80 mb-2 max-w-lg mx-auto">Your 7-day free trial is on the way.</p>
     <p class="text-lg text-white/70 mb-10 max-w-lg mx-auto">Check your inbox — our team will reach out within 24 hours to scope your first AI agent.</p>
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-lg" style="background:#FFFFFF;color:#111827">
+      <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-lg" style="background:#FFFFFF;color:#111827">
         📅  Book a Kickoff Call Now
       </a>
       <button id="successCloseBtn" class="btn btn-lg" style="background:transparent;color:#FFFFFF;border:1px solid rgba(255,255,255,0.3)">
