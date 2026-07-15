@@ -716,8 +716,8 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
       <div class="bg-white rounded-2xl p-6 sm:p-10 border border-line shadow-sm">
 
         <!-- Interactive US bubble map -->
-        <div class="relative" style="max-width:780px;margin:0 auto">
-          <svg viewBox="0 0 800 460" class="us-map" xmlns="http://www.w3.org/2000/svg">
+        <div class="relative" style="max-width:820px;margin:0 auto">
+          <svg viewBox="0 0 900 520" class="us-map" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <radialGradient id="activeGrad" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="#2ED3B7"/>
@@ -729,65 +729,108 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
               </filter>
             </defs>
 
-            <!-- Faint US outline for context (stylized dashed contour) -->
-            <path d="M 90,80 Q 60,110 65,180 Q 60,240 90,280 Q 130,320 200,340 Q 300,360 400,360 Q 500,360 580,340 Q 640,310 680,270 Q 720,220 720,160 Q 700,110 640,90 Q 500,60 380,55 Q 240,55 150,65 Q 100,68 90,80 Z" fill="rgba(15,98,254,0.03)" stroke="rgba(15,98,254,0.1)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <!-- Real US mainland outline (approximated with ~30 control points) -->
+            <path d="M 78,60
+                     L 250,55 L 330,58 L 410,64 L 470,80 L 495,95
+                     L 545,88 L 610,110 L 640,105 L 685,80 L 720,75
+                     L 735,110 L 720,150 L 690,175 L 655,190 L 640,215
+                     L 660,245 L 630,275 L 605,320 L 580,355 L 570,385
+                     L 605,430 L 570,435 L 530,400 L 480,380 L 425,375
+                     L 380,395 L 340,415 L 285,420 L 240,390 L 200,370
+                     L 165,355 L 130,340 L 95,335 L 78,300 L 65,240
+                     L 62,180 L 68,130 L 72,90 Z"
+                  fill="rgba(15,98,254,0.04)"
+                  stroke="rgba(15,98,254,0.25)"
+                  stroke-width="1.5"
+                  stroke-linejoin="round"/>
 
-            <!-- Non-active states (grey dots) -->
-            <g id="inactiveStates">
-              <circle class="us-state" cx="120" cy="380" r="14"/><text class="us-label us-label-inactive" x="120" y="382">AK</text>
-              <circle class="us-state" cx="180" cy="410" r="14"/><text class="us-label us-label-inactive" x="180" y="412">HI</text>
-              <circle class="us-state" cx="130" cy="105" r="14"/><text class="us-label us-label-inactive" x="130" y="107">ID</text>
-              <circle class="us-state" cx="200" cy="95" r="14"/><text class="us-label us-label-inactive" x="200" y="97">MT</text>
-              <circle class="us-state" cx="105" cy="150" r="14"/><text class="us-label us-label-inactive" x="105" y="152">OR</text>
-              <circle class="us-state" cx="130" cy="200" r="14"/><text class="us-label us-label-inactive" x="130" y="202">NV</text>
-              <circle class="us-state" cx="185" cy="215" r="14"/><text class="us-label us-label-inactive" x="185" y="217">UT</text>
-              <circle class="us-state" cx="240" cy="175" r="14"/><text class="us-label us-label-inactive" x="240" y="177">WY</text>
-              <circle class="us-state" cx="270" cy="130" r="14"/><text class="us-label us-label-inactive" x="270" y="132">ND</text>
-              <circle class="us-state" cx="275" cy="175" r="14"/><text class="us-label us-label-inactive" x="275" y="177">SD</text>
-              <circle class="us-state" cx="290" cy="220" r="14"/><text class="us-label us-label-inactive" x="290" y="222">NE</text>
-              <circle class="us-state" cx="115" cy="250" r="14"/><text class="us-label us-label-inactive" x="115" y="252">CA</text>
-              <circle class="us-state" cx="180" cy="270" r="14"/><text class="us-label us-label-inactive" x="180" y="272">AZ</text>
-              <circle class="us-state" cx="235" cy="255" r="14"/><text class="us-label us-label-inactive" x="235" y="257">NM</text>
-              <circle class="us-state" cx="255" cy="215" r="14"/><text class="us-label us-label-inactive" x="255" y="217">CO</text>
-              <circle class="us-state" cx="330" cy="215" r="14"/><text class="us-label us-label-inactive" x="330" y="217">KS</text>
-              <circle class="us-state" cx="315" cy="260" r="14"/><text class="us-label us-label-inactive" x="315" y="262">OK</text>
-              <circle class="us-state" cx="325" cy="135" r="14"/><text class="us-label us-label-inactive" x="325" y="137">MN</text>
-              <circle class="us-state" cx="360" cy="185" r="14"/><text class="us-label us-label-inactive" x="360" y="187">IA</text>
-              <circle class="us-state" cx="375" cy="230" r="14"/><text class="us-label us-label-inactive" x="375" y="232">MO</text>
-              <circle class="us-state" cx="380" cy="155" r="14"/><text class="us-label us-label-inactive" x="380" y="157">WI</text>
-              <circle class="us-state" cx="415" cy="195" r="14"/><text class="us-label us-label-inactive" x="415" y="197">IL</text>
-              <circle class="us-state" cx="450" cy="195" r="14"/><text class="us-label us-label-inactive" x="450" y="197">IN</text>
-              <circle class="us-state" cx="425" cy="160" r="14"/><text class="us-label us-label-inactive" x="425" y="162">MI</text>
-              <circle class="us-state" cx="440" cy="235" r="14"/><text class="us-label us-label-inactive" x="440" y="237">KY</text>
-              <circle class="us-state" cx="490" cy="230" r="14"/><text class="us-label us-label-inactive" x="490" y="232">WV</text>
-              <circle class="us-state" cx="530" cy="235" r="14"/><text class="us-label us-label-inactive" x="530" y="237">VA</text>
-              <circle class="us-state" cx="540" cy="200" r="14"/><text class="us-label us-label-inactive" x="540" y="202">MD</text>
-              <circle class="us-state" cx="565" cy="180" r="14"/><text class="us-label us-label-inactive" x="565" y="182">DE</text>
-              <circle class="us-state" cx="605" cy="130" r="14"/><text class="us-label us-label-inactive" x="605" y="132">CT</text>
-              <circle class="us-state" cx="620" cy="150" r="14"/><text class="us-label us-label-inactive" x="620" y="152">RI</text>
-              <circle class="us-state" cx="620" cy="105" r="14"/><text class="us-label us-label-inactive" x="620" y="107">MA</text>
-              <circle class="us-state" cx="605" cy="80" r="14"/><text class="us-label us-label-inactive" x="605" y="82">VT</text>
-              <circle class="us-state" cx="640" cy="80" r="14"/><text class="us-label us-label-inactive" x="640" y="82">NH</text>
-              <circle class="us-state" cx="670" cy="65" r="14"/><text class="us-label us-label-inactive" x="670" y="67">ME</text>
-              <circle class="us-state" cx="360" cy="285" r="14"/><text class="us-label us-label-inactive" x="360" y="287">LA</text>
-              <circle class="us-state" cx="405" cy="280" r="14"/><text class="us-label us-label-inactive" x="405" y="282">MS</text>
-              <circle class="us-state" cx="450" cy="285" r="14"/><text class="us-label us-label-inactive" x="450" y="287">AL</text>
+            <!-- AK/HI inset box (bottom-left corner) -->
+            <g>
+              <rect x="30" y="410" width="180" height="95" rx="8" fill="rgba(15,98,254,0.03)" stroke="rgba(15,98,254,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+              <text x="40" y="428" font-family="Inter" font-size="9" font-weight="600" fill="#9CA3AF" letter-spacing="0.1em">ALASKA · HAWAII</text>
             </g>
 
-            <!-- ACTIVE STATES (12 target states — bigger, glowing accent color) -->
+            <!-- Non-active states (grey dots) — 38 states -->
+            <g id="inactiveStates">
+              <!-- Alaska + Hawaii in inset -->
+              <circle class="us-state" cx="80" cy="470" r="14"/><text class="us-label us-label-inactive" x="80" y="472">AK</text>
+              <circle class="us-state" cx="160" cy="480" r="14"/><text class="us-label us-label-inactive" x="160" y="482">HI</text>
+
+              <!-- West -->
+              <circle class="us-state" cx="105" cy="170" r="14"/><text class="us-label us-label-inactive" x="105" y="172">OR</text>
+              <circle class="us-state" cx="175" cy="150" r="14"/><text class="us-label us-label-inactive" x="175" y="152">ID</text>
+              <circle class="us-state" cx="248" cy="115" r="14"/><text class="us-label us-label-inactive" x="248" y="117">MT</text>
+              <circle class="us-state" cx="135" cy="230" r="14"/><text class="us-label us-label-inactive" x="135" y="232">NV</text>
+              <circle class="us-state" cx="200" cy="235" r="14"/><text class="us-label us-label-inactive" x="200" y="237">UT</text>
+              <circle class="us-state" cx="255" cy="190" r="14"/><text class="us-label us-label-inactive" x="255" y="192">WY</text>
+              <circle class="us-state" cx="105" cy="285" r="14"/><text class="us-label us-label-inactive" x="105" y="287">CA</text>
+              <circle class="us-state" cx="195" cy="300" r="14"/><text class="us-label us-label-inactive" x="195" y="302">AZ</text>
+              <circle class="us-state" cx="265" cy="300" r="14"/><text class="us-label us-label-inactive" x="265" y="302">NM</text>
+              <circle class="us-state" cx="270" cy="255" r="14"/><text class="us-label us-label-inactive" x="270" y="257">CO</text>
+
+              <!-- Plains -->
+              <circle class="us-state" cx="330" cy="115" r="14"/><text class="us-label us-label-inactive" x="330" y="117">ND</text>
+              <circle class="us-state" cx="335" cy="165" r="14"/><text class="us-label us-label-inactive" x="335" y="167">SD</text>
+              <circle class="us-state" cx="340" cy="215" r="14"/><text class="us-label us-label-inactive" x="340" y="217">NE</text>
+              <circle class="us-state" cx="345" cy="265" r="14"/><text class="us-label us-label-inactive" x="345" y="267">KS</text>
+              <circle class="us-state" cx="350" cy="315" r="14"/><text class="us-label us-label-inactive" x="350" y="317">OK</text>
+
+              <!-- Midwest -->
+              <circle class="us-state" cx="410" cy="125" r="14"/><text class="us-label us-label-inactive" x="410" y="127">MN</text>
+              <circle class="us-state" cx="465" cy="150" r="14"/><text class="us-label us-label-inactive" x="465" y="152">WI</text>
+              <circle class="us-state" cx="520" cy="165" r="14"/><text class="us-label us-label-inactive" x="520" y="167">MI</text>
+              <circle class="us-state" cx="410" cy="200" r="14"/><text class="us-label us-label-inactive" x="410" y="202">IA</text>
+              <circle class="us-state" cx="420" cy="250" r="14"/><text class="us-label us-label-inactive" x="420" y="252">MO</text>
+              <circle class="us-state" cx="465" cy="215" r="14"/><text class="us-label us-label-inactive" x="465" y="217">IL</text>
+              <circle class="us-state" cx="510" cy="220" r="14"/><text class="us-label us-label-inactive" x="510" y="222">IN</text>
+              <circle class="us-state" cx="510" cy="255" r="14"/><text class="us-label us-label-inactive" x="510" y="257">KY</text>
+
+              <!-- South-central -->
+              <circle class="us-state" cx="435" cy="365" r="14"/><text class="us-label us-label-inactive" x="435" y="367">LA</text>
+              <circle class="us-state" cx="475" cy="335" r="14"/><text class="us-label us-label-inactive" x="475" y="337">MS</text>
+              <circle class="us-state" cx="515" cy="330" r="14"/><text class="us-label us-label-inactive" x="515" y="332">AL</text>
+
+              <!-- Mid-Atlantic -->
+              <circle class="us-state" cx="560" cy="245" r="14"/><text class="us-label us-label-inactive" x="560" y="247">WV</text>
+              <circle class="us-state" cx="605" cy="255" r="14"/><text class="us-label us-label-inactive" x="605" y="257">VA</text>
+              <circle class="us-state" cx="635" cy="225" r="14"/><text class="us-label us-label-inactive" x="635" y="227">MD</text>
+              <circle class="us-state" cx="665" cy="220" r="14"/><text class="us-label us-label-inactive" x="665" y="222">DE</text>
+
+              <!-- New England -->
+              <circle class="us-state" cx="655" cy="145" r="14"/><text class="us-label us-label-inactive" x="655" y="147">VT</text>
+              <circle class="us-state" cx="685" cy="140" r="14"/><text class="us-label us-label-inactive" x="685" y="142">NH</text>
+              <circle class="us-state" cx="720" cy="115" r="14"/><text class="us-label us-label-inactive" x="720" y="117">ME</text>
+              <circle class="us-state" cx="700" cy="165" r="14"/><text class="us-label us-label-inactive" x="700" y="167">MA</text>
+              <circle class="us-state" cx="720" cy="185" r="14"/><text class="us-label us-label-inactive" x="720" y="187">RI</text>
+              <circle class="us-state" cx="685" cy="180" r="14"/><text class="us-label us-label-inactive" x="685" y="182">CT</text>
+            </g>
+
+            <!-- ACTIVE STATES (12 target states — larger, glowing) -->
             <g id="activeStates" filter="url(#glow)">
-              <circle class="us-state active" cx="130" cy="70" r="20"/><text class="us-label" x="130" y="72">WA</text>
-              <circle class="us-state active" cx="290" cy="320" r="20"/><text class="us-label" x="290" y="322">TX</text>
-              <circle class="us-state active" cx="380" cy="270" r="20"/><text class="us-label" x="380" y="272">AR</text>
-              <circle class="us-state active" cx="450" cy="245" r="20"/><text class="us-label" x="450" y="247">TN</text>
-              <circle class="us-state active" cx="485" cy="195" r="20"/><text class="us-label" x="485" y="197">OH</text>
-              <circle class="us-state active" cx="530" cy="170" r="20"/><text class="us-label" x="530" y="172">PA</text>
-              <circle class="us-state active" cx="570" cy="120" r="20"/><text class="us-label" x="570" y="122">NY</text>
-              <circle class="us-state active" cx="570" cy="155" r="20"/><text class="us-label" x="570" y="157">NJ</text>
-              <circle class="us-state active" cx="510" cy="270" r="20"/><text class="us-label" x="510" y="272">NC</text>
-              <circle class="us-state active" cx="490" cy="305" r="20"/><text class="us-label" x="490" y="307">SC</text>
-              <circle class="us-state active" cx="475" cy="335" r="20"/><text class="us-label" x="475" y="337">GA</text>
-              <circle class="us-state active" cx="515" cy="380" r="20"/><text class="us-label" x="515" y="382">FL</text>
+              <!-- WA -->
+              <circle class="us-state active" cx="115" cy="115" r="22"/><text class="us-label" x="115" y="117">WA</text>
+              <!-- TX -->
+              <circle class="us-state active" cx="330" cy="380" r="22"/><text class="us-label" x="330" y="382">TX</text>
+              <!-- AR -->
+              <circle class="us-state active" cx="435" cy="305" r="22"/><text class="us-label" x="435" y="307">AR</text>
+              <!-- TN -->
+              <circle class="us-state active" cx="505" cy="295" r="22"/><text class="us-label" x="505" y="297">TN</text>
+              <!-- OH -->
+              <circle class="us-state active" cx="555" cy="215" r="22"/><text class="us-label" x="555" y="217">OH</text>
+              <!-- PA -->
+              <circle class="us-state active" cx="610" cy="200" r="22"/><text class="us-label" x="610" y="202">PA</text>
+              <!-- NY -->
+              <circle class="us-state active" cx="635" cy="170" r="22"/><text class="us-label" x="635" y="172">NY</text>
+              <!-- NJ -->
+              <circle class="us-state active" cx="665" cy="205" r="22"/><text class="us-label" x="665" y="207">NJ</text>
+              <!-- NC -->
+              <circle class="us-state active" cx="605" cy="300" r="22"/><text class="us-label" x="605" y="302">NC</text>
+              <!-- SC -->
+              <circle class="us-state active" cx="580" cy="335" r="22"/><text class="us-label" x="580" y="337">SC</text>
+              <!-- GA -->
+              <circle class="us-state active" cx="555" cy="365" r="22"/><text class="us-label" x="555" y="367">GA</text>
+              <!-- FL -->
+              <circle class="us-state active" cx="585" cy="425" r="22"/><text class="us-label" x="585" y="427">FL</text>
             </g>
           </svg>
 
@@ -1038,7 +1081,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
           AI Employees for Property Management Companies. Automate the repeatable. Scale without hiring.
         </p>
         <div class="flex items-center gap-3">
-          <a href="https://www.linkedin.com/company/upnex-solutions-opc-private-limited/" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/company/109027074" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
           <a href="https://www.youtube.com/@upnexs-Ind" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
@@ -1068,7 +1111,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
           <li><a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="footer-link">📅 Book Demo</a></li>
           <li><a href="mailto:hari@upnexs.com" class="footer-link">hari@upnexs.com</a></li>
           <li><a href="https://wa.me/13303385146" target="_blank" rel="noopener" class="footer-link">+1 (330) 338-5146</a></li>
-          <li><a href="https://www.linkedin.com/company/upnex-solutions-opc-private-limited/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/company/109027074" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
           <li><a href="https://www.youtube.com/@upnexs-Ind" target="_blank" rel="noopener" class="footer-link">YouTube channel</a></li>
         </ul>
       </div>
