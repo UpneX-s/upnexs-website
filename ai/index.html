@@ -1,24 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) — Google Ads conversion tracking -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18312920511"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-18312920511');
-</script>
-
-<!-- Google tag (gtag.js) — Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FLTEBMR6Z7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-FLTEBMR6Z7');
-</script>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -64,13 +46,14 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
 
-<!-- Google tag (gtag.js) — Google Ads AW-18312920511 -->
+<!-- Google tag (gtag.js) — loads once, configures BOTH Google Ads + GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18312920511"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'AW-18312920511');
+  gtag('config', 'AW-18312920511');   // Google Ads
+  gtag('config', 'G-FLTEBMR6Z7');     // Google Analytics 4
 </script>
 
 <style>
@@ -1327,6 +1310,70 @@ function fireConfetti() {
   })();
 }
 
+// ============ GOOGLE ADS CONVERSION TRACKING (robust) ============
+// Central helper — fires "Book appointment" conversion for every booking path.
+// Fires via gtag() when loaded, falls back to raw dataLayer.push if gtag.js
+// hasn't finished loading yet (Google's async script queues either way).
+const GADS_SEND_TO = 'AW-18312920511/qO1DCNjCydAcEL_7o5xE';
+
+function fireGAdsConversion(source) {
+  const payload = {
+    send_to: GADS_SEND_TO,
+    value: 1.0,
+    currency: 'INR',
+    transaction_id: source + '_' + Date.now(),
+  };
+  try {
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', payload);
+      console.log('[UpneX GAds] ✅ Conversion fired via gtag:', source, payload);
+    } else {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(['event', 'conversion', payload]);
+      console.warn('[UpneX GAds] ⚠️ gtag not ready — queued via dataLayer:', source);
+    }
+  } catch (err) {
+    console.error('[UpneX GAds] Failed to fire conversion:', err);
+  }
+}
+
+// PATH 1: Click on any external Calendly link (nav, hero, ROI card, sticky mobile,
+// trial success, footer). New-tab flow can't observe the booking directly, so we
+// fire on click intent. Uses event delegation so it catches dynamically injected links too.
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('a[href*="calendly.com"]');
+  if (link) {
+    fireGAdsConversion('calendly_link_click');
+  }
+});
+
+// PATH 2: Booking completed inside our inline Calendly widget on the bottom CTA.
+// Robust origin check — accept anything on the calendly.com domain family.
+window.addEventListener('message', function(e) {
+  const origin = String(e.origin || '');
+  const isCalendly = origin.indexOf('calendly.com') !== -1;
+  if (!isCalendly || !e.data || typeof e.data !== 'object') return;
+  if (e.data.event === 'calendly.event_scheduled') {
+    console.log('[UpneX] Calendly booking scheduled:', e.data.payload);
+    fireGAdsConversion('calendly_widget_scheduled');
+    if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
+  }
+});
+
+// PATH 3: Calendly redirect confirmation (?booked=1). If Calendly is configured to
+// redirect to https://upnexs.com/ai/?booked=1 after booking, this catches every booking
+// from every path — including the ones that happened in new tabs.
+(function() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('booked') === '1') {
+      fireGAdsConversion('calendly_redirect');
+      if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
+    }
+  } catch (err) { /* noop */ }
+})();
+
+// PATH 4: Trial modal signup completes.
 trialForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(trialForm));
@@ -1340,36 +1387,8 @@ trialForm.addEventListener('submit', (e) => {
     fireConfetti();
     setTimeout(fireConfetti, 700);
     if (typeof fbq !== 'undefined') fbq('track', 'StartTrial', { value: 0, currency: 'USD' });
-    // Google Ads conversion — trial signup counts as a booked engagement
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'conversion', {
-        'send_to': 'AW-18312920511/qO1DCNjCydAcEL_7o5xE',
-        'value': 1.0,
-        'currency': 'INR',
-        'transaction_id': 'trial_' + Date.now(),
-      });
-      console.log('[UpneX] Google Ads conversion fired: Trial signup');
-    }
+    fireGAdsConversion('trial_signup');
   });
-});
-
-// ============ GOOGLE ADS CONVERSION TRACKING ============
-// Fires the "Book appointment" conversion when Calendly booking completes
-// (works for the inline widget at the bottom of the page)
-window.addEventListener('message', function(e) {
-  if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') {
-    console.log('[UpneX] Calendly booking completed:', e.data.payload);
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'conversion', {
-        'send_to': 'AW-18312920511/qO1DCNjCydAcEL_7o5xE',
-        'value': 1.0,
-        'currency': 'INR',
-        'transaction_id': 'calendly_' + Date.now(),
-      });
-      console.log('[UpneX] Google Ads conversion fired: Book appointment');
-    }
-    if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
-  }
 });
 
 // ============ STICKY MOBILE CTA ============
