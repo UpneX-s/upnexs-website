@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maintenance Ticket Overload — AI Triage & Dispatch for Property Managers | UpneX</title>
+<meta name="description" content="Stop drowning in 30+ maintenance tickets a week. UpneX AI triages requests, dispatches vendors, and follows up automatically — inside your existing AppFolio or Buildium." />
+<link rel="canonical" href="https://upnexs.com/ai/maintenance/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','946905738177488');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18312920511"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','AW-18312920511');gtag('config','G-FLTEBMR6Z7');
+</script>
+
+<script>
+tailwind.config={theme:{extend:{colors:{brand:'#0F62FE',accent:'#2ED3B7',ink:'#111827',muted:'#6B7280',faint:'#9CA3AF',line:'#E5E7EB',soft:'#F9FAFB'},fontFamily:{sans:['Inter','-apple-system','BlinkMacSystemFont','"Segoe UI"','sans-serif']}}}};
+</script>
+<style>
+*{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#111827;background:#fff;overflow-x:hidden;letter-spacing:-0.003em}
+.display-xl{font-size:clamp(34px,5vw,56px);line-height:1.07;letter-spacing:-0.03em;font-weight:800}
+.display-md{font-size:clamp(24px,3vw,36px);line-height:1.15;letter-spacing:-0.02em;font-weight:700}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#0F62FE}
+.body-lg{font-size:18px;line-height:1.6;color:#6B7280}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(15,98,254,0.08);color:#0F62FE;font-size:13px;font-weight:600;border-radius:999px}
+.badge-dot{width:7px;height:7px;background:#2ED3B7;border-radius:50%;box-shadow:0 0 0 3px rgba(46,211,183,0.25);animation:pulse 2s ease-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(46,211,183,0.25)}50%{box-shadow:0 0 0 7px rgba(46,211,183,0.1)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:12px;font-weight:700;font-size:15px;line-height:1;transition:all 0.2s ease;cursor:pointer;white-space:nowrap;border:none;font-family:inherit;text-decoration:none}
+.btn-primary{background:#0F62FE;color:#fff;box-shadow:0 4px 16px rgba(15,98,254,0.3)}
+.btn-primary:hover{background:#0353E9;transform:translateY(-1px);box-shadow:0 8px 28px rgba(15,98,254,0.4)}
+.btn-lg{padding:16px 32px;font-size:17px;border-radius:14px}
+.btn-ghost{background:transparent;color:#111827;border:1.5px solid #E5E7EB}
+.btn-ghost:hover{background:#F9FAFB;border-color:#111827}
+.input{width:100%;padding:13px 16px;border:1.5px solid #E5E7EB;border-radius:12px;font-size:15px;color:#111827;background:#fff;transition:all 0.2s ease;font-family:inherit}
+.input:focus{outline:none;border-color:#0F62FE;box-shadow:0 0 0 4px rgba(15,98,254,0.1)}
+.input::placeholder{color:#9CA3AF}
+textarea.input{resize:vertical;min-height:72px;font-family:inherit}
+select.input{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+.pain-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:12px;font-size:15px;line-height:1.45;color:#111827}
+.pain-row.bad{background:#FEF2F2}
+.pain-row.good{background:rgba(46,211,183,0.08)}
+.pain-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
+.pain-icon.bad{background:#FCA5A5;color:#7F1D1D}
+.pain-icon.good{background:#2ED3B7;color:#fff}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #F3F4F6;font-size:15px;color:#374151;line-height:1.45}
+.check-item:last-child{border-bottom:none}
+.check-icon{width:20px;height:20px;background:rgba(46,211,183,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.check-icon svg{width:11px;height:11px;color:#2ED3B7}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:0.07s}.reveal-d2{transition-delay:0.14s}.reveal-d3{transition-delay:0.21s}
+.nav-link{color:#111827;font-size:14px;font-weight:500;transition:color 0.15s;text-decoration:none}
+.nav-link:hover{color:#0F62FE}
+.footer-link{color:rgba(255,255,255,0.6);font-size:13px;transition:color 0.15s;text-decoration:none}
+.footer-link:hover{color:#fff}
+.spinner{width:32px;height:32px;border:3px solid #E5E7EB;border-top-color:#0F62FE;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:60;padding:12px 16px;background:rgba(255,255,255,0.97);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid #E5E7EB;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+.sticky-cta.visible{transform:translateY(0)}
+@media(min-width:768px){.sticky-cta{display:none!important}}
+</style>
+</head>
+<body class="bg-white">
+
+<!-- NAV -->
+<nav class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-line">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+    <a href="/ai/" class="flex items-center gap-2 text-muted hover:text-ink transition-colors text-sm font-medium">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m7-7-7 7 7 7"/></svg>
+      <span class="font-bold text-lg tracking-tight"><span class="text-ink">UpneX</span><span class="text-brand mx-1">·</span><span class="text-brand">AI</span></span>
+    </a>
+    <a href="#audit-form" class="btn btn-primary text-sm" style="padding:9px 18px">Get Free AI Audit</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="pt-28 pb-16 sm:pt-32 sm:pb-20 bg-white">
+  <div class="max-w-3xl mx-auto px-5 sm:px-8 text-center">
+    <div class="reveal">
+      <div class="badge mb-6 mx-auto w-fit">
+        <span class="badge-dot"></span>
+        Maintenance Operations
+      </div>
+      <h1 class="display-xl mb-5">
+        30+ Maintenance Tickets a Week Is&nbsp;Drowning Your&nbsp;Operations Team
+      </h1>
+      <p class="body-lg max-w-2xl mx-auto mb-8">
+        Triage, dispatch, and close — automatically — inside your existing AppFolio&nbsp;or&nbsp;Buildium.
+      </p>
+      <a href="#audit-form" class="btn btn-primary btn-lg mx-auto">
+        Get My Free AI Operations Audit
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+      <p class="text-sm text-muted mt-4">Used by property managers running 200+ units. No pitch — just an audit of where AI can cut your ticket volume.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="py-16 sm:py-20 bg-soft">
+  <div class="max-w-3xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center mb-10">
+      <div class="eyebrow mb-3">The Problem</div>
+      <h2 class="display-md mb-4">Your coordinator is a human ticket queue</h2>
+      <p class="body-lg">
+        The average property management team handles 25–50 maintenance requests per week. Each one requires phone calls, vendor coordination, status updates, and follow-up. That's 40+ hours a month on work that never stops coming.
+      </p>
+    </div>
+    <div class="space-y-3 reveal reveal-d1">
+      <div class="pain-row bad">
+        <div class="pain-icon bad">✕</div>
+        <span>Coordinator spends 4+ hours a day chasing vendors and updating tenants on status</span>
+      </div>
+      <div class="pain-row bad">
+        <div class="pain-icon bad">✕</div>
+        <span>Critical repairs get lost in a pile of low-priority requests — tenants escalate, reviews suffer</span>
+      </div>
+      <div class="pain-row bad">
+        <div class="pain-icon bad">✕</div>
+        <span>Vendors don't respond, your team is stuck in the middle playing phone tag for days</span>
+      </div>
+      <div class="pain-row bad">
+        <div class="pain-icon bad">✕</div>
+        <span>80% of tenant dissatisfaction traces back to slow or unclear maintenance communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="py-16 sm:py-20 bg-white">
+  <div class="max-w-3xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center mb-10">
+      <div class="eyebrow mb-3">How UpneX Fixes It</div>
+      <h2 class="display-md mb-4">An AI layer on top of your existing AppFolio or Buildium</h2>
+      <p class="body-lg">
+        UpneX plugs into your current property management software in 24 hours. No migration, no new platform, no retraining your team. The AI handles the coordination — your staff handles the exceptions.
+      </p>
+    </div>
+    <div class="bg-white border border-line rounded-2xl p-6 sm:p-8 reveal reveal-d1">
+      <div class="divide-y divide-line">
+        <div class="check-item">
+          <div class="check-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Reads every maintenance request the moment it hits your <strong>AppFolio or Buildium</strong> inbox — email, portal, or SMS</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Triages by urgency: <strong>Emergency → Same-day → Scheduled</strong> — highest-risk tickets surface first, always</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Dispatches your preferred vendors with all relevant details — address, unit, issue description, access instructions — in one message</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Auto-follows up with vendors every 24 hours until the ticket closes — no more chasing</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Sends status updates to tenants automatically — tenants stay informed without your team lifting a finger</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Logs every action back into <strong>AppFolio or Buildium</strong> — full audit trail, nothing falls through the cracks</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-8 p-5 bg-ink rounded-2xl text-white reveal reveal-d2">
+      <p class="text-sm text-white/60 uppercase tracking-widest font-semibold mb-2">Reference Customer</p>
+      <p class="text-base leading-relaxed">A property management team running <strong>200+ units in Virginia on AppFolio</strong> reduced their maintenance response time from 2+ days to same-day for the majority of requests — without adding a single staff member.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORM + CALENDLY -->
+<section id="audit-form" class="py-16 sm:py-20 bg-soft">
+  <div class="max-w-2xl mx-auto px-5 sm:px-8">
+    <div class="text-center mb-10 reveal">
+      <div class="eyebrow mb-3">Free AI Operations Audit</div>
+      <h2 class="display-md mb-3">See exactly where AI can cut your maintenance load</h2>
+      <p class="body-lg">We review your current workflow and show you specifically what can be automated — in a free 30-minute call. No pitch, just a plan.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-line p-6 sm:p-8 reveal reveal-d1" id="formWrap">
+      <form id="auditForm" class="space-y-4">
+        <input type="hidden" name="page_source" value="maintenance" />
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 text-ink">Full Name *</label>
+            <input type="text" name="name" required class="input" placeholder="Your name" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 text-ink">Company *</label>
+            <input type="text" name="company" required class="input" placeholder="Company name" />
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 text-ink">Work Email *</label>
+            <input type="email" name="email" required class="input" placeholder="you@company.com" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 text-ink">Phone *</label>
+            <input type="tel" name="phone" required class="input" placeholder="+1 (555) 000-0000" />
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 text-ink">Units Under Management *</label>
+            <select name="portfolio" required class="input">
+              <option value="">Select range…</option>
+              <option value="0-100">Fewer than 100</option>
+              <option value="100-300">100–300 units</option>
+              <option value="300-600">300–600 units</option>
+              <option value="600-1000">600–1,000 units</option>
+              <option value="1000+">1,000+ units</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5 text-ink">Current PM Software *</label>
+            <select name="pm_software" required class="input">
+              <option value="">Which do you use?</option>
+              <option value="AppFolio">AppFolio</option>
+              <option value="Buildium">Buildium</option>
+              <option value="Rent Manager">Rent Manager</option>
+              <option value="Rentvine">Rentvine</option>
+              <option value="DoorLoop">DoorLoop</option>
+              <option value="Yardi">Yardi</option>
+              <option value="Other">Other</option>
+              <option value="None">None yet</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1.5 text-ink">Where are you feeling the pinch? <span class="text-muted font-normal">(optional)</span></label>
+          <textarea name="pain_point" class="input" placeholder="e.g. maintenance tickets pile up and vendors never respond on time, coordinator is overwhelmed…" maxlength="500"></textarea>
+        </div>
+        <button type="submit" id="submitBtn" class="btn btn-primary btn-lg w-full mt-2">
+          Get My Free AI Operations Audit
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+        <p class="text-xs text-muted text-center">Free 30-minute call. No pitch, no commitment. We audit your current workflow and show you exactly what can be automated.</p>
+      </form>
+    </div>
+
+    <div id="formSending" class="hidden text-center py-10">
+      <div class="spinner mb-4"></div>
+      <p class="text-muted">Submitting your audit request…</p>
+    </div>
+    <div id="formSuccess" class="hidden bg-white rounded-2xl border border-line p-8 text-center">
+      <div class="text-5xl mb-4">✅</div>
+      <h3 class="text-xl font-bold mb-2">Audit request received!</h3>
+      <p class="text-muted mb-6">Hari from UpneX will reach out within 1 business day to schedule your free operations audit. In the meantime, book a time directly below.</p>
+    </div>
+
+    <!-- Calendly -->
+    <div class="mt-10 reveal reveal-d2">
+      <p class="text-center text-sm text-muted mb-4 font-medium">Or pick a time directly — 30-minute free audit call</p>
+      <div id="calendlyWidget" class="calendly-inline-widget rounded-2xl overflow-hidden border border-line"
+           data-url="https://calendly.com/hari-upnexs/30min?hide_gdpr_banner=1&primary_color=0f62fe"
+           style="min-width:280px;height:660px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="py-16 sm:py-20 bg-ink text-white text-center">
+  <div class="max-w-2xl mx-auto px-5 sm:px-8 reveal">
+    <h2 class="display-md mb-4 text-white">Ready to clear the ticket queue?</h2>
+    <p class="text-white/60 text-lg mb-8">Free 30-minute AI operations audit. We review your current workflow and tell you exactly what can be automated.</p>
+    <a href="#audit-form" class="btn btn-lg mx-auto" style="background:#2ED3B7;color:#111827;font-weight:700">
+      Get My Free AI Operations Audit
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-ink text-white py-10 border-t border-white/10">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+    <div class="font-bold text-lg"><span class="text-white">UpneX</span><span class="text-brand mx-1">·</span><span class="text-brand">AI</span></div>
+    <div class="flex flex-wrap items-center gap-5 text-white/60">
+      <a href="/ai/" class="footer-link">← All AI Solutions</a>
+      <a href="/ai/maintenance/" class="footer-link">Maintenance</a>
+      <a href="/ai/tenant-communication/" class="footer-link">Tenant Comms</a>
+      <a href="/ai/leasing/" class="footer-link">Leasing</a>
+      <a href="/ai/automation/" class="footer-link">Automation</a>
+      <a href="/ai/staffing/" class="footer-link">Staffing</a>
+    </div>
+    <div class="text-white/40 text-xs">© 2025 UpneX Solutions OPC Pvt Ltd</div>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <a href="#audit-form" class="btn btn-primary w-full text-center">Get My Free AI Operations Audit</a>
+</div>
+
+<script>
+// ===== UTM PRESERVATION =====
+function getUTMs() {
+  const p = new URLSearchParams(window.location.search);
+  const out = {};
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid'].forEach(k => {
+    const v = p.get(k); if (v) out[k] = v;
+  });
+  return out;
+}
+function buildCalendlyUrl(base) {
+  const utms = getUTMs();
+  const params = new URLSearchParams({...utms, hide_gdpr_banner:1, primary_color:'0f62fe'});
+  return base + '?' + params.toString();
+}
+const CALENDLY_BASE = 'https://calendly.com/hari-upnexs/30min';
+document.addEventListener('DOMContentLoaded', () => {
+  const w = document.getElementById('calendlyWidget');
+  if (w) w.dataset.url = buildCalendlyUrl(CALENDLY_BASE);
+  document.querySelectorAll('a[data-calendly]').forEach(a => { a.href = buildCalendlyUrl(CALENDLY_BASE); });
+  const utms = getUTMs();
+  document.querySelectorAll('a[href="#audit-form"]').forEach(a => {
+    const s = window.location.search;
+    if (s) a.href = '#audit-form' + s.replace('?', '&');
+  });
+});
+
+// ===== EMAILJS =====
+const EMAILJS_CONFIG = { publicKey:'cQAXNRskNvru4mu4j', serviceId:'service_vhcikjr', templateId:'template_ymh1gz9' };
+if (window.emailjs) emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+
+// ===== GOOGLE ADS CONVERSION =====
+const GADS_SEND_TO = 'AW-18312920511/qO1DCNjCydAcEL_7o5xE';
+function fireConversion(src) {
+  try {
+    if (typeof gtag==='function') gtag('event','conversion',{send_to:GADS_SEND_TO,value:1,currency:'INR',transaction_id:src+'_'+Date.now()});
+    else { window.dataLayer=window.dataLayer||[]; window.dataLayer.push(['event','conversion',{send_to:GADS_SEND_TO}]); }
+  } catch(e) {}
+}
+document.addEventListener('click', e => { if (e.target.closest('a[href*="calendly.com"]')) fireConversion('calendly_click'); });
+window.addEventListener('message', e => {
+  if (String(e.origin).indexOf('calendly.com')!==-1 && e.data && e.data.event==='calendly.event_scheduled') {
+    fireConversion('calendly_widget_scheduled');
+    if (typeof fbq!=='undefined') fbq('track','Schedule');
+  }
+});
+(function(){ try { const p=new URLSearchParams(window.location.search); if(p.get('booked')==='1') fireConversion('calendly_redirect'); } catch(e){} })();
+
+// ===== FORM SUBMIT =====
+const auditForm = document.getElementById('auditForm');
+const formWrap = document.getElementById('formWrap');
+const formSending = document.getElementById('formSending');
+const formSuccess = document.getElementById('formSuccess');
+
+auditForm && auditForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(auditForm));
+  formWrap.classList.add('hidden');
+  formSending.classList.remove('hidden');
+  const ts = new Date().toLocaleString();
+  const msg = `🔔 New lead from upnexs.com/ai/maintenance\n\nName:           ${data.name||'—'}\nCompany:        ${data.company||'—'}\nEmail:          ${data.email||'—'}\nPhone:          ${data.phone||'—'}\nPortfolio Size: ${data.portfolio||'—'} units\nPM Software:    ${data.pm_software||'—'}\nPain Point:     ${data.pain_point||'(not provided)'}\nSubmitted:      ${ts}`;
+  const params = {
+    name:data.name, email:data.email, from_name:data.name, from_email:data.email,
+    phone:data.phone, portfolio:data.portfolio, pm_software:data.pm_software, pain_point:data.pain_point,
+    time:ts, timestamp:ts, message:msg,
+    subject:`🔔 AI Audit Request — ${data.name} (Maintenance, ${data.portfolio||'?'} units)`,
+  };
+  const send = window.emailjs
+    ? emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params).then(()=>true).catch(()=>false)
+    : Promise.resolve(false);
+  Promise.all([send, new Promise(r=>setTimeout(r,1000))]).then(() => {
+    formSending.classList.add('hidden');
+    formSuccess.classList.remove('hidden');
+    fireConversion('form_submit');
+    if (typeof fbq!=='undefined') fbq('track','Lead');
+  });
+});
+
+// ===== SCROLL REVEAL =====
+const ro = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);} }), {threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// ===== STICKY CTA =====
+const stickyCta = document.getElementById('stickyCta');
+window.addEventListener('scroll', () => { stickyCta && (window.scrollY > 400 ? stickyCta.classList.add('visible') : stickyCta.classList.remove('visible')); }, {passive:true});
+</script>
+</body>
+</html>
