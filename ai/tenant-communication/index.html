@@ -70,6 +70,14 @@ select.input{appearance:none;-webkit-appearance:none;background-image:url("data:
 .sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:60;padding:12px 16px;background:rgba(255,255,255,0.97);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid #E5E7EB;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
 .sticky-cta.visible{transform:translateY(0)}
 @media(min-width:768px){.sticky-cta{display:none!important}}
+.roi-card{background:#fff;border:1.5px solid #E5E7EB;border-radius:20px;padding:28px 32px;max-width:560px;margin:0 auto}
+.roi-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;outline:none;cursor:pointer;background:linear-gradient(to right,#0F62FE 0%,#E5E7EB 0%)}
+.roi-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#0F62FE;border:3px solid #fff;box-shadow:0 2px 10px rgba(15,98,254,0.4);cursor:pointer}
+.roi-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#0F62FE;border:3px solid white;box-shadow:0 2px 10px rgba(15,98,254,0.4);cursor:pointer}
+.roi-metric{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:12px}
+.roi-metric.neutral{background:#F9FAFB;border:1.5px solid #E5E7EB}
+.roi-metric.win{background:rgba(46,211,183,0.1);border:1.5px solid rgba(46,211,183,0.3)}
+.roi-metric.highlight{background:rgba(15,98,254,0.06);border:1.5px solid rgba(15,98,254,0.2)}
 </style>
 </head>
 <body class="bg-white">
@@ -180,6 +188,44 @@ select.input{appearance:none;-webkit-appearance:none;background-image:url("data:
     <div class="mt-8 p-5 bg-ink rounded-2xl text-white reveal reveal-d2">
       <p class="text-sm text-white/60 uppercase tracking-widest font-semibold mb-2">Reference Customer</p>
       <p class="text-base leading-relaxed">A property management team running <strong>200+ units in Virginia on AppFolio</strong> reduced average tenant response time from 6+ hours to under 3 minutes for the majority of incoming messages — with no additional staff.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROI SLIDER -->
+<section class="py-16 sm:py-20 bg-white" id="roi">
+  <div class="max-w-3xl mx-auto px-5 sm:px-8">
+    <div class="reveal text-center mb-8">
+      <div class="eyebrow mb-3">Calculate Your Savings</div>
+      <h2 class="display-md mb-3">How much time does your team spend on tenant messages?</h2>
+      <p class="body-lg max-w-xl mx-auto">Drag the slider to see what AI communication automation means for your team's capacity.</p>
+    </div>
+    <div class="roi-card reveal reveal-d1">
+      <div class="flex items-center justify-between mb-2">
+        <label class="text-sm font-bold text-ink" for="roiSlider">Tenant messages &amp; calls per week</label>
+        <span class="text-2xl font-extrabold text-brand" id="roiVal">60</span>
+      </div>
+      <input type="range" id="roiSlider" class="roi-slider" min="20" max="200" value="60" step="5" aria-label="Messages per week">
+      <div class="flex justify-between text-xs text-muted mt-1 mb-6"><span>20 / week</span><span>200 / week</span></div>
+      <div class="space-y-3">
+        <div class="roi-metric neutral">
+          <span class="text-sm text-muted">Staff hours/month on tenant messages (today)</span>
+          <span class="text-base font-bold text-ink" id="roiHoursNow">40 hrs</span>
+        </div>
+        <div class="roi-metric win">
+          <span class="text-sm font-semibold text-ink">Messages handled by AI per month</span>
+          <span class="text-base font-bold" style="color:#0f766e" id="roiMsgsAuto">168 msgs</span>
+        </div>
+        <div class="roi-metric win">
+          <span class="text-sm font-semibold text-ink">Staff hours freed per month</span>
+          <span class="text-base font-bold" style="color:#0f766e" id="roiHoursSaved">28 hrs</span>
+        </div>
+        <div class="roi-metric highlight">
+          <span class="text-sm font-semibold text-ink">Estimated monthly savings</span>
+          <span class="text-xl font-extrabold text-brand" id="roiDollar">$700</span>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-4 text-center">Based on 10 min/message avg handling time · AI automates 70% of messages · $25/hr coordinator cost</p>
     </div>
   </div>
 </section>
@@ -333,7 +379,7 @@ auditForm&&auditForm.addEventListener('submit',e=>{
   formWrap.classList.add('hidden');formSending.classList.remove('hidden');
   const ts=new Date().toLocaleString();
   const msg=`🔔 New lead from upnexs.com/ai/tenant-communication\n\nName:           ${data.name||'—'}\nCompany:        ${data.company||'—'}\nEmail:          ${data.email||'—'}\nPhone:          ${data.phone||'—'}\nPortfolio Size: ${data.portfolio||'—'} units\nPM Software:    ${data.pm_software||'—'}\nPain Point:     ${data.pain_point||'(not provided)'}\nSubmitted:      ${ts}`;
-  const params={name:data.name,email:data.email,from_name:data.name,from_email:data.email,phone:data.phone,portfolio:data.portfolio,pm_software:data.pm_software,pain_point:data.pain_point,time:ts,timestamp:ts,message:msg,subject:`🔔 AI Audit Request — ${data.name} (Tenant Comms, ${data.portfolio||'?'} units)`};
+  const params={name:data.name,company:data.company,email:data.email,from_name:data.name,from_email:data.email,phone:data.phone,portfolio:data.portfolio,pm_software:data.pm_software,pain_point:data.pain_point,time:ts,timestamp:ts,message:msg,subject:`🔔 AI Audit Request — ${data.name} (Tenant Comms, ${data.portfolio||'?'} units)`};
   const send=window.emailjs?emailjs.send(EMAILJS_CONFIG.serviceId,EMAILJS_CONFIG.templateId,params).then(()=>true).catch(()=>false):Promise.resolve(false);
   Promise.all([send,new Promise(r=>setTimeout(r,1000))]).then(()=>{formSending.classList.add('hidden');formSuccess.classList.remove('hidden');UpneX.track('lead_form_submitted');if(typeof fbq!=='undefined')fbq('track','Lead');});
 });
@@ -341,6 +387,28 @@ const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 const stickyCta=document.getElementById('stickyCta');
 window.addEventListener('scroll',()=>{stickyCta&&(window.scrollY>400?stickyCta.classList.add('visible'):stickyCta.classList.remove('visible'));},{passive:true});
+
+// ===== ROI SLIDER =====
+(function(){
+  var sl=document.getElementById('roiSlider');
+  if(!sl)return;
+  function calc(v){
+    v=parseInt(v);
+    document.getElementById('roiVal').textContent=v;
+    var pct=Math.round((v-20)/(200-20)*100);
+    sl.style.background='linear-gradient(to right,#0F62FE '+pct+'%,#E5E7EB '+pct+'%)';
+    var monthly=v*4;
+    var hrsTotalNow=Math.round(monthly*(10/60));
+    var msgsAuto=Math.round(monthly*0.7);
+    var hrsSaved=Math.round(msgsAuto*(10/60));
+    document.getElementById('roiHoursNow').textContent=hrsTotalNow+' hrs';
+    document.getElementById('roiMsgsAuto').textContent=msgsAuto.toLocaleString()+' msgs';
+    document.getElementById('roiHoursSaved').textContent=hrsSaved+' hrs';
+    document.getElementById('roiDollar').textContent='$'+(hrsSaved*25).toLocaleString();
+  }
+  sl.addEventListener('input',function(){calc(this.value);});
+  calc(60);
+})();
 </script>
 </body>
 </html>
