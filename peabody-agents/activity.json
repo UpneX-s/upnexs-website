@@ -12,7 +12,7 @@
       "domain": "tenant",
       "description": "Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) within minutes of submission.",
       "liveSince": "2026-06-16T18:09:00-04:00",
-      "lastEventAt": "2026-07-19T20:30:00-04:00"
+      "lastEventAt": "2026-07-19T20:31:12-04:00"
     },
     {
       "name": "Lease Renewal Agent",
@@ -65,6 +65,321 @@
     }
   ],
   "activity": [
+    {
+      "id": "evt-496dff007ce0",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 353",
+      "outcome": "REVIEW",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-cf2ff177c2ed",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 352",
+      "outcome": "APPROVE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-d957de006388",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 348",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-2905ac6880e2",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 344",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-4e8dc8f99f98",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 334",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-73bc0a9f221e",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 327",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-444d90eeba6a",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 322",
+      "outcome": "REVIEW",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-f0e8623c094e",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 310",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-62566ec0eec3",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 305",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-129b23d503c1",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 304",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-7771baae4a93",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 303",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-f328b337a696",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 302",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-db23b29d7391",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 300",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-5f26b2c3d99a",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 298",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-bbf86cedca03",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 297",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-2a8b67d1eb43",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 295",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-824631de0ca0",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 292",
+      "outcome": "REVIEW",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-2449ec2d51bb",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 291",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-e384c5162af7",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 290",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-7adf3ad1aea4",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 289",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-5e10533fd9c0",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 285",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-8ec26ee913fa",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 283",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-8251e3bfd7ff",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 281",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-1dd0b678f0ba",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 278",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-ab8f66d3d6fc",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 276",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-ba358ec3a169",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 273",
+      "outcome": "REVIEW",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-4265170d4c71",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 272",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-b44cb1fc7aac",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 271",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-0c16f9100f0f",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 270",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-1bcac7be3e9c",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 269",
+      "outcome": "REVIEW",
+      "status": "Delivered"
+    },
+    {
+      "id": "evt-c81a2bc7cee6",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 267",
+      "outcome": "DECLINE",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-c741edae228e",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 266",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-66e18ec8ca78",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 264",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-75dc2d8dd7af",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 263",
+      "outcome": "REVIEW",
+      "status": "DRAFT \u2014 awaiting send approval"
+    },
+    {
+      "id": "evt-a3d102980e0e",
+      "ts": "2026-07-19T20:31:12-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening recorded (daily sync)",
+      "subject": "Application 258",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
     {
       "id": "evt-fd0cc932a6d5",
       "ts": "2026-07-19T20:30:00-04:00",
@@ -199,322 +514,7 @@
       "subject": "Application 301",
       "outcome": "REVIEW",
       "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-3bfb1cacc7bf",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 299",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-7a6a493baf19",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 265",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-87ac8640a5c0",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 262",
-      "outcome": "APPROVE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-a2111cdd7351",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 261",
-      "outcome": "REVIEW",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-e08cd7f0dfe8",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 260",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-4c3ddd57a987",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 255",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-7035eda24aaf",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 254",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-500097581de7",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 253",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-29af6e67c365",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 252",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-84b459258f25",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 251",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-da07e087e01b",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 250",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-02cb41e314a1",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 248",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-9812a150ecee",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 247",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-ca8079ecc902",
-      "ts": "2026-07-19T20:30:00-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 246",
-      "outcome": "APPROVE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-496dff007ce0",
-      "ts": "2026-07-19T12:33:40-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 353",
-      "outcome": "REVIEW",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-cf2ff177c2ed",
-      "ts": "2026-07-19T12:33:40-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 352",
-      "outcome": "APPROVE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-d957de006388",
-      "ts": "2026-07-19T12:33:40-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 348",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-2905ac6880e2",
-      "ts": "2026-07-19T12:33:40-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 344",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-4e8dc8f99f98",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 334",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-73bc0a9f221e",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 327",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-444d90eeba6a",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 322",
-      "outcome": "REVIEW",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-f0e8623c094e",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 310",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-62566ec0eec3",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 305",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-129b23d503c1",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 304",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-7771baae4a93",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 303",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-f328b337a696",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 302",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-db23b29d7391",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 300",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-5f26b2c3d99a",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 298",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-bbf86cedca03",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 297",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-2a8b67d1eb43",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 295",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-824631de0ca0",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 292",
-      "outcome": "REVIEW",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-2449ec2d51bb",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 291",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-e384c5162af7",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 290",
-      "outcome": "DECLINE",
-      "status": "Delivered"
-    },
-    {
-      "id": "evt-7adf3ad1aea4",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 289",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-5e10533fd9c0",
-      "ts": "2026-07-19T12:33:39-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 285",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
     }
   ],
-  "lastUpdated": "2026-07-19T20:30:00-04:00"
+  "lastUpdated": "2026-07-19T20:31:12-04:00"
 }
