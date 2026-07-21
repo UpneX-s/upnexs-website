@@ -1292,34 +1292,77 @@ function calcFull() {
 calcFull();
 
 // ============ EMAIL SENDER ============
+// Two independent delivery channels, both fire in parallel. If EmailJS ever
+// silently fails, the Formsubmit fallback still gets the lead to Hari.
 function sendLeadEmail(data, source) {
-  return new Promise((resolve) => {
+  const timestamp = new Date().toLocaleString();
+  const messageBody =
+    `🔔 New lead from ${source || 'upnexs.com/ai'}\n\n` +
+    `Name:           ${data.name || '—'}\n` +
+    `Email:          ${data.email || '—'}\n` +
+    `Phone:          ${data.phone || '—'}\n` +
+    `Portfolio Size: ${data.portfolio || '—'} units\n` +
+    `PM Software:    ${data.pm_software || '—'}\n` +
+    `Pain Point:     ${data.pain_point || '(not provided)'}\n` +
+    `Submitted:      ${timestamp}\n\n` +
+    `Reply to this email to respond directly.`;
+  const subjectLine = `🔔 New UpneX Trial Signup — ${data.name} (${data.portfolio || 'trial'})`;
+
+  // Channel A — EmailJS (primary; existing template)
+  const emailjsPromise = new Promise((resolve) => {
     const configured = window.emailjs && EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY_HERE';
-    if (!configured) {
-      console.warn('[UpneX] EmailJS not configured — skipping. Lead:', data);
-      return resolve(false);
-    }
-    const timestamp = new Date().toLocaleString();
-    const messageBody =
-      `🔔 New lead from ${source || 'upnexs.com/ai'}\n\n` +
-      `Name:           ${data.name || '—'}\n` +
-      `Email:          ${data.email || '—'}\n` +
-      `Phone:          ${data.phone || '—'}\n` +
-      `Portfolio Size: ${data.portfolio || '—'} units\n` +
-      `PM Software:    ${data.pm_software || '—'}\n` +
-      `Pain Point:     ${data.pain_point || '(not provided)'}\n` +
-      `Submitted:      ${timestamp}\n\n` +
-      `Reply to this email to respond directly.`;
+    if (!configured) { console.warn('[UpneX] EmailJS not configured'); return resolve(false); }
+    // Include multiple recipient-hint fields — different EmailJS templates use
+    // different variable names for "to". Sending all of them is defensive.
     const params = {
-      name: data.name, email: data.email, time: timestamp, message: messageBody,
-      from_name: data.name, from_email: data.email, phone: data.phone,
-      portfolio: data.portfolio, pm_software: data.pm_software,
-      pain_point: data.pain_point, timestamp: timestamp,
-      subject: `🔔 New UpneX Trial Signup — ${data.name} (${data.portfolio || 'trial'})`,
+      name: data.name, email: data.email,
+      from_name: data.name, from_email: data.email,
+      to_name: 'Hari Sundaram', to_email: 'hari@upnexs.com',
+      reply_to: data.email || 'hari@upnexs.com',
+      recipient: 'hari@upnexs.com',
+      phone: data.phone, portfolio: data.portfolio,
+      pm_software: data.pm_software, pain_point: data.pain_point,
+      time: timestamp, timestamp: timestamp,
+      message: messageBody, subject: subjectLine,
     };
     emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, params)
-      .then(() => { console.log('[UpneX] Lead email sent ✓'); resolve(true); })
-      .catch((err) => { console.error('[UpneX] EmailJS failed:', err); resolve(false); });
+      .then(() => { console.log('[UpneX] ✅ EmailJS delivered'); resolve(true); })
+      .catch((err) => { console.error('[UpneX] ❌ EmailJS failed:', err); resolve(false); });
+  });
+
+  // Channel B — Formsubmit.co fallback (ajax mode, no page redirect).
+  // Free service, forwards to hari@upnexs.com. First submission from a domain
+  // requires clicking a one-time verification link Hari receives; after that,
+  // every submission arrives instantly. Zero-config, redundant, hard to lose.
+  const formsubmitPromise = new Promise((resolve) => {
+    try {
+      const fd = new FormData();
+      fd.append('name', data.name || '');
+      fd.append('email', data.email || '');
+      fd.append('phone', data.phone || '');
+      fd.append('portfolio', data.portfolio || '');
+      fd.append('pm_software', data.pm_software || '');
+      fd.append('pain_point', data.pain_point || '');
+      fd.append('_subject', subjectLine);
+      fd.append('_replyto', data.email || '');
+      fd.append('_template', 'table');
+      fd.append('_captcha', 'false');
+      fd.append('source', source || 'upnexs.com/ai');
+      fetch('https://formsubmit.co/ajax/hari@upnexs.com', {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' },
+      })
+        .then(r => r.ok
+          ? (console.log('[UpneX] ✅ Formsubmit delivered'), resolve(true))
+          : (console.error('[UpneX] ❌ Formsubmit HTTP', r.status), resolve(false)))
+        .catch(err => { console.error('[UpneX] ❌ Formsubmit fetch failed:', err); resolve(false); });
+    } catch (e) { console.error('[UpneX] Formsubmit setup error:', e); resolve(false); }
+  });
+
+  return Promise.all([emailjsPromise, formsubmitPromise]).then(([e, f]) => {
+    if (!e && !f) console.error('[UpneX] 🚨 BOTH email channels failed for lead:', data);
+    return e || f;   // succeed if at least one delivered
   });
 }
 
