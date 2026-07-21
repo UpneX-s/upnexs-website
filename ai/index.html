@@ -46,15 +46,15 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
 
-<!-- Google tag (gtag.js) — loads once, configures BOTH Google Ads + GA4 -->
+<!-- Google tag (gtag.js) — configures Google Ads; GA4 is configured via analytics.js initAnalytics() -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18312920511"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18312920511');   // Google Ads
-  gtag('config', 'G-FLTEBMR6Z7');     // Google Analytics 4
 </script>
+<script src="/ai/js/analytics.js"></script>
 
 <style>
   *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
@@ -968,6 +968,64 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
   </div>
 </section>
 
+<!-- ============ AI SOLUTIONS SUB-NAV ============ -->
+<section class="py-16 sm:py-20 bg-soft">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center mb-10 reveal">
+      <div class="eyebrow mb-3">Deep Dives</div>
+      <h2 class="display-md mb-3">See how AI transforms specific areas of your operation</h2>
+      <p class="body-lg">Each page covers one pain point in detail — the problem, how UpneX solves it, and a free audit offer.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal reveal-d1">
+      <a href="/ai/maintenance/" class="card p-6 hover:shadow-xl hover:-translate-y-1 transition-all group">
+        <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background:rgba(15,98,254,0.1)">
+          <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-2 group-hover:text-brand transition-colors">Maintenance Operations</h3>
+        <p class="text-muted text-sm leading-relaxed">30+ tickets a week drowning your team — AI triages, dispatches, and follows up automatically.</p>
+        <div class="mt-4 text-brand text-sm font-semibold flex items-center gap-1">See how it works <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></div>
+      </a>
+      <a href="/ai/tenant-communication/" class="card p-6 hover:shadow-xl hover:-translate-y-1 transition-all group">
+        <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background:rgba(46,211,183,0.1)">
+          <svg class="w-5 h-5" style="color:#2ED3B7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-2 group-hover:text-brand transition-colors">Tenant Communication</h3>
+        <p class="text-muted text-sm leading-relaxed">Tenants text at 2 AM — AI answers instantly, escalates only what matters, keeps residents happy.</p>
+        <div class="mt-4 text-brand text-sm font-semibold flex items-center gap-1">See how it works <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></div>
+      </a>
+      <a href="/ai/leasing/" class="card p-6 hover:shadow-xl hover:-translate-y-1 transition-all group">
+        <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background:rgba(139,92,246,0.1)">
+          <svg class="w-5 h-5" style="color:#8B5CF6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-2 group-hover:text-brand transition-colors">Leasing &amp; Vacancy</h3>
+        <p class="text-muted text-sm leading-relaxed">Inquiries go cold in minutes — AI responds in 60 seconds, qualifies, and books showings automatically.</p>
+        <div class="mt-4 text-brand text-sm font-semibold flex items-center gap-1">See how it works <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></div>
+      </a>
+      <a href="/ai/automation/" class="card p-6 hover:shadow-xl hover:-translate-y-1 transition-all group">
+        <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background:rgba(245,158,11,0.1)">
+          <svg class="w-5 h-5" style="color:#F59E0B" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-2 group-hover:text-brand transition-colors">PM Automation</h3>
+        <p class="text-muted text-sm leading-relaxed">Renewals, notices, owner reports, invoices — AI handles the back office so your team can focus on growth.</p>
+        <div class="mt-4 text-brand text-sm font-semibold flex items-center gap-1">See how it works <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></div>
+      </a>
+      <a href="/ai/staffing/" class="card p-6 hover:shadow-xl hover:-translate-y-1 transition-all group">
+        <div class="w-10 h-10 rounded-xl mb-4 flex items-center justify-center" style="background:rgba(239,68,68,0.1)">
+          <svg class="w-5 h-5" style="color:#EF4444" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-2 group-hover:text-brand transition-colors">Staffing &amp; Cost</h3>
+        <p class="text-muted text-sm leading-relaxed">A coordinator costs $60K+/yr — AI handles the same routine work at $8–12/unit/month.</p>
+        <div class="mt-4 text-brand text-sm font-semibold flex items-center gap-1">See how it works <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></div>
+      </a>
+      <div class="card p-6 flex flex-col justify-center items-center text-center" style="background:linear-gradient(155deg,#111827 0%,#1F2937 100%);border-color:#374151">
+        <div class="text-white font-bold text-lg mb-2">Not sure where to start?</div>
+        <p class="text-white/60 text-sm mb-4">Book a free 30-minute AI audit — we map your biggest pain point and tell you exactly where automation fits.</p>
+        <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn text-sm" style="background:#2ED3B7;color:#111827;font-weight:700;padding:10px 20px">Book Free Audit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOOTER ============ -->
 <footer class="bg-ink text-white py-14 border-t border-white/5">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
@@ -1128,6 +1186,9 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 </div>
 
 <script>
+// ============ PAGE TRACKING ============
+initAnalytics({ page_name: 'AI Solutions Hub', page_type: 'hub' });
+
 // ============ EMAILJS CONFIG ============
 const EMAILJS_CONFIG = {
   publicKey:  'cQAXNRskNvru4mu4j',
@@ -1310,70 +1371,7 @@ function fireConfetti() {
   })();
 }
 
-// ============ GOOGLE ADS CONVERSION TRACKING (robust) ============
-// Central helper — fires "Book appointment" conversion for every booking path.
-// Fires via gtag() when loaded, falls back to raw dataLayer.push if gtag.js
-// hasn't finished loading yet (Google's async script queues either way).
-const GADS_SEND_TO = 'AW-18312920511/qO1DCNjCydAcEL_7o5xE';
-
-function fireGAdsConversion(source) {
-  const payload = {
-    send_to: GADS_SEND_TO,
-    value: 1.0,
-    currency: 'INR',
-    transaction_id: source + '_' + Date.now(),
-  };
-  try {
-    if (typeof gtag === 'function') {
-      gtag('event', 'conversion', payload);
-      console.log('[UpneX GAds] ✅ Conversion fired via gtag:', source, payload);
-    } else {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push(['event', 'conversion', payload]);
-      console.warn('[UpneX GAds] ⚠️ gtag not ready — queued via dataLayer:', source);
-    }
-  } catch (err) {
-    console.error('[UpneX GAds] Failed to fire conversion:', err);
-  }
-}
-
-// PATH 1: Click on any external Calendly link (nav, hero, ROI card, sticky mobile,
-// trial success, footer). New-tab flow can't observe the booking directly, so we
-// fire on click intent. Uses event delegation so it catches dynamically injected links too.
-document.addEventListener('click', function(e) {
-  const link = e.target.closest('a[href*="calendly.com"]');
-  if (link) {
-    fireGAdsConversion('calendly_link_click');
-  }
-});
-
-// PATH 2: Booking completed inside our inline Calendly widget on the bottom CTA.
-// Robust origin check — accept anything on the calendly.com domain family.
-window.addEventListener('message', function(e) {
-  const origin = String(e.origin || '');
-  const isCalendly = origin.indexOf('calendly.com') !== -1;
-  if (!isCalendly || !e.data || typeof e.data !== 'object') return;
-  if (e.data.event === 'calendly.event_scheduled') {
-    console.log('[UpneX] Calendly booking scheduled:', e.data.payload);
-    fireGAdsConversion('calendly_widget_scheduled');
-    if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
-  }
-});
-
-// PATH 3: Calendly redirect confirmation (?booked=1). If Calendly is configured to
-// redirect to https://upnexs.com/ai/?booked=1 after booking, this catches every booking
-// from every path — including the ones that happened in new tabs.
-(function() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('booked') === '1') {
-      fireGAdsConversion('calendly_redirect');
-      if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
-    }
-  } catch (err) { /* noop */ }
-})();
-
-// PATH 4: Trial modal signup completes.
+// ============ TRIAL FORM SUBMIT ============
 trialForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(trialForm));
@@ -1387,7 +1385,7 @@ trialForm.addEventListener('submit', (e) => {
     fireConfetti();
     setTimeout(fireConfetti, 700);
     if (typeof fbq !== 'undefined') fbq('track', 'StartTrial', { value: 0, currency: 'USD' });
-    fireGAdsConversion('trial_signup');
+    UpneX.track('trial_form_submitted');
   });
 });
 
