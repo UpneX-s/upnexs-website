@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Raut Properties | Real Estate Investment & Property Operations</title>
+    <meta
+      name="description"
+      content="Raut Properties acquires, renovates, manages, and holds residential real estate with thoughtful systems and a long-term ownership mindset."
+    />
+    <style>
+      :root {
+        --bg: #f7f4ee;
+        --ink: #151515;
+        --muted: #756f66;
+        --gold: #b08a4a;
+        --line: rgba(20, 20, 20, 0.12);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
+      .display { font-family: Georgia, "Times New Roman", serif; letter-spacing: 0; }
+      .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+      .eyebrow {
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      header {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 20;
+        border-bottom: 1px solid rgba(255,255,255,.14);
+        background: rgba(0,0,0,.52);
+        color: #fff;
+        backdrop-filter: blur(20px);
+      }
+      .nav {
+        height: 78px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+      .brand { font-size: 28px; }
+      .links { display: flex; gap: 28px; color: rgba(255,255,255,.72); font-size: 14px; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 13px 20px;
+        font-size: 14px;
+        font-weight: 800;
+        transition: .25s ease;
+      }
+      .btn.light { background: #fff; color: #000; }
+      .btn.dark { background: #111; color: #fff; }
+      .btn.outline { border: 1px solid rgba(255,255,255,.25); color: #fff; }
+      .hero {
+        position: relative;
+        min-height: 92vh;
+        overflow: hidden;
+        background: #000;
+        color: #fff;
+        padding-top: 108px;
+      }
+      .hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: .7;
+      }
+      .shade {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(0,0,0,.82), rgba(0,0,0,.36), rgba(0,0,0,.12)),
+          linear-gradient(0deg, rgba(0,0,0,.82), transparent 52%);
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 2;
+        min-height: calc(92vh - 108px);
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        padding-bottom: 46px;
+      }
+      h1 {
+        max-width: 900px;
+        margin: 18px 0 0;
+        font-size: clamp(48px, 7vw, 88px);
+        line-height: 1.02;
+        font-weight: 500;
+      }
+      h2 {
+        margin: 14px 0 0;
+        font-size: clamp(34px, 5vw, 64px);
+        line-height: 1.06;
+        font-weight: 500;
+      }
+      h3 { margin: 0; font-size: 20px; }
+      p { color: var(--muted); line-height: 1.75; }
+      .hero p { max-width: 710px; color: rgba(255,255,255,.78); font-size: 20px; }
+      .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+      .hero-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 50px;
+      }
+      .glass {
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 8px;
+        background: rgba(255,255,255,.08);
+        padding: 20px;
+        backdrop-filter: blur(18px);
+      }
+      section { padding: 96px 0; }
+      .grid-2 { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: start; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255,255,255,.72);
+        padding: 26px;
+      }
+      .services .card { min-height: 205px; background: #fbfaf7; transition: .25s ease; }
+      .services .card {
+        padding: 34px 28px 30px;
+      }
+      .services .card h3 {
+        font-size: 22px;
+        line-height: 1.2;
+        font-weight: 800;
+      }
+      .services .card p {
+        margin-top: 16px;
+      }
+      .services .card:hover { transform: translateY(-5px); background: #181816; color: #fff; box-shadow: 0 24px 70px rgba(0,0,0,.18); }
+      .services .card:hover p { color: rgba(255,255,255,.68); }
+      .icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: #eee6d7;
+        color: #8a6a35;
+        font-weight: 900;
+      }
+      .dark { background: #151515; color: #fff; }
+      .dark p { color: rgba(255,255,255,.68); }
+      .process { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-top: 42px; }
+      .process .card { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.12); }
+      .portfolio { background: #f7f4ee; }
+      .showcase {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 24px 80px rgba(18,16,12,.12);
+      }
+      .photo { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+      .metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+      .pill { border-radius: 999px; background: #f0eadf; padding: 7px 11px; color: #4b4337; font-size: 12px; font-weight: 800; }
+      .dashboard {
+        border-radius: 8px;
+        background: #151515;
+        color: #fff;
+        padding: 24px;
+        box-shadow: 0 24px 80px rgba(18,16,12,.16);
+      }
+      .bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; margin-top: 8px; }
+      .bar span { display: block; height: 100%; border-radius: inherit; background: var(--gold); }
+      .stat {
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+      }
+      .stat strong { display: block; font: 500 52px/1 Georgia, serif; }
+      .form {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 24px 80px rgba(18,16,12,.12);
+        padding: 28px;
+      }
+      .sell-section { padding: 68px 0; }
+      .sell-layout {
+        align-items: center;
+        gap: 48px;
+      }
+      .sell-copy {
+        max-width: 540px;
+      }
+      .sell-copy p {
+        margin-bottom: 20px;
+      }
+      .sell-copy details + details {
+        margin-top: 12px;
+      }
+      .sell-copy details {
+        overflow: hidden;
+        border-color: rgba(255, 255, 255, 0.08);
+        background: #f8f6f1;
+        color: #111;
+        transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+      }
+      .sell-copy details:hover {
+        border-color: rgba(176, 138, 74, 0.36);
+        background: #fff;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+        transform: translateY(-2px);
+      }
+      .sell-copy summary {
+        position: relative;
+        list-style: none;
+        color: #111;
+        padding-right: 28px;
+      }
+      .sell-copy summary::-webkit-details-marker {
+        display: none;
+      }
+      .sell-copy summary::after {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        content: "+";
+        color: var(--gold);
+        font-size: 22px;
+        line-height: 1;
+        transform: translateY(-50%);
+        transition: transform .25s ease;
+      }
+      .sell-copy details[open] summary::after {
+        transform: translateY(-50%) rotate(45deg);
+      }
+      .sell-copy details p {
+        max-height: 0;
+        overflow: hidden;
+        margin: 0;
+        color: #555;
+        line-height: 1.65;
+        opacity: 0;
+        transition: max-height .32s ease, opacity .25s ease, margin-top .25s ease;
+      }
+      .sell-copy details[open] p {
+        max-height: 180px;
+        margin-top: 12px;
+        opacity: 1;
+      }
+      .sell-form {
+        padding: 24px;
+      }
+      .sell-form h3 {
+        margin-bottom: 18px;
+      }
+      .sell-form .fields {
+        gap: 12px;
+      }
+      .sell-form textarea {
+        min-height: 92px;
+      }
+      label { display: grid; gap: 8px; font-size: 14px; font-weight: 800; }
+      input, select, textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #fbfaf7;
+        padding: 14px;
+        font: inherit;
+      }
+      textarea { min-height: 120px; resize: vertical; }
+      .fields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .wide { grid-column: 1 / -1; }
+      details { border: 1px solid var(--line); border-radius: 8px; background: #fbfaf7; padding: 18px; }
+      summary { cursor: pointer; font-weight: 800; }
+      .fade { animation: rise .75s ease both; }
+      @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+      footer { background: #10100f; color: #fff; padding: 44px 0; }
+      footer p { color: rgba(255,255,255,.62); }
+      @media (max-width: 900px) {
+        .links { display: none; }
+        .hero-cards, .grid-2, .grid-3, .grid-4, .process, .fields { grid-template-columns: 1fr; }
+        .sell-section { padding: 56px 0; }
+        .sell-layout { gap: 28px; align-items: start; }
+        .sell-copy { max-width: none; }
+        h1 { font-size: 48px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="shell nav">
+        <a class="brand display" href="#">Raut Properties</a>
+        <nav class="links">
+          <a href="#who">About</a>
+          <a href="#services">Services</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="btn light" href="#sell">Sell Your Property</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2200&q=85" alt="Modern residential home at dusk" />
+        <div class="shade"></div>
+        <div class="shell hero-inner fade">
+          <div class="eyebrow">Real Estate Investment & Operations</div>
+          <h1 class="display">Real Estate Built on Experience, Strategy, and Long-Term Vision</h1>
+          <p>Raut Properties acquires, renovates, manages, and operates residential properties with a focus on thoughtful decisions, efficient operations, and lasting value.</p>
+          <div class="cta">
+            <a class="btn light" href="#sell">Sell Your Property</a>
+            <a class="btn outline" href="#portfolio">View Portfolio</a>
+          </div>
+          <div class="hero-cards">
+            <div class="glass"><strong>Acquisitions</strong><p>Thoughtful property reviews and clear next steps.</p></div>
+            <div class="glass"><strong>Renovations</strong><p>Improvements planned for quality and long-term use.</p></div>
+            <div class="glass"><strong>Property Operations</strong><p>Reliable systems for leasing, maintenance, and care.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="who">
+        <div class="shell grid-2">
+          <div>
+            <div class="eyebrow">About</div>
+            <h2 class="display">Built on Experience. Focused on Long-Term Value.</h2>
+          </div>
+          <div>
+            <p>Raut Properties combines real estate expertise, operational discipline, and modern systems to identify opportunities, improve properties, and create lasting value. Our approach is rooted in careful analysis, responsible ownership, and a commitment to doing things the right way.</p>
+            <div class="grid-3">
+              <div class="card"><div class="icon">1</div><h3>Real Estate Experience</h3></div>
+              <div class="card"><div class="icon">2</div><h3>Operational Discipline</h3></div>
+              <div class="card"><div class="icon">3</div><h3>Responsible Ownership</h3></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="services" style="background:#fff">
+        <div class="shell">
+          <div class="eyebrow">Services</div>
+          <h2 class="display">What We Do</h2>
+          <div class="grid-4" style="margin-top:38px">
+            <div class="card"><h3>Property Acquisitions</h3><p>We acquire residential properties through direct purchases, off-market opportunities, and strategic acquisitions.</p></div>
+            <div class="card"><h3>Renovation & Improvements</h3><p>We manage renovations and capital improvements that enhance property value and long-term performance.</p></div>
+            <div class="card"><h3>Property Management</h3><p>We oversee day-to-day operations, maintenance coordination, leasing support, and property performance.</p></div>
+            <div class="card"><h3>Investment Analysis</h3><p>We use market research and data-driven evaluation to make informed real estate decisions.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="process" class="dark">
+        <div class="shell">
+          <div class="eyebrow">Process</div>
+          <h2 class="display">Our Approach</h2>
+          <div class="process">
+            <div class="card"><span class="eyebrow">01</span><h3>Identify Opportunity</h3></div>
+            <div class="card"><span class="eyebrow">02</span><h3>Evaluate Potential</h3></div>
+            <div class="card"><span class="eyebrow">03</span><h3>Plan Improvements</h3></div>
+            <div class="card"><span class="eyebrow">04</span><h3>Execute Renovations</h3></div>
+            <div class="card"><span class="eyebrow">05</span><h3>Manage Operations</h3></div>
+            <div class="card"><span class="eyebrow">06</span><h3>Build Long-Term Value</h3></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio" class="portfolio">
+        <div class="shell">
+          <div class="eyebrow">Portfolio</div>
+          <h2 class="display">Selected Projects</h2>
+          <p style="max-width:760px">A look at properties, renovations, and projects that reflect our commitment to quality and long-term value creation.</p>
+          <div class="grid-2" style="margin-top:38px">
+            <article class="showcase">
+              <img class="photo" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1100&q=80" alt="Renovated residential exterior" />
+              <div class="card"><span class="eyebrow">Single-family renovation</span><h3 class="display" style="font-size:32px">Suburban Ranch Renewal</h3><div class="metrics"><span class="pill">42 day renovation</span><span class="pill">3 bed / 2 bath</span><span class="pill">Long-term rental</span></div></div>
+            </article>
+            <article class="showcase">
+              <img class="photo" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1100&q=80" alt="Updated residential home exterior" />
+              <div class="card"><span class="eyebrow">Off-market acquisition</span><h3 class="display" style="font-size:32px">Neighborhood Rental Reposition</h3><div class="metrics"><span class="pill">Updated systems</span><span class="pill">Improved exterior</span><span class="pill">Professional leasing</span></div></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#fff">
+        <div class="shell grid-2">
+          <div>
+            <div class="eyebrow">Technology & Operations</div>
+            <h2 class="display">Clear information helps better decisions happen faster.</h2>
+            <p>Raut Properties uses market research, repair tracking, remote coordination, and performance reporting to keep projects and rentals moving with fewer surprises.</p>
+          </div>
+          <div class="dashboard">
+            <strong>Operations Dashboard</strong>
+            <div class="grid-3" style="margin:22px 0">
+              <div class="glass"><span class="display" style="font-size:42px">18</span><p>Active market checks</p></div>
+              <div class="glass"><span class="display" style="font-size:42px">94%</span><p>Tasks documented</p></div>
+              <div class="glass"><span class="display" style="font-size:42px">7</span><p>Vendor scopes moving</p></div>
+            </div>
+            <p>Repair budget</p><div class="bar"><span style="width:78%"></span></div>
+            <p>Lease readiness</p><div class="bar"><span style="width:88%"></span></div>
+            <p>Maintenance response</p><div class="bar"><span style="width:92%"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="shell">
+          <div class="eyebrow">Why Raut Properties</div>
+          <h2 class="display">Why Work With Raut Properties</h2>
+          <div class="grid-3" style="margin-top:38px">
+            <div class="card"><h3>Experience-Driven Decisions</h3><p>Every opportunity is reviewed with practical market knowledge and clear assumptions.</p></div>
+            <div class="card"><h3>Reliable Communication</h3><p>We value direct updates, responsive conversations, and respectful follow-through.</p></div>
+            <div class="card"><h3>Thoughtful Property Improvements</h3><p>Renovations are planned around quality, function, and long-term usefulness.</p></div>
+            <div class="card"><h3>Long-Term Ownership Mindset</h3><p>Decisions are made with durability, residents, and future performance in mind.</p></div>
+            <div class="card"><h3>Professional Management</h3><p>Operations, maintenance, leasing, and documentation are handled with care.</p></div>
+            <div class="card"><h3>Organized Systems & Processes</h3><p>Clear systems help projects move smoothly from review to daily operations.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sell" class="dark sell-section">
+        <div class="shell grid-2 sell-layout">
+          <div class="sell-copy">
+            <div class="eyebrow">Sell Your Property</div>
+            <h2 class="display">Considering Selling Your Property?</h2>
+            <p>Share a few details and our team will review the property, answer questions, and discuss potential next steps. No pressure and no obligation.</p>
+            <details open><summary>Do I need to renovate first?</summary><p>No. Properties needing repairs, updates, cleanup, or a complete renovation plan can be reviewed.</p></details>
+            <details><summary>What properties are a fit?</summary><p>Single-family homes, distressed properties, off-market opportunities, foreclosures, and rentals may all be considered.</p></details>
+          </div>
+          <form class="form sell-form">
+            <div class="eyebrow">Property Details</div>
+            <h3 class="display" style="font-size:34px">Start the review</h3>
+            <div class="fields">
+              <label>Name<input placeholder="Your name" /></label>
+              <label>Email<input type="email" placeholder="you@example.com" /></label>
+              <label>Phone<input type="tel" placeholder="Best contact number" /></label>
+              <label>Property Address<input placeholder="Street, city, state" /></label>
+              <label>Property Type<select><option>Single-family home</option><option>Rental property</option><option>Distressed property</option><option>Foreclosure or pre-foreclosure</option></select></label>
+              <label>Timeline<select><option>Exploring options</option><option>30 days or less</option><option>30-90 days</option><option>Flexible</option></select></label>
+              <label class="wide">Property Notes<textarea placeholder="Repairs, occupancy, tenants, updates, or anything else useful."></textarea></label>
+            </div>
+            <button class="btn dark" type="button" style="width:100%; margin-top:18px">Submit Property</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="contact" style="background:#fff">
+        <div class="shell grid-2">
+          <div>
+            <div class="eyebrow">Contact</div>
+            <h2 class="display">Let's Start a Conversation</h2>
+          </div>
+          <div>
+            <p>Whether you're exploring a property sale, partnership opportunity, or simply have questions, we'd be glad to hear from you.</p>
+            <a class="btn dark" href="#sell">Contact Raut Properties</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell">
+        <div class="brand display">Raut Properties</div>
+        <p>Real estate acquisitions, renovations, property operations, and long-term ownership.</p>
+        <nav class="links" style="display:flex; margin-top:20px">
+          <a href="#who">About</a>
+          <a href="#services">Services</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
