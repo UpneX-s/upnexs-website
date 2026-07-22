@@ -65,3 +65,24 @@
 | /ai/staffing/ | 35/50 🟡 | 45+/50 |
 | /ai/leasing/ | 37/50 🟢 | 47+/50 |
 | **Average** | **32/50** | **46+/50** |
+
+## /clients/ Page — Added 2026-07-22
+
+**URL:** `https://upnexs.com/clients/`  
+**Commit:** `f1a25af`  
+**Purpose:** Client-facing pitch page for discovery call demos
+
+### New GA4 Events
+| Event | When it fires |
+|---|---|
+| `roi_calculator_used` | First slider input per session |
+| `roi_result_seen` | Scroll past ROI result panel (50% threshold) |
+| `roi_calculator_cta_click` | Click "Book a call" CTA from inside calculator |
+
+### Standard Events Also Active
+All existing events fire: `page_view`, `scroll_depth`, `cta_click`, `calendly_link_click`, `booking_completed`
+
+### Baseline (no data yet — page shipped today)
+- Expected traffic: direct share only (no ads, no SEO ranking yet)
+- Primary use: Hari shares URL on discovery calls
+- Target: visitor sees ROI calculator, fires `roi_result_seen`, books via Calendly
