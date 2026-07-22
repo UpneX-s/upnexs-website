@@ -1,1364 +1,1225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<title>UpneX · AI Operations for Property Managers — Client Overview</title>
-<meta name="description" content="UpneX builds AI employees for property management companies. Maintenance, leasing, tenant comms, renewals — all automated inside your existing PMS. See ROI in minutes." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>UpneX — AI Operations for Property Managers</title>
+<meta name="description" content="UpneX builds AI employees for property management companies. Maintenance, leasing, tenant comms, renewals — all automated inside your existing PMS. See ROI in minutes.">
 
 <!-- Meta Pixel -->
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '946905738177488');fbq('track', 'PageView');
-</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','946905738177488');fbq('track','PageView');</script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=946905738177488&ev=PageView&noscript=1"/></noscript>
 
-<!-- Google tag (gtag.js) -->
+<!-- Google tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18312920511"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-18312920511');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18312920511');</script>
 <script src="/ai/js/analytics.js"></script>
 
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          brand:   '#0F62FE',
-          accent:  '#2ED3B7',
-          orange:  '#ff6b1a',
-          ink:     '#111827',
-          muted:   '#6B7280',
-          faint:   '#9CA3AF',
-          line:    '#E5E7EB',
-          soft:    '#F9FAFB',
-          softer:  '#F3F4F6',
-          navy:    '#1a3a5c',
-        },
-        fontFamily: {
-          sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
-        },
-      },
-    },
-  };
-</script>
-
 <style>
-  *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-  html{scroll-behavior:smooth}
-  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#111827;background:#FFFFFF;overflow-x:hidden;letter-spacing:-0.003em}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --green:#22c55e;
+  --green-dim:rgba(34,197,94,0.12);
+  --green-border:rgba(34,197,94,0.25);
+  --blue:#60a5fa;
+  --amber:#fbbf24;
+  --purple:#a78bfa;
+  --coral:#f87171;
+  --bg:#07070f;
+  --bg2:#0d0d1e;
+  --bg3:#111128;
+  --text:rgba(255,255,255,0.88);
+  --muted:rgba(255,255,255,0.45);
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
-  .display-xl{font-size:clamp(36px,5vw,58px);line-height:1.06;letter-spacing:-0.03em;font-weight:800}
-  .display-lg{font-size:clamp(30px,4vw,48px);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
-  .display-md{font-size:clamp(24px,3vw,36px);line-height:1.15;letter-spacing:-0.02em;font-weight:700}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0F62FE}
-  .body-lg{font-size:18px;line-height:1.6;color:#6B7280}
-  .body-md{font-size:15.5px;line-height:1.6;color:#6B7280}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(7,7,15,0.85);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:60px;}
+.nav-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;text-decoration:none;}
+.nav-logo span{color:var(--green);}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:#fff;}
+.nav-cta{background:var(--green);color:#000;font-size:13px;font-weight:700;padding:8px 20px;border-radius:8px;text-decoration:none;transition:opacity 0.2s;white-space:nowrap;}
+.nav-cta:hover{opacity:0.85;}
 
-  .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(15,98,254,0.08);color:#0F62FE;font-size:12px;font-weight:700;border-radius:999px;letter-spacing:0.04em}
-  .badge-dot{width:6px;height:6px;background:#2ED3B7;border-radius:50%;box-shadow:0 0 0 3px rgba(46,211,183,0.25);animation:pulse 2s ease-out infinite}
-  @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(46,211,183,0.25)}50%{box-shadow:0 0 0 6px rgba(46,211,183,0.15)}}
+/* LAYOUT */
+section{padding:100px 48px;max-width:1200px;margin:0 auto;}
+.sep{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.sep section{max-width:1200px;margin:0 auto;}
 
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:12px;font-weight:600;font-size:15px;line-height:1;transition:all 0.2s ease;cursor:pointer;white-space:nowrap;border:none;font-family:inherit;text-decoration:none}
-  .btn-primary{background:#ff6b1a;color:#FFFFFF;box-shadow:0 4px 20px rgba(255,107,26,0.35)}
-  .btn-primary:hover{background:#e85d12;transform:translateY(-1px);box-shadow:0 8px 28px rgba(255,107,26,0.45)}
-  .btn-secondary{background:#0F62FE;color:#FFFFFF;box-shadow:0 4px 14px rgba(15,98,254,0.28)}
-  .btn-secondary:hover{background:#0353E9;transform:translateY(-1px);box-shadow:0 8px 24px rgba(15,98,254,0.38)}
-  .btn-ghost{background:transparent;color:#111827;border:1.5px solid #E5E7EB}
-  .btn-ghost:hover{background:#F9FAFB;border-color:#111827}
-  .btn-lg{padding:16px 32px;font-size:16px;border-radius:14px}
-  .btn-xl{padding:18px 36px;font-size:17px;border-radius:14px}
+/* TYPOGRAPHY */
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:14px;display:block;}
+.eyebrow.blue{color:var(--blue);}
+.eyebrow.amber{color:var(--amber);}
+.eyebrow.purple{color:var(--purple);}
+.eyebrow.coral{color:var(--coral);}
+h1{font-size:clamp(40px,5.5vw,72px);font-weight:800;line-height:1.04;letter-spacing:-2.5px;}
+h2{font-size:clamp(30px,4vw,48px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;}
+h2 span,h2 em{color:var(--green);font-style:normal;}
+h3{font-size:20px;font-weight:600;line-height:1.3;color:#fff;}
+.lead{font-size:18px;color:var(--muted);line-height:1.7;}
+.divider{width:40px;height:3px;background:var(--green);border-radius:2px;margin:18px 0 30px;}
+.divider.blue{background:var(--blue);}
+.divider.amber{background:var(--amber);}
+.divider.purple{background:var(--purple);}
 
-  .nav-link{color:#111827;font-size:14px;font-weight:500;transition:color 0.15s;text-decoration:none}
-  .nav-link:hover{color:#0F62FE}
+/* BUTTONS */
+.btn-primary{background:var(--green);color:#000;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;transition:opacity 0.2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary:hover{opacity:0.85;}
+.btn-primary.lg{padding:16px 34px;font-size:16px;border-radius:12px;}
+.btn-ghost{border:1px solid var(--border2);color:#fff;font-weight:600;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.05);}
+.btn-ghost.lg{padding:16px 34px;font-size:16px;border-radius:12px;}
+.btn-full{width:100%;justify-content:center;margin-top:24px;}
 
-  .card{background:#FFFFFF;border-radius:20px;border:1px solid #E5E7EB;transition:all 0.35s cubic-bezier(0.16,1,0.3,1)}
-  .card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(17,24,39,0.1);border-color:transparent}
+/* HERO */
+.hero-section{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
+.hero-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(34,197,94,0.06) 0%,transparent 70%);pointer-events:none;}
+.hero-section::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(96,165,250,0.04) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:24px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--green);margin-bottom:24px;}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse-dot 2s infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.3);}}
+.hero-sub{font-size:18px;color:var(--muted);line-height:1.7;margin:20px 0 36px;max-width:520px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
+.tag{display:inline-block;padding:5px 13px;border-radius:20px;font-size:12px;font-weight:600;}
+.tag.g{background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.25);}
+.tag.b{background:rgba(96,165,250,0.12);color:var(--blue);border:1px solid rgba(96,165,250,0.25);}
+.tag.a{background:rgba(251,191,36,0.12);color:var(--amber);border:1px solid rgba(251,191,36,0.25);}
+.tag.p{background:rgba(167,139,250,0.12);color:var(--purple);border:1px solid rgba(167,139,250,0.25);}
 
-  /* ROI Calculator */
-  .calc-wrap{background:linear-gradient(160deg,#1a3a5c 0%,#0d2440 100%);border-radius:28px;padding:48px;color:#FFFFFF;position:relative;overflow:hidden}
-  .calc-wrap::before{content:'';position:absolute;top:-120px;right:-120px;width:340px;height:340px;background:radial-gradient(circle,rgba(255,107,26,0.2) 0%,transparent 70%);border-radius:50%;pointer-events:none}
-  .calc-wrap::after{content:'';position:absolute;bottom:-80px;left:-80px;width:260px;height:260px;background:radial-gradient(circle,rgba(46,211,183,0.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
-  .calc-input-wrap{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:20px 24px}
-  .calc-label{font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:8px;font-weight:500}
-  .calc-value{font-size:22px;font-weight:700;color:#FFFFFF;font-variant-numeric:tabular-nums}
-  .calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;background:rgba(255,255,255,0.15);border-radius:999px;outline:none;cursor:pointer;margin-top:10px}
-  .calc-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;background:#ff6b1a;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(255,107,26,0.6);border:3px solid #FFFFFF}
-  .calc-slider::-moz-range-thumb{width:22px;height:22px;background:#ff6b1a;border-radius:50%;cursor:pointer;box-shadow:0 4px 12px rgba(255,107,26,0.6);border:3px solid #FFFFFF;border-color:#FFFFFF}
-  .result-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px;text-align:center;transition:all 0.4s ease}
-  .result-card:hover{background:rgba(255,255,255,0.12)}
-  .result-label{font-size:11px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;font-weight:600}
-  .result-val{font-size:30px;font-weight:800;color:#ff6b1a;font-variant-numeric:tabular-nums;line-height:1}
-  .result-sub{font-size:12px;color:rgba(255,255,255,0.45);margin-top:6px}
-  .result-val.teal{color:#2ED3B7}
-  .result-val.white{color:#FFFFFF}
+/* HERO VISUAL */
+.hero-visual{display:flex;flex-direction:column;gap:14px;}
+.hv-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:20px;}
+.hv-card.accent{border-color:rgba(34,197,94,0.25);}
+.hv-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;}
+.hv-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted);}
+.hv-row:last-child{border-bottom:none;}
+.hv-row .val{font-weight:600;color:var(--green);}
+.hv-row .val.b{color:var(--blue);}
+.hv-row .val.a{color:var(--amber);}
+.hv-row .val.red{color:var(--coral);}
+.hv-status{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;}
+.hv-status.pass{background:rgba(34,197,94,0.15);color:var(--green);}
+.hv-status.live{background:rgba(96,165,250,0.15);color:var(--blue);}
 
-  /* Agent cards */
-  .agent-card{background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:28px;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden}
-  .agent-card:hover{transform:translateY(-6px);border-color:transparent;box-shadow:0 24px 56px rgba(17,24,39,0.12)}
-  .agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0F62FE,#2ED3B7);opacity:0;transition:opacity 0.3s}
-  .agent-card:hover::before{opacity:1}
-  .agent-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:22px}
-  .agent-tasks{margin-top:14px;padding-top:14px;border-top:1px dashed #E5E7EB}
-  .agent-tasks li{display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:13.5px;color:#6B7280;line-height:1.4}
+/* STATS BAND */
+.stats-band{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 48px;}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat-item{text-align:center;padding:0 24px;border-right:1px solid var(--border);}
+.stat-item:last-child{border-right:none;}
+.stat-num{font-size:52px;font-weight:800;line-height:1;letter-spacing:-2px;}
+.stat-num.g{color:var(--green);}
+.stat-num.b{color:var(--blue);}
+.stat-num.a{color:var(--amber);}
+.stat-num.p{color:var(--purple);}
+.stat-label{font-size:14px;color:var(--muted);margin-top:8px;}
 
-  /* Comparison table */
-  .comp-table{width:100%;border-collapse:separate;border-spacing:0}
-  .comp-table th{padding:14px 20px;font-size:13px;font-weight:700;text-align:center;background:#F9FAFB;color:#111827;letter-spacing:-0.01em}
-  .comp-table th:first-child{text-align:left}
-  .comp-table th.highlight{background:#1a3a5c;color:#FFFFFF;border-radius:12px 12px 0 0}
-  .comp-table td{padding:14px 20px;font-size:14px;border-bottom:1px solid #F3F4F6;text-align:center;color:#6B7280}
-  .comp-table td:first-child{text-align:left;font-weight:500;color:#111827}
-  .comp-table td.highlight{background:rgba(15,98,254,0.04);color:#111827;font-weight:600}
-  .comp-check{color:#2ED3B7;font-size:18px}
-  .comp-x{color:#EF4444;font-size:18px}
-  .comp-neutral{color:#9CA3AF}
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color 0.2s;}
+.card:hover{border-color:var(--border2);}
+.card.green-hl{border-color:var(--green-border);background:rgba(34,197,94,0.04);}
+.card.blue-hl{border-color:rgba(96,165,250,0.25);background:rgba(96,165,250,0.04);}
+.card.amber-hl{border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.04);}
+.card-icon{font-size:28px;margin-bottom:16px;}
+.card p{font-size:15px;color:var(--muted);line-height:1.65;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 
-  /* Pricing */
-  .pricing-card{background:#FFFFFF;border:1.5px solid #E5E7EB;border-radius:24px;padding:36px;transition:all 0.3s ease;position:relative}
-  .pricing-card.featured{border-color:#0F62FE;box-shadow:0 20px 60px rgba(15,98,254,0.15)}
-  .pricing-card.featured .popular-badge{display:inline-flex}
-  .popular-badge{display:none;position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#0F62FE;color:#FFFFFF;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap}
-  .pricing-price{font-size:40px;font-weight:800;color:#111827;line-height:1;letter-spacing:-0.03em}
-  .pricing-unit{font-size:14px;color:#6B7280;margin-top:4px}
-  .pricing-feature{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:14px;color:#374151;line-height:1.4}
+/* CHECK LISTS */
+.check-list{list-style:none;}
+.check-list li{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:15px;color:var(--muted);align-items:flex-start;}
+.check-list li:last-child{border-bottom:none;}
+.check-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;font-size:14px;margin-top:1px;}
+.check-list li.x::before{content:'✗';color:var(--coral);}
+.check-list li.w{color:var(--text);}
 
-  /* CODN */
-  .codn-card{background:linear-gradient(145deg,#1a3a5c 0%,#0d2440 100%);border-radius:20px;padding:32px;color:#FFFFFF;position:relative;overflow:hidden}
-  .codn-card::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,107,26,0.25) 0%,transparent 70%);border-radius:50%;pointer-events:none}
-  .stat-num{font-size:48px;font-weight:800;color:#ff6b1a;line-height:1;font-variant-numeric:tabular-nums}
+/* COMPARISON TABLE */
+.comp-table{width:100%;border-collapse:collapse;}
+.comp-table th{padding:14px 20px;font-size:11px;font-weight:700;text-align:center;background:rgba(255,255,255,0.03);color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.comp-table th:first-child{text-align:left;}
+.comp-table th.hl{background:rgba(34,197,94,0.1);color:var(--green);}
+.comp-table td{padding:13px 20px;font-size:14px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted);}
+.comp-table td:first-child{text-align:left;font-weight:500;color:var(--text);}
+.comp-table td.hl{background:rgba(34,197,94,0.05);color:#fff;font-weight:600;}
+.comp-check{color:var(--green);}
+.comp-x{color:var(--coral);}
 
-  /* What's included */
-  .included-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;font-size:15px;color:#374151;line-height:1.4;border-bottom:1px solid #F3F4F6}
-  .included-item:last-child{border-bottom:none}
+/* AGENT CARDS */
+.agents-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.agent-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all 0.2s;}
+.agent-card:hover{border-color:rgba(34,197,94,0.35);background:rgba(34,197,94,0.04);transform:translateY(-2px);}
+.agent-icon{font-size:24px;margin-bottom:12px;}
+.agent-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;}
+.agent-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:12px;}
+.agent-tasks{padding-top:12px;border-top:1px solid var(--border);}
+.agent-task{display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:12px;color:var(--muted);}
+.agent-task::before{content:'✓';color:var(--green);font-size:11px;flex-shrink:0;margin-top:2px;}
 
-  /* Testimonial */
-  .testimonial{background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:28px;transition:all 0.3s ease}
-  .testimonial:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(17,24,39,0.08)}
-  .stars{display:inline-flex;gap:2px;color:#F59E0B;margin-bottom:14px}
-  .avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;color:#FFFFFF}
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:920px;margin:0 auto;}
+.pricing-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;transition:all 0.3s;}
+.pricing-card.featured{border-color:var(--green-border);background:rgba(34,197,94,0.04);}
+.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;font-size:10px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;}
+.price-tier{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:12px;}
+.pricing-card.featured .price-tier{color:var(--green);}
+.price-num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-2px;}
+.price-num.g{color:var(--green);}
+.price-num.w{color:#fff;}
+.price-per{font-size:14px;color:var(--muted);margin:6px 0 24px;}
+.price-features{border-top:1px solid var(--border);padding-top:20px;}
+.price-feat{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:14px;color:var(--muted);}
+.price-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+.price-feat.off{color:rgba(255,255,255,0.2);}
+.price-feat.off::before{content:'—';color:rgba(255,255,255,0.15);}
 
-  /* FAQ */
-  .faq-item{border-bottom:1px solid #E5E7EB}
-  .faq-item:first-child{border-top:1px solid #E5E7EB}
-  .faq-trigger{width:100%;text-align:left;padding:22px 0;display:flex;justify-content:space-between;align-items:center;font-size:17px;font-weight:600;color:#111827;cursor:pointer;background:transparent;border:none;font-family:inherit}
-  .faq-trigger:hover{color:#0F62FE}
-  .faq-icon{width:22px;height:22px;flex-shrink:0;transition:transform 0.3s ease;color:#6B7280}
-  .faq-item.open .faq-icon{transform:rotate(45deg);color:#0F62FE}
-  .faq-content{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
-  .faq-body{padding:0 0 22px;color:#6B7280;line-height:1.65;font-size:15.5px;max-width:52em}
+/* ROI CALCULATOR */
+.calc-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:48px;position:relative;overflow:hidden;}
+.calc-wrap::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(34,197,94,0.08) 0%,transparent 70%);pointer-events:none;}
+.calc-wrap::after{content:'';position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(96,165,250,0.06) 0%,transparent 70%);pointer-events:none;}
+.calc-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+.calc-input-wrap{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:14px;}
+.calc-label{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:1px;}
+.calc-value{font-size:22px;font-weight:700;color:#fff;}
+.calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,255,255,0.12);border-radius:999px;outline:none;cursor:pointer;margin-top:10px;}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--green);border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(34,197,94,0.5);border:2px solid #fff;}
+.calc-slider::-moz-range-thumb{width:20px;height:20px;background:var(--green);border-radius:50%;cursor:pointer;border:2px solid #fff;}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.result-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;transition:all 0.4s;}
+.result-card:hover{background:rgba(255,255,255,0.07);}
+.result-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;font-weight:600;}
+.result-val{font-size:28px;font-weight:800;line-height:1;color:var(--green);}
+.result-val.b{color:var(--blue);}
+.result-val.w{color:#fff;}
+.result-sub{font-size:11px;color:rgba(255,255,255,0.3);margin-top:5px;}
+.calc-breakdown{padding:16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
+.calc-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:5px 0;}
+.calc-row.total{border-top:1px solid var(--border);padding-top:10px;margin-top:5px;color:var(--text);font-weight:600;}
 
-  /* Footer */
-  .footer-link{color:rgba(255,255,255,0.6);font-size:14px;transition:color 0.15s;text-decoration:none}
-  .footer-link:hover{color:#FFFFFF}
+/* INCLUDED LIST */
+.included-list{list-style:none;}
+.included-item{display:flex;align-items:flex-start;gap:12px;padding:13px 0;font-size:15px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--border);}
+.included-item:last-child{border-bottom:none;}
+.included-item::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:2px;}
 
-  /* Animations */
-  .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
-  .reveal.visible{opacity:1;transform:translateY(0)}
-  .reveal-d1{transition-delay:0.08s}
-  .reveal-d2{transition-delay:0.16s}
-  .reveal-d3{transition-delay:0.24s}
-  .reveal-d4{transition-delay:0.32s}
+/* COST OF DOING NOTHING */
+.codn-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;overflow:hidden;}
+.codn-card::after{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;opacity:0.1;}
+.codn-card:nth-child(1)::after{background:var(--coral);}
+.codn-card:nth-child(2)::after{background:var(--amber);}
+.codn-card:nth-child(3)::after{background:var(--purple);}
+.codn-num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-2px;}
+.codn-num.coral{color:var(--coral);}
+.codn-num.amber{color:var(--amber);}
+.codn-num.purple{color:var(--purple);}
 
-  .counter-val{font-variant-numeric:tabular-nums}
-  .animating{transition:none !important}
+/* GROWTH CARDS */
+.growth-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;overflow:hidden;}
+.growth-card::after{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;opacity:0.08;}
+.growth-card.gc-green::after{background:var(--green);}
+.growth-card.gc-blue::after{background:var(--blue);}
+.growth-card.gc-amber::after{background:var(--amber);}
+.gc-from{font-size:28px;font-weight:700;color:rgba(255,255,255,0.25);}
+.gc-arrow{font-size:18px;color:rgba(255,255,255,0.2);margin:0 8px;}
+.gc-to{font-size:44px;font-weight:800;}
+.gc-to.g{color:var(--green);}
+.gc-to.b{color:var(--blue);}
+.gc-to.a{color:var(--amber);}
+.gc-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:8px 0 12px;}
+.gc-badge.g{background:rgba(34,197,94,0.15);color:var(--green);}
+.gc-badge.b{background:rgba(96,165,250,0.15);color:var(--blue);}
+.gc-badge.a{background:rgba(251,191,36,0.15);color:var(--amber);}
 
-  /* Sticky mobile CTA */
-  .sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:60;padding:12px 16px;background:rgba(255,255,255,0.96);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid #E5E7EB;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
-  .sticky-cta.visible{transform:translateY(0)}
-  @media(min-width:768px){.sticky-cta{display:none !important}}
+/* PILOT BOX */
+.pilot-box{background:rgba(34,197,94,0.06);border:2px solid rgba(34,197,94,0.25);border-radius:20px;padding:32px;text-align:center;}
 
-  @media(max-width:768px){
-    .calc-wrap{padding:28px 20px}
-    .comp-table{font-size:12px}
-    .comp-table th,.comp-table td{padding:10px 12px}
-  }
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-item:first-child{border-top:1px solid var(--border);}
+.faq-trigger{width:100%;text-align:left;padding:22px 0;display:flex;justify-content:space-between;align-items:center;font-size:17px;font-weight:600;color:#fff;cursor:pointer;background:transparent;border:none;font-family:inherit;}
+.faq-trigger:hover{color:var(--green);}
+.faq-icon{width:22px;height:22px;flex-shrink:0;transition:transform 0.3s;color:var(--muted);}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--green);}
+.faq-content{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
+.faq-body{padding:0 0 22px;color:var(--muted);line-height:1.7;font-size:15.5px;max-width:52em;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:0.1s;}
+.reveal-d2{transition-delay:0.2s;}
+.reveal-d3{transition-delay:0.3s;}
+
+/* STICKY CTA */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:60;padding:12px 16px;background:rgba(7,7,15,0.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}
+.sticky-cta.visible{transform:translateY(0);}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:48px;text-align:center;}
+.foot-logo{font-size:22px;font-weight:800;margin-bottom:8px;}
+.foot-logo span{color:var(--green);}
+.foot-links{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;margin:16px 0;}
+.foot-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.15s;}
+.foot-links a:hover{color:#fff;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  h1{font-size:38px;letter-spacing:-1.5px;}
+  h2{font-size:28px;}
+  .hero-section{padding:100px 20px 60px;}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-visual{display:none;}
+  .stats-inner{grid-template-columns:1fr 1fr;}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border);padding:16px;}
+  section{padding:60px 20px;}
+  .two-col,.three-col,.pricing-grid,.agents-grid{grid-template-columns:1fr;}
+  .comp-table th,.comp-table td{padding:10px 12px;font-size:12px;}
+  .stats-band{padding:40px 20px;}
+  .calc-inner{grid-template-columns:1fr;}
+  .calc-wrap{padding:28px 20px;}
+  .result-grid{grid-template-columns:1fr 1fr;}
+  footer{padding:32px 20px;}
+}
 </style>
 </head>
-<body class="bg-white">
+<body>
 
-<!-- ===== NAV ===== -->
-<nav class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-line">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-    <a href="/ai/" class="flex items-center" aria-label="UpneX AI home">
-      <span class="font-bold text-xl tracking-tight leading-none">
-        <span style="color:#111827">UpneX</span>
-        <span style="color:#0F62FE" class="mx-1">·</span>
-        <span style="color:#0F62FE">AI</span>
-      </span>
-    </a>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#what-is-upnex" class="nav-link">What We Do</a>
-      <a href="#agents" class="nav-link">AI Employees</a>
-      <a href="#pricing" class="nav-link">Pricing</a>
-      <a href="#roi" class="nav-link">ROI Calculator</a>
-      <a href="#faq" class="nav-link">FAQ</a>
-    </div>
-    <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary" style="padding:9px 20px;font-size:14px" data-cta>
-      Book Free Audit
-    </a>
+<!-- NAV -->
+<nav>
+  <a href="/ai/" class="nav-logo">Up<span>Ne</span>X</a>
+  <div class="nav-links">
+    <a href="#what-is-upnex">What We Do</a>
+    <a href="#agents">AI Employees</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#roi">ROI Calculator</a>
+    <a href="#faq">FAQ</a>
   </div>
+  <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="nav-cta" data-cta>Book Free Audit</a>
 </nav>
 
-<!-- ===== HERO ===== -->
-<section class="pt-28 pb-20 sm:pt-32 sm:pb-24 bg-white">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="max-w-4xl mx-auto text-center reveal">
-      <div class="badge mb-8">
-        <span class="badge-dot"></span>
+<!-- HERO -->
+<div class="hero-section">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
         AI Operations for Property Managers
       </div>
-      <h1 class="display-xl mb-6">
-        Your Admin Team Is Spending<br />
-        40 Hours a Week on Work<br />
-        <span style="color:#ff6b1a">AI Can Handle in Minutes.</span>
-      </h1>
-      <p class="body-lg max-w-2xl mx-auto mb-10">
-        UpneX builds AI employees that handle maintenance routing, lease renewals, tenant screening, and owner communications — inside your existing AppFolio, Buildium, or Rent Manager. No new software. No new hires.
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary btn-xl" data-cta>
+      <h1>Your Admin Team Spends 40 Hours a Week on Work<br><em>AI Handles in Minutes.</em></h1>
+      <p class="hero-sub">UpneX builds AI employees that handle maintenance routing, lease renewals, tenant screening, and owner communications — inside your existing AppFolio, Buildium, or Rent Manager. No new software. No new hires.</p>
+      <div class="hero-actions">
+        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary lg" data-cta>
           Book Your Free AI Operations Audit
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
-        <a href="#roi" class="btn btn-ghost btn-xl">
-          See your ROI estimate
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-        </a>
+        <a href="#roi" class="btn-ghost lg">See your ROI →</a>
       </div>
-      <div class="flex flex-wrap items-center justify-center gap-8 text-sm text-muted">
-        <span class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-          No long-term contracts
-        </span>
-        <span class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-          Live in 1–2 weeks
-        </span>
-        <span class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-          Works in your existing PMS
-        </span>
-        <span class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-          500+ units currently managed
-        </span>
+      <div class="hero-tags">
+        <div class="tag g">500+ Units Managed</div>
+        <div class="tag b">8 AI Employees</div>
+        <div class="tag a">12 States</div>
+        <div class="tag g">7 Yrs PM Experience</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hv-card accent" style="position:relative;overflow:hidden;">
+        <div style="position:absolute;top:12px;right:14px;display:flex;align-items:center;gap:6px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:20px;padding:4px 10px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse-dot 1.2s infinite;"></span>
+          <span style="font-size:11px;font-weight:700;color:#22c55e;letter-spacing:0.5px;">LIVE</span>
+        </div>
+        <div class="hv-title">Maintenance Triage Agent</div>
+        <div class="hv-row"><span>Work Orders Today</span><span class="val" id="la-orders">12 triaged</span></div>
+        <div class="hv-row"><span>Emergency Flagged</span><span class="val red" id="la-emg">2 dispatched</span></div>
+        <div class="hv-row"><span>Vendors Notified</span><span class="hv-status pass">AUTO</span></div>
+        <div class="hv-row"><span>Tenants Updated</span><span class="hv-status pass">AUTO</span></div>
+        <div class="hv-row"><span>Avg Response Time</span><span class="val b">&lt; 4 min</span></div>
+        <div id="la-ticker" style="margin-top:12px;font-size:11px;color:rgba(34,197,94,0.65);min-height:16px;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px;font-style:italic;"></div>
+      </div>
+      <div class="hv-card">
+        <div class="hv-title">Renewal Agent</div>
+        <div class="hv-row"><span>Leases expiring in 90 days</span><span class="val">24</span></div>
+        <div class="hv-row"><span>Outreach sent today</span><span class="val">7 personalized</span></div>
+        <div class="hv-row"><span>Positive responses</span><span class="val">3 flagged</span></div>
+        <div class="hv-row"><span>Renewal rate MTD</span><span class="val a">87%</span></div>
+      </div>
+      <div class="hv-card">
+        <div class="hv-title">Screening Agent — Application #2847</div>
+        <div class="hv-row"><span>James Miller — Unit 3B</span><span class="hv-status pass">APPROVED</span></div>
+        <div class="hv-row"><span>AI Score</span><span class="val">87 / 100</span></div>
+        <div class="hv-row"><span>Income Ratio</span><span class="val">3.6× rent</span></div>
+        <div class="hv-row"><span>Processed in</span><span class="val b">&lt; 60 seconds</span></div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ===== PMS LOGOS ===== -->
-<section class="py-12 bg-soft border-y border-line">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <p class="text-center text-xs font-semibold text-muted tracking-widest uppercase mb-6">Plugs into your existing stack — no migration needed</p>
-    <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">AppFolio</div>
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">Buildium</div>
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">Rent Manager</div>
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">Rentvine</div>
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">DoorLoop</div>
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">Propertyware</div>
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">Yardi Breeze</div>
-      <div class="px-5 py-2.5 bg-white border border-line rounded-xl text-sm font-semibold text-ink">+ any platform with email</div>
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num g" id="cnt1">500+</div>
+      <div class="stat-label">Units Under Management</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num b" id="cnt2">8</div>
+      <div class="stat-label">AI Employees Available</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num a" id="cnt3">12</div>
+      <div class="stat-label">States We Operate In</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num p" id="cnt4">7</div>
+      <div class="stat-label">Years PM Experience</div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ===== SECTION 1: WHAT IS UPNEX ===== -->
-<section id="what-is-upnex" class="py-24 sm:py-28 bg-white">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-      <div class="reveal">
-        <div class="eyebrow mb-5">What is UpneX</div>
-        <h2 class="display-lg mb-6">The AI Operations Layer for Your PM Company</h2>
-        <p class="body-lg mb-6">
-          UpneX is not a new property management platform. It's not a chatbot. It's not another app your team has to learn.
-        </p>
-        <p class="body-md mb-6">
-          We sit on top of your existing software — AppFolio, Buildium, Rent Manager — and handle the repeatable operational work your team spends most of their day on. Maintenance routing. Lease renewal outreach. Tenant screening. Owner communications. All of it.
-        </p>
-        <p class="body-md mb-8">
-          Think of us as a back-office department that works 24/7, never calls in sick, and costs a fraction of what you'd pay for the same headcount. You keep running your business. We handle the repetition.
-        </p>
-        <div class="flex flex-col gap-3">
-          <div class="flex items-start gap-3 p-4 rounded-xl bg-soft">
-            <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </div>
-            <span class="text-sm font-medium text-ink">Not a PMS replacement — works alongside what you already use</span>
-          </div>
-          <div class="flex items-start gap-3 p-4 rounded-xl bg-soft">
-            <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </div>
-            <span class="text-sm font-medium text-ink">Not offshore VAs — AI agents that scale without turnover</span>
-          </div>
-          <div class="flex items-start gap-3 p-4 rounded-xl bg-soft">
-            <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </div>
-            <span class="text-sm font-medium text-ink">Not a SaaS tool — purpose-built AI employees for your exact workflow</span>
-          </div>
-        </div>
-      </div>
-      <div class="reveal reveal-d1">
-        <div class="bg-soft rounded-3xl p-8 sm:p-10 border border-line">
-          <h3 class="text-lg font-bold text-ink mb-6">How UpneX fits your stack</h3>
-          <div class="space-y-4">
-            <div class="bg-white rounded-2xl p-5 border border-line flex items-center gap-4 shadow-sm">
-              <div class="w-10 h-10 rounded-xl bg-ink flex items-center justify-center text-white text-xs font-bold flex-shrink-0">PM</div>
-              <div>
-                <div class="font-semibold text-sm text-ink">Your Property Management Team</div>
-                <div class="text-xs text-muted mt-0.5">Focused on growth, relationships, owner calls</div>
-              </div>
-            </div>
-            <div class="flex justify-center">
-              <div class="flex flex-col items-center gap-1">
-                <div class="w-px h-4 bg-line"></div>
-                <div class="text-xs text-muted font-medium px-3 py-1 bg-blue-50 text-blue-600 rounded-full">UpneX AI layer</div>
-                <div class="w-px h-4 bg-line"></div>
-              </div>
-            </div>
-            <div class="grid grid-cols-3 gap-2">
-              <div class="bg-white rounded-xl p-3 border border-line text-center">
-                <div class="text-lg mb-1">🔧</div>
-                <div class="text-xs font-semibold text-ink">Maintenance</div>
-              </div>
-              <div class="bg-white rounded-xl p-3 border border-line text-center">
-                <div class="text-lg mb-1">📋</div>
-                <div class="text-xs font-semibold text-ink">Leasing</div>
-              </div>
-              <div class="bg-white rounded-xl p-3 border border-line text-center">
-                <div class="text-lg mb-1">🔄</div>
-                <div class="text-xs font-semibold text-ink">Renewals</div>
-              </div>
-              <div class="bg-white rounded-xl p-3 border border-line text-center">
-                <div class="text-lg mb-1">📩</div>
-                <div class="text-xs font-semibold text-ink">Screening</div>
-              </div>
-              <div class="bg-white rounded-xl p-3 border border-line text-center">
-                <div class="text-lg mb-1">🏠</div>
-                <div class="text-xs font-semibold text-ink">Onboarding</div>
-              </div>
-              <div class="bg-white rounded-xl p-3 border border-line text-center">
-                <div class="text-lg mb-1">📊</div>
-                <div class="text-xs font-semibold text-ink">Owner Comms</div>
-              </div>
-            </div>
-            <div class="flex justify-center">
-              <div class="flex flex-col items-center gap-1">
-                <div class="w-px h-4 bg-line"></div>
-                <div class="text-xs text-muted font-medium px-3 py-1 bg-soft border border-line rounded-full">Your existing PMS</div>
-                <div class="w-px h-4 bg-line"></div>
-              </div>
-            </div>
-            <div class="bg-white rounded-2xl p-4 border border-line flex flex-wrap gap-2 justify-center">
-              <span class="text-xs font-medium text-muted px-2 py-1 bg-soft rounded-lg">AppFolio</span>
-              <span class="text-xs font-medium text-muted px-2 py-1 bg-soft rounded-lg">Buildium</span>
-              <span class="text-xs font-medium text-muted px-2 py-1 bg-soft rounded-lg">Rent Manager</span>
-              <span class="text-xs font-medium text-muted px-2 py-1 bg-soft rounded-lg">Rentvine</span>
-              <span class="text-xs font-medium text-muted px-2 py-1 bg-soft rounded-lg">+ more</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- WHAT IS UPNEX -->
+<section id="what-is-upnex">
+  <div class="reveal">
+    <span class="eyebrow">What is UpneX</span>
+    <h2>The AI Operations Layer for<br><span>Your PM Company</span></h2>
+    <div class="divider"></div>
   </div>
-</section>
-
-<!-- ===== SECTION 2: WHAT IS AN AI EMPLOYEE ===== -->
-<section class="py-24 sm:py-28 bg-soft">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
-      <div class="eyebrow mb-5">What is an AI Employee</div>
-      <h2 class="display-md mb-4">Not a Chatbot. Not a VA. A Purpose-Built AI Agent.</h2>
-      <p class="body-lg">An AI Employee is a dedicated agent trained on your systems, your SOPs, and your vendor list. It does one job — and does it better than a coordinator who splits attention across 20 tasks.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      <div class="card p-8 text-center reveal">
-        <div class="text-4xl mb-5">⏰</div>
-        <h3 class="text-xl font-bold text-ink mb-3">Works 24/7</h3>
-        <p class="body-md">Tenants submit maintenance requests at 11pm on Saturday. Your AI Employee logs it, categorizes it, and texts the vendor before your team wakes up. No overtime. No weekends.</p>
-      </div>
-      <div class="card p-8 text-center reveal reveal-d1">
-        <div class="text-4xl mb-5">🧠</div>
-        <h3 class="text-xl font-bold text-ink mb-3">Learns Your Business</h3>
-        <p class="body-md">We train each agent on your vendor list, your lease templates, your escalation rules, and your communication tone. It doesn't just follow a script — it follows your playbook.</p>
-      </div>
-      <div class="card p-8 text-center reveal reveal-d2">
-        <div class="text-4xl mb-5">💰</div>
-        <h3 class="text-xl font-bold text-ink mb-3">1/10th the Cost</h3>
-        <p class="body-md">A full-time coordinator costs $35,000–$55,000/year in salary, benefits, and onboarding. UpneX handles the same workload starting at a fraction of that — and scales as you grow.</p>
-      </div>
-    </div>
-    <div class="text-center mt-10 reveal">
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-secondary btn-lg" data-cta>
-        See how it works in 15 minutes
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 3: WHY UPNEX VS ALTERNATIVES ===== -->
-<section class="py-24 sm:py-28 bg-white">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
-      <div class="eyebrow mb-5">Why UpneX</div>
-      <h2 class="display-md mb-4">Every Alternative Leaves Something on the Table</h2>
-      <p class="body-lg">Offshore VAs have high turnover. SaaS bots follow generic scripts. In-house staff don't scale. UpneX is the only option built specifically for PM back-office ops.</p>
-    </div>
-    <div class="overflow-x-auto reveal reveal-d1">
-      <table class="comp-table">
-        <thead>
-          <tr>
-            <th style="width:26%;border-radius:12px 0 0 0;background:#F9FAFB"></th>
-            <th class="highlight">UpneX AI</th>
-            <th>Offshore VA</th>
-            <th>SaaS Bot / Realm-X</th>
-            <th>In-House Staff</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Monthly cost (100 units)</td>
-            <td class="highlight">$800–1,200</td>
-            <td>$2,000–3,500</td>
-            <td>$1,000–2,000</td>
-            <td>$4,000–6,500</td>
-          </tr>
-          <tr>
-            <td>Available hours</td>
-            <td class="highlight">24/7 / 365</td>
-            <td>8–10 hrs/day</td>
-            <td>24/7 (limited)</td>
-            <td>40 hrs/wk</td>
-          </tr>
-          <tr>
-            <td>Learns your SOPs</td>
-            <td class="highlight"><span class="comp-check">✓</span> Deep training</td>
-            <td><span class="comp-neutral">◑</span> Partial</td>
-            <td><span class="comp-x">✕</span> Generic rules</td>
-            <td><span class="comp-check">✓</span> Slow ramp</td>
-          </tr>
-          <tr>
-            <td>PMS integration</td>
-            <td class="highlight"><span class="comp-check">✓</span> Native</td>
-            <td><span class="comp-neutral">◑</span> Via email only</td>
-            <td><span class="comp-neutral">◑</span> Varies</td>
-            <td><span class="comp-check">✓</span> Direct</td>
-          </tr>
-          <tr>
-            <td>Setup time</td>
-            <td class="highlight">1–2 weeks</td>
-            <td>4–8 weeks</td>
-            <td>4–12 weeks</td>
-            <td>8–16 weeks</td>
-          </tr>
-          <tr>
-            <td>Turnover risk</td>
-            <td class="highlight"><span class="comp-check">✓</span> None</td>
-            <td><span class="comp-x">✕</span> High (40–60%/yr)</td>
-            <td><span class="comp-check">✓</span> None</td>
-            <td><span class="comp-x">✕</span> High</td>
-          </tr>
-          <tr>
-            <td>Scales with portfolio</td>
-            <td class="highlight"><span class="comp-check">✓</span> Instant</td>
-            <td><span class="comp-x">✕</span> Must hire</td>
-            <td><span class="comp-neutral">◑</span> Limited</td>
-            <td><span class="comp-x">✕</span> Must hire</td>
-          </tr>
-          <tr>
-            <td>Kill switch / override</td>
-            <td class="highlight"><span class="comp-check">✓</span> Per-agent</td>
-            <td><span class="comp-check">✓</span> You manage them</td>
-            <td><span class="comp-neutral">◑</span> Varies</td>
-            <td><span class="comp-check">✓</span> Direct manage</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="text-center text-sm text-muted mt-4 reveal">Estimates based on US PM industry benchmarks. Your numbers may vary — <a href="#roi" class="text-brand underline">run the calculator</a>.</p>
-  </div>
-</section>
-
-<!-- ===== SECTION 4: AI EMPLOYEES GRID ===== -->
-<section id="agents" class="py-24 sm:py-28 bg-soft">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
-      <div class="eyebrow mb-5">Our AI Employees</div>
-      <h2 class="display-md mb-4">Eight Agents. One Back Office. Zero Overhead.</h2>
-      <p class="body-lg">Each agent is built for a single operational role. You can start with one and add more as your portfolio grows.</p>
-    </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-      <div class="agent-card reveal">
-        <div class="agent-icon bg-blue-50">🔍</div>
-        <h3 class="font-bold text-ink mb-1">Screening Agent</h3>
-        <p class="text-sm text-muted">Qualifies applicants end-to-end — so your team only sees move-in-ready tenants.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Reviews applications & documents
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Requests missing items from applicants
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Scores & routes to your decision criteria
-          </li>
-        </ul>
-      </div>
-
-      <div class="agent-card reveal reveal-d1">
-        <div class="agent-icon bg-green-50">🔄</div>
-        <h3 class="font-bold text-ink mb-1">Renewal Agent</h3>
-        <p class="text-sm text-muted">Starts renewal outreach 90 days out. Increases retention without your team lifting a finger.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Contacts tenants at 90/60/30-day marks
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Handles negotiation within your parameters
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Updates lease records in your PMS
-          </li>
-        </ul>
-      </div>
-
-      <div class="agent-card reveal reveal-d2">
-        <div class="agent-icon bg-orange-50">🔧</div>
-        <h3 class="font-bold text-ink mb-1">Maintenance Agent</h3>
-        <p class="text-sm text-muted">Every maintenance request handled, tracked, and resolved — without clogging your inbox.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Logs & categorizes requests 24/7
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Dispatches your approved vendors
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Follows up on completion & tenant satisfaction
-          </li>
-        </ul>
-      </div>
-
-      <div class="agent-card reveal reveal-d3">
-        <div class="agent-icon bg-purple-50">🏠</div>
-        <h3 class="font-bold text-ink mb-1">Leasing Agent</h3>
-        <p class="text-sm text-muted">Responds to every inquiry, books tours, and chases applications so no lead goes cold.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Responds to Zillow, MLS, direct inquiries
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Books showing tours & sends confirmations
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Chases application completion follow-ups
-          </li>
-        </ul>
-      </div>
-
-      <div class="agent-card reveal">
-        <div class="agent-icon bg-teal-50">📋</div>
-        <h3 class="font-bold text-ink mb-1">Onboarding Agent</h3>
-        <p class="text-sm text-muted">New tenant move-in processed start to finish — docs, portals, key pickup, first impressions.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Collects docs & sets up payment portals
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Sends move-in instructions & checklists
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Coordinates utility setup & access codes
-          </li>
-        </ul>
-      </div>
-
-      <div class="agent-card reveal reveal-d1">
-        <div class="agent-icon bg-red-50">📊</div>
-        <h3 class="font-bold text-ink mb-1">Owner Attrition Agent</h3>
-        <p class="text-sm text-muted">Tracks portfolio health and keeps owners informed before they start asking questions.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Flags at-risk owners before they leave
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Sends proactive monthly performance reports
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Answers owner questions from your data
-          </li>
-        </ul>
-      </div>
-
-      <div class="agent-card reveal reveal-d2">
-        <div class="agent-icon bg-yellow-50">📍</div>
-        <h3 class="font-bold text-ink mb-1">Vacancy Agent</h3>
-        <p class="text-sm text-muted">Monitors days-on-market and takes action when listings stall — before vacancies cost you owners.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Syndicates listings to Zillow, MLS, + more
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Flags stale listings for price review
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Reports vacancy trends weekly
-          </li>
-        </ul>
-      </div>
-
-      <div class="agent-card reveal reveal-d3">
-        <div class="agent-icon bg-indigo-50">📰</div>
-        <h3 class="font-bold text-ink mb-1">Newsletter Agent</h3>
-        <p class="text-sm text-muted">Keeps your owner relationships warm with zero manual effort — branded, data-driven monthly updates.</p>
-        <ul class="agent-tasks text-muted list-none p-0 m-0 space-y-0">
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Auto-generates monthly owner newsletters
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Includes maintenance summary & market data
-          </li>
-          <li>
-            <svg class="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Branded to your company, sent on your schedule
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===== SECTION 5: PRICING ===== -->
-<section id="pricing" class="py-24 sm:py-28 bg-white">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
-      <div class="eyebrow mb-5">Pricing</div>
-      <h2 class="display-md mb-4">Simple Pricing. No Surprises.</h2>
-      <p class="body-lg">Flat per-unit monthly pricing. No setup fees. No long-term contracts. Cancel with 30 days' notice.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-
-      <div class="pricing-card reveal">
-        <div class="text-sm font-semibold text-muted mb-2">Ops Core</div>
-        <div class="pricing-price">$12<span class="text-xl text-muted font-normal">/unit</span></div>
-        <div class="pricing-unit">/month · up to 100 units</div>
-        <div class="my-6 h-px bg-line"></div>
-        <div class="space-y-1">
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Maintenance Agent
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Renewal Agent
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Screening Agent
-          </div>
-          <div class="pricing-feature text-muted">
-            <svg class="w-4 h-4 text-muted flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Leasing + Onboarding
-          </div>
-          <div class="pricing-feature text-muted">
-            <svg class="w-4 h-4 text-muted flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Owner Attrition + Newsletter
-          </div>
-        </div>
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-ghost w-full mt-8" data-cta>
-          Book a call
-        </a>
-      </div>
-
-      <div class="pricing-card featured reveal reveal-d1">
-        <div class="popular-badge">Most Popular</div>
-        <div class="text-sm font-semibold" style="color:#0F62FE">Full Suite</div>
-        <div class="pricing-price mt-1">$10<span class="text-xl text-muted font-normal">/unit</span></div>
-        <div class="pricing-unit">/month · 100–500 units</div>
-        <div class="my-6 h-px bg-line"></div>
-        <div class="space-y-1">
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            All 8 AI Employees included
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Maintenance + Renewal + Screening
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Leasing + Onboarding + Vacancy
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Owner Attrition + Newsletter
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Weekly performance dashboard
-          </div>
-        </div>
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary w-full mt-8" data-cta>
-          Book a call
-        </a>
-      </div>
-
-      <div class="pricing-card reveal reveal-d2">
-        <div class="text-sm font-semibold text-muted mb-2">Enterprise</div>
-        <div class="pricing-price">Custom</div>
-        <div class="pricing-unit">500+ units · custom pricing</div>
-        <div class="my-6 h-px bg-line"></div>
-        <div class="space-y-1">
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Volume pricing (typically $8/unit/mo)
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Custom agent builds for your workflow
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Dedicated onboarding & SLA support
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            All 8 AI Employees + custom agents
-          </div>
-          <div class="pricing-feature">
-            <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Multi-market and multi-entity support
-          </div>
-        </div>
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-ghost w-full mt-8" data-cta>
-          Get a custom quote
-        </a>
-      </div>
-    </div>
-    <p class="text-center text-sm text-muted mt-8 reveal">All plans include 90-day launch window. Month-to-month after that. 30-day cancellation notice.</p>
-  </div>
-</section>
-
-<!-- ===== ROI CALCULATOR ===== -->
-<section id="roi" class="py-24 sm:py-28 bg-soft">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
-      <div class="eyebrow mb-5">ROI Calculator</div>
-      <h2 class="display-md mb-4">Put Your Numbers In. See What You're Leaving on the Table.</h2>
-      <p class="body-lg">Adjust the sliders to match your portfolio. The calculator shows your current cost vs. UpneX, hours freed, and projected ROI.</p>
-    </div>
-    <div class="calc-wrap max-w-5xl mx-auto reveal">
-      <div class="relative z-10 grid lg:grid-cols-2 gap-10">
-        <!-- Inputs -->
-        <div>
-          <h3 class="text-lg font-bold text-white mb-6">Your Current Operation</h3>
-          <div class="space-y-5">
-
-            <div class="calc-input-wrap">
-              <div class="flex justify-between items-baseline mb-1">
-                <div class="calc-label">Units under management</div>
-                <div class="calc-value"><span id="calcUnitsVal">200</span></div>
-              </div>
-              <input type="range" id="calcUnits" class="calc-slider" min="50" max="2500" step="10" value="200" aria-label="Units under management" />
-              <div class="flex justify-between text-xs mt-1" style="color:rgba(255,255,255,0.35)">
-                <span>50</span><span>2,500</span>
-              </div>
-            </div>
-
-            <div class="calc-input-wrap">
-              <div class="flex justify-between items-baseline mb-1">
-                <div class="calc-label">Maintenance requests / month</div>
-                <div class="calc-value"><span id="calcMaintVal">100</span></div>
-              </div>
-              <input type="range" id="calcMaint" class="calc-slider" min="10" max="1500" step="5" value="100" aria-label="Maintenance requests per month" />
-              <div class="flex justify-between text-xs mt-1" style="color:rgba(255,255,255,0.35)">
-                <span>10</span><span>1,500</span>
-              </div>
-            </div>
-
-            <div class="calc-input-wrap">
-              <div class="flex justify-between items-baseline mb-1">
-                <div class="calc-label">Applications received / month</div>
-                <div class="calc-value"><span id="calcAppsVal">20</span></div>
-              </div>
-              <input type="range" id="calcApps" class="calc-slider" min="0" max="200" step="1" value="20" aria-label="Applications per month" />
-              <div class="flex justify-between text-xs mt-1" style="color:rgba(255,255,255,0.35)">
-                <span>0</span><span>200</span>
-              </div>
-            </div>
-
-            <div class="calc-input-wrap">
-              <div class="flex justify-between items-baseline mb-1">
-                <div class="calc-label">Admin / coordinator staff</div>
-                <div class="calc-value"><span id="calcStaffVal">2</span></div>
-              </div>
-              <input type="range" id="calcStaff" class="calc-slider" min="0.5" max="10" step="0.5" value="2" aria-label="Admin staff count" />
-              <div class="flex justify-between text-xs mt-1" style="color:rgba(255,255,255,0.35)">
-                <span>0.5</span><span>10</span>
-              </div>
-            </div>
-
-            <div class="calc-input-wrap">
-              <div class="flex justify-between items-baseline mb-1">
-                <div class="calc-label">Average admin hourly rate</div>
-                <div class="calc-value">$<span id="calcRateVal">22</span></div>
-              </div>
-              <input type="range" id="calcRate" class="calc-slider" min="15" max="55" step="1" value="22" aria-label="Admin hourly rate" />
-              <div class="flex justify-between text-xs mt-1" style="color:rgba(255,255,255,0.35)">
-                <span>$15</span><span>$55</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Results -->
-        <div>
-          <h3 class="text-lg font-bold text-white mb-6">Your Estimated Returns</h3>
-          <div id="calcEdgeCase" class="hidden mb-5 p-4 rounded-xl border border-orange-400/40 bg-orange-500/10 text-orange-300 text-sm">
-            UpneX makes the strongest economic case at 50+ units. At your size, we may have a lighter-weight option — <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="underline text-orange-200 font-semibold">book a call anyway</a> to find out.
-          </div>
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <div class="result-card">
-              <div class="result-label">Hours Freed / Month</div>
-              <div class="result-val teal" id="calcHours">0</div>
-              <div class="result-sub">hrs reclaimed</div>
-            </div>
-            <div class="result-card">
-              <div class="result-label">Monthly Savings</div>
-              <div class="result-val" id="calcMonthlySavings">$0</div>
-              <div class="result-sub">vs. current cost</div>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <div class="result-card">
-              <div class="result-label">Annual Savings</div>
-              <div class="result-val" id="calcAnnualSavings">$0</div>
-              <div class="result-sub">per year</div>
-            </div>
-            <div class="result-card">
-              <div class="result-label">ROI</div>
-              <div class="result-val teal" id="calcROI">0%</div>
-              <div class="result-sub">return on UpneX cost</div>
-            </div>
-          </div>
-          <div class="result-card mb-4">
-            <div class="result-label">Payback Period</div>
-            <div class="result-val white text-2xl" id="calcPayback">—</div>
-            <div class="result-sub">months to break even</div>
-          </div>
-          <div class="mt-2 p-4 rounded-xl border border-white/10 bg-white/5 text-sm" style="color:rgba(255,255,255,0.65)">
-            <div class="flex justify-between mb-1">
-              <span>Your current annual staff cost</span>
-              <span class="font-semibold text-white" id="calcCurrentCost">$0</span>
-            </div>
-            <div class="flex justify-between mb-1">
-              <span>UpneX annual cost</span>
-              <span class="font-semibold text-white" id="calcUpnexCost">$0</span>
-            </div>
-            <div class="flex justify-between border-t border-white/10 pt-2 mt-2">
-              <span>Labor hours freed / year</span>
-              <span class="font-semibold" style="color:#2ED3B7" id="calcAnnualHours">0 hrs</span>
-            </div>
-          </div>
-          <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener"
-             id="calcCTA"
-             class="btn btn-primary btn-lg w-full mt-6"
-             data-cta>
-            Book a call — get an exact quote
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-    <p class="text-center text-xs text-muted mt-6 reveal">Estimates use US PM industry benchmarks. Actual savings depend on your specific workflow and vendor structure.</p>
-  </div>
-</section>
-
-<!-- ===== WHAT'S INCLUDED ===== -->
-<section class="py-24 sm:py-28 bg-white">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="grid lg:grid-cols-2 gap-16 items-start">
-      <div class="reveal">
-        <div class="eyebrow mb-5">What You Actually Get</div>
-        <h2 class="display-md mb-4">Every Month. Without Being Asked.</h2>
-        <p class="body-lg mb-6">Here's what happens inside your operation after UpneX goes live. This isn't a feature list — it's what gets done.</p>
-        <div class="space-y-0">
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Every maintenance request logged, routed to a vendor, and followed up for completion — whether it comes in at 2pm or 2am</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Lease renewal outreach started 90 days before every expiration — automatically, with your tone and your parameters</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Every inbound leasing inquiry answered within minutes, tour scheduled, and application status tracked</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>New tenant onboarding processed end-to-end — docs, portal setup, utility coordination, move-in instructions</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Owner monthly reports sent automatically — maintenance summary, vacancy status, and performance data</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Application screening completed with your criteria — no incomplete apps falling through the cracks</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Vacancy listings syndicated and monitored — alerts when properties stall past your threshold</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Escalation routing to your team when human judgment is needed — every time, with full context</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Weekly operational dashboard — what happened, what's pending, what needs your attention</span>
-          </div>
-          <div class="included-item">
-            <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Monthly branded owner newsletter — written, formatted, and sent with your name on it</span>
-          </div>
-        </div>
-      </div>
-      <div class="reveal reveal-d1">
-        <!-- Cost of Doing Nothing -->
-        <div class="eyebrow mb-5">Cost of Doing Nothing</div>
-        <h2 class="display-md mb-6">The Status Quo Has a Price Tag. Most PMs Just Haven't Counted It.</h2>
-        <div class="space-y-4">
-          <div class="codn-card">
-            <div class="relative z-10">
-              <div class="stat-num">12%</div>
-              <div class="mt-2 text-sm font-medium text-white/80">of lease renewals lost to slow or missed follow-up</div>
-              <div class="mt-1 text-xs text-white/50">Industry avg renewal rate drops 12 points without proactive outreach</div>
-            </div>
-          </div>
-          <div class="codn-card">
-            <div class="relative z-10">
-              <div class="stat-num">$45</div>
-              <div class="mt-2 text-sm font-medium text-white/80">in lost rent per unit per vacancy day (avg across US markets)</div>
-              <div class="mt-1 text-xs text-white/50">Every week a unit sits empty costs you and your owner real money</div>
-            </div>
-          </div>
-          <div class="codn-card">
-            <div class="relative z-10">
-              <div class="stat-num">1.4×</div>
-              <div class="mt-2 text-sm font-medium text-white/80">longer maintenance resolution when requests aren't routed immediately</div>
-              <div class="mt-1 text-xs text-white/50">Delayed routing = extended vendor turnaround = lower tenant satisfaction scores</div>
-            </div>
-          </div>
-          <div class="p-5 rounded-2xl border border-line bg-soft text-sm text-muted">
-            <strong class="text-ink">The real question isn't "Can we afford UpneX?"</strong><br/>
-            It's "How much is the current system already costing us in missed renewals, slow leasing, and owner churn — and does anyone even know that number?"
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SOCIAL PROOF ===== -->
-<section class="py-24 sm:py-28 bg-soft">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-14 reveal">
-      <div class="eyebrow mb-5">Client Results</div>
-      <h2 class="display-md mb-4">PM Companies Using UpneX</h2>
-      <p class="body-lg">Across Austin, Tampa, Cleveland, Atlanta, and Phoenix. Real results from real portfolios.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="testimonial reveal">
-        <div class="stars">
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        </div>
-        <p class="text-ink font-medium mb-5 leading-relaxed">"The maintenance agent alone saves us 60+ hours a month. We used to have one coordinator spending half their week just chasing vendors. That's gone now."</p>
-        <div class="flex items-center gap-3">
-          <div class="avatar bg-brand text-sm">T</div>
-          <div>
-            <div class="text-sm font-semibold text-ink">Texas PM Company</div>
-            <div class="text-xs text-muted">200+ units · Austin TX</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial reveal reveal-d1">
-        <div class="stars">
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        </div>
-        <p class="text-ink font-medium mb-5 leading-relaxed">"Our renewal rate went from 68% to 81% in the first 6 months. The renewal agent started following up 90 days out. I didn't change anything else — just that one process."</p>
-        <div class="flex items-center gap-3">
-          <div class="avatar bg-accent text-sm" style="color:#111827">V</div>
-          <div>
-            <div class="text-sm font-semibold text-ink">Virginia PM Company</div>
-            <div class="text-xs text-muted">300 units · mixed residential</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial reveal reveal-d2">
-        <div class="stars">
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg viewBox="0 0 20 20" class="w-4 h-4"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        </div>
-        <p class="text-ink font-medium mb-5 leading-relaxed">"We were going to hire a second coordinator. Instead we brought UpneX in. We're handling 40% more volume with the same team — and the agents don't call in sick."</p>
-        <div class="flex items-center gap-3">
-          <div class="avatar text-sm" style="background:#ff6b1a">F</div>
-          <div>
-            <div class="text-sm font-semibold text-ink">Florida PM Company</div>
-            <div class="text-xs text-muted">150 units · Tampa FL</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FAQ ===== -->
-<section id="faq" class="py-24 sm:py-28 bg-white">
-  <div class="max-w-4xl mx-auto px-5 sm:px-8">
-    <div class="text-center mb-14 reveal">
-      <div class="eyebrow mb-5">FAQ</div>
-      <h2 class="display-md">Common Questions</h2>
-    </div>
-    <div id="faqList" class="reveal">
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          How long does setup take?
-          <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        </button>
-        <div class="faq-content"><div class="faq-body">Most clients are live within 1–2 weeks from kickoff. Week 1 is onboarding: we collect your vendor list, SOPs, lease templates, and communication preferences. Week 2 is training and testing in your environment. We don't flip the switch until you've reviewed a batch of real-world responses and signed off.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          Does this replace my property management software?
-          <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        </button>
-        <div class="faq-content"><div class="faq-body">No — UpneX is not a PMS. It works on top of AppFolio, Buildium, Rent Manager, Rentvine, and others. You keep your existing software and your existing workflows. We plug in as an operations layer that handles the repetitive tasks, routing information back into your PMS so your records stay current.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          What if I need to override or stop an agent?
-          <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        </button>
-        <div class="faq-content"><div class="faq-body">Every agent has a kill switch. You can pause or stop any individual agent — or all of them — at any time without affecting the rest of your operation. You also set escalation rules that determine when an agent hands off to your team instead of acting autonomously. You're always in control.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          How is my data handled? Is it secure?
-          <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        </button>
-        <div class="faq-content"><div class="faq-body">All data is encrypted in transit and at rest. We operate on enterprise-grade infrastructure and follow strict data handling protocols. Tenant PII is handled under your existing PMS's data agreements — UpneX agents access only what they need to complete specific tasks and don't retain data beyond what's required.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          What's the contract length?
-          <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        </button>
-        <div class="faq-content"><div class="faq-body">There's a 90-day launch window to get your agents fully trained and operating. After that, billing is month-to-month. We don't believe in long-term contracts — if the agents aren't delivering value, you shouldn't be locked in.</div></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-trigger" onclick="toggleFaq(this)">
-          Can I add agents over time as my portfolio grows?
-          <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        </button>
-        <div class="faq-content"><div class="faq-body">Yes — most clients start with 2–3 agents (usually Maintenance, Renewal, and Screening) and add more as the portfolio grows or as they see results. There's no minimum agent count and no penalty for starting small. You can also remove agents at any time if your needs change.</div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===== FINAL CTA ===== -->
-<section class="py-24 sm:py-28" style="background:linear-gradient(160deg,#1a3a5c 0%,#0d2440 100%)">
-  <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center text-white">
+  <div class="two-col" style="align-items:start;margin-top:0;">
     <div class="reveal">
-      <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-8 px-4 py-2 rounded-full" style="background:rgba(255,107,26,0.15);color:#ff6b1a">
-        Zero ad spend. No obligation.
+      <p class="lead" style="margin-bottom:20px;">UpneX is not a new property management platform. It's not a chatbot. It's not another app your team has to learn.</p>
+      <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:20px;">We sit on top of your existing software — AppFolio, Buildium, Rent Manager — and handle the repeatable operational work your team spends most of their day on. Maintenance routing. Lease renewal outreach. Tenant screening. Owner communications. All of it.</p>
+      <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:32px;">Think of us as a back-office department that works 24/7, never calls in sick, and costs a fraction of what you'd pay for the same headcount.</p>
+      <ul class="check-list">
+        <li class="w">Not a PMS replacement — works alongside what you already use</li>
+        <li class="w">Not offshore VAs — AI agents that scale without turnover</li>
+        <li class="w">Not a SaaS tool — purpose-built AI employees for your exact workflow</li>
+      </ul>
+    </div>
+    <div class="reveal reveal-d1" style="display:flex;flex-direction:column;gap:16px;">
+      <div class="card green-hl">
+        <div class="card-icon">🏗️</div>
+        <h3>We Build, You Grow</h3>
+        <p>Every agent is custom-built for your portfolio, your pain points, and your targets. No two deployments are identical.</p>
       </div>
-      <h2 class="display-lg mb-6 text-white">
-        Book Your Free AI Operations Audit.
-      </h2>
-      <p class="text-lg mb-3" style="color:rgba(255,255,255,0.7);max-width:36em;margin-left:auto;margin-right:auto">
-        15 minutes. We'll look at your current ops, identify where AI can make the biggest impact, and show you exactly what it would look like inside your stack.
-      </p>
-      <p class="text-base mb-10" style="color:rgba(255,255,255,0.5)">No deck. No sales pitch. Just a real look at your operation.</p>
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary btn-xl" data-cta>
-          Book Your Free AI Operations Audit
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </a>
-        <a href="#roi" class="btn btn-ghost btn-xl" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2)">
-          Run the ROI calculator first
-        </a>
+      <div class="card blue-hl">
+        <div class="card-icon">🔄</div>
+        <h3>We Run It Too</h3>
+        <p>We don't hand you a tool and walk away. We run the agents, monitor output, fix issues, and upgrade everything as you grow.</p>
       </div>
-      <div class="flex flex-wrap items-center justify-center gap-8 text-sm mt-10" style="color:rgba(255,255,255,0.45)">
-        <span>No commitment</span>
-        <span>·</span>
-        <span>15 minutes</span>
-        <span>·</span>
-        <span>Live in 1–2 weeks if you say yes</span>
+      <div class="card amber-hl">
+        <div class="card-icon">📊</div>
+        <h3>You Review Results Only</h3>
+        <p>Your team sees a daily briefing of warm leads, flagged replies, and completed tasks. Zero operational overhead on your end.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== FOOTER ===== -->
-<footer style="background:#0d2440" class="py-12">
-  <div class="max-w-7xl mx-auto px-5 sm:px-8">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
-      <div>
-        <div class="font-bold text-lg text-white">UpneX <span style="color:#0F62FE">·</span> <span style="color:#0F62FE">AI</span></div>
-        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.35)">AI Operations for Property Managers</div>
-      </div>
-      <div class="flex flex-wrap gap-6">
-        <a href="/ai/" class="footer-link">Main site</a>
-        <a href="/ai/maintenance/" class="footer-link">Maintenance</a>
-        <a href="/ai/leasing/" class="footer-link">Leasing</a>
-        <a href="/ai/automation/" class="footer-link">Automation</a>
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="footer-link" style="color:#ff6b1a">Book a Call</a>
-      </div>
-      <div class="text-xs" style="color:rgba(255,255,255,0.25)">© 2026 UpneX Solutions OPC Pvt Ltd</div>
+<!-- WHAT IS AN AI EMPLOYEE -->
+<div class="sep">
+<section>
+  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+    <span class="eyebrow blue">What is an AI Employee</span>
+    <h2>Not a Chatbot. Not a VA.<br><span style="color:var(--blue);">A Purpose-Built AI Agent.</span></h2>
+    <div class="divider blue" style="margin:18px auto 24px;"></div>
+    <p class="lead">An AI Employee is a dedicated agent trained on your systems, your SOPs, and your vendor list. It does one job — and does it better than a coordinator splitting attention across 20 tasks.</p>
+  </div>
+  <div class="three-col">
+    <div class="card reveal" style="text-align:center;">
+      <div class="card-icon" style="text-align:center;">⏰</div>
+      <h3 style="text-align:center;margin-bottom:10px;">Works 24/7</h3>
+      <p>Tenants submit maintenance at 11pm Saturday. Your AI Employee logs it, categorizes it, and texts the vendor before your team wakes up. No overtime. No weekends.</p>
+    </div>
+    <div class="card reveal reveal-d1" style="text-align:center;">
+      <div class="card-icon" style="text-align:center;">🧠</div>
+      <h3 style="text-align:center;margin-bottom:10px;">Learns Your Business</h3>
+      <p>We train each agent on your vendor list, lease templates, escalation rules, and communication tone. It doesn't follow a generic script — it follows your playbook.</p>
+    </div>
+    <div class="card reveal reveal-d2" style="text-align:center;">
+      <div class="card-icon" style="text-align:center;">💰</div>
+      <h3 style="text-align:center;margin-bottom:10px;">1/10th the Cost</h3>
+      <p>A full-time coordinator costs $35,000–$55,000/year. UpneX handles the same workload starting at a fraction of that — and scales as you grow without re-hiring.</p>
     </div>
   </div>
+  <div style="text-align:center;margin-top:40px;" class="reveal">
+    <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary" data-cta>
+      See how it works in 15 minutes →
+    </a>
+  </div>
+</section>
+</div>
+
+<!-- COMPARISON TABLE -->
+<section>
+  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+    <span class="eyebrow">Why UpneX</span>
+    <h2>Every Alternative Leaves<br><span>Something on the Table</span></h2>
+    <div class="divider" style="margin:18px auto 24px;"></div>
+    <p class="lead">Offshore VAs have high turnover. SaaS bots follow generic scripts. In-house staff don't scale. UpneX is the only option built specifically for PM back-office ops.</p>
+  </div>
+  <div style="overflow-x:auto;" class="reveal reveal-d1">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th style="width:26%;"></th>
+          <th class="hl">UpneX AI</th>
+          <th>Offshore VA</th>
+          <th>SaaS Bot</th>
+          <th>In-House Staff</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Monthly cost (100 units)</td>
+          <td class="hl">$800–1,200</td>
+          <td>$2,000–3,500</td>
+          <td>$1,000–2,000</td>
+          <td>$4,000–6,500</td>
+        </tr>
+        <tr>
+          <td>Available hours</td>
+          <td class="hl">24/7 / 365</td>
+          <td>8–10 hrs/day</td>
+          <td>24/7 (limited)</td>
+          <td>40 hrs/wk</td>
+        </tr>
+        <tr>
+          <td>Learns your SOPs</td>
+          <td class="hl"><span class="comp-check">✓</span> Deep training</td>
+          <td>◑ Partial</td>
+          <td><span class="comp-x">✕</span> Generic rules</td>
+          <td><span class="comp-check">✓</span> Slow ramp</td>
+        </tr>
+        <tr>
+          <td>PMS integration</td>
+          <td class="hl"><span class="comp-check">✓</span> Native</td>
+          <td>◑ Via email</td>
+          <td>◑ Varies</td>
+          <td><span class="comp-check">✓</span> Direct</td>
+        </tr>
+        <tr>
+          <td>Setup time</td>
+          <td class="hl">1–2 weeks</td>
+          <td>4–8 weeks</td>
+          <td>4–12 weeks</td>
+          <td>8–16 weeks</td>
+        </tr>
+        <tr>
+          <td>Turnover risk</td>
+          <td class="hl"><span class="comp-check">✓</span> None</td>
+          <td><span class="comp-x">✕</span> High (40–60%/yr)</td>
+          <td><span class="comp-check">✓</span> None</td>
+          <td><span class="comp-x">✕</span> High</td>
+        </tr>
+        <tr>
+          <td>Scales with portfolio</td>
+          <td class="hl"><span class="comp-check">✓</span> Instant</td>
+          <td><span class="comp-x">✕</span> Must hire</td>
+          <td>◑ Limited</td>
+          <td><span class="comp-x">✕</span> Must hire</td>
+        </tr>
+        <tr>
+          <td>Kill switch / override</td>
+          <td class="hl"><span class="comp-check">✓</span> Per-agent</td>
+          <td><span class="comp-check">✓</span> You manage them</td>
+          <td>◑ Varies</td>
+          <td><span class="comp-check">✓</span> Direct manage</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:16px;" class="reveal">Estimates based on US PM industry benchmarks. <a href="#roi" style="color:var(--green);">Run the calculator</a> with your numbers.</p>
+</section>
+
+<!-- 8 AI EMPLOYEES -->
+<div class="sep">
+<section id="agents">
+  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+    <span class="eyebrow purple">Our AI Employees</span>
+    <h2>Eight Agents. One Back Office.<br><span style="color:var(--purple);">Zero Overhead.</span></h2>
+    <div class="divider purple" style="margin:18px auto 24px;"></div>
+    <p class="lead">Each agent is built for a single operational role. Start with one and add more as your portfolio grows.</p>
+  </div>
+  <div class="agents-grid">
+    <div class="agent-card reveal">
+      <div class="agent-icon">🔍</div>
+      <div class="agent-title">Screening Agent</div>
+      <div class="agent-desc">Qualifies applicants end-to-end — your team only sees move-in-ready tenants.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Reviews applications &amp; documents</div>
+        <div class="agent-task">Requests missing items from applicants</div>
+        <div class="agent-task">Scores &amp; routes to your criteria</div>
+      </div>
+    </div>
+    <div class="agent-card reveal reveal-d1">
+      <div class="agent-icon">🔄</div>
+      <div class="agent-title">Renewal Agent</div>
+      <div class="agent-desc">Starts renewal outreach 90 days out. Increases retention without lifting a finger.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Contacts tenants at 90/60/30-day marks</div>
+        <div class="agent-task">Handles negotiation within your parameters</div>
+        <div class="agent-task">Updates lease records in your PMS</div>
+      </div>
+    </div>
+    <div class="agent-card reveal reveal-d2">
+      <div class="agent-icon">🔧</div>
+      <div class="agent-title">Maintenance Agent</div>
+      <div class="agent-desc">Every maintenance request handled, tracked, and resolved — without clogging your inbox.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Logs &amp; categorizes requests 24/7</div>
+        <div class="agent-task">Dispatches your approved vendors</div>
+        <div class="agent-task">Follows up on completion &amp; satisfaction</div>
+      </div>
+    </div>
+    <div class="agent-card reveal reveal-d3">
+      <div class="agent-icon">🏠</div>
+      <div class="agent-title">Leasing Agent</div>
+      <div class="agent-desc">Responds to every inquiry, books tours, and chases applications so no lead goes cold.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Responds to Zillow, MLS, direct inquiries</div>
+        <div class="agent-task">Books showing tours &amp; confirmations</div>
+        <div class="agent-task">Chases application completion follow-ups</div>
+      </div>
+    </div>
+    <div class="agent-card reveal">
+      <div class="agent-icon">📋</div>
+      <div class="agent-title">Onboarding Agent</div>
+      <div class="agent-desc">New tenant move-in processed start to finish — docs, portals, key pickup, first impressions.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Collects docs &amp; sets up payment portals</div>
+        <div class="agent-task">Sends move-in instructions &amp; checklists</div>
+        <div class="agent-task">Coordinates utility setup &amp; access codes</div>
+      </div>
+    </div>
+    <div class="agent-card reveal reveal-d1">
+      <div class="agent-icon">📊</div>
+      <div class="agent-title">Owner Attrition Agent</div>
+      <div class="agent-desc">Tracks portfolio health and keeps owners informed before they start asking questions.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Flags at-risk owners before they leave</div>
+        <div class="agent-task">Sends proactive monthly performance reports</div>
+        <div class="agent-task">Answers owner questions from your data</div>
+      </div>
+    </div>
+    <div class="agent-card reveal reveal-d2">
+      <div class="agent-icon">📍</div>
+      <div class="agent-title">Vacancy Agent</div>
+      <div class="agent-desc">Monitors days-on-market and acts when listings stall — before vacancies cost you owners.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Syndicates listings to Zillow, MLS, + more</div>
+        <div class="agent-task">Flags stale listings for price review</div>
+        <div class="agent-task">Reports vacancy trends weekly</div>
+      </div>
+    </div>
+    <div class="agent-card reveal reveal-d3">
+      <div class="agent-icon">📰</div>
+      <div class="agent-title">Newsletter Agent</div>
+      <div class="agent-desc">Keeps owner relationships warm with zero manual effort — branded monthly updates.</div>
+      <div class="agent-tasks">
+        <div class="agent-task">Auto-generates monthly owner newsletters</div>
+        <div class="agent-task">Includes maintenance summary &amp; market data</div>
+        <div class="agent-task">Branded to your company, sent on schedule</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+    <span class="eyebrow amber">Pricing</span>
+    <h2>Simple, Transparent,<br><span style="color:var(--amber);">Fully Managed</span></h2>
+    <div class="divider amber" style="margin:18px auto 24px;"></div>
+    <p class="lead">Flat per-unit monthly pricing. No setup fees. No long-term contracts. Cancel with 30 days' notice.</p>
+  </div>
+  <div class="pricing-grid reveal reveal-d1">
+    <div class="pricing-card">
+      <div class="price-tier">Ops Core</div>
+      <div class="price-num g">$12<span style="font-size:20px;font-weight:400;color:var(--muted);">/unit</span></div>
+      <div class="price-per">/month · up to 100 units</div>
+      <div class="price-features">
+        <div class="price-feat">Maintenance Agent</div>
+        <div class="price-feat">Renewal Agent</div>
+        <div class="price-feat">Screening Agent</div>
+        <div class="price-feat off">Leasing + Onboarding</div>
+        <div class="price-feat off">Owner Attrition + Newsletter</div>
+      </div>
+      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-ghost btn-full" data-cta>Book a call</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="popular-badge">Most Popular</div>
+      <div class="price-tier">Full Suite</div>
+      <div class="price-num g">$10<span style="font-size:20px;font-weight:400;color:var(--muted);">/unit</span></div>
+      <div class="price-per">/month · 100–500 units</div>
+      <div class="price-features">
+        <div class="price-feat">All 8 AI Employees included</div>
+        <div class="price-feat">Maintenance + Renewal + Screening</div>
+        <div class="price-feat">Leasing + Onboarding + Vacancy</div>
+        <div class="price-feat">Owner Attrition + Newsletter</div>
+        <div class="price-feat">Weekly performance dashboard</div>
+      </div>
+      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary btn-full" data-cta>Book a call</a>
+    </div>
+    <div class="pricing-card">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-num w">Custom<span style="font-size:18px;font-weight:400;color:var(--muted);"></span></div>
+      <div class="price-per">500+ units · typically $8/unit/mo</div>
+      <div class="price-features">
+        <div class="price-feat">Volume pricing (typically $8/unit/mo)</div>
+        <div class="price-feat">Custom agent builds for your workflow</div>
+        <div class="price-feat">Dedicated onboarding &amp; SLA support</div>
+        <div class="price-feat">All 8 AI Employees + custom agents</div>
+        <div class="price-feat">Multi-market and multi-entity support</div>
+      </div>
+      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-ghost btn-full" data-cta>Get a custom quote</a>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;" class="reveal">All plans include 90-day launch window. Month-to-month after that. 30-day cancellation notice.</p>
+</section>
+
+<!-- ROI CALCULATOR -->
+<div class="sep">
+<section id="roi">
+  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+    <span class="eyebrow">ROI Calculator</span>
+    <h2>Put Your Numbers In.<br><span>See What You're Leaving on the Table.</span></h2>
+    <div class="divider" style="margin:18px auto 24px;"></div>
+    <p class="lead">Adjust the sliders to match your portfolio. The calculator shows your current cost vs. UpneX, hours freed, and projected ROI.</p>
+  </div>
+  <div class="calc-wrap reveal">
+    <div class="calc-inner">
+      <div>
+        <h3 style="margin-bottom:24px;">Your Current Operation</h3>
+        <div class="calc-input-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <div class="calc-label">Units under management</div>
+            <div class="calc-value"><span id="calcUnitsVal">200</span></div>
+          </div>
+          <input type="range" id="calcUnits" class="calc-slider" min="50" max="2500" step="10" value="200" aria-label="Units under management">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>50</span><span>2,500</span></div>
+        </div>
+        <div class="calc-input-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <div class="calc-label">Maintenance requests / month</div>
+            <div class="calc-value"><span id="calcMaintVal">100</span></div>
+          </div>
+          <input type="range" id="calcMaint" class="calc-slider" min="10" max="1500" step="5" value="100" aria-label="Maintenance requests per month">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>10</span><span>1,500</span></div>
+        </div>
+        <div class="calc-input-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <div class="calc-label">Applications received / month</div>
+            <div class="calc-value"><span id="calcAppsVal">20</span></div>
+          </div>
+          <input type="range" id="calcApps" class="calc-slider" min="0" max="200" step="1" value="20" aria-label="Applications per month">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>0</span><span>200</span></div>
+        </div>
+        <div class="calc-input-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <div class="calc-label">Admin / coordinator staff</div>
+            <div class="calc-value"><span id="calcStaffVal">2</span></div>
+          </div>
+          <input type="range" id="calcStaff" class="calc-slider" min="0.5" max="10" step="0.5" value="2" aria-label="Admin staff count">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>0.5</span><span>10</span></div>
+        </div>
+        <div class="calc-input-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <div class="calc-label">Average admin hourly rate</div>
+            <div class="calc-value">$<span id="calcRateVal">22</span></div>
+          </div>
+          <input type="range" id="calcRate" class="calc-slider" min="15" max="55" step="1" value="22" aria-label="Admin hourly rate">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>$15</span><span>$55</span></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:24px;">Your Estimated Returns</h3>
+        <div id="calcEdgeCase" style="display:none;margin-bottom:16px;padding:14px;border-radius:12px;border:1px solid rgba(251,191,36,0.3);background:rgba(251,191,36,0.08);color:var(--amber);font-size:13px;">
+          UpneX makes the strongest case at 50+ units. At your size, we may have a lighter option — <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" style="color:var(--amber);font-weight:700;text-decoration:underline;">book a call anyway</a>.
+        </div>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="result-label">Hours Freed / Month</div>
+            <div class="result-val b" id="calcHours">0</div>
+            <div class="result-sub">hrs reclaimed</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Monthly Savings</div>
+            <div class="result-val" id="calcMonthlySavings">$0</div>
+            <div class="result-sub">vs. current cost</div>
+          </div>
+        </div>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="result-label">Annual Savings</div>
+            <div class="result-val" id="calcAnnualSavings">$0</div>
+            <div class="result-sub">per year</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">ROI</div>
+            <div class="result-val" id="calcROI">0%</div>
+            <div class="result-sub">return on UpneX cost</div>
+          </div>
+        </div>
+        <div class="result-card" style="margin-bottom:16px;">
+          <div class="result-label">Payback Period</div>
+          <div class="result-val w" id="calcPayback" style="font-size:24px;">—</div>
+          <div class="result-sub">months to break even</div>
+        </div>
+        <div class="calc-breakdown">
+          <div class="calc-row"><span>Your current annual staff cost</span><span style="color:#fff;font-weight:600;" id="calcCurrentCost">$0</span></div>
+          <div class="calc-row"><span>UpneX annual cost</span><span style="color:#fff;font-weight:600;" id="calcUpnexCost">$0</span></div>
+          <div class="calc-row total"><span>Labor hours freed / year</span><span style="color:var(--green);" id="calcAnnualHours">0 hrs</span></div>
+        </div>
+        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" id="calcCTA" class="btn-primary btn-full" data-cta>
+          Book a call — get an exact quote
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:16px;" class="reveal">Estimates use US PM industry benchmarks. Actual savings depend on your specific workflow.</p>
+</section>
+</div>
+
+<!-- WHAT'S INCLUDED + COST OF DOING NOTHING -->
+<section>
+  <div class="two-col" style="align-items:start;">
+    <div class="reveal">
+      <span class="eyebrow">What You Actually Get</span>
+      <h2>Every Month.<br><span>Without Being Asked.</span></h2>
+      <div class="divider"></div>
+      <p style="font-size:16px;color:var(--muted);margin-bottom:28px;line-height:1.7;">Here's what happens inside your operation after UpneX goes live. This isn't a feature list — it's what gets done.</p>
+      <ul class="included-list">
+        <li>Every maintenance request logged, routed to a vendor, and followed up for completion — whether it comes in at 2pm or 2am</li>
+        <li>Lease renewal outreach started 90 days before every expiration — automatically, with your tone and your parameters</li>
+        <li>Every inbound leasing inquiry answered within minutes, tour scheduled, and application status tracked</li>
+        <li>New tenant onboarding processed end-to-end — docs, portal setup, utility coordination, move-in instructions</li>
+        <li>Owner monthly reports sent automatically — maintenance summary, vacancy status, and performance data</li>
+        <li>Application screening completed with your criteria — no incomplete apps falling through the cracks</li>
+        <li>Vacancy listings syndicated and monitored — alerts when properties stall past your threshold</li>
+        <li>Escalation routing to your team when human judgment is needed — every time, with full context</li>
+        <li>Weekly operational dashboard — what happened, what's pending, what needs your attention</li>
+        <li>Monthly branded owner newsletter — written, formatted, and sent with your name on it</li>
+      </ul>
+    </div>
+    <div class="reveal reveal-d1">
+      <span class="eyebrow coral">Cost of Doing Nothing</span>
+      <h2>The Status Quo Has<br><span style="color:var(--coral);">a Price Tag.</span></h2>
+      <div class="divider coral" style="background:var(--coral);"></div>
+      <p style="font-size:16px;color:var(--muted);margin-bottom:28px;line-height:1.7;">Most PMs just haven't counted it.</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="codn-card">
+          <div style="position:relative;z-index:1;">
+            <div class="codn-num coral">12%</div>
+            <div style="margin-top:8px;font-size:14px;font-weight:500;color:rgba(255,255,255,0.8);">of lease renewals lost to slow or missed follow-up</div>
+            <div style="margin-top:4px;font-size:12px;color:var(--muted);">Industry avg renewal rate drops 12 points without proactive outreach</div>
+          </div>
+        </div>
+        <div class="codn-card">
+          <div style="position:relative;z-index:1;">
+            <div class="codn-num amber">$45</div>
+            <div style="margin-top:8px;font-size:14px;font-weight:500;color:rgba(255,255,255,0.8);">in lost rent per unit per vacancy day (avg across US markets)</div>
+            <div style="margin-top:4px;font-size:12px;color:var(--muted);">Every week a unit sits empty costs you and your owner real money</div>
+          </div>
+        </div>
+        <div class="codn-card">
+          <div style="position:relative;z-index:1;">
+            <div class="codn-num purple">1.4×</div>
+            <div style="margin-top:8px;font-size:14px;font-weight:500;color:rgba(255,255,255,0.8);">longer maintenance resolution when requests aren't routed immediately</div>
+            <div style="margin-top:4px;font-size:12px;color:var(--muted);">Delayed routing = extended vendor turnaround = lower tenant satisfaction</div>
+          </div>
+        </div>
+        <div style="padding:18px 20px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;font-size:14px;color:var(--muted);line-height:1.65;">
+          <strong style="color:#fff;">The real question isn't "Can we afford UpneX?"</strong><br>It's "How much is the current system already costing us in missed renewals, slow leasing, and owner churn?"
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<div class="sep">
+<section>
+  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
+    <span class="eyebrow">Client Results</span>
+    <h2>PM Companies Using UpneX</h2>
+    <div class="divider" style="margin:18px auto 24px;"></div>
+    <p class="lead">Across Austin, Tampa, Cleveland, Atlanta, and Phoenix. Real results from real portfolios.</p>
+  </div>
+  <div class="three-col">
+    <div class="growth-card gc-green reveal">
+      <div class="eyebrow" style="margin-bottom:4px;">Texas PM Company · Austin</div>
+      <div style="display:flex;align-items:baseline;">
+        <span class="gc-from">60+</span>
+        <span class="gc-arrow">→</span>
+        <span class="gc-to g">0</span>
+        <span style="font-size:16px;color:var(--muted);margin-left:4px;">hrs/mo admin</span>
+      </div>
+      <div class="gc-badge g">Maintenance Automation</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;">"The maintenance agent alone saves us 60+ hours a month. We used to have one coordinator spending half their week just chasing vendors. That's gone now."</p>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;">
+        <div class="tag g" style="font-size:11px;">200+ units</div>
+        <div class="tag g" style="font-size:11px;">Maintenance Agent</div>
+      </div>
+    </div>
+    <div class="growth-card gc-blue reveal reveal-d1">
+      <div class="eyebrow blue" style="margin-bottom:4px;">Virginia PM Company</div>
+      <div style="display:flex;align-items:baseline;">
+        <span class="gc-from">68%</span>
+        <span class="gc-arrow">→</span>
+        <span class="gc-to b">81%</span>
+        <span style="font-size:16px;color:var(--muted);margin-left:4px;">renewal rate</span>
+      </div>
+      <div class="gc-badge b">+13pts in 6 Months</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;">"Our renewal rate went from 68% to 81% in the first 6 months. The renewal agent started following up 90 days out. I didn't change anything else — just that one process."</p>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;">
+        <div class="tag b" style="font-size:11px;">300 units</div>
+        <div class="tag b" style="font-size:11px;">Renewal Agent</div>
+      </div>
+    </div>
+    <div class="growth-card gc-amber reveal reveal-d2">
+      <div class="eyebrow amber" style="margin-bottom:4px;">Florida PM Company · Tampa</div>
+      <div style="display:flex;align-items:baseline;">
+        <span class="gc-from">same</span>
+        <span class="gc-arrow">→</span>
+        <span class="gc-to a">+40%</span>
+        <span style="font-size:16px;color:var(--muted);margin-left:4px;">volume</span>
+      </div>
+      <div class="gc-badge a">Same Team, More Volume</div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;">"We were going to hire a second coordinator. Instead we brought UpneX in. We're handling 40% more volume with the same team — and the agents don't call in sick."</p>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;">
+        <div class="tag a" style="font-size:11px;">150 units</div>
+        <div class="tag a" style="font-size:11px;">Full Suite</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- FAQ -->
+<section id="faq" style="max-width:860px;">
+  <div class="text-center reveal" style="text-align:center;margin-bottom:56px;">
+    <span class="eyebrow">FAQ</span>
+    <h2>Common Questions</h2>
+    <div class="divider" style="margin:18px auto 0;"></div>
+  </div>
+  <div id="faqList" class="reveal">
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        Is there a free trial or pilot?
+        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+      <div class="faq-content"><div class="faq-body">Yes — we offer a <strong style="color:#fff;">15-Day Free Pilot</strong>. Two custom AI agents are built and deployed for your portfolio at zero cost. At day 15, we review performance together: response times, tenant satisfaction, work order close rate. If the results aren't there, you pay nothing for the pilot period. If they are — and they will be — we expand to your full operation.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        How long does setup take?
+        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+      <div class="faq-content"><div class="faq-body">Most clients are live within 1–2 weeks from kickoff. Week 1 is onboarding: we collect your vendor list, SOPs, lease templates, and communication preferences. Week 2 is training and testing in your environment. We don't flip the switch until you've reviewed a batch of real-world responses and signed off.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        Does this replace my property management software?
+        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+      <div class="faq-content"><div class="faq-body">No — UpneX is not a PMS. It works on top of AppFolio, Buildium, Rent Manager, Rentvine, and others. You keep your existing software and workflows. We plug in as an operations layer that handles the repetitive tasks, routing information back into your PMS so your records stay current.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        What if I need to override or stop an agent?
+        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+      <div class="faq-content"><div class="faq-body">Every agent has a kill switch. You can pause or stop any individual agent — or all of them — at any time without affecting the rest of your operation. You also set escalation rules that determine when an agent hands off to your team instead of acting autonomously. You're always in control.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        How is my data handled? Is it secure?
+        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+      <div class="faq-content"><div class="faq-body">All data is encrypted in transit and at rest. We operate on enterprise-grade infrastructure and follow strict data handling protocols. Tenant PII is handled under your existing PMS's data agreements — UpneX agents access only what they need to complete specific tasks and don't retain data beyond what's required.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        What's the contract length?
+        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+      <div class="faq-content"><div class="faq-body">There's a 90-day launch window to get your agents fully trained and operating. After that, billing is month-to-month. We don't believe in long-term contracts — if the agents aren't delivering value, you shouldn't be locked in.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-trigger" onclick="toggleFaq(this)">
+        Can I add agents over time as my portfolio grows?
+        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+      <div class="faq-content"><div class="faq-body">Yes — most clients start with 2–3 agents (usually Maintenance, Renewal, and Screening) and add more as the portfolio grows or as they see results. There's no minimum agent count and no penalty for starting small. You can also remove agents at any time if your needs change.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="sep">
+<div style="padding:100px 48px;text-align:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(34,197,94,0.07) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="max-width:700px;margin:0 auto;position:relative;z-index:1;" class="reveal">
+    <div class="hero-badge" style="margin:0 auto 28px;display:inline-flex;">
+      <div class="hero-badge-dot"></div>
+      Zero ad spend. No obligation.
+    </div>
+    <h2 style="margin-bottom:20px;">Book Your Free<br><span>AI Operations Audit.</span></h2>
+    <p class="lead" style="margin-bottom:8px;">15 minutes. We'll look at your current ops, identify where AI can make the biggest impact, and show you exactly what it would look like inside your stack.</p>
+    <p style="font-size:14px;color:rgba(255,255,255,0.35);margin-bottom:40px;">No deck. No sales pitch. Just a real look at your operation.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary lg" data-cta>
+        Book Your Free AI Operations Audit
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+      <a href="#roi" class="btn-ghost lg">Run the ROI calculator first</a>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;margin-top:32px;font-size:13px;color:rgba(255,255,255,0.3);">
+      <span>No commitment</span><span>·</span><span>15 minutes</span><span>·</span><span>Live in 1–2 weeks if you say yes</span>
+    </div>
+
+    <!-- 15-Day Pilot Highlight -->
+    <div style="margin-top:48px;" class="pilot-box">
+      <div style="font-size:32px;margin-bottom:8px;">🎁</div>
+      <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;">15-Day Free Pilot Program</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.65;max-width:440px;margin:0 auto;">2 custom AI agents built and deployed for your portfolio at zero cost. We prove the value before you commit a single dollar.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Up<span>Ne</span>X</div>
+  <p style="font-size:13px;color:var(--muted);">AI Operations for Property Managers · upnexs.com · hari@upnexs.com</p>
+  <div class="foot-links">
+    <a href="/ai/">Main site</a>
+    <a href="/ai/maintenance/">Maintenance</a>
+    <a href="/ai/leasing/">Leasing</a>
+    <a href="/ai/automation/">Automation</a>
+    <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" style="color:var(--green);">Book a Call</a>
+  </div>
+  <p style="font-size:12px;color:rgba(255,255,255,0.2);">© 2026 UpneX Solutions OPC Pvt Ltd</p>
 </footer>
 
-<!-- ===== STICKY MOBILE CTA ===== -->
+<!-- STICKY MOBILE CTA -->
 <div class="sticky-cta" id="stickyCta">
-  <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn btn-primary w-full justify-center" data-cta>
+  <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary" style="width:100%;justify-content:center;" data-cta>
     Book Free AI Operations Audit
   </a>
 </div>
 
-<!-- ===== SCRIPTS ===== -->
 <script>
-// ── Init analytics ────────────────────────────────────────────────────────────
-(function () {
-  if (typeof window.initAnalytics === 'function') {
-    window.initAnalytics({ page_name: 'clients_pitch', page_type: 'client_pitch' });
-  }
+// Analytics init
+(function(){if(typeof window.initAnalytics==='function'){window.initAnalytics({page_name:'clients_pitch',page_type:'client_pitch'});}})();
+
+// Reveal on scroll
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:0.1});
+  els.forEach(function(el){io.observe(el);});
 })();
 
-// ── Reveal on scroll ──────────────────────────────────────────────────────────
-(function () {
-  var els = document.querySelectorAll('.reveal');
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  els.forEach(function (el) { io.observe(el); });
+// Sticky CTA
+(function(){
+  var bar=document.getElementById('stickyCta');
+  var shown=false;
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400&&!shown){bar.classList.add('visible');shown=true;}
+    else if(window.scrollY<200&&shown){bar.classList.remove('visible');shown=false;}
+  },{passive:true});
 })();
 
-// ── Sticky CTA ────────────────────────────────────────────────────────────────
-(function () {
-  var bar = document.getElementById('stickyCta');
-  var shown = false;
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 400 && !shown) { bar.classList.add('visible'); shown = true; }
-    else if (window.scrollY < 200 && shown) { bar.classList.remove('visible'); shown = false; }
-  }, { passive: true });
-})();
-
-// ── FAQ ───────────────────────────────────────────────────────────────────────
-function toggleFaq(btn) {
-  var item = btn.parentElement;
-  var content = item.querySelector('.faq-content');
-  var isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(function (el) {
-    el.classList.remove('open');
-    el.querySelector('.faq-content').style.maxHeight = '0';
+// FAQ
+function toggleFaq(btn){
+  var item=btn.parentElement;
+  var content=item.querySelector('.faq-content');
+  var isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el){
+    el.classList.remove('open');el.querySelector('.faq-content').style.maxHeight='0';
   });
-  if (!isOpen) {
-    item.classList.add('open');
-    content.style.maxHeight = content.scrollHeight + 'px';
-  }
+  if(!isOpen){item.classList.add('open');content.style.maxHeight=content.scrollHeight+'px';}
 }
 
-// ── ROI Calculator ────────────────────────────────────────────────────────────
-(function () {
-  var calcInteracted = false;
-  var resultsSeen = false;
+// Counter animation on stats
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting&&!e.target.dataset.counted){
+        e.target.dataset.counted='1';
+        animateCounter('cnt1',500,'+',2000);
+        animateCounter('cnt2',8,'',1200);
+        animateCounter('cnt3',12,'',900);
+        animateCounter('cnt4',7,'',700);
+      }
+    });
+  },{threshold:0.3});
+  var band=document.querySelector('.stats-band');
+  if(band)io.observe(band);
 
-  function fmt(n) {
-    return Math.round(n).toLocaleString('en-US');
+  function animateCounter(id,target,suffix,duration){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var start=performance.now();
+    (function step(now){
+      var p=Math.min((now-start)/duration,1);
+      var ease=1-Math.pow(1-p,3);
+      el.textContent=Math.round(ease*target)+suffix;
+      if(p<1)requestAnimationFrame(step);
+    })(start);
   }
+})();
 
-  function animateNum(el, target) {
-    var start = parseFloat(el.dataset.current || 0) || 0;
-    var diff = target - start;
-    var dur = 600;
-    var t0 = null;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      var p = Math.min((ts - t0) / dur, 1);
-      var ease = 1 - Math.pow(1 - p, 3);
-      el.dataset.current = start + diff * ease;
-      el.textContent = fmt(start + diff * ease);
-      if (p < 1) requestAnimationFrame(step);
-      else { el.dataset.current = target; el.textContent = fmt(target); }
+// Live agent ticker
+(function(){
+  var events=[
+    '→ Maintenance request: Unit 3B — HVAC filter · Austin, TX',
+    '→ Vendor dispatched: Carlos HVAC · ETA confirmed 2hr',
+    '→ Renewal sent: Tenant at 204 Oak — 90-day notice',
+    '→ Application received: Sarah Kim · Unit 5C processing',
+    '→ Emergency: Pipe burst at 18 Elm — vendor alerted',
+    '→ Owner report sent: 5 properties · Tampa, FL',
+    '→ Leasing inquiry answered: Zillow · Unit 7B tour booked',
+    '→ Renewal confirmed: Martinez family extended 12 months',
+    '→ Stale listing flagged: 302 Pine Ave — day 18 on market',
+    '→ Onboarding complete: New tenant at 101 River · docs in',
+  ];
+  var orders=12,emg=2,idx=0;
+  var tick=function(){
+    var r=Math.random();
+    if(r<0.4){orders++;var el=document.getElementById('la-orders');if(el)el.textContent=orders+' triaged';}
+    var ticker=document.getElementById('la-ticker');
+    if(ticker){ticker.textContent=events[idx%events.length];idx++;}
+  };
+  setInterval(tick,2800);
+})();
+
+// CTA tracking
+document.querySelectorAll('[data-cta]').forEach(function(el){
+  el.addEventListener('click',function(){
+    if(typeof window.UpneX!=='undefined')window.UpneX.track('cta_click',{page_name:'clients_pitch',cta_text:el.textContent.trim().slice(0,50)});
+  });
+});
+
+// ROI Calculator
+(function(){
+  var calcInteracted=false;
+  var resultsSeen=false;
+
+  function fmt(n){return Math.round(n).toLocaleString('en-US');}
+
+  function animateNum(el,target){
+    var start=parseFloat(el.dataset.current||0)||0;
+    var diff=target-start;
+    var dur=600;
+    var t0=null;
+    function step(ts){
+      if(!t0)t0=ts;
+      var p=Math.min((ts-t0)/dur,1);
+      var ease=1-Math.pow(1-p,3);
+      el.dataset.current=start+diff*ease;
+      el.textContent=fmt(start+diff*ease);
+      if(p<1)requestAnimationFrame(step);
+      else{el.dataset.current=target;el.textContent=fmt(target);}
     }
     requestAnimationFrame(step);
   }
 
-  function calcROI() {
-    var units    = parseInt(document.getElementById('calcUnits').value) || 200;
-    var maint    = parseInt(document.getElementById('calcMaint').value) || 100;
-    var apps     = parseInt(document.getElementById('calcApps').value) || 20;
-    var staff    = parseFloat(document.getElementById('calcStaff').value) || 2;
-    var rate     = parseFloat(document.getElementById('calcRate').value) || 22;
+  function calcROI(){
+    var units=parseInt(document.getElementById('calcUnits').value)||200;
+    var maint=parseInt(document.getElementById('calcMaint').value)||100;
+    var apps=parseInt(document.getElementById('calcApps').value)||20;
+    var staff=parseFloat(document.getElementById('calcStaff').value)||2;
+    var rate=parseFloat(document.getElementById('calcRate').value)||22;
 
-    // Display input values
-    document.getElementById('calcUnitsVal').textContent = fmt(units);
-    document.getElementById('calcMaintVal').textContent = fmt(maint);
-    document.getElementById('calcAppsVal').textContent = fmt(apps);
-    document.getElementById('calcStaffVal').textContent = staff % 1 === 0 ? staff : staff.toFixed(1);
-    document.getElementById('calcRateVal').textContent = Math.round(rate);
+    document.getElementById('calcUnitsVal').textContent=fmt(units);
+    document.getElementById('calcMaintVal').textContent=fmt(maint);
+    document.getElementById('calcAppsVal').textContent=fmt(apps);
+    document.getElementById('calcStaffVal').textContent=staff%1===0?staff:staff.toFixed(1);
+    document.getElementById('calcRateVal').textContent=Math.round(rate);
 
-    // UpneX per-unit pricing tier
-    var upnexPerUnit = units <= 100 ? 12 : (units <= 500 ? 10 : 8);
-    var upnexMonthly = units * upnexPerUnit;
-    var upnexAnnual = upnexMonthly * 12;
+    var upnexPerUnit=units<=100?12:(units<=500?10:8);
+    var upnexMonthly=units*upnexPerUnit;
+    var upnexAnnual=upnexMonthly*12;
+    var staffMonthly=staff*rate*40*4.33;
+    var staffAnnual=staff*rate*40*52;
+    var hoursMaint=0.5*maint;
+    var hoursApps=1.5*apps;
+    var hoursTours=0.5*Math.round(units*0.05);
+    var hoursOwner=0.5*(units/20);
+    var totalHours=hoursMaint+hoursApps+hoursTours+hoursOwner;
+    var laborValue=totalHours*rate;
+    var grossMonthlyBenefit=staffMonthly+laborValue;
+    var monthlySavings=grossMonthlyBenefit-upnexMonthly;
+    var annualSavings=monthlySavings*12;
+    var roi=upnexAnnual>0?Math.round((annualSavings/upnexAnnual)*100):0;
+    var payback=monthlySavings>0?(upnexMonthly/monthlySavings):0;
 
-    // Current staff cost
-    var staffMonthly = staff * rate * 40 * 4.33;
-    var staffAnnual = staff * rate * 40 * 52;
+    var edgeCase=document.getElementById('calcEdgeCase');
+    edgeCase.style.display=units<50?'block':'none';
 
-    // Hours freed per month
-    var hoursMaint = 0.5 * maint;
-    var hoursApps  = 1.5 * apps;
-    var hoursTours = 0.5 * Math.round(units * 0.05);
-    var hoursOwner = 0.5 * (units / 20);
-    var totalHours = hoursMaint + hoursApps + hoursTours + hoursOwner;
-    var laborValue = totalHours * rate;
+    var hoursEl=document.getElementById('calcHours');
+    var monthEl=document.getElementById('calcMonthlySavings');
+    var annEl=document.getElementById('calcAnnualSavings');
+    var roiEl=document.getElementById('calcROI');
+    var pbEl=document.getElementById('calcPayback');
+    var ccEl=document.getElementById('calcCurrentCost');
+    var ucEl=document.getElementById('calcUpnexCost');
+    var ahEl=document.getElementById('calcAnnualHours');
 
-    // Savings
-    var grossMonthlyBenefit = staffMonthly + laborValue;
-    var monthlySavings = grossMonthlyBenefit - upnexMonthly;
-    var annualSavings = monthlySavings * 12;
-    var roi = upnexAnnual > 0 ? Math.round((annualSavings / upnexAnnual) * 100) : 0;
-    var payback = monthlySavings > 0 ? (upnexMonthly / monthlySavings) : 0;
-
-    // Edge case: very small portfolio
-    var edgeCase = document.getElementById('calcEdgeCase');
-    edgeCase.classList.toggle('hidden', units >= 50);
-
-    // Update results
-    var hoursEl = document.getElementById('calcHours');
-    var monthEl = document.getElementById('calcMonthlySavings');
-    var annEl   = document.getElementById('calcAnnualSavings');
-    var roiEl   = document.getElementById('calcROI');
-    var pbEl    = document.getElementById('calcPayback');
-    var ccEl    = document.getElementById('calcCurrentCost');
-    var ucEl    = document.getElementById('calcUpnexCost');
-    var ahEl    = document.getElementById('calcAnnualHours');
-
-    // Animate numbers
-    animateNum(hoursEl, Math.round(totalHours));
-    monthEl.textContent = monthlySavings >= 0 ? '$' + fmt(monthlySavings) : '-$' + fmt(Math.abs(monthlySavings));
-    monthEl.style.color = monthlySavings >= 0 ? '#ff6b1a' : '#EF4444';
-    annEl.textContent = annualSavings >= 0 ? '$' + fmt(annualSavings) : '-$' + fmt(Math.abs(annualSavings));
-    annEl.style.color = annualSavings >= 0 ? '#ff6b1a' : '#EF4444';
-    roiEl.textContent = roi + '%';
-    pbEl.textContent = payback > 0 ? payback.toFixed(1) + ' mo' : '< 1 mo';
-    ccEl.textContent = '$' + fmt(staffAnnual);
-    ucEl.textContent = '$' + fmt(upnexAnnual);
-    ahEl.textContent = fmt(totalHours * 12) + ' hrs';
+    animateNum(hoursEl,Math.round(totalHours));
+    monthEl.textContent=monthlySavings>=0?'$'+fmt(monthlySavings):'-$'+fmt(Math.abs(monthlySavings));
+    monthEl.style.color=monthlySavings>=0?'var(--green)':'var(--coral)';
+    annEl.textContent=annualSavings>=0?'$'+fmt(annualSavings):'-$'+fmt(Math.abs(annualSavings));
+    annEl.style.color=annualSavings>=0?'var(--green)':'var(--coral)';
+    roiEl.textContent=roi+'%';
+    pbEl.textContent=payback>0?payback.toFixed(1)+' mo':'< 1 mo';
+    ccEl.textContent='$'+fmt(staffAnnual);
+    ucEl.textContent='$'+fmt(upnexAnnual);
+    ahEl.textContent=fmt(totalHours*12)+' hrs';
   }
 
-  // Bind sliders
-  ['calcUnits','calcMaint','calcApps','calcStaff','calcRate'].forEach(function (id) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('input', function () {
-      if (!calcInteracted) {
-        calcInteracted = true;
-        if (typeof window.UpneX !== 'undefined') window.UpneX.track('roi_calculator_used', { page_name: 'clients_pitch' });
+  ['calcUnits','calcMaint','calcApps','calcStaff','calcRate'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.addEventListener('input',function(){
+      if(!calcInteracted){
+        calcInteracted=true;
+        if(typeof window.UpneX!=='undefined')window.UpneX.track('roi_calculator_used',{page_name:'clients_pitch'});
       }
       calcROI();
     });
   });
 
-  // Track when results scroll into view
-  var resultsEl = document.getElementById('calcHours');
-  if (resultsEl) {
-    var io = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting && !resultsSeen) {
-        resultsSeen = true;
-        if (typeof window.UpneX !== 'undefined') window.UpneX.track('roi_result_seen', { page_name: 'clients_pitch' });
+  var resultsEl=document.getElementById('calcHours');
+  if(resultsEl){
+    new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting&&!resultsSeen){
+        resultsSeen=true;
+        if(typeof window.UpneX!=='undefined')window.UpneX.track('roi_result_seen',{page_name:'clients_pitch'});
       }
-    }, { threshold: 0.5 });
-    io.observe(resultsEl);
+    },{threshold:0.5}).observe(resultsEl);
   }
 
-  // Track CTA click from calculator
-  var ctaEl = document.getElementById('calcCTA');
-  if (ctaEl) {
-    ctaEl.addEventListener('click', function () {
-      if (typeof window.UpneX !== 'undefined') window.UpneX.track('roi_calculator_cta_click', { page_name: 'clients_pitch' });
+  var ctaEl=document.getElementById('calcCTA');
+  if(ctaEl){
+    ctaEl.addEventListener('click',function(){
+      if(typeof window.UpneX!=='undefined')window.UpneX.track('roi_calculator_cta_click',{page_name:'clients_pitch'});
     });
   }
 
-  // Initial calculation
   calcROI();
 })();
 </script>
