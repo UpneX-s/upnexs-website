@@ -219,6 +219,15 @@ h1 em { font-style:normal; color:var(--green); }
 /* SECTION SEPARATORS */
 .sep { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 
+/* FOOTER */
+footer { background:var(--bg); border-top:1px solid var(--border); padding:48px; text-align:center; }
+footer .foot-logo { font-size:26px; font-weight:800; margin-bottom:8px; }
+footer .foot-logo span { color:var(--green); }
+footer p { font-size:14px; color:var(--muted); }
+
+/* CHART */
+.chart-wrap { position:relative; width:100%; height:260px; }
+
 /* ROI CALCULATOR */
 .calc-slider { -webkit-appearance:none; appearance:none; width:100%; height:4px; background:rgba(255,255,255,0.12); border-radius:999px; outline:none; cursor:pointer; margin-top:10px; }
 .calc-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; background:var(--green); border-radius:50%; cursor:pointer; box-shadow:0 2px 8px rgba(34,197,94,0.4); border:2px solid #fff; }
@@ -235,15 +244,6 @@ h1 em { font-style:normal; color:var(--green); }
 .roi-speed-from { text-align:center; flex:1; }
 .roi-speed-arrow { font-size:22px; color:rgba(255,255,255,0.2); flex-shrink:0; }
 .roi-speed-to { text-align:center; flex:1; }
-
-/* FOOTER */
-footer { background:var(--bg); border-top:1px solid var(--border); padding:48px; text-align:center; }
-footer .foot-logo { font-size:26px; font-weight:800; margin-bottom:8px; }
-footer .foot-logo span { color:var(--green); }
-footer p { font-size:14px; color:var(--muted); }
-
-/* CHART */
-.chart-wrap { position:relative; width:100%; height:260px; }
 
 /* RESPONSIVE NAV */
 @media (max-width:900px) {
@@ -800,6 +800,7 @@ footer p { font-size:14px; color:var(--muted); }
   <div style="position:relative; padding-left:40px;">
     <div style="position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom, rgba(96,165,250,0.6), rgba(167,139,250,0.6), rgba(251,191,36,0.6), rgba(34,197,94,0.8));border-radius:2px;"></div>
 
+    <!-- Phase 1 -->
     <div style="position:relative;margin-bottom:32px;">
       <div style="position:absolute;left:-32px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--blue);border:2px solid var(--bg);"></div>
       <div style="background:var(--bg2);border:1px solid rgba(96,165,250,0.2);border-radius:16px;padding:28px 32px;">
@@ -820,6 +821,7 @@ footer p { font-size:14px; color:var(--muted); }
       </div>
     </div>
 
+    <!-- Phase 2 -->
     <div style="position:relative;margin-bottom:32px;">
       <div style="position:absolute;left:-32px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--purple);border:2px solid var(--bg);"></div>
       <div style="background:var(--bg2);border:1px solid rgba(167,139,250,0.2);border-radius:16px;padding:28px 32px;">
@@ -840,6 +842,7 @@ footer p { font-size:14px; color:var(--muted); }
       </div>
     </div>
 
+    <!-- Phase 3 -->
     <div style="position:relative;margin-bottom:32px;">
       <div style="position:absolute;left:-32px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--amber);border:2px solid var(--bg);"></div>
       <div style="background:var(--bg2);border:1px solid rgba(251,191,36,0.2);border-radius:16px;padding:28px 32px;">
@@ -860,6 +863,7 @@ footer p { font-size:14px; color:var(--muted); }
       </div>
     </div>
 
+    <!-- Phase 4 -->
     <div style="position:relative;margin-bottom:32px;">
       <div style="position:absolute;left:-32px;top:20px;width:16px;height:16px;border-radius:50%;background:var(--green);border:2px solid var(--bg);box-shadow:0 0 12px rgba(34,197,94,0.5);"></div>
       <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.3);border-radius:16px;padding:28px 32px;">
@@ -883,6 +887,7 @@ footer p { font-size:14px; color:var(--muted); }
       </div>
     </div>
 
+    <!-- Trial Review -->
     <div style="position:relative;">
       <div style="position:absolute;left:-34px;top:18px;width:20px;height:20px;border-radius:50%;background:var(--green);border:3px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;">
         <div style="width:8px;height:8px;border-radius:50%;background:#fff;"></div>
@@ -961,10 +966,9 @@ footer p { font-size:14px; color:var(--muted); }
   <div class="eyebrow">ROI Calculator</div>
   <h2>See What UpneX Saves<br><span>Your Team Every Month</span></h2>
   <div class="divider"></div>
-  <p class="lead" style="margin-bottom:40px;">Enter your current operation numbers. We'll show you time saved, dollars recovered, and how fast your team responds to leads.</p>
+  <p class="lead" style="margin-bottom:40px;">Enter your current numbers. See time saved, money recovered, and how fast your team responds to leads.</p>
 
   <div class="two-col" style="align-items:start;">
-    <!-- INPUTS -->
     <div>
       <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">Your Current Operation</div>
 
@@ -979,16 +983,7 @@ footer p { font-size:14px; color:var(--muted); }
 
       <div class="calc-input-wrap">
         <div style="display:flex;justify-content:space-between;align-items:baseline;">
-          <div class="calc-label">Staff Count (admin / leasing)</div>
-          <div class="calc-val-display"><span id="vStaff">2</span> people</div>
-        </div>
-        <input type="range" class="calc-slider" id="sStaff" min="1" max="12" step="1" value="2">
-        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>1</span><span>12</span></div>
-      </div>
-
-      <div class="calc-input-wrap">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;">
-          <div class="calc-label">Avg Staff Hourly Rate</div>
+          <div class="calc-label">Staff Cost ($/hr — admin &amp; leasing)</div>
           <div class="calc-val-display">$<span id="vRate">22</span>/hr</div>
         </div>
         <input type="range" class="calc-slider" id="sRate" min="15" max="55" step="1" value="22">
@@ -1006,7 +1001,7 @@ footer p { font-size:14px; color:var(--muted); }
 
       <div class="calc-input-wrap">
         <div style="display:flex;justify-content:space-between;align-items:baseline;">
-          <div class="calc-label">Guest Cards / Inquiries / Month</div>
+          <div class="calc-label">Guest Cards Received / Month</div>
           <div class="calc-val-display"><span id="vGuest">40</span></div>
         </div>
         <input type="range" class="calc-slider" id="sGuest" min="0" max="300" step="5" value="40">
@@ -1023,14 +1018,12 @@ footer p { font-size:14px; color:var(--muted); }
       </div>
     </div>
 
-    <!-- OUTPUTS -->
     <div>
       <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">Your Estimated Returns</div>
 
-      <!-- Speed to lead banner -->
       <div class="roi-speed-bar">
         <div class="roi-speed-from">
-          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Current Response</div>
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Current Speed to Lead</div>
           <div style="font-size:30px;font-weight:800;color:var(--coral);" id="rSpeedFrom">4 hrs</div>
           <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">avg to first reply</div>
         </div>
@@ -1042,7 +1035,6 @@ footer p { font-size:14px; color:var(--muted); }
         </div>
       </div>
 
-      <!-- 4-metric grid -->
       <div class="roi-grid-4">
         <div class="roi-result-card">
           <div class="roi-result-label">Hours Freed / Mo</div>
@@ -1062,11 +1054,10 @@ footer p { font-size:14px; color:var(--muted); }
         <div class="roi-result-card">
           <div class="roi-result-label">Lead Capture</div>
           <div class="roi-result-val" style="color:var(--amber);" id="rLeads">↑ 3×</div>
-          <div class="roi-result-sub">faster response = more closes</div>
+          <div class="roi-result-sub">faster = more closes</div>
         </div>
       </div>
 
-      <!-- Breakdown -->
       <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;">
         <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;font-weight:700;">Time Saved Breakdown</div>
         <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);">
@@ -1077,13 +1068,9 @@ footer p { font-size:14px; color:var(--muted); }
           <span>Application processing</span>
           <span style="color:#fff;font-weight:600;" id="bApps">0 hrs</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);">
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;">
           <span>Guest card follow-up &amp; scheduling</span>
           <span style="color:#fff;font-weight:600;" id="bGuest">0 hrs</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;">
-          <span>General admin &amp; coordination</span>
-          <span style="color:#fff;font-weight:600;" id="bAdmin">0 hrs</span>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;padding-top:12px;margin-top:4px;border-top:1px solid var(--border);">
           <span style="color:var(--text);">Total hours freed / month</span>
@@ -1091,7 +1078,7 @@ footer p { font-size:14px; color:var(--muted); }
         </div>
       </div>
 
-      <a href="mailto:hari@upnexs.com" class="btn-primary" style="width:100%;text-align:center;padding:16px;font-size:16px;border-radius:12px;">
+      <a href="mailto:hari@upnexs.com" class="btn-primary" style="width:100%;text-align:center;padding:16px;font-size:15px;border-radius:12px;display:block;">
         Get a Custom Quote Based on Your Numbers →
       </a>
     </div>
@@ -1244,6 +1231,7 @@ window.addEventListener('load', () => {
     '49':'UT','50':'VT','51':'VA','53':'WA','54':'WV','55':'WI','56':'WY'};
 
   const w = container.offsetWidth || 500;
+  const h = Math.round(w * 0.58);
 
   const svg = d3.select(container).append('svg')
     .attr('viewBox', '0 0 960 560')
@@ -1264,6 +1252,7 @@ window.addEventListener('load', () => {
 
   d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
     const features = topojson.feature(us, us.objects.states).features;
+
     svg.selectAll('path')
       .data(features)
       .join('path')
@@ -1334,7 +1323,7 @@ window.addEventListener('load', () => {
           label: 'After UpneX',
           data: [225, 175, 35],
           backgroundColor: ['rgba(34,197,94,0.7)', 'rgba(96,165,250,0.7)', 'rgba(251,191,36,0.7)'],
-          borderColor: ['rgba(34,197,94,1)', 'rgba(96,165,250,1)', 'rgba(251,191,6,1)'],
+          borderColor: ['rgba(34,197,94,1)', 'rgba(96,165,250,1)', 'rgba(251,191,36,1)'],
           borderWidth: 1,
           borderRadius: 6
         }
@@ -1378,12 +1367,7 @@ window.addEventListener('load', () => {
 /* ROI CALCULATOR */
 (function() {
   function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
-
-  function fmtHrs(h) {
-    const r = Math.round(h);
-    return r + ' hr' + (r !== 1 ? 's' : '');
-  }
-
+  function fmtHrs(h) { const r = Math.round(h); return r + ' hr' + (r !== 1 ? 's' : ''); }
   function fmtSpeed(hrs) {
     if (hrs < 1) return Math.round(hrs * 60) + ' min';
     if (hrs === 1) return '1 hr';
@@ -1391,35 +1375,27 @@ window.addEventListener('load', () => {
   }
 
   function calc() {
-    const maint  = parseInt(document.getElementById('sMaint').value);
-    const staff  = parseInt(document.getElementById('sStaff').value);
-    const rate   = parseFloat(document.getElementById('sRate').value);
-    const apps   = parseInt(document.getElementById('sApps').value);
-    const guest  = parseInt(document.getElementById('sGuest').value);
-    const speed  = parseFloat(document.getElementById('sSpeed').value);
+    const maint = parseInt(document.getElementById('sMaint').value);
+    const rate  = parseFloat(document.getElementById('sRate').value);
+    const apps  = parseInt(document.getElementById('sApps').value);
+    const guest = parseInt(document.getElementById('sGuest').value);
+    const speed = parseFloat(document.getElementById('sSpeed').value);
 
-    // update display values
     document.getElementById('vMaint').textContent = maint;
-    document.getElementById('vStaff').textContent = staff;
     document.getElementById('vRate').textContent  = Math.round(rate);
     document.getElementById('vApps').textContent  = apps;
     document.getElementById('vGuest').textContent = guest;
     document.getElementById('vSpeed').textContent = speed % 1 === 0 ? speed : speed.toFixed(1);
 
-    // time saved estimates (hrs/month)
-    const tMaint = maint * 0.45;       // 27 min avg per request (triage + vendor + update)
-    const tApps  = apps  * 0.75;       // 45 min per application
-    const tGuest = guest * 0.35;       // 21 min per guest card follow-up + scheduling
-    const tAdmin = staff * 8;          // 8 hrs/month general admin per staff member freed
-    const tTotal = tMaint + tApps + tGuest + tAdmin;
+    const tMaint = maint * 0.45;
+    const tApps  = apps  * 0.75;
+    const tGuest = guest * 0.35;
+    const tTotal = tMaint + tApps + tGuest;
 
     const monthlySavings = tTotal * rate;
     const annualSavings  = monthlySavings * 12;
-
-    // lead capture multiplier based on speed improvement
     const leadMulti = speed >= 4 ? '3×' : speed >= 2 ? '2×' : '1.5×';
 
-    // speed display
     document.getElementById('rSpeedFrom').textContent = fmtSpeed(speed);
     document.getElementById('rHours').textContent     = fmt(tTotal);
     document.getElementById('rMonthly').textContent   = '$' + fmt(monthlySavings);
@@ -1429,14 +1405,12 @@ window.addEventListener('load', () => {
     document.getElementById('bMaint').textContent = fmtHrs(tMaint);
     document.getElementById('bApps').textContent  = fmtHrs(tApps);
     document.getElementById('bGuest').textContent = fmtHrs(tGuest);
-    document.getElementById('bAdmin').textContent = fmtHrs(tAdmin);
     document.getElementById('bTotal').textContent = fmtHrs(tTotal);
   }
 
-  ['sMaint','sStaff','sRate','sApps','sGuest','sSpeed'].forEach(id => {
+  ['sMaint','sRate','sApps','sGuest','sSpeed'].forEach(id => {
     document.getElementById(id).addEventListener('input', calc);
   });
-
   calc();
 })();
 </script>
