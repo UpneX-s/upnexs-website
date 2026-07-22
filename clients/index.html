@@ -3,284 +3,265 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>UpneX — AI Operations for Property Managers</title>
-<meta name="description" content="UpneX builds AI employees for property management companies. Maintenance, leasing, tenant comms, renewals — all automated inside your existing PMS. See ROI in minutes.">
-
-
+<title>UpneX — AI-Powered Property Operations</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --green:#22c55e;
-  --green-dim:rgba(34,197,94,0.12);
-  --green-border:rgba(34,197,94,0.25);
-  --blue:#60a5fa;
-  --amber:#fbbf24;
-  --purple:#a78bfa;
-  --coral:#f87171;
-  --bg:#07070f;
-  --bg2:#0d0d1e;
-  --bg3:#111128;
-  --text:rgba(255,255,255,0.88);
-  --muted:rgba(255,255,255,0.45);
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.12);
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --green-border: rgba(34,197,94,0.25);
+  --blue: #60a5fa;
+  --amber: #fbbf24;
+  --purple: #a78bfa;
+  --coral: #f87171;
+  --bg: #07070f;
+  --bg2: #0d0d1e;
+  --bg3: #111128;
+  --text: rgba(255,255,255,0.88);
+  --muted: rgba(255,255,255,0.45);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
 }
-html{scroll-behavior:smooth;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:999;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(7,7,15,0.85);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:60px;}
-.nav-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:#fff;text-decoration:none;}
-.nav-logo span{color:var(--green);}
-.nav-links{display:flex;gap:28px;}
-.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
-.nav-links a:hover{color:#fff;}
-.nav-cta{background:var(--green);color:#000;font-size:13px;font-weight:700;padding:8px 20px;border-radius:8px;text-decoration:none;transition:opacity 0.2s;white-space:nowrap;}
-.nav-cta:hover{opacity:0.85;}
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  background: rgba(7,7,15,0.8);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 60px;
+}
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+.nav-logo span { color: var(--green); }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { background: var(--green); color: #000; font-size: 13px; font-weight: 700; padding: 8px 20px; border-radius: 8px; text-decoration: none; transition: opacity 0.2s; }
+.nav-cta:hover { opacity: 0.85; }
 
-/* LAYOUT */
-section{padding:100px 48px;max-width:1200px;margin:0 auto;}
-.sep{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.sep section{max-width:1200px;margin:0 auto;}
+/* SECTIONS */
+section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+.section-full { padding: 100px 48px; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
 
-/* TYPOGRAPHY */
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:14px;display:block;}
-.eyebrow.blue{color:var(--blue);}
-.eyebrow.amber{color:var(--amber);}
-.eyebrow.purple{color:var(--purple);}
-.eyebrow.coral{color:var(--coral);}
-h1{font-size:clamp(40px,5.5vw,72px);font-weight:800;line-height:1.04;letter-spacing:-2.5px;}
-h2{font-size:clamp(30px,4vw,48px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;}
-h2 span,h2 em{color:var(--green);font-style:normal;}
-h3{font-size:20px;font-weight:600;line-height:1.3;color:#fff;}
-.lead{font-size:18px;color:var(--muted);line-height:1.7;}
-.divider{width:40px;height:3px;background:var(--green);border-radius:2px;margin:18px 0 30px;}
-.divider.blue{background:var(--blue);}
-.divider.amber{background:var(--amber);}
-.divider.purple{background:var(--purple);}
-
-/* BUTTONS */
-.btn-primary{background:var(--green);color:#000;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;transition:opacity 0.2s;display:inline-flex;align-items:center;gap:8px;}
-.btn-primary:hover{opacity:0.85;}
-.btn-primary.lg{padding:16px 34px;font-size:16px;border-radius:12px;}
-.btn-ghost{border:1px solid var(--border2);color:#fff;font-weight:600;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
-.btn-ghost:hover{border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.05);}
-.btn-ghost.lg{padding:16px 34px;font-size:16px;border-radius:12px;}
-.btn-full{width:100%;justify-content:center;margin-top:24px;}
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
+.eyebrow.blue { color: var(--blue); }
+.eyebrow.amber { color: var(--amber); }
+.eyebrow.purple { color: var(--purple); }
+.eyebrow.coral { color: var(--coral); }
+h1 { font-size: 72px; font-weight: 800; line-height: 1.02; letter-spacing: -2.5px; }
+h2 { font-size: 48px; font-weight: 700; line-height: 1.08; letter-spacing: -1.5px; }
+h2 span { color: var(--green); }
+h3 { font-size: 22px; font-weight: 600; line-height: 1.3; }
+.lead { font-size: 19px; color: var(--muted); line-height: 1.65; }
+.divider { width: 40px; height: 3px; background: var(--green); border-radius: 2px; margin: 20px 0 32px; }
+.divider.blue { background: var(--blue); }
+.divider.amber { background: var(--amber); }
+.divider.purple { background: var(--purple); }
 
 /* HERO */
-.hero-section{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
-.hero-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(34,197,94,0.06) 0%,transparent 70%);pointer-events:none;}
-.hero-section::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(96,165,250,0.04) 0%,transparent 70%);pointer-events:none;}
-.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:24px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--green);margin-bottom:24px;}
-.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse-dot 2s infinite;}
-@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(1.3);}}
-.hero-sub{font-size:18px;color:var(--muted);line-height:1.7;margin:20px 0 36px;max-width:520px;}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
-.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;}
-.tag{display:inline-block;padding:5px 13px;border-radius:20px;font-size:12px;font-weight:600;}
-.tag.g{background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.25);}
-.tag.b{background:rgba(96,165,250,0.12);color:var(--blue);border:1px solid rgba(96,165,250,0.25);}
-.tag.a{background:rgba(251,191,36,0.12);color:var(--amber);border:1px solid rgba(251,191,36,0.25);}
-.tag.p{background:rgba(167,139,250,0.12);color:var(--purple);border:1px solid rgba(167,139,250,0.25);}
+.hero-section { min-height: 100vh; display: flex; align-items: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
+.hero-section::before { content:''; position:absolute; top:-200px; right:-200px; width:700px; height:700px; background:radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 70%); pointer-events:none; }
+.hero-section::after { content:''; position:absolute; bottom:-100px; left:-100px; width:500px; height:500px; background:radial-gradient(circle, rgba(96,165,250,0.04) 0%, transparent 70%); pointer-events:none; }
+.hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); border-radius:24px; padding:6px 16px; font-size:12px; font-weight:600; color:var(--green); margin-bottom:24px; }
+.hero-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.3);} }
+h1 em { font-style:normal; color:var(--green); }
+.hero-sub { font-size:18px; color:var(--muted); line-height:1.7; margin:20px 0 36px; max-width:520px; }
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-primary { background:var(--green); color:#000; font-weight:700; font-size:15px; padding:14px 28px; border-radius:10px; text-decoration:none; transition:opacity 0.2s; display:inline-block; }
+.btn-primary:hover { opacity:0.85; }
+.btn-ghost { border:1px solid var(--border2); color:#fff; font-weight:600; font-size:15px; padding:14px 28px; border-radius:10px; text-decoration:none; transition:all 0.2s; display:inline-block; }
+.btn-ghost:hover { border-color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.05); }
+.hero-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:28px; }
+.tag { display:inline-block; padding:5px 13px; border-radius:20px; font-size:12px; font-weight:600; }
+.tag.g { background:rgba(34,197,94,0.12); color:var(--green); border:1px solid rgba(34,197,94,0.25); }
+.tag.b { background:rgba(96,165,250,0.12); color:var(--blue); border:1px solid rgba(96,165,250,0.25); }
+.tag.a { background:rgba(251,191,36,0.12); color:var(--amber); border:1px solid rgba(251,191,36,0.25); }
+.tag.p { background:rgba(167,139,250,0.12); color:var(--purple); border:1px solid rgba(167,139,250,0.25); }
+.tag.r { background:rgba(248,113,113,0.12); color:var(--coral); border:1px solid rgba(248,113,113,0.25); }
 
 /* HERO VISUAL */
-.hero-visual{display:flex;flex-direction:column;gap:14px;}
-.hv-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:20px;}
-.hv-card.accent{border-color:rgba(34,197,94,0.25);}
-.hv-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;}
-.hv-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted);}
-.hv-row:last-child{border-bottom:none;}
-.hv-row .val{font-weight:600;color:var(--green);}
-.hv-row .val.b{color:var(--blue);}
-.hv-row .val.a{color:var(--amber);}
-.hv-row .val.red{color:var(--coral);}
-.hv-status{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;}
-.hv-status.pass{background:rgba(34,197,94,0.15);color:var(--green);}
-.hv-status.live{background:rgba(96,165,250,0.15);color:var(--blue);}
+.hero-visual { display:flex; flex-direction:column; gap:14px; }
+.hv-card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:20px; }
+.hv-card.accent { border-color:rgba(34,197,94,0.25); }
+.hv-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:12px; }
+.hv-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px; }
+.hv-row:last-child { border-bottom:none; }
+.hv-row .val { font-weight:600; color:var(--green); }
+.hv-row .val.b { color:var(--blue); }
+.hv-row .val.a { color:var(--amber); }
+.hv-status { display:inline-block; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700; }
+.hv-status.pass { background:rgba(34,197,94,0.15); color:var(--green); }
+.hv-status.live { background:rgba(96,165,250,0.15); color:var(--blue); animation:pulse 2s infinite; }
+.hv-status.warn { background:rgba(251,191,36,0.15); color:var(--amber); }
 
 /* STATS BAND */
-.stats-band{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 48px;}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
-.stat-item{text-align:center;padding:0 24px;border-right:1px solid var(--border);}
-.stat-item:last-child{border-right:none;}
-.stat-num{font-size:52px;font-weight:800;line-height:1;letter-spacing:-2px;}
-.stat-num.g{color:var(--green);}
-.stat-num.b{color:var(--blue);}
-.stat-num.a{color:var(--amber);}
-.stat-num.p{color:var(--purple);}
-.stat-label{font-size:14px;color:var(--muted);margin-top:8px;}
+.stats-band { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:60px 48px; }
+.stats-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+.stat-item { text-align:center; padding:0 24px; border-right:1px solid var(--border); }
+.stat-item:last-child { border-right:none; }
+.stat-num { font-size:54px; font-weight:800; line-height:1; letter-spacing:-2px; }
+.stat-num.g { color:var(--green); }
+.stat-num.b { color:var(--blue); }
+.stat-num.a { color:var(--amber); }
+.stat-num.p { color:var(--purple); }
+.stat-label { font-size:14px; color:var(--muted); margin-top:8px; }
 
-/* CARDS */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color 0.2s;}
-.card:hover{border-color:var(--border2);}
-.card.green-hl{border-color:var(--green-border);background:rgba(34,197,94,0.04);}
-.card.blue-hl{border-color:rgba(96,165,250,0.25);background:rgba(96,165,250,0.04);}
-.card.amber-hl{border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.04);}
-.card-icon{font-size:28px;margin-bottom:16px;}
-.card p{font-size:15px;color:var(--muted);line-height:1.65;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
-.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+/* CARDS GRID */
+.card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:28px; transition:border-color 0.2s; }
+.card:hover { border-color:var(--border2); }
+.card.green-hl { border-color:var(--green-border); background:rgba(34,197,94,0.04); }
+.card.blue-hl { border-color:rgba(96,165,250,0.25); background:rgba(96,165,250,0.04); }
+.card.amber-hl { border-color:rgba(251,191,36,0.25); background:rgba(251,191,36,0.04); }
+.card.purple-hl { border-color:rgba(167,139,250,0.25); background:rgba(167,139,250,0.04); }
+.card-icon { font-size:28px; margin-bottom:16px; }
+.card h3 { margin-bottom:10px; }
+.card p { font-size:15px; color:var(--muted); line-height:1.65; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+.three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
 
-/* CHECK LISTS */
-.check-list{list-style:none;}
-.check-list li{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:15px;color:var(--muted);align-items:flex-start;}
-.check-list li:last-child{border-bottom:none;}
-.check-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;font-size:14px;margin-top:1px;}
-.check-list li.x::before{content:'✗';color:var(--coral);}
-.check-list li.w{color:var(--text);}
+/* GROWTH CARD */
+.growth-card { background:var(--bg2); border:1px solid var(--border); border-radius:20px; padding:32px; position:relative; overflow:hidden; }
+.growth-card::after { content:''; position:absolute; top:-60px; right:-60px; width:180px; height:180px; border-radius:50%; opacity:0.08; }
+.growth-card.gc-green::after { background:var(--green); }
+.growth-card.gc-blue::after { background:var(--blue); }
+.growth-card.gc-amber::after { background:var(--amber); }
+.gc-from { font-size:32px; font-weight:700; color:rgba(255,255,255,0.25); }
+.gc-arrow { font-size:20px; color:rgba(255,255,255,0.2); margin:0 10px; }
+.gc-to { font-size:48px; font-weight:800; }
+.gc-to.g { color:var(--green); }
+.gc-to.b { color:var(--blue); }
+.gc-to.a { color:var(--amber); }
+.gc-badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; margin-top:10px; margin-bottom:14px; }
+.gc-badge.g { background:rgba(34,197,94,0.15); color:var(--green); }
+.gc-badge.b { background:rgba(96,165,250,0.15); color:var(--blue); }
+.gc-badge.a { background:rgba(251,191,36,0.15); color:var(--amber); }
 
-/* COMPARISON TABLE */
-.comp-table{width:100%;border-collapse:collapse;}
-.comp-table th{padding:14px 20px;font-size:11px;font-weight:700;text-align:center;background:rgba(255,255,255,0.03);color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;border-bottom:1px solid var(--border);}
-.comp-table th:first-child{text-align:left;}
-.comp-table th.hl{background:rgba(34,197,94,0.1);color:var(--green);}
-.comp-table td{padding:13px 20px;font-size:14px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted);}
-.comp-table td:first-child{text-align:left;font-weight:500;color:var(--text);}
-.comp-table td.hl{background:rgba(34,197,94,0.05);color:#fff;font-weight:600;}
-.comp-check{color:var(--green);}
-.comp-x{color:var(--coral);}
+/* VS SECTION */
+.vs-wrap { display:grid; grid-template-columns:1fr auto 1fr; gap:24px; align-items:stretch; }
+.vs-label { display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:900; color:rgba(255,255,255,0.15); }
+.check-list { list-style:none; }
+.check-list li { display:flex; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); font-size:15px; color:var(--muted); align-items:flex-start; }
+.check-list li:last-child { border-bottom:none; }
+.check-list li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; font-size:14px; margin-top:1px; }
+.check-list li.x::before { content:'✗'; color:var(--coral); }
+.check-list li.w { color:var(--text); }
 
-/* AGENT CARDS */
-.agents-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-.agent-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all 0.2s;}
-.agent-card:hover{border-color:rgba(34,197,94,0.35);background:rgba(34,197,94,0.04);transform:translateY(-2px);}
-.agent-icon{font-size:24px;margin-bottom:12px;}
-.agent-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;}
-.agent-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:12px;}
-.agent-tasks{padding-top:12px;border-top:1px solid var(--border);}
-.agent-task{display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:12px;color:var(--muted);}
-.agent-task::before{content:'✓';color:var(--green);font-size:11px;flex-shrink:0;margin-top:2px;}
+/* PAIN POINTS GRID */
+.pain-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.pain-item { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:24px; cursor:pointer; transition:all 0.2s; }
+.pain-item:hover { border-color:rgba(34,197,94,0.35); background:rgba(34,197,94,0.04); transform:translateY(-2px); }
+.pain-item.sel { border-color:rgba(34,197,94,0.5); background:rgba(34,197,94,0.08); }
+.pi-icon { font-size:24px; margin-bottom:12px; }
+.pi-title { font-size:15px; font-weight:600; color:#fff; margin-bottom:6px; }
+.pi-body { font-size:13px; color:var(--muted); line-height:1.55; }
+
+/* DEMO MOCKUP */
+.mockup-shell { background:var(--bg3); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+.mockup-bar { background:rgba(255,255,255,0.04); padding:12px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+.mock-dot { width:10px; height:10px; border-radius:50%; }
+.mockup-content { padding:24px; }
+.mf-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:6px; }
+.mf-val { font-size:14px; color:var(--text); background:rgba(255,255,255,0.04); padding:10px 14px; border-radius:8px; border:1px solid var(--border); }
+.score-ring { width:90px; height:90px; position:relative; display:flex; align-items:center; justify-content:center; }
+.score-text { font-size:26px; font-weight:800; color:var(--green); }
+.score-sub { font-size:10px; color:var(--muted); }
 
 /* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:920px;margin:0 auto;}
-.pricing-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;transition:all 0.3s;}
-.pricing-card.featured{border-color:var(--green-border);background:rgba(34,197,94,0.04);}
-.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;font-size:10px;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;}
-.price-tier{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:12px;}
-.pricing-card.featured .price-tier{color:var(--green);}
-.price-num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-2px;}
-.price-num.g{color:var(--green);}
-.price-num.w{color:#fff;}
-.price-per{font-size:14px;color:var(--muted);margin:6px 0 24px;}
-.price-features{border-top:1px solid var(--border);padding-top:20px;}
-.price-feat{display:flex;align-items:flex-start;gap:10px;padding:7px 0;font-size:14px;color:var(--muted);}
-.price-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
-.price-feat.off{color:rgba(255,255,255,0.2);}
-.price-feat.off::before{content:'—';color:rgba(255,255,255,0.15);}
+.pricing-hero { text-align:center; background:rgba(34,197,94,0.05); border:2px solid rgba(34,197,94,0.25); border-radius:24px; padding:48px; }
+.price-num { font-size:80px; font-weight:800; line-height:1; color:var(--green); letter-spacing:-3px; }
+.price-per { font-size:20px; color:var(--muted); margin-bottom:20px; }
+.price-table { width:100%; border-collapse:collapse; }
+.price-table th { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); }
+.price-table td { padding:13px 16px; font-size:14px; color:var(--muted); border-bottom:1px solid rgba(255,255,255,0.04); }
+.price-table tr.hl td { background:rgba(34,197,94,0.07); color:#fff; font-weight:600; }
+.price-table tr.hl td:first-child { border-left:3px solid var(--green); }
+
+/* TIMELINE */
+.tl-phase { display:grid; grid-template-columns:160px 1fr 1fr; border-radius:14px; overflow:hidden; border:1px solid var(--border); margin-bottom:14px; }
+.tl-phase.live-phase { border-color:rgba(34,197,94,0.3); background:rgba(34,197,94,0.03); }
+.tl-label { padding:20px; background:rgba(255,255,255,0.03); border-right:1px solid var(--border); }
+.tl-col { padding:20px 24px; border-right:1px solid var(--border); }
+.tl-col:last-child { border-right:none; }
+.tl-phase-name { font-size:15px; font-weight:700; }
+.tl-phase-days { font-size:12px; color:var(--muted); margin-top:4px; }
+.tl-col-head { font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:8px; font-weight:700; }
+.tl-col-body { font-size:13px; color:var(--muted); line-height:1.65; }
+
+/* FUTURE SCOPE TABLE */
+.unit-table { width:100%; border-collapse:collapse; }
+.unit-table th { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); }
+.unit-table td { padding:12px 16px; font-size:14px; color:var(--muted); border-bottom:1px solid rgba(255,255,255,0.04); }
+.unit-table tr.hl-row td { background:rgba(167,139,250,0.07); color:#fff; font-weight:600; }
+
+/* NEXT STEPS */
+.step-flow { display:flex; gap:0; align-items:flex-start; }
+.step-box { flex:1; text-align:center; position:relative; padding:0 12px; }
+.step-num { width:44px; height:44px; border-radius:50%; border:2px solid var(--green); color:var(--green); font-weight:700; font-size:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; background:rgba(34,197,94,0.08); }
+.step-title { font-size:15px; font-weight:700; color:#fff; margin-bottom:8px; }
+.step-desc { font-size:13px; color:var(--muted); line-height:1.55; }
+.step-arrow { font-size:18px; color:rgba(255,255,255,0.15); padding-top:12px; flex-shrink:0; }
+
+/* PILOT HIGHLIGHT */
+.pilot-box { background:rgba(34,197,94,0.06); border:2px solid rgba(34,197,94,0.25); border-radius:20px; padding:36px; text-align:center; }
+
+/* TRANSPARENCY QUOTE */
+.big-quote { font-size:21px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.6; border-left:4px solid var(--amber); padding-left:24px; font-style:italic; }
+
+/* SECTION SEPARATORS */
+.sep { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
 
 /* ROI CALCULATOR */
-.calc-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:48px;position:relative;overflow:hidden;}
-.calc-wrap::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(34,197,94,0.08) 0%,transparent 70%);pointer-events:none;}
-.calc-wrap::after{content:'';position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(96,165,250,0.06) 0%,transparent 70%);pointer-events:none;}
-.calc-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:48px;}
-.calc-input-wrap{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:14px;}
-.calc-label{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:1px;}
-.calc-value{font-size:22px;font-weight:700;color:#fff;}
-.calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,255,255,0.12);border-radius:999px;outline:none;cursor:pointer;margin-top:10px;}
-.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--green);border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(34,197,94,0.5);border:2px solid #fff;}
-.calc-slider::-moz-range-thumb{width:20px;height:20px;background:var(--green);border-radius:50%;cursor:pointer;border:2px solid #fff;}
-.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-.result-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;transition:all 0.4s;}
-.result-card:hover{background:rgba(255,255,255,0.07);}
-.result-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;font-weight:600;}
-.result-val{font-size:28px;font-weight:800;line-height:1;color:var(--green);}
-.result-val.b{color:var(--blue);}
-.result-val.w{color:#fff;}
-.result-sub{font-size:11px;color:rgba(255,255,255,0.3);margin-top:5px;}
-.calc-breakdown{padding:16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;}
-.calc-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:5px 0;}
-.calc-row.total{border-top:1px solid var(--border);padding-top:10px;margin-top:5px;color:var(--text);font-weight:600;}
-
-/* INCLUDED LIST */
-.included-list{list-style:none;}
-.included-item{display:flex;align-items:flex-start;gap:12px;padding:13px 0;font-size:15px;color:var(--muted);line-height:1.5;border-bottom:1px solid var(--border);}
-.included-item:last-child{border-bottom:none;}
-.included-item::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:2px;}
-
-/* COST OF DOING NOTHING */
-.codn-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;overflow:hidden;}
-.codn-card::after{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;opacity:0.1;}
-.codn-card:nth-child(1)::after{background:var(--coral);}
-.codn-card:nth-child(2)::after{background:var(--amber);}
-.codn-card:nth-child(3)::after{background:var(--purple);}
-.codn-num{font-size:48px;font-weight:800;line-height:1;letter-spacing:-2px;}
-.codn-num.coral{color:var(--coral);}
-.codn-num.amber{color:var(--amber);}
-.codn-num.purple{color:var(--purple);}
-
-/* GROWTH CARDS */
-.growth-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;position:relative;overflow:hidden;}
-.growth-card::after{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;opacity:0.08;}
-.growth-card.gc-green::after{background:var(--green);}
-.growth-card.gc-blue::after{background:var(--blue);}
-.growth-card.gc-amber::after{background:var(--amber);}
-.gc-from{font-size:28px;font-weight:700;color:rgba(255,255,255,0.25);}
-.gc-arrow{font-size:18px;color:rgba(255,255,255,0.2);margin:0 8px;}
-.gc-to{font-size:44px;font-weight:800;}
-.gc-to.g{color:var(--green);}
-.gc-to.b{color:var(--blue);}
-.gc-to.a{color:var(--amber);}
-.gc-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:8px 0 12px;}
-.gc-badge.g{background:rgba(34,197,94,0.15);color:var(--green);}
-.gc-badge.b{background:rgba(96,165,250,0.15);color:var(--blue);}
-.gc-badge.a{background:rgba(251,191,36,0.15);color:var(--amber);}
-
-/* PILOT BOX */
-.pilot-box{background:rgba(34,197,94,0.06);border:2px solid rgba(34,197,94,0.25);border-radius:20px;padding:32px;text-align:center;}
-
-/* FAQ */
-.faq-item{border-bottom:1px solid var(--border);}
-.faq-item:first-child{border-top:1px solid var(--border);}
-.faq-trigger{width:100%;text-align:left;padding:22px 0;display:flex;justify-content:space-between;align-items:center;font-size:17px;font-weight:600;color:#fff;cursor:pointer;background:transparent;border:none;font-family:inherit;}
-.faq-trigger:hover{color:var(--green);}
-.faq-icon{width:22px;height:22px;flex-shrink:0;transition:transform 0.3s;color:var(--muted);}
-.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--green);}
-.faq-content{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
-.faq-body{padding:0 0 22px;color:var(--muted);line-height:1.7;font-size:15.5px;max-width:52em;}
-
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
-.reveal.visible{opacity:1;transform:translateY(0);}
-.reveal-d1{transition-delay:0.1s;}
-.reveal-d2{transition-delay:0.2s;}
-.reveal-d3{transition-delay:0.3s;}
-
-/* STICKY CTA */
-.sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:60;padding:12px 16px;background:rgba(7,7,15,0.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}
-.sticky-cta.visible{transform:translateY(0);}
+.calc-slider { -webkit-appearance:none; appearance:none; width:100%; height:4px; background:rgba(255,255,255,0.12); border-radius:999px; outline:none; cursor:pointer; margin-top:10px; }
+.calc-slider::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; background:var(--green); border-radius:50%; cursor:pointer; box-shadow:0 2px 8px rgba(34,197,94,0.4); border:2px solid #fff; }
+.calc-slider::-moz-range-thumb { width:18px; height:18px; background:var(--green); border-radius:50%; cursor:pointer; border:2px solid #fff; }
+.calc-input-wrap { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:16px 20px; margin-bottom:12px; }
+.calc-label { font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+.calc-val-display { font-size:20px; font-weight:700; color:#fff; }
+.roi-result-card { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:22px; text-align:center; }
+.roi-result-label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; font-weight:700; }
+.roi-result-val { font-size:34px; font-weight:800; line-height:1; }
+.roi-result-sub { font-size:12px; color:rgba(255,255,255,0.3); margin-top:6px; }
+.roi-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:12px; }
+.roi-speed-bar { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:14px; padding:22px; margin-bottom:12px; }
+.roi-speed-from { text-align:center; flex:1; }
+.roi-speed-arrow { font-size:22px; color:rgba(255,255,255,0.2); flex-shrink:0; }
+.roi-speed-to { text-align:center; flex:1; }
 
 /* FOOTER */
-footer{background:var(--bg);border-top:1px solid var(--border);padding:48px;text-align:center;}
-.foot-logo{font-size:22px;font-weight:800;margin-bottom:8px;}
-.foot-logo span{color:var(--green);}
-.foot-links{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;margin:16px 0;}
-.foot-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.15s;}
-.foot-links a:hover{color:#fff;}
+footer { background:var(--bg); border-top:1px solid var(--border); padding:48px; text-align:center; }
+footer .foot-logo { font-size:26px; font-weight:800; margin-bottom:8px; }
+footer .foot-logo span { color:var(--green); }
+footer p { font-size:14px; color:var(--muted); }
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  nav{padding:0 20px;}
-  .nav-links{display:none;}
-  h1{font-size:38px;letter-spacing:-1.5px;}
-  h2{font-size:28px;}
-  .hero-section{padding:100px 20px 60px;}
-  .hero-inner{grid-template-columns:1fr;}
-  .hero-visual{display:none;}
-  .stats-inner{grid-template-columns:1fr 1fr;}
-  .stat-item{border-right:none;border-bottom:1px solid var(--border);padding:16px;}
-  section{padding:60px 20px;}
-  .two-col,.three-col,.pricing-grid,.agents-grid{grid-template-columns:1fr;}
-  .comp-table th,.comp-table td{padding:10px 12px;font-size:12px;}
-  .stats-band{padding:40px 20px;}
-  .calc-inner{grid-template-columns:1fr;}
-  .calc-wrap{padding:28px 20px;}
-  .result-grid{grid-template-columns:1fr 1fr;}
-  footer{padding:32px 20px;}
+/* CHART */
+.chart-wrap { position:relative; width:100%; height:260px; }
+
+/* RESPONSIVE NAV */
+@media (max-width:900px) {
+  nav { padding:0 24px; }
+  .nav-links { display:none; }
+  h1 { font-size:48px; }
+  h2 { font-size:36px; }
+  .hero-inner { grid-template-columns:1fr; }
+  .stats-inner { grid-template-columns:1fr 1fr; gap:24px; }
+  .stat-item { border-right:none; border-bottom:1px solid var(--border); padding:16px; }
+  section { padding:60px 24px; }
+  .two-col,.three-col,.pain-grid { grid-template-columns:1fr; }
+  .vs-wrap { grid-template-columns:1fr; }
+  .vs-label { display:none; }
+  .tl-phase { grid-template-columns:1fr; }
+  .step-flow { flex-direction:column; gap:20px; }
+  .step-arrow { transform:rotate(90deg); margin:0 auto; }
+  .roi-grid-4 { grid-template-columns:1fr 1fr; }
 }
 </style>
 </head>
@@ -288,37 +269,32 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px;text
 
 <!-- NAV -->
 <nav>
-  <a href="/ai/" class="nav-logo">Up<span>Ne</span>X</a>
+  <div class="nav-logo">Up<span>Ne</span>X</div>
   <div class="nav-links">
-    <a href="#what-is-upnex">What We Do</a>
-    <a href="#agents">AI Employees</a>
+    <a href="#about">About</a>
+    <a href="#results">Results</a>
+    <a href="#difference">Our Approach</a>
+    <a href="#demo">Demo</a>
     <a href="#pricing">Pricing</a>
-    <a href="#roi">ROI Calculator</a>
-    <a href="#faq">FAQ</a>
+    <a href="#next">Next Steps</a>
   </div>
-  <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="nav-cta" data-cta>Book Free Audit</a>
+  <a href="#next" class="nav-cta">Start Free Pilot →</a>
 </nav>
 
-<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════ HERO -->
 <div class="hero-section">
   <div class="hero-inner">
     <div>
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        AI Operations for Property Managers
-      </div>
-      <h1>Your Admin Team Spends 40 Hours a Week on Work<br><em>AI Handles in Minutes.</em></h1>
-      <p class="hero-sub">UpneX builds AI employees that handle maintenance routing, lease renewals, tenant screening, and owner communications — inside your existing AppFolio, Buildium, or Rent Manager. No new software. No new hires.</p>
+      <div class="hero-badge"><div class="hero-badge-dot"></div>Fully Managed AI Operations</div>
+      <h1>Property Management,<br><em>Run by AI.</em></h1>
+      <p class="hero-sub">We don't sell software. We build and run custom AI agents that handle your property operations 24/7 — at a fraction of what any alternative costs.</p>
       <div class="hero-actions">
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary lg" data-cta>
-          Book Your Free AI Operations Audit
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </a>
-        <a href="#roi" class="btn-ghost lg">See your ROI →</a>
+        <a href="#demo" class="btn-primary">See a Live Demo</a>
+        <a href="#pricing" class="btn-ghost">View Pricing</a>
       </div>
       <div class="hero-tags">
-        <div class="tag g">500+ Units Managed</div>
-        <div class="tag b">8 AI Employees</div>
+        <div class="tag g">3,500+ Units Managed</div>
+        <div class="tag b">45 Custom Agents Built</div>
         <div class="tag a">12 States</div>
         <div class="tag g">7 Yrs PM Experience</div>
       </div>
@@ -326,76 +302,87 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px;text
     <div class="hero-visual">
       <div class="hv-card accent" style="position:relative;overflow:hidden;">
         <div style="position:absolute;top:12px;right:14px;display:flex;align-items:center;gap:6px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:20px;padding:4px 10px;">
-          <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse-dot 1.2s infinite;"></span>
+          <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block;animation:pulse 1.2s infinite;"></span>
           <span style="font-size:11px;font-weight:700;color:#22c55e;letter-spacing:0.5px;">LIVE</span>
         </div>
-        <div class="hv-title">Maintenance Triage Agent</div>
-        <div class="hv-row"><span>Work Orders Today</span><span class="val" id="la-orders">12 triaged</span></div>
-        <div class="hv-row"><span>Emergency Flagged</span><span class="val red" id="la-emg">2 dispatched</span></div>
-        <div class="hv-row"><span>Vendors Notified</span><span class="hv-status pass">AUTO</span></div>
-        <div class="hv-row"><span>Tenants Updated</span><span class="hv-status pass">AUTO</span></div>
-        <div class="hv-row"><span>Avg Response Time</span><span class="val b">&lt; 4 min</span></div>
-        <div id="la-ticker" style="margin-top:12px;font-size:11px;color:rgba(34,197,94,0.65);min-height:16px;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px;font-style:italic;"></div>
+        <div class="hv-title">Owner Acquisition Agent</div>
+        <div class="hv-row"><span>Leads Found Today</span><span class="val" id="la-leads">0</span></div>
+        <div class="hv-row"><span>Emails Sent</span><span class="val" id="la-emails">0</span></div>
+        <div class="hv-row"><span>Warm Replies Flagged</span><span class="val" id="la-replies">0</span></div>
+        <div class="hv-row"><span>Markets Scanned</span><span class="val" id="la-markets">0</span></div>
+        <div class="hv-row"><span>CRM Synced</span><span class="val" style="color:#22c55e;">● Auto</span></div>
+        <div id="la-ticker" style="margin-top:12px;font-size:11px;color:rgba(34,197,94,0.6);min-height:16px;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px;font-style:italic;"></div>
       </div>
       <div class="hv-card">
-        <div class="hv-title">Renewal Agent</div>
-        <div class="hv-row"><span>Leases expiring in 90 days</span><span class="val">24</span></div>
-        <div class="hv-row"><span>Outreach sent today</span><span class="val">7 personalized</span></div>
-        <div class="hv-row"><span>Positive responses</span><span class="val">3 flagged</span></div>
-        <div class="hv-row"><span>Renewal rate MTD</span><span class="val a">87%</span></div>
-      </div>
-      <div class="hv-card">
-        <div class="hv-title">Screening Agent — Application #2847</div>
+        <div class="hv-title">Rental Screening Agent</div>
         <div class="hv-row"><span>James Miller — Unit 3B</span><span class="hv-status pass">APPROVED</span></div>
         <div class="hv-row"><span>AI Score</span><span class="val">87 / 100</span></div>
-        <div class="hv-row"><span>Income Ratio</span><span class="val">3.6× rent</span></div>
+        <div class="hv-row"><span>Income Ratio</span><span class="val">3.6×</span></div>
+        <div class="hv-row"><span>Credit</span><span class="val">724</span></div>
         <div class="hv-row"><span>Processed in</span><span class="val b">&lt; 60 seconds</span></div>
+      </div>
+      <div class="hv-card">
+        <div class="hv-title">Maintenance Triage Agent</div>
+        <div class="hv-row"><span>Work Orders Today</span><span class="val">12 triaged</span></div>
+        <div class="hv-row"><span>Emergency Flagged</span><span class="val" style="color:#f87171;">2 dispatched</span></div>
+        <div class="hv-row"><span>Vendor Notified</span><span class="hv-status pass">AUTO</span></div>
+        <div class="hv-row"><span>Tenant Updated</span><span class="hv-status pass">AUTO</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- STATS BAND -->
+<!-- ═══════════════════════════════════════════════════ STATS -->
 <div class="stats-band">
   <div class="stats-inner">
     <div class="stat-item">
-      <div class="stat-num g" id="cnt1">500+</div>
+      <div class="stat-num g" id="cnt1">0+</div>
       <div class="stat-label">Units Under Management</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num b" id="cnt2">8</div>
-      <div class="stat-label">AI Employees Available</div>
+      <div class="stat-num b" id="cnt2">0</div>
+      <div class="stat-label">Custom AI Agents Built</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num a" id="cnt3">12</div>
+      <div class="stat-num a" id="cnt3">0</div>
       <div class="stat-label">States We Operate In</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num p" id="cnt4">7</div>
+      <div class="stat-num p" id="cnt4">0</div>
       <div class="stat-label">Years PM Experience</div>
     </div>
   </div>
 </div>
 
-<!-- WHAT IS UPNEX -->
-<section id="what-is-upnex">
-  <div class="reveal">
-    <span class="eyebrow">What is UpneX</span>
-    <h2>The AI Operations Layer for<br><span>Your PM Company</span></h2>
-    <div class="divider"></div>
-  </div>
-  <div class="two-col" style="align-items:start;margin-top:0;">
-    <div class="reveal">
-      <p class="lead" style="margin-bottom:20px;">UpneX is not a new property management platform. It's not a chatbot. It's not another app your team has to learn.</p>
-      <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:20px;">We sit on top of your existing software — AppFolio, Buildium, Rent Manager — and handle the repeatable operational work your team spends most of their day on. Maintenance routing. Lease renewal outreach. Tenant screening. Owner communications. All of it.</p>
-      <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:32px;">Think of us as a back-office department that works 24/7, never calls in sick, and costs a fraction of what you'd pay for the same headcount.</p>
-      <ul class="check-list">
-        <li class="w">Not a PMS replacement — works alongside what you already use</li>
-        <li class="w">Not offshore VAs — AI agents that scale without turnover</li>
-        <li class="w">Not a SaaS tool — purpose-built AI employees for your exact workflow</li>
-      </ul>
+<!-- ═══════════════════════════════════════════════════ ABOUT -->
+<section id="about">
+  <div class="eyebrow">Who We Are</div>
+  <h2>Built by Property Managers,<br><span>for Property Managers</span></h2>
+  <div class="divider"></div>
+  <div class="two-col" style="align-items:start; margin-top:16px;">
+    <div>
+      <p class="lead" style="margin-bottom:20px;">UpneX is a fully managed AI operations company built specifically for property management. We are not a SaaS tool — we are a team that builds, deploys, and maintains custom AI agents tailored to your exact workflows.</p>
+      <p style="font-size:16px; color:var(--muted); line-height:1.7; margin-bottom:28px;">Our founder has 7 years of hands-on property management experience, holds a US Business Visa, and has recently visited operations in Ohio. We understand the industry from the inside — not from a boardroom.</p>
+      <div style="margin-bottom:20px;">
+        <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px;">Services We Offer</div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <div class="tag g">AI Agent Solutions</div>
+          <div class="tag b">Property Management</div>
+          <div class="tag a">Project Management</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px;">Active in 12 States</div>
+        <div id="us-map-container" style="width:100%;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;overflow:hidden;padding:8px 0;"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
+          <div class="tag g" style="font-size:11px;">OH</div><div class="tag g" style="font-size:11px;">NJ</div><div class="tag g" style="font-size:11px;">NY</div>
+          <div class="tag g" style="font-size:11px;">FL</div><div class="tag g" style="font-size:11px;">TN</div><div class="tag g" style="font-size:11px;">NC</div>
+          <div class="tag g" style="font-size:11px;">SC</div><div class="tag g" style="font-size:11px;">AR</div><div class="tag g" style="font-size:11px;">WA</div>
+          <div class="tag g" style="font-size:11px;">TX</div><div class="tag g" style="font-size:11px;">PA</div><div class="tag g" style="font-size:11px;">GA</div>
+        </div>
+      </div>
     </div>
-    <div class="reveal reveal-d1" style="display:flex;flex-direction:column;gap:16px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
       <div class="card green-hl">
         <div class="card-icon">🏗️</div>
         <h3>We Build, You Grow</h3>
@@ -409,778 +396,1049 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:48px;text
       <div class="card amber-hl">
         <div class="card-icon">📊</div>
         <h3>You Review Results Only</h3>
-        <p>Your team sees a daily briefing of warm leads, flagged replies, and completed tasks. Zero operational overhead on your end.</p>
+        <p>Your team sees a daily briefing of warm leads, flagged replies, and completed tasks. That's it. Zero operational overhead.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHAT IS AN AI EMPLOYEE -->
+<!-- ═══════════════════════════════════════════════════ CLIENT RESULTS -->
 <div class="sep">
-<section>
-  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
-    <span class="eyebrow blue">What is an AI Employee</span>
-    <h2>Not a Chatbot. Not a VA.<br><span style="color:var(--blue);">A Purpose-Built AI Agent.</span></h2>
-    <div class="divider blue" style="margin:18px auto 24px;"></div>
-    <p class="lead">An AI Employee is a dedicated agent trained on your systems, your SOPs, and your vendor list. It does one job — and does it better than a coordinator splitting attention across 20 tasks.</p>
-  </div>
-  <div class="three-col">
-    <div class="card reveal" style="text-align:center;">
-      <div class="card-icon" style="text-align:center;">⏰</div>
-      <h3 style="text-align:center;margin-bottom:10px;">Works 24/7</h3>
-      <p>Tenants submit maintenance at 11pm Saturday. Your AI Employee logs it, categorizes it, and texts the vendor before your team wakes up. No overtime. No weekends.</p>
+<section id="results" style="max-width:1200px; margin:0 auto;">
+  <div class="eyebrow">Proven Results</div>
+  <h2>Our Clients <span>Grow Fast</span></h2>
+  <div class="divider"></div>
+  <div class="three-col" style="margin-top:16px;">
+    <div class="growth-card gc-green">
+      <div class="eyebrow" style="margin-bottom:4px;">LS Properties — PA</div>
+      <div style="display:flex; align-items:baseline;">
+        <span class="gc-from">150</span>
+        <span class="gc-arrow">→</span>
+        <span class="gc-to g">225</span>
+        <span style="font-size:18px; color:var(--muted); margin-left:4px;">units</span>
+      </div>
+      <div class="gc-badge g">+50% Portfolio Growth</div>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">PA-based portfolio scaled 50% with AI-powered leasing, maintenance triage, and tenant communications — without adding staff.</p>
+      <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:6px;">
+        <div class="tag g" style="font-size:11px;">Leasing Agent</div>
+        <div class="tag g" style="font-size:11px;">Maintenance Triage</div>
+        <div class="tag g" style="font-size:11px;">Tenant Comms</div>
+      </div>
     </div>
-    <div class="card reveal reveal-d1" style="text-align:center;">
-      <div class="card-icon" style="text-align:center;">🧠</div>
-      <h3 style="text-align:center;margin-bottom:10px;">Learns Your Business</h3>
-      <p>We train each agent on your vendor list, lease templates, escalation rules, and communication tone. It doesn't follow a generic script — it follows your playbook.</p>
-    </div>
-    <div class="card reveal reveal-d2" style="text-align:center;">
-      <div class="card-icon" style="text-align:center;">💰</div>
-      <h3 style="text-align:center;margin-bottom:10px;">1/10th the Cost</h3>
-      <p>A full-time coordinator costs $35,000–$55,000/year. UpneX handles the same workload starting at a fraction of that — and scales as you grow without re-hiring.</p>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:40px;" class="reveal">
-    <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary" data-cta>
-      See how it works in 15 minutes →
-    </a>
-  </div>
-</section>
-</div>
 
-<!-- COMPARISON TABLE -->
-<section>
-  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
-    <span class="eyebrow">Why UpneX</span>
-    <h2>Every Alternative Leaves<br><span>Something on the Table</span></h2>
-    <div class="divider" style="margin:18px auto 24px;"></div>
-    <p class="lead">Offshore VAs have high turnover. SaaS bots follow generic scripts. In-house staff don't scale. UpneX is the only option built specifically for PM back-office ops.</p>
-  </div>
-  <div style="overflow-x:auto;" class="reveal reveal-d1">
-    <table class="comp-table">
-      <thead>
-        <tr>
-          <th style="width:26%;"></th>
-          <th class="hl">UpneX AI</th>
-          <th>Offshore VA</th>
-          <th>SaaS Bot</th>
-          <th>In-House Staff</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Monthly cost (100 units)</td>
-          <td class="hl">$800–1,200</td>
-          <td>$2,000–3,500</td>
-          <td>$1,000–2,000</td>
-          <td>$4,000–6,500</td>
-        </tr>
-        <tr>
-          <td>Available hours</td>
-          <td class="hl">24/7 / 365</td>
-          <td>8–10 hrs/day</td>
-          <td>24/7 (limited)</td>
-          <td>40 hrs/wk</td>
-        </tr>
-        <tr>
-          <td>Learns your SOPs</td>
-          <td class="hl"><span class="comp-check">✓</span> Deep training</td>
-          <td>◑ Partial</td>
-          <td><span class="comp-x">✕</span> Generic rules</td>
-          <td><span class="comp-check">✓</span> Slow ramp</td>
-        </tr>
-        <tr>
-          <td>PMS integration</td>
-          <td class="hl"><span class="comp-check">✓</span> Native</td>
-          <td>◑ Via email</td>
-          <td>◑ Varies</td>
-          <td><span class="comp-check">✓</span> Direct</td>
-        </tr>
-        <tr>
-          <td>Setup time</td>
-          <td class="hl">1–2 weeks</td>
-          <td>4–8 weeks</td>
-          <td>4–12 weeks</td>
-          <td>8–16 weeks</td>
-        </tr>
-        <tr>
-          <td>Turnover risk</td>
-          <td class="hl"><span class="comp-check">✓</span> None</td>
-          <td><span class="comp-x">✕</span> High (40–60%/yr)</td>
-          <td><span class="comp-check">✓</span> None</td>
-          <td><span class="comp-x">✕</span> High</td>
-        </tr>
-        <tr>
-          <td>Scales with portfolio</td>
-          <td class="hl"><span class="comp-check">✓</span> Instant</td>
-          <td><span class="comp-x">✕</span> Must hire</td>
-          <td>◑ Limited</td>
-          <td><span class="comp-x">✕</span> Must hire</td>
-        </tr>
-        <tr>
-          <td>Kill switch / override</td>
-          <td class="hl"><span class="comp-check">✓</span> Per-agent</td>
-          <td><span class="comp-check">✓</span> You manage them</td>
-          <td>◑ Varies</td>
-          <td><span class="comp-check">✓</span> Direct manage</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:16px;" class="reveal">Estimates based on US PM industry benchmarks. <a href="#roi" style="color:var(--green);">Run the calculator</a> with your numbers.</p>
-</section>
+    <div class="growth-card gc-blue">
+      <div class="eyebrow blue" style="margin-bottom:4px;">TX Pod — Texas</div>
+      <div style="display:flex; align-items:baseline;">
+        <span class="gc-from">100</span>
+        <span class="gc-arrow">→</span>
+        <span class="gc-to b">175</span>
+        <span style="font-size:18px; color:var(--muted); margin-left:4px;">units</span>
+      </div>
+      <div class="gc-badge b">+75% in Just 6 Months</div>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Texas portfolio grew 75% in 6 months using AI-powered BD, lead generation, and owner acquisition systems running every day.</p>
+      <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:6px;">
+        <div class="tag b" style="font-size:11px;">BD Prospector</div>
+        <div class="tag b" style="font-size:11px;">Lead Enricher</div>
+        <div class="tag b" style="font-size:11px;">Outreach Bot</div>
+      </div>
+    </div>
 
-<!-- 8 AI EMPLOYEES -->
-<div class="sep">
-<section id="agents">
-  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
-    <span class="eyebrow purple">Our AI Employees</span>
-    <h2>Eight Agents. One Back Office.<br><span style="color:var(--purple);">Zero Overhead.</span></h2>
-    <div class="divider purple" style="margin:18px auto 24px;"></div>
-    <p class="lead">Each agent is built for a single operational role. Start with one and add more as your portfolio grows.</p>
+    <div class="growth-card gc-amber">
+      <div class="eyebrow amber" style="margin-bottom:4px;">Raut Properties</div>
+      <div style="display:flex; align-items:baseline;">
+        <span class="gc-from">2</span>
+        <span class="gc-arrow">→</span>
+        <span class="gc-to a">35</span>
+        <span style="font-size:18px; color:var(--muted); margin-left:4px;">units</span>
+      </div>
+      <div class="gc-badge a">+1,650% Growth</div>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Started with 2 units, now managing 35 across multiple markets with AI-assisted acquisition, operations, and reporting.</p>
+      <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:6px;">
+        <div class="tag a" style="font-size:11px;">Market Finder</div>
+        <div class="tag a" style="font-size:11px;">Owner Outreach</div>
+        <div class="tag a" style="font-size:11px;">Ops Manager</div>
+      </div>
+    </div>
   </div>
-  <div class="agents-grid">
-    <div class="agent-card reveal">
-      <div class="agent-icon">🔍</div>
-      <div class="agent-title">Screening Agent</div>
-      <div class="agent-desc">Qualifies applicants end-to-end — your team only sees move-in-ready tenants.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Reviews applications &amp; documents</div>
-        <div class="agent-task">Requests missing items from applicants</div>
-        <div class="agent-task">Scores &amp; routes to your criteria</div>
-      </div>
-    </div>
-    <div class="agent-card reveal reveal-d1">
-      <div class="agent-icon">🔄</div>
-      <div class="agent-title">Renewal Agent</div>
-      <div class="agent-desc">Starts renewal outreach 90 days out. Increases retention without lifting a finger.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Contacts tenants at 90/60/30-day marks</div>
-        <div class="agent-task">Handles negotiation within your parameters</div>
-        <div class="agent-task">Updates lease records in your PMS</div>
-      </div>
-    </div>
-    <div class="agent-card reveal reveal-d2">
-      <div class="agent-icon">🔧</div>
-      <div class="agent-title">Maintenance Agent</div>
-      <div class="agent-desc">Every maintenance request handled, tracked, and resolved — without clogging your inbox.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Logs &amp; categorizes requests 24/7</div>
-        <div class="agent-task">Dispatches your approved vendors</div>
-        <div class="agent-task">Follows up on completion &amp; satisfaction</div>
-      </div>
-    </div>
-    <div class="agent-card reveal reveal-d3">
-      <div class="agent-icon">🏠</div>
-      <div class="agent-title">Leasing Agent</div>
-      <div class="agent-desc">Responds to every inquiry, books tours, and chases applications so no lead goes cold.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Responds to Zillow, MLS, direct inquiries</div>
-        <div class="agent-task">Books showing tours &amp; confirmations</div>
-        <div class="agent-task">Chases application completion follow-ups</div>
-      </div>
-    </div>
-    <div class="agent-card reveal">
-      <div class="agent-icon">📋</div>
-      <div class="agent-title">Onboarding Agent</div>
-      <div class="agent-desc">New tenant move-in processed start to finish — docs, portals, key pickup, first impressions.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Collects docs &amp; sets up payment portals</div>
-        <div class="agent-task">Sends move-in instructions &amp; checklists</div>
-        <div class="agent-task">Coordinates utility setup &amp; access codes</div>
-      </div>
-    </div>
-    <div class="agent-card reveal reveal-d1">
-      <div class="agent-icon">📊</div>
-      <div class="agent-title">Owner Attrition Agent</div>
-      <div class="agent-desc">Tracks portfolio health and keeps owners informed before they start asking questions.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Flags at-risk owners before they leave</div>
-        <div class="agent-task">Sends proactive monthly performance reports</div>
-        <div class="agent-task">Answers owner questions from your data</div>
-      </div>
-    </div>
-    <div class="agent-card reveal reveal-d2">
-      <div class="agent-icon">📍</div>
-      <div class="agent-title">Vacancy Agent</div>
-      <div class="agent-desc">Monitors days-on-market and acts when listings stall — before vacancies cost you owners.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Syndicates listings to Zillow, MLS, + more</div>
-        <div class="agent-task">Flags stale listings for price review</div>
-        <div class="agent-task">Reports vacancy trends weekly</div>
-      </div>
-    </div>
-    <div class="agent-card reveal reveal-d3">
-      <div class="agent-icon">📰</div>
-      <div class="agent-title">Newsletter Agent</div>
-      <div class="agent-desc">Keeps owner relationships warm with zero manual effort — branded monthly updates.</div>
-      <div class="agent-tasks">
-        <div class="agent-task">Auto-generates monthly owner newsletters</div>
-        <div class="agent-task">Includes maintenance summary &amp; market data</div>
-        <div class="agent-task">Branded to your company, sent on schedule</div>
-      </div>
+
+  <div style="margin-top:48px;">
+    <div style="font-size:13px; color:var(--muted); text-align:center; margin-bottom:24px; text-transform:uppercase; letter-spacing:1px;">Total portfolio growth across all UpneX clients</div>
+    <div class="chart-wrap">
+      <canvas id="growthChart" role="img" aria-label="Bar chart showing portfolio growth across three clients: LS Properties 150 to 225 units, TX Pod 100 to 175 units, Raut Properties 2 to 35 units">Portfolio growth data: LS Properties grew from 150 to 225 units, TX Pod grew from 100 to 175 units, Raut Properties grew from 2 to 35 units.</canvas>
     </div>
   </div>
 </section>
 </div>
 
-<!-- PRICING -->
-<section id="pricing">
-  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
-    <span class="eyebrow amber">Pricing</span>
-    <h2>Simple, Transparent,<br><span style="color:var(--amber);">Fully Managed</span></h2>
-    <div class="divider amber" style="margin:18px auto 24px;"></div>
-    <p class="lead">Flat per-unit monthly pricing. No setup fees. No long-term contracts. Cancel with 30 days' notice.</p>
-  </div>
-  <div class="pricing-grid reveal reveal-d1">
-    <div class="pricing-card">
-      <div class="price-tier">Ops Core</div>
-      <div class="price-num g">$12<span style="font-size:20px;font-weight:400;color:var(--muted);">/unit</span></div>
-      <div class="price-per">/month · up to 100 units</div>
-      <div class="price-features">
-        <div class="price-feat">Maintenance Agent</div>
-        <div class="price-feat">Renewal Agent</div>
-        <div class="price-feat">Screening Agent</div>
-        <div class="price-feat off">Leasing + Onboarding</div>
-        <div class="price-feat off">Owner Attrition + Newsletter</div>
-      </div>
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-ghost btn-full" data-cta>Book a call</a>
-    </div>
-    <div class="pricing-card featured">
-      <div class="popular-badge">Most Popular</div>
-      <div class="price-tier">Full Suite</div>
-      <div class="price-num g">$10<span style="font-size:20px;font-weight:400;color:var(--muted);">/unit</span></div>
-      <div class="price-per">/month · 100–500 units</div>
-      <div class="price-features">
-        <div class="price-feat">All 8 AI Employees included</div>
-        <div class="price-feat">Maintenance + Renewal + Screening</div>
-        <div class="price-feat">Leasing + Onboarding + Vacancy</div>
-        <div class="price-feat">Owner Attrition + Newsletter</div>
-        <div class="price-feat">Weekly performance dashboard</div>
-      </div>
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary btn-full" data-cta>Book a call</a>
-    </div>
-    <div class="pricing-card">
-      <div class="price-tier">Enterprise</div>
-      <div class="price-num w">Custom<span style="font-size:18px;font-weight:400;color:var(--muted);"></span></div>
-      <div class="price-per">500+ units · typically $8/unit/mo</div>
-      <div class="price-features">
-        <div class="price-feat">Volume pricing (typically $8/unit/mo)</div>
-        <div class="price-feat">Custom agent builds for your workflow</div>
-        <div class="price-feat">Dedicated onboarding &amp; SLA support</div>
-        <div class="price-feat">All 8 AI Employees + custom agents</div>
-        <div class="price-feat">Multi-market and multi-entity support</div>
-      </div>
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-ghost btn-full" data-cta>Get a custom quote</a>
-    </div>
-  </div>
-  <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;" class="reveal">All plans include 90-day launch window. Month-to-month after that. 30-day cancellation notice.</p>
-</section>
+<!-- ═══════════════════════════════════════════════════ HOW WE'RE DIFFERENT -->
+<section id="difference">
+  <div class="eyebrow blue">Our Approach</div>
+  <h2>Not Another Software.<br><span>A Team That Runs Itself.</span></h2>
+  <div class="divider blue"></div>
 
-<!-- ROI CALCULATOR -->
-<div class="sep">
-<section id="roi">
-  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
-    <span class="eyebrow">ROI Calculator</span>
-    <h2>Put Your Numbers In.<br><span>See What You're Leaving on the Table.</span></h2>
-    <div class="divider" style="margin:18px auto 24px;"></div>
-    <p class="lead">Adjust the sliders to match your portfolio. The calculator shows your current cost vs. UpneX, hours freed, and projected ROI.</p>
-  </div>
-  <div class="calc-wrap reveal">
-    <div class="calc-inner">
-      <div>
-        <h3 style="margin-bottom:24px;">Your Current Operation</h3>
-        <div class="calc-input-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-            <div class="calc-label">Units under management</div>
-            <div class="calc-value"><span id="calcUnitsVal">200</span></div>
-          </div>
-          <input type="range" id="calcUnits" class="calc-slider" min="50" max="2500" step="10" value="200" aria-label="Units under management">
-          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>50</span><span>2,500</span></div>
-        </div>
-        <div class="calc-input-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-            <div class="calc-label">Maintenance requests / month</div>
-            <div class="calc-value"><span id="calcMaintVal">100</span></div>
-          </div>
-          <input type="range" id="calcMaint" class="calc-slider" min="10" max="1500" step="5" value="100" aria-label="Maintenance requests per month">
-          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>10</span><span>1,500</span></div>
-        </div>
-        <div class="calc-input-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-            <div class="calc-label">Applications received / month</div>
-            <div class="calc-value"><span id="calcAppsVal">20</span></div>
-          </div>
-          <input type="range" id="calcApps" class="calc-slider" min="0" max="200" step="1" value="20" aria-label="Applications per month">
-          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>0</span><span>200</span></div>
-        </div>
-        <div class="calc-input-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-            <div class="calc-label">Admin / coordinator staff</div>
-            <div class="calc-value"><span id="calcStaffVal">2</span></div>
-          </div>
-          <input type="range" id="calcStaff" class="calc-slider" min="0.5" max="10" step="0.5" value="2" aria-label="Admin staff count">
-          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>0.5</span><span>10</span></div>
-        </div>
-        <div class="calc-input-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-            <div class="calc-label">Average admin hourly rate</div>
-            <div class="calc-value">$<span id="calcRateVal">22</span></div>
-          </div>
-          <input type="range" id="calcRate" class="calc-slider" min="15" max="55" step="1" value="22" aria-label="Admin hourly rate">
-          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:rgba(255,255,255,0.25);"><span>$15</span><span>$55</span></div>
-        </div>
-      </div>
-      <div>
-        <h3 style="margin-bottom:24px;">Your Estimated Returns</h3>
-        <div id="calcEdgeCase" style="display:none;margin-bottom:16px;padding:14px;border-radius:12px;border:1px solid rgba(251,191,36,0.3);background:rgba(251,191,36,0.08);color:var(--amber);font-size:13px;">
-          UpneX makes the strongest case at 50+ units. At your size, we may have a lighter option — <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" style="color:var(--amber);font-weight:700;text-decoration:underline;">book a call anyway</a>.
-        </div>
-        <div class="result-grid">
-          <div class="result-card">
-            <div class="result-label">Hours Freed / Month</div>
-            <div class="result-val b" id="calcHours">0</div>
-            <div class="result-sub">hrs reclaimed</div>
-          </div>
-          <div class="result-card">
-            <div class="result-label">Monthly Savings</div>
-            <div class="result-val" id="calcMonthlySavings">$0</div>
-            <div class="result-sub">vs. current cost</div>
-          </div>
-        </div>
-        <div class="result-grid">
-          <div class="result-card">
-            <div class="result-label">Annual Savings</div>
-            <div class="result-val" id="calcAnnualSavings">$0</div>
-            <div class="result-sub">per year</div>
-          </div>
-          <div class="result-card">
-            <div class="result-label">ROI</div>
-            <div class="result-val" id="calcROI">0%</div>
-            <div class="result-sub">return on UpneX cost</div>
-          </div>
-        </div>
-        <div class="result-card" style="margin-bottom:16px;">
-          <div class="result-label">Payback Period</div>
-          <div class="result-val w" id="calcPayback" style="font-size:24px;">—</div>
-          <div class="result-sub">months to break even</div>
-        </div>
-        <div class="calc-breakdown">
-          <div class="calc-row"><span>Your current annual staff cost</span><span style="color:#fff;font-weight:600;" id="calcCurrentCost">$0</span></div>
-          <div class="calc-row"><span>UpneX annual cost</span><span style="color:#fff;font-weight:600;" id="calcUpnexCost">$0</span></div>
-          <div class="calc-row total"><span>Labor hours freed / year</span><span style="color:var(--green);" id="calcAnnualHours">0 hrs</span></div>
-        </div>
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" id="calcCTA" class="btn-primary btn-full" data-cta>
-          Book a call — get an exact quote
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-  <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:16px;" class="reveal">Estimates use US PM industry benchmarks. Actual savings depend on your specific workflow.</p>
-</section>
-</div>
-
-<!-- WHAT'S INCLUDED + COST OF DOING NOTHING -->
-<section>
-  <div class="two-col" style="align-items:start;">
-    <div class="reveal">
-      <span class="eyebrow">What You Actually Get</span>
-      <h2>Every Month.<br><span>Without Being Asked.</span></h2>
-      <div class="divider"></div>
-      <p style="font-size:16px;color:var(--muted);margin-bottom:28px;line-height:1.7;">Here's what happens inside your operation after UpneX goes live. This isn't a feature list — it's what gets done.</p>
-      <ul class="included-list">
-        <li>Every maintenance request logged, routed to a vendor, and followed up for completion — whether it comes in at 2pm or 2am</li>
-        <li>Lease renewal outreach started 90 days before every expiration — automatically, with your tone and your parameters</li>
-        <li>Every inbound leasing inquiry answered within minutes, tour scheduled, and application status tracked</li>
-        <li>New tenant onboarding processed end-to-end — docs, portal setup, utility coordination, move-in instructions</li>
-        <li>Owner monthly reports sent automatically — maintenance summary, vacancy status, and performance data</li>
-        <li>Application screening completed with your criteria — no incomplete apps falling through the cracks</li>
-        <li>Vacancy listings syndicated and monitored — alerts when properties stall past your threshold</li>
-        <li>Escalation routing to your team when human judgment is needed — every time, with full context</li>
-        <li>Weekly operational dashboard — what happened, what's pending, what needs your attention</li>
-        <li>Monthly branded owner newsletter — written, formatted, and sent with your name on it</li>
+  <div class="vs-wrap" style="margin-top:16px;">
+    <div class="card" style="border-color:rgba(248,113,113,0.15); background:rgba(248,113,113,0.03);">
+      <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(248,113,113,0.6); margin-bottom:20px;">Traditional SaaS / Competitors</div>
+      <ul class="check-list">
+        <li class="x">One-size-fits-all software</li>
+        <li class="x">You learn and manage their system</li>
+        <li class="x">You configure and operate everything</li>
+        <li class="x">Generic automations, not your workflow</li>
+        <li class="x">Constant maintenance burden on your team</li>
+        <li class="x">Pay for features you never use</li>
       </ul>
     </div>
-    <div class="reveal reveal-d1">
-      <span class="eyebrow coral">Cost of Doing Nothing</span>
-      <h2>The Status Quo Has<br><span style="color:var(--coral);">a Price Tag.</span></h2>
-      <div class="divider coral" style="background:var(--coral);"></div>
-      <p style="font-size:16px;color:var(--muted);margin-bottom:28px;line-height:1.7;">Most PMs just haven't counted it.</p>
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="codn-card">
-          <div style="position:relative;z-index:1;">
-            <div class="codn-num coral">12%</div>
-            <div style="margin-top:8px;font-size:14px;font-weight:500;color:rgba(255,255,255,0.8);">of lease renewals lost to slow or missed follow-up</div>
-            <div style="margin-top:4px;font-size:12px;color:var(--muted);">Industry avg renewal rate drops 12 points without proactive outreach</div>
+    <div class="vs-label">VS</div>
+    <div class="card green-hl" style="border-width:2px;">
+      <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:rgba(34,197,94,0.7); margin-bottom:20px;">UpneX — Fully Managed AI</div>
+      <ul class="check-list">
+        <li class="w">Custom agents built for YOUR exact workflow</li>
+        <li class="w">We build, deploy, and maintain everything</li>
+        <li class="w">You review results only — zero overhead</li>
+        <li class="w">Deep PM expertise built into every agent</li>
+        <li class="w">Runs 24/7 without your team involved</li>
+        <li class="w">Pays for itself in hours saved, week one</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;" class="three-col">
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h3>PM Domain Intelligence</h3>
+      <p>Every agent is trained on 7 years of real property management experience. It knows the industry, the terminology, and the workflows.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h3>24/7 Autonomous Operation</h3>
+      <p>While your team sleeps, agents are prospecting, screening, triaging maintenance, and updating your CRM. No days off.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <h3>Scales With Your Portfolio</h3>
+      <p>50 units or 2,000 units — the agent scales instantly. No hiring, no training, no management overhead as you grow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ PAIN POINTS -->
+<div class="sep">
+<section id="pain" style="max-width:1200px; margin:0 auto;">
+  <div class="eyebrow purple">Let's Hear From You</div>
+  <h2>Where Are Your<br><span>Biggest Operational Gaps?</span></h2>
+  <div class="divider purple"></div>
+  <p class="lead" style="margin-bottom:32px;">Select the areas where you feel the most pressure. We'll focus the conversation there.</p>
+  <div class="pain-grid">
+    <div class="pain-item" onclick="this.classList.toggle('sel')">
+      <div class="pi-icon">📥</div>
+      <div class="pi-title">Leasing & Lead Response Speed</div>
+      <div class="pi-body">Leads going cold before your team responds. Losing applicants to competitors who reply in minutes.</div>
+    </div>
+    <div class="pain-item" onclick="this.classList.toggle('sel')">
+      <div class="pi-icon">🔧</div>
+      <div class="pi-title">Maintenance Triage & Coordination</div>
+      <div class="pi-body">Work orders piling up. Hard to prioritize. Vendors miss calls. Tenants frustrated before work even starts.</div>
+    </div>
+    <div class="pain-item" onclick="this.classList.toggle('sel')">
+      <div class="pi-icon">📈</div>
+      <div class="pi-title">Business Development & Growth</div>
+      <div class="pi-body">Not enough owner leads. Hard to prospect, enrich contacts, and follow up at scale consistently.</div>
+    </div>
+    <div class="pain-item" onclick="this.classList.toggle('sel')">
+      <div class="pi-icon">📋</div>
+      <div class="pi-title">Owner Reporting & Communication</div>
+      <div class="pi-body">Owners expect regular updates. Pulling reports manually takes hours. Communication is reactive, not proactive.</div>
+    </div>
+    <div class="pain-item" onclick="this.classList.toggle('sel')">
+      <div class="pi-icon">🏘️</div>
+      <div class="pi-title">Tenant Screening & Applications</div>
+      <div class="pi-body">Manual screening is slow and inconsistent. Hard to enforce standards fairly across a growing portfolio.</div>
+    </div>
+    <div class="pain-item" onclick="this.classList.toggle('sel')">
+      <div class="pi-icon">💼</div>
+      <div class="pi-title">Administrative & Back-Office Load</div>
+      <div class="pi-body">Team buried in emails, scheduling, data entry. Not enough capacity for growth, strategy, or client relationships.</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ DEMO -->
+<section id="demo">
+  <div class="eyebrow">Live Demo</div>
+  <h2>Rental Screening Agent<br><span>In Action</span></h2>
+  <div class="divider"></div>
+  <div class="two-col" style="align-items:start; margin-top:16px;">
+    <div>
+      <p class="lead" style="margin-bottom:24px;">Our rental screening agent processes applications automatically — pulling income, credit, rental history, and background data — then scores and recommends in under 60 seconds.</p>
+
+      <div style="margin-bottom:28px;">
+        <div style="font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px;">What the agent handles automatically</div>
+        <ul class="check-list">
+          <li class="w" style="color:var(--text);">Receives and parses application data</li>
+          <li class="w" style="color:var(--text);">Checks income-to-rent ratio against your criteria</li>
+          <li class="w" style="color:var(--text);">Flags credit score thresholds automatically</li>
+          <li class="w" style="color:var(--text);">Verifies rental history for red flags</li>
+          <li class="w" style="color:var(--text);">Scores applicant 0–100 with reasoning</li>
+          <li class="w" style="color:var(--text);">Sends pass/review/decline to your team instantly</li>
+        </ul>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="card green-hl" style="text-align:center; padding:20px;">
+          <div style="font-size:32px; font-weight:800; color:var(--green);">45 min</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:4px;">Saved per application</div>
+        </div>
+        <div class="card" style="text-align:center; padding:20px;">
+          <div style="font-size:32px; font-weight:800; color:#fff;">&lt;60s</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:4px;">End-to-end processing</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup-shell">
+      <div class="mockup-bar">
+        <div style="display:flex; gap:6px;">
+          <div class="mock-dot" style="background:#f87171;"></div>
+          <div class="mock-dot" style="background:#fbbf24;"></div>
+          <div class="mock-dot" style="background:#4ade80;"></div>
+        </div>
+        <div style="font-size:12px; color:var(--muted); margin-left:10px;">UpneX Screening Agent</div>
+      </div>
+      <div class="mockup-content">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <div>
+            <div style="font-size:15px; font-weight:700;">Application #2847</div>
+            <div style="font-size:12px; color:var(--muted);">Unit 3B · Received 2 min ago</div>
+          </div>
+          <span style="background:rgba(34,197,94,0.15); color:var(--green); padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700;">✓ APPROVED</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+          <div>
+            <div class="mf-label">Applicant</div>
+            <div class="mf-val">James Miller</div>
+          </div>
+          <div>
+            <div class="mf-label">Monthly Income</div>
+            <div class="mf-val">$7,200 <span style="color:var(--green); font-size:12px;">✓ 3.6× rent</span></div>
+          </div>
+          <div>
+            <div class="mf-label">Credit Score</div>
+            <div class="mf-val">724 <span style="color:var(--green); font-size:12px;">✓ above min</span></div>
+          </div>
+          <div>
+            <div class="mf-label">Eviction History</div>
+            <div class="mf-val">None found <span style="color:var(--green); font-size:12px;">✓</span></div>
           </div>
         </div>
-        <div class="codn-card">
-          <div style="position:relative;z-index:1;">
-            <div class="codn-num amber">$45</div>
-            <div style="margin-top:8px;font-size:14px;font-weight:500;color:rgba(255,255,255,0.8);">in lost rent per unit per vacancy day (avg across US markets)</div>
-            <div style="margin-top:4px;font-size:12px;color:var(--muted);">Every week a unit sits empty costs you and your owner real money</div>
+
+        <div style="margin-bottom:14px;">
+          <div class="mf-label">AI Screening Score</div>
+          <div style="background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:10px; padding:16px; display:flex; align-items:center; gap:16px;">
+            <div style="text-align:center;">
+              <div style="font-size:36px; font-weight:800; color:var(--green); line-height:1;">87</div>
+              <div style="font-size:11px; color:var(--muted);">/ 100</div>
+            </div>
+            <div style="flex:1;">
+              <div style="background:rgba(255,255,255,0.08); height:8px; border-radius:4px; margin-bottom:6px;">
+                <div style="width:87%; height:8px; border-radius:4px; background:var(--green);"></div>
+              </div>
+              <div style="font-size:13px; color:var(--muted);">Strong applicant — recommend approval</div>
+            </div>
           </div>
         </div>
-        <div class="codn-card">
-          <div style="position:relative;z-index:1;">
-            <div class="codn-num purple">1.4×</div>
-            <div style="margin-top:8px;font-size:14px;font-weight:500;color:rgba(255,255,255,0.8);">longer maintenance resolution when requests aren't routed immediately</div>
-            <div style="margin-top:4px;font-size:12px;color:var(--muted);">Delayed routing = extended vendor turnaround = lower tenant satisfaction</div>
-          </div>
-        </div>
-        <div style="padding:18px 20px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:14px;font-size:14px;color:var(--muted);line-height:1.65;">
-          <strong style="color:#fff;">The real question isn't "Can we afford UpneX?"</strong><br>It's "How much is the current system already costing us in missed renewals, slow leasing, and owner churn?"
+
+        <div>
+          <div class="mf-label">Agent Recommendation</div>
+          <div style="font-size:13px; color:var(--muted); line-height:1.6; background:rgba(255,255,255,0.03); padding:12px 14px; border-radius:8px; border:1px solid var(--border);">Income verified at 3.6× monthly rent. Credit score 724 — above threshold. No eviction history found. Background check clear. Recommend proceeding with lease offer. Draft lease sent to leasing queue.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SOCIAL PROOF -->
+<!-- ═══════════════════════════════════════════════════ PRICING -->
 <div class="sep">
-<section>
-  <div class="text-center reveal" style="text-align:center;max-width:720px;margin:0 auto 56px;">
-    <span class="eyebrow">Client Results</span>
-    <h2>PM Companies Using UpneX</h2>
-    <div class="divider" style="margin:18px auto 24px;"></div>
-    <p class="lead">Across Austin, Tampa, Cleveland, Atlanta, and Phoenix. Real results from real portfolios.</p>
-  </div>
-  <div class="three-col">
-    <div class="growth-card gc-green reveal">
-      <div class="eyebrow" style="margin-bottom:4px;">Texas PM Company · Austin</div>
-      <div style="display:flex;align-items:baseline;">
-        <span class="gc-from">60+</span>
-        <span class="gc-arrow">→</span>
-        <span class="gc-to g">0</span>
-        <span style="font-size:16px;color:var(--muted);margin-left:4px;">hrs/mo admin</span>
+<section id="pricing" style="max-width:1200px; margin:0 auto;">
+  <div class="eyebrow amber">Pricing</div>
+  <h2>Simple, Transparent,<br><span>Fully Managed</span></h2>
+  <div class="divider amber"></div>
+
+  <div class="two-col" style="align-items:start; margin-top:16px;">
+    <div>
+      <div class="pricing-hero" style="margin-bottom:20px;">
+        <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin-bottom:16px;">BD AI — Fully Managed</div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:20px;">
+          <div class="tag g">2 Custom AI Agents</div>
+          <div class="tag g">Built for Your Workflow</div>
+        </div>
+        <div style="font-size:15px; color:var(--text); line-height:1.6; margin-bottom:20px;">Both agents run 24/7. You review results only.<br>Zero operational burden on your team.</div>
+        <a href="mailto:hari@upnexs.com" class="btn-primary" style="display:inline-block;">Get a Custom Quote →</a>
+        <div style="margin-top:16px; font-size:13px; color:var(--muted); border-top:1px solid rgba(255,255,255,0.07); padding-top:16px;">
+          Pricing is customized to your portfolio size, target markets, and scope. Contact us for a transparent breakdown.
+        </div>
       </div>
-      <div class="gc-badge g">Maintenance Automation</div>
-      <p style="font-size:14px;color:var(--muted);line-height:1.6;">"The maintenance agent alone saves us 60+ hours a month. We used to have one coordinator spending half their week just chasing vendors. That's gone now."</p>
-      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;">
-        <div class="tag g" style="font-size:11px;">200+ units</div>
-        <div class="tag g" style="font-size:11px;">Maintenance Agent</div>
-      </div>
-    </div>
-    <div class="growth-card gc-blue reveal reveal-d1">
-      <div class="eyebrow blue" style="margin-bottom:4px;">Virginia PM Company</div>
-      <div style="display:flex;align-items:baseline;">
-        <span class="gc-from">68%</span>
-        <span class="gc-arrow">→</span>
-        <span class="gc-to b">81%</span>
-        <span style="font-size:16px;color:var(--muted);margin-left:4px;">renewal rate</span>
-      </div>
-      <div class="gc-badge b">+13pts in 6 Months</div>
-      <p style="font-size:14px;color:var(--muted);line-height:1.6;">"Our renewal rate went from 68% to 81% in the first 6 months. The renewal agent started following up 90 days out. I didn't change anything else — just that one process."</p>
-      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;">
-        <div class="tag b" style="font-size:11px;">300 units</div>
-        <div class="tag b" style="font-size:11px;">Renewal Agent</div>
+
+      <div class="card green-hl" style="padding:24px;">
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <div style="font-size:28px; flex-shrink:0;">🎁</div>
+          <div>
+            <div style="font-size:17px; font-weight:700; color:#fff; margin-bottom:6px;">Free 15-Day Pilot Program</div>
+            <div style="font-size:14px; color:var(--muted); line-height:1.6;">2 custom agents built and deployed at zero cost. We prove the value before you commit a single dollar.</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="growth-card gc-amber reveal reveal-d2">
-      <div class="eyebrow amber" style="margin-bottom:4px;">Florida PM Company · Tampa</div>
-      <div style="display:flex;align-items:baseline;">
-        <span class="gc-from">same</span>
-        <span class="gc-arrow">→</span>
-        <span class="gc-to a">+40%</span>
-        <span style="font-size:16px;color:var(--muted);margin-left:4px;">volume</span>
+
+    <div>
+      <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">How UpneX compares to the alternatives</div>
+      <div style="background:var(--bg2); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+        <table class="price-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Monthly Cost</th>
+              <th>Who Runs It</th>
+              <th>Your Burden</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>US-based BD Consultant</td>
+              <td style="color:var(--coral);">$5,000–10,000</td>
+              <td>Consultant</td>
+              <td style="color:var(--coral);">High</td>
+            </tr>
+            <tr>
+              <td>In-house BD Hire</td>
+              <td style="color:var(--coral);">$8,000–12,000</td>
+              <td>Employee</td>
+              <td style="color:var(--coral);">Very High</td>
+            </tr>
+            <tr>
+              <td>DIY AI Tools</td>
+              <td style="color:var(--amber);">$300–800</td>
+              <td>Your team</td>
+              <td style="color:var(--amber);">Very High</td>
+            </tr>
+            <tr class="hl">
+              <td>UpneX Fully Managed</td>
+              <td style="color:var(--green);">Custom Quote</td>
+              <td>UpneX — 100%</td>
+              <td style="color:var(--green);">Zero</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="gc-badge a">Same Team, More Volume</div>
-      <p style="font-size:14px;color:var(--muted);line-height:1.6;">"We were going to hire a second coordinator. Instead we brought UpneX in. We're handling 40% more volume with the same team — and the agents don't call in sick."</p>
-      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;">
-        <div class="tag a" style="font-size:11px;">150 units</div>
-        <div class="tag a" style="font-size:11px;">Full Suite</div>
+
+      <div style="margin-top:20px; padding:18px 20px; background:rgba(34,197,94,0.07); border:1px solid rgba(34,197,94,0.2); border-radius:12px;">
+        <div style="font-size:15px; color:var(--text); line-height:1.6;">A BD function that runs itself, around the clock, at a fraction of what any alternative costs. <strong style="color:var(--green);">Priced to deliver clear ROI from day one.</strong></div>
+      </div>
+
+      <div style="margin-top:16px; padding:18px 20px; background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2); border-radius:12px;">
+        <div class="eyebrow amber" style="margin-bottom:8px;">Why this price is fair</div>
+        <p style="font-size:14px; color:var(--muted); line-height:1.65;">UpneX is India-based — a deliberate structural advantage passed directly to clients. This is not a discounted service. It is a fairly priced one, built for a long-term partnership, not a short-term transaction.</p>
       </div>
     </div>
   </div>
 </section>
 </div>
 
-<!-- FAQ -->
-<section id="faq" style="max-width:860px;">
-  <div class="text-center reveal" style="text-align:center;margin-bottom:56px;">
-    <span class="eyebrow">FAQ</span>
-    <h2>Common Questions</h2>
-    <div class="divider" style="margin:18px auto 0;"></div>
-  </div>
-  <div id="faqList" class="reveal">
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        Is there a free trial or pilot?
-        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      </button>
-      <div class="faq-content"><div class="faq-body">Yes — we offer a <strong style="color:#fff;">15-Day Free Pilot</strong>. Two custom AI agents are built and deployed for your portfolio at zero cost. At day 15, we review performance together: response times, tenant satisfaction, work order close rate. If the results aren't there, you pay nothing for the pilot period. If they are — and they will be — we expand to your full operation.</div></div>
+<!-- ═══════════════════════════════════════════════════ PILOT -->
+<section id="pilot">
+  <div class="eyebrow">Start Risk-Free</div>
+  <h2>The 15-Day Free Pilot —<br><span>No Commitment, No Cost</span></h2>
+  <div class="divider"></div>
+  <div class="two-col" style="align-items:start; margin-top:16px;">
+    <div>
+      <div class="pilot-box" style="margin-bottom:20px;">
+        <div style="font-size:48px; font-weight:800; color:var(--green); margin-bottom:4px;">$0.00</div>
+        <div style="font-size:16px; color:var(--muted); margin-bottom:24px;">Total cost for the full pilot</div>
+        <ul class="check-list" style="text-align:left;">
+          <li class="w" style="color:var(--text);">2 custom AI agents built for your portfolio</li>
+          <li class="w" style="color:var(--text);">Fully deployed in your environment</li>
+          <li class="w" style="color:var(--text);">15 days of live operation — zero cost</li>
+          <li class="w" style="color:var(--text);">Full performance report at end of trial</li>
+          <li class="w" style="color:var(--text);">No credit card, no commitment required</li>
+        </ul>
+      </div>
+      <p style="font-size:15px; color:var(--muted); line-height:1.7;">At the end of the pilot, you'll have a concrete report: owner leads identified by market, contacts enriched, outreach sent, and warm replies flagged for your team. Everything you need to make a data-driven decision.</p>
     </div>
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        How long does setup take?
-        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      </button>
-      <div class="faq-content"><div class="faq-body">Most clients are live within 1–2 weeks from kickoff. Week 1 is onboarding: we collect your vendor list, SOPs, lease templates, and communication preferences. Week 2 is training and testing in your environment. We don't flip the switch until you've reviewed a batch of real-world responses and signed off.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        Does this replace my property management software?
-        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      </button>
-      <div class="faq-content"><div class="faq-body">No — UpneX is not a PMS. It works on top of AppFolio, Buildium, Rent Manager, Rentvine, and others. You keep your existing software and workflows. We plug in as an operations layer that handles the repetitive tasks, routing information back into your PMS so your records stay current.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        What if I need to override or stop an agent?
-        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      </button>
-      <div class="faq-content"><div class="faq-body">Every agent has a kill switch. You can pause or stop any individual agent — or all of them — at any time without affecting the rest of your operation. You also set escalation rules that determine when an agent hands off to your team instead of acting autonomously. You're always in control.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        How is my data handled? Is it secure?
-        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      </button>
-      <div class="faq-content"><div class="faq-body">All data is encrypted in transit and at rest. We operate on enterprise-grade infrastructure and follow strict data handling protocols. Tenant PII is handled under your existing PMS's data agreements — UpneX agents access only what they need to complete specific tasks and don't retain data beyond what's required.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        What's the contract length?
-        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      </button>
-      <div class="faq-content"><div class="faq-body">There's a 90-day launch window to get your agents fully trained and operating. After that, billing is month-to-month. We don't believe in long-term contracts — if the agents aren't delivering value, you shouldn't be locked in.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-trigger" onclick="toggleFaq(this)">
-        Can I add agents over time as my portfolio grows?
-        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-      </button>
-      <div class="faq-content"><div class="faq-body">Yes — most clients start with 2–3 agents (usually Maintenance, Renewal, and Screening) and add more as the portfolio grows or as they see results. There's no minimum agent count and no penalty for starting small. You can also remove agents at any time if your needs change.</div></div>
+    <div>
+      <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">What gets built in the pilot</div>
+      <div class="card" style="margin-bottom:14px; border-color:rgba(34,197,94,0.2);">
+        <div style="display:flex; gap:16px; align-items:flex-start;">
+          <div style="width:40px; height:40px; border-radius:50%; background:rgba(34,197,94,0.15); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:800; color:var(--green); flex-shrink:0;">1</div>
+          <div>
+            <div style="font-size:16px; font-weight:700; color:#fff; margin-bottom:6px;">Custom Agent — Your #1 Pain Point</div>
+            <div style="font-size:14px; color:var(--muted); line-height:1.6;">We identify your highest-impact bottleneck and build an agent that addresses it directly — whether that's leasing speed, maintenance triage, BD prospecting, or back-office automation.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="border-color:rgba(34,197,94,0.2);">
+        <div style="display:flex; gap:16px; align-items:flex-start;">
+          <div style="width:40px; height:40px; border-radius:50%; background:rgba(34,197,94,0.15); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:800; color:var(--green); flex-shrink:0;">2</div>
+          <div>
+            <div style="font-size:16px; font-weight:700; color:#fff; margin-bottom:6px;">Supporting Agent — Connected Workflow</div>
+            <div style="font-size:14px; color:var(--muted); line-height:1.6;">A second agent that connects to and extends the first — handling a downstream task, routing outputs to the right place, or automating the follow-through that usually falls through the cracks.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
+<!-- ═══════════════════════════════════════════════════ TIMELINE -->
 <div class="sep">
-<div style="padding:100px 48px;text-align:center;position:relative;overflow:hidden;">
-  <div style="position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(34,197,94,0.07) 0%,transparent 70%);pointer-events:none;"></div>
-  <div style="max-width:700px;margin:0 auto;position:relative;z-index:1;" class="reveal">
-    <div class="hero-badge" style="margin:0 auto 28px;display:inline-flex;">
-      <div class="hero-badge-dot"></div>
-      Zero ad spend. No obligation.
+<section id="timeline" style="max-width:1200px; margin:0 auto;">
+  <div class="eyebrow blue">Build Timeline</div>
+  <h2>Agreement to Agent Live —<br><span>In Under 3 Weeks</span></h2>
+  <div class="divider blue"></div>
+  <p class="lead" style="margin-bottom:40px;">A clear, predictable process from day one. You'll know exactly what's happening and when — no surprises, no delays.</p>
+
+  <div style="position:relative; padding-left:40px;">
+    <div style="position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom, rgba(96,165,250,0.6), rgba(167,139,250,0.6), rgba(251,191,36,0.6), rgba(34,197,94,0.8));border-radius:2px;"></div>
+
+    <div style="position:relative;margin-bottom:32px;">
+      <div style="position:absolute;left:-32px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--blue);border:2px solid var(--bg);"></div>
+      <div style="background:var(--bg2);border:1px solid rgba(96,165,250,0.2);border-radius:16px;padding:28px 32px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.2);border-radius:6px;padding:4px 10px;">Phase 1</div>
+            <div style="font-size:20px;font-weight:700;color:#fff;">Discovery</div>
+          </div>
+          <div style="font-size:13px;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:5px 14px;">Days 1–4</div>
+        </div>
+        <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:16px;">We begin with a single 30–45 minute call. We capture your workflow, operational pain points, target markets, existing tools, and goals. Nothing else is required from your team during this phase.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <div class="tag b" style="font-size:12px;">Workflow mapping</div>
+          <div class="tag b" style="font-size:12px;">Pain point capture</div>
+          <div class="tag b" style="font-size:12px;">Tools & integrations audit</div>
+          <div class="tag b" style="font-size:12px;">Goal alignment</div>
+        </div>
+      </div>
     </div>
-    <h2 style="margin-bottom:20px;">Book Your Free<br><span>AI Operations Audit.</span></h2>
-    <p class="lead" style="margin-bottom:8px;">15 minutes. We'll look at your current ops, identify where AI can make the biggest impact, and show you exactly what it would look like inside your stack.</p>
-    <p style="font-size:14px;color:rgba(255,255,255,0.35);margin-bottom:40px;">No deck. No sales pitch. Just a real look at your operation.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary lg" data-cta>
-        Book Your Free AI Operations Audit
-        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+
+    <div style="position:relative;margin-bottom:32px;">
+      <div style="position:absolute;left:-32px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--purple);border:2px solid var(--bg);"></div>
+      <div style="background:var(--bg2);border:1px solid rgba(167,139,250,0.2);border-radius:16px;padding:28px 32px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purple);background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);border-radius:6px;padding:4px 10px;">Phase 2</div>
+            <div style="font-size:20px;font-weight:700;color:#fff;">Design & Build</div>
+          </div>
+          <div style="font-size:13px;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:5px 14px;">Days 5–11</div>
+        </div>
+        <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:16px;">Our team builds your custom agents from scratch — no templates, no one-size-fits-all configuration. Every agent is designed around your specific workflow, data sources, integrations, and operational logic. You don't write a line of code or touch a single setting.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <div class="tag p" style="font-size:12px;">Custom agent architecture</div>
+          <div class="tag p" style="font-size:12px;">Data source integration</div>
+          <div class="tag p" style="font-size:12px;">Workflow logic build</div>
+          <div class="tag p" style="font-size:12px;">CRM & tool connections</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;margin-bottom:32px;">
+      <div style="position:absolute;left:-32px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--amber);border:2px solid var(--bg);"></div>
+      <div style="background:var(--bg2);border:1px solid rgba(251,191,36,0.2);border-radius:16px;padding:28px 32px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);border-radius:6px;padding:4px 10px;">Phase 3</div>
+            <div style="font-size:20px;font-weight:700;color:#fff;">Deploy & Test</div>
+          </div>
+          <div style="font-size:13px;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:5px 14px;">Days 12–16</div>
+        </div>
+        <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:16px;">We deploy your agents in a controlled environment first. We review output quality, test edge cases, verify integrations, and calibrate performance. You review what's coming out — we fix everything that's not right before going live. Nothing goes fully live until we're both satisfied.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <div class="tag a" style="font-size:12px;">Controlled deployment</div>
+          <div class="tag a" style="font-size:12px;">Output quality review</div>
+          <div class="tag a" style="font-size:12px;">Edge case testing</div>
+          <div class="tag a" style="font-size:12px;">Calibration & tuning</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;margin-bottom:32px;">
+      <div style="position:absolute;left:-32px;top:20px;width:16px;height:16px;border-radius:50%;background:var(--green);border:2px solid var(--bg);box-shadow:0 0 12px rgba(34,197,94,0.5);"></div>
+      <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.3);border-radius:16px;padding:28px 32px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--green);background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:6px;padding:4px 10px;">Phase 4</div>
+            <div style="font-size:20px;font-weight:700;color:#fff;">Agent Goes Live</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="hv-status live">● Live</span>
+            <div style="font-size:13px;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:5px 14px;">Days 17–20+</div>
+          </div>
+        </div>
+        <p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.7;margin-bottom:16px;">Your agents run autonomously, 24/7. You receive a daily briefing of results — actions taken, items flagged for your attention, and performance metrics. We monitor everything in the background, handle any issues, and continue optimizing as your portfolio grows.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <div class="tag g" style="font-size:12px;">24/7 autonomous operation</div>
+          <div class="tag g" style="font-size:12px;">Daily results briefing</div>
+          <div class="tag g" style="font-size:12px;">Ongoing monitoring</div>
+          <div class="tag g" style="font-size:12px;">Continuous optimization</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;">
+      <div style="position:absolute;left:-34px;top:18px;width:20px;height:20px;border-radius:50%;background:var(--green);border:3px solid rgba(34,197,94,0.3);display:flex;align-items:center;justify-content:center;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#fff;"></div>
+      </div>
+      <div style="background:rgba(34,197,94,0.07);border:2px solid rgba(34,197,94,0.25);border-radius:16px;padding:24px 32px;display:flex;align-items:center;gap:20px;">
+        <div style="font-size:32px;flex-shrink:0;">📊</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:5px;">Performance Review — Day 20</div>
+          <div style="font-size:14px;color:var(--muted);line-height:1.65;">We deliver a full performance report: what was built, what ran, what results came in, and what's performing. A clear, data-driven picture that lets you decide confidently whether to continue — with no pressure and no commitment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ FUTURE SCOPE -->
+<section id="scope">
+  <div class="eyebrow purple">Future Scope — Informational Only</div>
+  <h2>Full Property Operations AI —<br><span>When You're Ready</span></h2>
+  <div class="divider purple"></div>
+  <p style="font-size:16px; color:var(--muted); line-height:1.7; margin-bottom:32px; max-width:800px;">The following describes the full UpneX engagement model if you choose to expand beyond BD into full property operations. This is informational only — nothing below creates any obligation.</p>
+
+  <div class="two-col" style="align-items:start;">
+    <div>
+      <h3 style="margin-bottom:16px;">Operations Subscription Covers</h3>
+      <ul class="check-list" style="margin-bottom:28px;">
+        <li class="w" style="color:var(--text);">Unlimited AI agents for your entire portfolio</li>
+        <li class="w" style="color:var(--text);">24/7 autonomous operation across all workflows</li>
+        <li class="w" style="color:var(--text);">Bug fixes and issue resolution — 15–20 hrs/month included</li>
+        <li class="w" style="color:var(--text);">Unlimited upgrades as your needs evolve</li>
+        <li class="w" style="color:var(--text);">Applies to ALL units — occupied and vacant</li>
+      </ul>
+      <div style="margin-bottom:16px; font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:1px;">Full lifecycle coverage</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <div class="tag p">Vacancy Marketing</div>
+        <div class="tag p">Leasing</div>
+        <div class="tag p">Move-In</div>
+        <div class="tag p">Tenancy</div>
+        <div class="tag p">Maintenance</div>
+        <div class="tag p">Move-Out</div>
+        <div class="tag p">Owner Reporting</div>
+        <div class="tag p">Financial Ops</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:14px;">Per-Unit Pricing</div>
+      <div style="background:var(--bg2); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:16px;">
+        <table class="unit-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>Units</th>
+              <th>AI Ops Only</th>
+              <th>AI Ops + VA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0–200</td><td>$10/unit/mo</td><td>$13/unit/mo</td></tr>
+            <tr><td>201–500</td><td>$9/unit/mo</td><td>$12/unit/mo</td></tr>
+            <tr><td>501–1,000</td><td>$8/unit/mo</td><td>$11/unit/mo</td></tr>
+            <tr><td>1,001–2,000</td><td>$7/unit/mo</td><td>$10/unit/mo</td></tr>
+            <tr class="hl-row"><td>2,000+ units</td><td>$6/unit/mo</td><td>$9/unit/mo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:14px 16px; background:rgba(167,139,250,0.06); border:1px solid rgba(167,139,250,0.15); border-radius:10px;">
+        <div style="font-size:13px; color:var(--muted); line-height:1.65;">A typical VA costs $800–1,500/month and manages 100–200 units. At the AI Ops + VA tier, you get AI-powered operations plus dedicated human support at the same cost — or less — than a single traditional VA.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ ROI CALCULATOR -->
+<div class="sep">
+<section id="roi" style="max-width:1200px; margin:0 auto;">
+  <div class="eyebrow">ROI Calculator</div>
+  <h2>See What UpneX Saves<br><span>Your Team Every Month</span></h2>
+  <div class="divider"></div>
+  <p class="lead" style="margin-bottom:40px;">Enter your current operation numbers. We'll show you time saved, dollars recovered, and how fast your team responds to leads.</p>
+
+  <div class="two-col" style="align-items:start;">
+    <!-- INPUTS -->
+    <div>
+      <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">Your Current Operation</div>
+
+      <div class="calc-input-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div class="calc-label">Maintenance Requests / Month</div>
+          <div class="calc-val-display"><span id="vMaint">80</span></div>
+        </div>
+        <input type="range" class="calc-slider" id="sMaint" min="10" max="500" step="5" value="80">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>10</span><span>500</span></div>
+      </div>
+
+      <div class="calc-input-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div class="calc-label">Staff Count (admin / leasing)</div>
+          <div class="calc-val-display"><span id="vStaff">2</span> people</div>
+        </div>
+        <input type="range" class="calc-slider" id="sStaff" min="1" max="12" step="1" value="2">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>1</span><span>12</span></div>
+      </div>
+
+      <div class="calc-input-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div class="calc-label">Avg Staff Hourly Rate</div>
+          <div class="calc-val-display">$<span id="vRate">22</span>/hr</div>
+        </div>
+        <input type="range" class="calc-slider" id="sRate" min="15" max="55" step="1" value="22">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>$15</span><span>$55</span></div>
+      </div>
+
+      <div class="calc-input-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div class="calc-label">Applications Received / Month</div>
+          <div class="calc-val-display"><span id="vApps">25</span></div>
+        </div>
+        <input type="range" class="calc-slider" id="sApps" min="0" max="200" step="5" value="25">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>0</span><span>200</span></div>
+      </div>
+
+      <div class="calc-input-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div class="calc-label">Guest Cards / Inquiries / Month</div>
+          <div class="calc-val-display"><span id="vGuest">40</span></div>
+        </div>
+        <input type="range" class="calc-slider" id="sGuest" min="0" max="300" step="5" value="40">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>0</span><span>300</span></div>
+      </div>
+
+      <div class="calc-input-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div class="calc-label">Current Speed to Lead (avg hrs)</div>
+          <div class="calc-val-display"><span id="vSpeed">4</span> hrs</div>
+        </div>
+        <input type="range" class="calc-slider" id="sSpeed" min="0.5" max="48" step="0.5" value="4">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>30 min</span><span>48 hrs</span></div>
+      </div>
+    </div>
+
+    <!-- OUTPUTS -->
+    <div>
+      <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">Your Estimated Returns</div>
+
+      <!-- Speed to lead banner -->
+      <div class="roi-speed-bar">
+        <div class="roi-speed-from">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Current Response</div>
+          <div style="font-size:30px;font-weight:800;color:var(--coral);" id="rSpeedFrom">4 hrs</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">avg to first reply</div>
+        </div>
+        <div class="roi-speed-arrow">→</div>
+        <div class="roi-speed-to">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">With UpneX AI</div>
+          <div style="font-size:30px;font-weight:800;color:var(--green);">&lt; 5 min</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">24 / 7 / 365</div>
+        </div>
+      </div>
+
+      <!-- 4-metric grid -->
+      <div class="roi-grid-4">
+        <div class="roi-result-card">
+          <div class="roi-result-label">Hours Freed / Mo</div>
+          <div class="roi-result-val" style="color:var(--blue);" id="rHours">0</div>
+          <div class="roi-result-sub">hrs reclaimed</div>
+        </div>
+        <div class="roi-result-card">
+          <div class="roi-result-label">Monthly Savings</div>
+          <div class="roi-result-val" style="color:var(--green);" id="rMonthly">$0</div>
+          <div class="roi-result-sub">labor cost freed</div>
+        </div>
+        <div class="roi-result-card">
+          <div class="roi-result-label">Annual Savings</div>
+          <div class="roi-result-val" style="color:var(--green);" id="rAnnual">$0</div>
+          <div class="roi-result-sub">per year</div>
+        </div>
+        <div class="roi-result-card">
+          <div class="roi-result-label">Lead Capture</div>
+          <div class="roi-result-val" style="color:var(--amber);" id="rLeads">↑ 3×</div>
+          <div class="roi-result-sub">faster response = more closes</div>
+        </div>
+      </div>
+
+      <!-- Breakdown -->
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;font-weight:700;">Time Saved Breakdown</div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);">
+          <span>Maintenance triage &amp; routing</span>
+          <span style="color:#fff;font-weight:600;" id="bMaint">0 hrs</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);">
+          <span>Application processing</span>
+          <span style="color:#fff;font-weight:600;" id="bApps">0 hrs</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);">
+          <span>Guest card follow-up &amp; scheduling</span>
+          <span style="color:#fff;font-weight:600;" id="bGuest">0 hrs</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:8px 0;">
+          <span>General admin &amp; coordination</span>
+          <span style="color:#fff;font-weight:600;" id="bAdmin">0 hrs</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;padding-top:12px;margin-top:4px;border-top:1px solid var(--border);">
+          <span style="color:var(--text);">Total hours freed / month</span>
+          <span style="color:var(--green);" id="bTotal">0 hrs</span>
+        </div>
+      </div>
+
+      <a href="mailto:hari@upnexs.com" class="btn-primary" style="width:100%;text-align:center;padding:16px;font-size:16px;border-radius:12px;">
+        Get a Custom Quote Based on Your Numbers →
       </a>
-      <a href="#roi" class="btn-ghost lg">Run the ROI calculator first</a>
-    </div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;margin-top:32px;font-size:13px;color:rgba(255,255,255,0.3);">
-      <span>No commitment</span><span>·</span><span>15 minutes</span><span>·</span><span>Live in 1–2 weeks if you say yes</span>
-    </div>
-
-    <!-- 15-Day Pilot Highlight -->
-    <div style="margin-top:48px;" class="pilot-box">
-      <div style="font-size:32px;margin-bottom:8px;">🎁</div>
-      <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;">15-Day Free Pilot Program</div>
-      <div style="font-size:14px;color:var(--muted);line-height:1.65;max-width:440px;margin:0 auto;">2 custom AI agents built and deployed for your portfolio at zero cost. We prove the value before you commit a single dollar.</div>
     </div>
   </div>
+</section>
 </div>
+
+<!-- ═══════════════════════════════════════════════════ NEXT STEPS -->
+<div class="sep">
+<section id="next" style="max-width:1200px; margin:0 auto;">
+  <div class="eyebrow">What Happens Next</div>
+  <h2>Ready to Start?<br><span>Here's the Path Forward</span></h2>
+  <div class="divider"></div>
+
+  <div class="step-flow" style="margin:40px 0 48px;">
+    <div class="step-box">
+      <div class="step-num">1</div>
+      <div class="step-title">Agreement Signed</div>
+      <div class="step-desc">Simple 1-page agreement. Once signed, we start within 48 hours — no delays, no onboarding forms.</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-box">
+      <div class="step-num">2</div>
+      <div class="step-title">Discovery Call</div>
+      <div class="step-desc">30–45 min call to capture your target markets, ideal client profile, pitch, and pain points. That's all we need.</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-box">
+      <div class="step-num">3</div>
+      <div class="step-title">Agents Built</div>
+      <div class="step-desc">Our team builds your custom agents Days 5–11. You don't lift a finger. We keep you updated.</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-box">
+      <div class="step-num">4</div>
+      <div class="step-title">Go Live</div>
+      <div class="step-desc">Agents deploy and run 24/7. You review a daily briefing of results. Warm leads flagged for your team.</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-box">
+      <div class="step-num" style="background:rgba(34,197,94,0.15);">✓</div>
+      <div class="step-title">Portfolio Grows</div>
+      <div class="step-desc">New owner leads every day, outreach running on autopilot. You close. We find the next batch.</div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:40px;">
+    <div class="card green-hl" style="text-align:center; padding:24px;">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:6px;">Pilot starts</div>
+      <div style="font-size:20px; font-weight:800; color:var(--green);">Within 48 hrs</div>
+      <div style="font-size:13px; color:var(--muted); margin-top:4px;">of agreement signing</div>
+    </div>
+    <div class="card" style="text-align:center; padding:24px;">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:6px;">Pilot cost</div>
+      <div style="font-size:20px; font-weight:800; color:#fff;">$0.00</div>
+      <div style="font-size:13px; color:var(--muted); margin-top:4px;">Zero commitment</div>
+    </div>
+    <div class="card" style="text-align:center; padding:24px;">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:6px;">Contact</div>
+      <div style="font-size:16px; font-weight:700; color:var(--blue);">hari@upnexs.com</div>
+      <div style="font-size:13px; color:var(--muted); margin-top:4px;">upnexs.com</div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2); border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center;">
+    <div class="big-quote" style="border:none; padding:0; text-align:center; font-size:18px; font-style:normal; color:var(--muted); max-width:700px; margin:0 auto 28px;">"We don't give you another tool to manage.<br>We give you a team that runs itself."</div>
+    <a href="mailto:hari@upnexs.com" class="btn-primary" style="font-size:16px; padding:16px 36px;">Start Your Free Pilot Today →</a>
+  </div>
+</section>
 </div>
 
 <!-- FOOTER -->
 <footer>
   <div class="foot-logo">Up<span>Ne</span>X</div>
-  <p style="font-size:13px;color:var(--muted);">AI Operations for Property Managers · upnexs.com · hari@upnexs.com</p>
-  <div class="foot-links">
-    <a href="/ai/">Main site</a>
-    <a href="/ai/maintenance/">Maintenance</a>
-    <a href="/ai/leasing/">Leasing</a>
-    <a href="/ai/automation/">Automation</a>
-    <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" style="color:var(--green);">Book a Call</a>
-  </div>
-  <p style="font-size:12px;color:rgba(255,255,255,0.2);">© 2026 UpneX Solutions OPC Pvt Ltd</p>
+  <p>AI-Powered Property Management Operations · upnexs.com · hari@upnexs.com</p>
+  <p style="margin-top:8px; font-size:12px; color:rgba(255,255,255,0.2);">Confidential — For Prospect Use Only</p>
 </footer>
 
-<!-- STICKY MOBILE CTA -->
-<div class="sticky-cta" id="stickyCta">
-  <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="btn-primary" style="width:100%;justify-content:center;" data-cta>
-    Book Free AI Operations Audit
-  </a>
-</div>
-
 <script>
-// Reveal on scroll
-(function(){
-  var els=document.querySelectorAll('.reveal');
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
-  },{threshold:0.1});
-  els.forEach(function(el){io.observe(el);});
-})();
-
-// Sticky CTA
-(function(){
-  var bar=document.getElementById('stickyCta');
-  var shown=false;
-  window.addEventListener('scroll',function(){
-    if(window.scrollY>400&&!shown){bar.classList.add('visible');shown=true;}
-    else if(window.scrollY<200&&shown){bar.classList.remove('visible');shown=false;}
-  },{passive:true});
-})();
-
-// FAQ
-function toggleFaq(btn){
-  var item=btn.parentElement;
-  var content=item.querySelector('.faq-content');
-  var isOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(function(el){
-    el.classList.remove('open');el.querySelector('.faq-content').style.maxHeight='0';
-  });
-  if(!isOpen){item.classList.add('open');content.style.maxHeight=content.scrollHeight+'px';}
+/* COUNTER ANIMATION */
+function animateCounter(id, target, suffix, duration) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const start = performance.now();
+  (function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(ease * target);
+    el.textContent = val >= 1000 ? val.toLocaleString() + suffix : val + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  })(start);
 }
 
-// Counter animation on stats
-(function(){
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting&&!e.target.dataset.counted){
-        e.target.dataset.counted='1';
-        animateCounter('cnt1',500,'+',2000);
-        animateCounter('cnt2',8,'',1200);
-        animateCounter('cnt3',12,'',900);
-        animateCounter('cnt4',7,'',700);
-      }
-    });
-  },{threshold:0.3});
-  var band=document.querySelector('.stats-band');
-  if(band)io.observe(band);
-
-  function animateCounter(id,target,suffix,duration){
-    var el=document.getElementById(id);
-    if(!el)return;
-    var start=performance.now();
-    (function step(now){
-      var p=Math.min((now-start)/duration,1);
-      var ease=1-Math.pow(1-p,3);
-      el.textContent=Math.round(ease*target)+suffix;
-      if(p<1)requestAnimationFrame(step);
-    })(start);
-  }
-})();
-
-// Live agent ticker
-(function(){
-  var events=[
-    '→ Maintenance request: Unit 3B — HVAC filter · Austin, TX',
-    '→ Vendor dispatched: Carlos HVAC · ETA confirmed 2hr',
-    '→ Renewal sent: Tenant at 204 Oak — 90-day notice',
-    '→ Application received: Sarah Kim · Unit 5C processing',
-    '→ Emergency: Pipe burst at 18 Elm — vendor alerted',
-    '→ Owner report sent: 5 properties · Tampa, FL',
-    '→ Leasing inquiry answered: Zillow · Unit 7B tour booked',
-    '→ Renewal confirmed: Martinez family extended 12 months',
-    '→ Stale listing flagged: 302 Pine Ave — day 18 on market',
-    '→ Onboarding complete: New tenant at 101 River · docs in',
-  ];
-  var orders=12,emg=2,idx=0;
-  var tick=function(){
-    var r=Math.random();
-    if(r<0.4){orders++;var el=document.getElementById('la-orders');if(el)el.textContent=orders+' triaged';}
-    var ticker=document.getElementById('la-ticker');
-    if(ticker){ticker.textContent=events[idx%events.length];idx++;}
-  };
-  setInterval(tick,2800);
-})();
-
-// ROI Calculator
-(function(){
-  function fmt(n){return Math.round(n).toLocaleString('en-US');}
-
-  function animateNum(el,target){
-    var start=parseFloat(el.dataset.current||0)||0;
-    var diff=target-start;
-    var dur=600;
-    var t0=null;
-    function step(ts){
-      if(!t0)t0=ts;
-      var p=Math.min((ts-t0)/dur,1);
-      var ease=1-Math.pow(1-p,3);
-      el.dataset.current=start+diff*ease;
-      el.textContent=fmt(start+diff*ease);
-      if(p<1)requestAnimationFrame(step);
-      else{el.dataset.current=target;el.textContent=fmt(target);}
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.counted) {
+      e.target.dataset.counted = '1';
+      animateCounter('cnt1', 3500, '+', 2000);
+      animateCounter('cnt2', 45, '', 1400);
+      animateCounter('cnt3', 12, '', 1000);
+      animateCounter('cnt4', 7, '', 800);
     }
-    requestAnimationFrame(step);
-  }
+  });
+}, { threshold: 0.3 });
+const statsBand = document.querySelector('.stats-band');
+if (statsBand) observer.observe(statsBand);
 
-  function calcROI(){
-    var units=parseInt(document.getElementById('calcUnits').value)||200;
-    var maint=parseInt(document.getElementById('calcMaint').value)||100;
-    var apps=parseInt(document.getElementById('calcApps').value)||20;
-    var staff=parseFloat(document.getElementById('calcStaff').value)||2;
-    var rate=parseFloat(document.getElementById('calcRate').value)||22;
+/* LIVE AGENT TICKER */
+(function() {
+  const events = [
+    'New lead found: Self-managing landlord · Austin, TX',
+    'Email sent: Intro outreach to R. Matthews · Tampa, FL',
+    'Warm reply flagged: "Interested, let\'s talk" · Atlanta, GA',
+    'Lead enriched: Phone + email verified · Phoenix, AZ',
+    'CRM updated: 3 new contacts added to pipeline',
+    'New lead found: PM company posting jobs · Cleveland, OH',
+    'Email sent: Follow-up sequence Day 3 · Dallas, TX',
+    'Market scan complete: 12 new leads ranked',
+    'Warm reply flagged: "Tell me more about pricing" · Charlotte, NC',
+    'Lead enriched: LinkedIn + email verified · Seattle, WA',
+  ];
+  let leads = 28, emails = 14, replies = 2, markets = 4, idx = 0;
+  const tick = () => {
+    const r = Math.random();
+    if (r < 0.35) { leads++; document.getElementById('la-leads').textContent = leads + ' new owners'; }
+    else if (r < 0.65) { emails++; document.getElementById('la-emails').textContent = emails + ' personalized'; }
+    else if (r < 0.80) { replies++; document.getElementById('la-replies').textContent = replies + ' flagged for you'; }
+    else { markets++; document.getElementById('la-markets').textContent = markets + ' today'; }
+    const ticker = document.getElementById('la-ticker');
+    if (ticker) { ticker.textContent = '→ ' + events[idx % events.length]; idx++; }
+  };
+  document.getElementById('la-leads').textContent = leads + ' new owners';
+  document.getElementById('la-emails').textContent = emails + ' personalized';
+  document.getElementById('la-replies').textContent = replies + ' flagged for you';
+  document.getElementById('la-markets').textContent = markets + ' today';
+  setInterval(tick, 2800);
+})();
 
-    document.getElementById('calcUnitsVal').textContent=fmt(units);
-    document.getElementById('calcMaintVal').textContent=fmt(maint);
-    document.getElementById('calcAppsVal').textContent=fmt(apps);
-    document.getElementById('calcStaffVal').textContent=staff%1===0?staff:staff.toFixed(1);
-    document.getElementById('calcRateVal').textContent=Math.round(rate);
+/* US MAP */
+window.addEventListener('load', () => {
+  const container = document.getElementById('us-map-container');
+  if (!container || typeof d3 === 'undefined' || typeof topojson === 'undefined') return;
 
-    var upnexPerUnit=units<=100?12:(units<=500?10:8);
-    var upnexMonthly=units*upnexPerUnit;
-    var upnexAnnual=upnexMonthly*12;
-    var staffMonthly=staff*rate*40*4.33;
-    var staffAnnual=staff*rate*40*52;
-    var hoursMaint=0.5*maint;
-    var hoursApps=1.5*apps;
-    var hoursTours=0.5*Math.round(units*0.05);
-    var hoursOwner=0.5*(units/20);
-    var totalHours=hoursMaint+hoursApps+hoursTours+hoursOwner;
-    var laborValue=totalHours*rate;
-    var grossMonthlyBenefit=staffMonthly+laborValue;
-    var monthlySavings=grossMonthlyBenefit-upnexMonthly;
-    var annualSavings=monthlySavings*12;
-    var roi=upnexAnnual>0?Math.round((annualSavings/upnexAnnual)*100):0;
-    var payback=monthlySavings>0?(upnexMonthly/monthlySavings):0;
+  const activeFIPS = new Set(['39','34','36','12','47','37','45','05','53','48','42','13']);
+  const stateAbbr = {'01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT','10':'DE',
+    '11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL','18':'IN','19':'IA','20':'KS',
+    '21':'KY','22':'LA','23':'ME','24':'MD','25':'MA','26':'MI','27':'MN','28':'MS','29':'MO',
+    '30':'MT','31':'NE','32':'NV','33':'NH','34':'NJ','35':'NM','36':'NY','37':'NC','38':'ND',
+    '39':'OH','40':'OK','41':'OR','42':'PA','44':'RI','45':'SC','46':'SD','47':'TN','48':'TX',
+    '49':'UT','50':'VT','51':'VA','53':'WA','54':'WV','55':'WI','56':'WY'};
 
-    var edgeCase=document.getElementById('calcEdgeCase');
-    edgeCase.style.display=units<50?'block':'none';
+  const w = container.offsetWidth || 500;
 
-    var hoursEl=document.getElementById('calcHours');
-    var monthEl=document.getElementById('calcMonthlySavings');
-    var annEl=document.getElementById('calcAnnualSavings');
-    var roiEl=document.getElementById('calcROI');
-    var pbEl=document.getElementById('calcPayback');
-    var ccEl=document.getElementById('calcCurrentCost');
-    var ucEl=document.getElementById('calcUpnexCost');
-    var ahEl=document.getElementById('calcAnnualHours');
+  const svg = d3.select(container).append('svg')
+    .attr('viewBox', '0 0 960 560')
+    .attr('width', '100%')
+    .attr('style', 'display:block;');
 
-    animateNum(hoursEl,Math.round(totalHours));
-    monthEl.textContent=monthlySavings>=0?'$'+fmt(monthlySavings):'-$'+fmt(Math.abs(monthlySavings));
-    monthEl.style.color=monthlySavings>=0?'var(--green)':'var(--coral)';
-    annEl.textContent=annualSavings>=0?'$'+fmt(annualSavings):'-$'+fmt(Math.abs(annualSavings));
-    annEl.style.color=annualSavings>=0?'var(--green)':'var(--coral)';
-    roiEl.textContent=roi+'%';
-    pbEl.textContent=payback>0?payback.toFixed(1)+' mo':'< 1 mo';
-    ccEl.textContent='$'+fmt(staffAnnual);
-    ucEl.textContent='$'+fmt(upnexAnnual);
-    ahEl.textContent=fmt(totalHours*12)+' hrs';
-  }
+  const projection = d3.geoAlbersUsa().scale(1200).translate([480, 280]);
+  const path = d3.geoPath(projection);
 
-  ['calcUnits','calcMaint','calcApps','calcStaff','calcRate'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(!el)return;
-    el.addEventListener('input',function(){
-      calcROI();
-    });
+  const tooltip = d3.select(container).append('div')
+    .style('position','absolute').style('pointer-events','none')
+    .style('background','rgba(10,10,20,0.92)').style('border','1px solid rgba(34,197,94,0.3)')
+    .style('color','#fff').style('font-size','12px').style('padding','6px 12px')
+    .style('border-radius','8px').style('opacity','0').style('transition','opacity 0.15s')
+    .style('white-space','nowrap').style('z-index','10');
+
+  d3.select(container).style('position','relative');
+
+  d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
+    const features = topojson.feature(us, us.objects.states).features;
+    svg.selectAll('path')
+      .data(features)
+      .join('path')
+      .attr('d', path)
+      .attr('fill', d => {
+        const id = String(d.id).padStart(2,'0');
+        return activeFIPS.has(id) ? 'rgba(34,197,94,0.65)' : 'rgba(255,255,255,0.06)';
+      })
+      .attr('stroke', d => {
+        const id = String(d.id).padStart(2,'0');
+        return activeFIPS.has(id) ? 'rgba(34,197,94,1)' : 'rgba(255,255,255,0.12)';
+      })
+      .attr('stroke-width', d => {
+        const id = String(d.id).padStart(2,'0');
+        return activeFIPS.has(id) ? '1.5' : '0.5';
+      })
+      .style('cursor', d => {
+        const id = String(d.id).padStart(2,'0');
+        return activeFIPS.has(id) ? 'pointer' : 'default';
+      })
+      .on('mouseover', function(event, d) {
+        const id = String(d.id).padStart(2,'0');
+        if (activeFIPS.has(id)) {
+          d3.select(this).attr('fill','rgba(34,197,94,0.9)');
+          tooltip.style('opacity','1').text('✓ Active — ' + (stateAbbr[id] || id));
+        }
+      })
+      .on('mousemove', function(event) {
+        const rect = container.getBoundingClientRect();
+        tooltip.style('left', (event.clientX - rect.left + 12) + 'px')
+               .style('top', (event.clientY - rect.top - 28) + 'px');
+      })
+      .on('mouseout', function(event, d) {
+        const id = String(d.id).padStart(2,'0');
+        d3.select(this).attr('fill', activeFIPS.has(id) ? 'rgba(34,197,94,0.65)' : 'rgba(255,255,255,0.06)');
+        tooltip.style('opacity','0');
+      });
+
+    svg.append('text')
+      .attr('x', 480).attr('y', 540)
+      .attr('text-anchor','middle')
+      .attr('fill','rgba(255,255,255,0.25)')
+      .attr('font-size','11px')
+      .text('12 active states — hover to explore');
+  }).catch(() => {
+    container.innerHTML = '<div style="padding:16px;font-size:13px;color:rgba(255,255,255,0.3);text-align:center;">Map loading...</div>';
+  });
+});
+
+/* CHART */
+window.addEventListener('load', () => {
+  const ctx = document.getElementById('growthChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['LS Properties — PA', 'TX Pod — Texas', 'Raut Properties'],
+      datasets: [
+        {
+          label: 'Before UpneX',
+          data: [150, 100, 2],
+          backgroundColor: 'rgba(255,255,255,0.08)',
+          borderColor: 'rgba(255,255,255,0.15)',
+          borderWidth: 1,
+          borderRadius: 6
+        },
+        {
+          label: 'After UpneX',
+          data: [225, 175, 35],
+          backgroundColor: ['rgba(34,197,94,0.7)', 'rgba(96,165,250,0.7)', 'rgba(251,191,36,0.7)'],
+          borderColor: ['rgba(34,197,94,1)', 'rgba(96,165,250,1)', 'rgba(251,191,6,1)'],
+          borderWidth: 1,
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a2e',
+          titleColor: '#fff',
+          bodyColor: 'rgba(255,255,255,0.7)',
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: 'rgba(255,255,255,0.45)', font: { size: 13 } }
+        },
+        y: {
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: 'rgba(255,255,255,0.45)', font: { size: 12 } }
+        }
+      }
+    }
   });
 
-  calcROI();
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:20px;margin-bottom:10px;font-size:12px;color:rgba(255,255,255,0.45);';
+  legend.innerHTML = `
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:2px;background:rgba(255,255,255,0.15);display:inline-block;"></span>Before UpneX</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;border-radius:2px;background:rgba(34,197,94,0.7);display:inline-block;"></span>After UpneX</span>
+  `;
+  ctx.parentElement.insertBefore(legend, ctx);
+});
+
+/* ROI CALCULATOR */
+(function() {
+  function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+
+  function fmtHrs(h) {
+    const r = Math.round(h);
+    return r + ' hr' + (r !== 1 ? 's' : '');
+  }
+
+  function fmtSpeed(hrs) {
+    if (hrs < 1) return Math.round(hrs * 60) + ' min';
+    if (hrs === 1) return '1 hr';
+    return hrs % 1 === 0 ? hrs + ' hrs' : hrs.toFixed(1) + ' hrs';
+  }
+
+  function calc() {
+    const maint  = parseInt(document.getElementById('sMaint').value);
+    const staff  = parseInt(document.getElementById('sStaff').value);
+    const rate   = parseFloat(document.getElementById('sRate').value);
+    const apps   = parseInt(document.getElementById('sApps').value);
+    const guest  = parseInt(document.getElementById('sGuest').value);
+    const speed  = parseFloat(document.getElementById('sSpeed').value);
+
+    // update display values
+    document.getElementById('vMaint').textContent = maint;
+    document.getElementById('vStaff').textContent = staff;
+    document.getElementById('vRate').textContent  = Math.round(rate);
+    document.getElementById('vApps').textContent  = apps;
+    document.getElementById('vGuest').textContent = guest;
+    document.getElementById('vSpeed').textContent = speed % 1 === 0 ? speed : speed.toFixed(1);
+
+    // time saved estimates (hrs/month)
+    const tMaint = maint * 0.45;       // 27 min avg per request (triage + vendor + update)
+    const tApps  = apps  * 0.75;       // 45 min per application
+    const tGuest = guest * 0.35;       // 21 min per guest card follow-up + scheduling
+    const tAdmin = staff * 8;          // 8 hrs/month general admin per staff member freed
+    const tTotal = tMaint + tApps + tGuest + tAdmin;
+
+    const monthlySavings = tTotal * rate;
+    const annualSavings  = monthlySavings * 12;
+
+    // lead capture multiplier based on speed improvement
+    const leadMulti = speed >= 4 ? '3×' : speed >= 2 ? '2×' : '1.5×';
+
+    // speed display
+    document.getElementById('rSpeedFrom').textContent = fmtSpeed(speed);
+    document.getElementById('rHours').textContent     = fmt(tTotal);
+    document.getElementById('rMonthly').textContent   = '$' + fmt(monthlySavings);
+    document.getElementById('rAnnual').textContent    = '$' + fmt(annualSavings);
+    document.getElementById('rLeads').textContent     = '↑ ' + leadMulti;
+
+    document.getElementById('bMaint').textContent = fmtHrs(tMaint);
+    document.getElementById('bApps').textContent  = fmtHrs(tApps);
+    document.getElementById('bGuest').textContent = fmtHrs(tGuest);
+    document.getElementById('bAdmin').textContent = fmtHrs(tAdmin);
+    document.getElementById('bTotal').textContent = fmtHrs(tTotal);
+  }
+
+  ['sMaint','sStaff','sRate','sApps','sGuest','sSpeed'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calc);
+  });
+
+  calc();
 })();
 </script>
-
 </body>
 </html>
