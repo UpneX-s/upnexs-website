@@ -1310,6 +1310,226 @@ section[id] { scroll-margin-top: 5rem; }
 .footer-legal a:hover { color: rgba(247,246,242,0.7); }
 
 /* ===================================
+   FOUNDER / ABOUT AMIT
+=================================== */
+.founder-section {
+  background: #faf9f6;
+  padding-block: var(--section-py);
+  border-top: 1px solid var(--ink-10);
+}
+
+.founder-inner {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: clamp(3rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.founder-photo-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-photo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.founder-photo-placeholder {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  background: #e8e5de;
+  border-radius: var(--radius);
+  border: 1px solid var(--ink-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--ink);
+  text-align: center;
+  padding: 2rem;
+}
+
+.founder-photo-placeholder svg { opacity: 0.3; }
+
+.founder-photo-placeholder span {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-60);
+}
+
+.founder-photo-placeholder small {
+  font-size: 0.6875rem;
+  color: rgba(10,11,13,0.35);
+  line-height: 1.55;
+}
+
+.founder-photo-img {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--radius);
+  border: 1px solid var(--ink-10);
+  box-shadow: 0 4px 24px rgba(10,11,13,0.1);
+}
+
+.founder-bio-col h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.founder-title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--blue);
+  margin-bottom: 1.5rem !important;
+  margin-top: 0 !important;
+}
+
+.founder-bio-col > p {
+  font-size: 1rem;
+  line-height: 1.72;
+  color: var(--ink-60);
+  margin-bottom: 1rem;
+}
+
+.founder-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--ink-10);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-block: 1.875rem;
+}
+
+.founder-stat {
+  background: #fff;
+  padding: 1.125rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.founder-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.founder-stat-num.pending {
+  font-size: 0.75rem;
+  color: rgba(10,11,13,0.28);
+  font-weight: 600;
+  letter-spacing: 0;
+  font-style: italic;
+  font-family: var(--font-body);
+}
+
+.founder-stat-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--ink-60);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.1rem;
+}
+
+.founder-credentials {
+  margin-bottom: 1.875rem;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--ink-10);
+  border-radius: var(--radius);
+}
+
+.founder-credentials h3 {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(10,11,13,0.35);
+  margin-bottom: 1rem;
+}
+
+.founder-credentials ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  list-style: none;
+}
+
+.founder-credentials li {
+  font-size: 0.9375rem;
+  color: var(--ink-60);
+  padding-left: 1.25rem;
+  position: relative;
+  line-height: 1.55;
+}
+
+.founder-credentials li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blue);
+  flex-shrink: 0;
+}
+
+.founder-credentials li em {
+  font-style: italic;
+  color: rgba(10,11,13,0.32);
+}
+
+.founder-cta {
+  display: flex;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .founder-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .founder-photo-col {
+    align-items: center;
+  }
+
+  .founder-photo-wrap,
+  .founder-photo-placeholder,
+  .founder-photo-img {
+    max-width: 260px;
+  }
+
+  .founder-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .founder-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===================================
    SCROLL REVEAL
 =================================== */
 .reveal-up {
