@@ -206,7 +206,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 
   .sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:60;padding:12px 16px;background:rgba(255,255,255,0.96);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid #E5E7EB;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
   .sticky-cta.visible{transform:translateY(0)}
-  @media(min-width:768px){.sticky-cta{display:none !important}}
+  @media(min-width:768px){.sticky-cta{max-width:420px;right:24px;left:auto;border-radius:14px 14px 0 0;border:1.5px solid #E5E7EB;border-bottom:none;box-shadow:0 -4px 24px rgba(0,0,0,0.1)}}
 
   .spinner{width:36px;height:36px;border:3px solid #E5E7EB;border-top-color:#0F62FE;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
   @keyframes spin{to{transform:rotate(360deg)}}
