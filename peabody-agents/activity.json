@@ -5,6 +5,57 @@
     "totalDays": 15,
     "midCheckDay": 7
   },
+  "engagement": {
+    "liveSince": "2026-06-16",
+    "status": "Active"
+  },
+  "phases": [
+    { "key": "design",  "label": "Design",      "color": "#7c4dff" },
+    { "key": "dev",     "label": "Development",  "color": "#0066cc" },
+    { "key": "test",    "label": "Testing",      "color": "#e0951b" },
+    { "key": "deploy",  "label": "Deployment",   "color": "#14a0a0" },
+    { "key": "prod",    "label": "Production",   "color": "#1faa59" },
+    { "key": "maint",   "label": "Maintenance",  "color": "#7b8aa0" },
+    { "key": "update",  "label": "Update",       "color": "#3d8bff" },
+    { "key": "upgrade", "label": "Upgrade",      "color": "#4a3ec9" }
+  ],
+  "columns": [
+    { "key": "planned", "title": "Planned",            "color": "#7c4dff" },
+    { "key": "dev",     "title": "In Development",      "color": "#0066cc" },
+    { "key": "test",    "title": "Testing",            "color": "#e0951b" },
+    { "key": "deploy",  "title": "Deployment",         "color": "#14a0a0" },
+    { "key": "prod",    "title": "Live in Production", "color": "#1faa59" }
+  ],
+  "board": [
+    { "name": "Lead Nurture & Showing Coordinator", "domain": "lead",   "column": "planned", "crossed": ["design"], "blurb": "6-stage inquiry flow from first touch to booked showing.", "when": "Go-live September" },
+    { "name": "Renewal Risk Scoring",               "domain": "lease",  "column": "planned", "crossed": ["design"], "blurb": "Renewal-likelihood score feeding the Renewal agent.", "when": "September" },
+    { "name": "Executive Dashboard",                "domain": "fin",    "column": "planned", "crossed": ["design"], "blurb": "One director-level report aggregating every agent (this view is the interim).", "when": "October" },
+    { "name": "Revenue Leakage",                    "domain": "fin",    "column": "dev",     "crossed": ["design", "dev"], "blurb": "Weekly flag of missed / unbilled revenue with source data.", "when": "Build sprint · August" },
+    { "name": "Operations Orchestrator",            "domain": "ops",    "column": "dev",     "crossed": ["design", "dev"], "blurb": "Intelligence layer above AppFolio — Phase 1: Maintenance.", "when": "Phase 1 · Aug–Sep" },
+    { "name": "Owner Onboarding",                   "domain": "owner",  "column": "test",    "crossed": ["design", "dev", "test", "deploy"], "blurb": "21-item, 7-phase checklist triggered on each new property.", "when": "Live test · 2 properties" },
+    { "name": "Owner Newsletter",                   "domain": "owner",  "column": "deploy",  "crossed": ["design", "dev", "test", "deploy"], "blurb": "Per-owner weekly reports with demand-based pricing guidance.", "when": "Pilot launching" },
+    { "name": "Tenant Screening",                   "domain": "tenant", "column": "prod",    "crossed": ["design", "dev", "test", "deploy", "prod", "maint", "update", "upgrade"], "blurb": "Inquiry-to-screening. 79 applications handled to date.", "when": "Live since Jun 16 · all phases crossed" },
+    { "name": "Lease Renewal",                      "domain": "lease",  "column": "prod",    "crossed": ["design", "dev", "test", "deploy", "prod", "maint", "update"], "blurb": "Owner renewal notices. 32 sent across Sep + Oct cohorts.", "when": "Live since Jun 24" },
+    { "name": "Owner Attrition Report",             "domain": "owner",  "column": "prod",    "crossed": ["design", "dev", "test", "deploy", "prod", "maint", "update"], "blurb": "Weekly Green/Yellow/Red per owner. 295 owners scored.", "when": "Live weekly" },
+    { "name": "Vacancy Intelligence",               "domain": "lead",   "column": "prod",    "crossed": ["design", "dev", "test", "deploy", "prod", "maint", "upgrade"], "blurb": "Weekly vacancy audit + leasing health. Expanding to daily alerts.", "when": "Live weekly · daily upgrade in Aug" }
+  ],
+  "calendar": [
+    { "date": "2026-06-16", "phase": "prod",    "title": "Tenant Screening goes live" },
+    { "date": "2026-06-24", "phase": "prod",    "title": "Lease Renewal goes live" },
+    { "date": "2026-07-09", "phase": "prod",    "title": "Attrition Report — first weekly run" },
+    { "date": "2026-07-13", "phase": "test",    "title": "Onboarding agent enters live test" },
+    { "date": "2026-07-24", "phase": "deploy",  "title": "Newsletter pilot test run (17 owners)" },
+    { "date": "2026-07-27", "phase": "update",  "title": "Dashboard: Kanban + Calendar views" },
+    { "date": "2026-08-04", "phase": "dev",     "title": "Revenue Leakage build sprint" },
+    { "date": "2026-08-11", "phase": "dev",     "title": "Orchestrator Phase 1 (Maintenance)" },
+    { "date": "2026-08-18", "phase": "upgrade", "title": "Vacancy → daily cadence upgrade" },
+    { "date": "2026-08-25", "phase": "prod",    "title": "Newsletter full pilot live" },
+    { "date": "2026-09-08", "phase": "deploy",  "title": "Lead Nurture go-live" },
+    { "date": "2026-09-15", "phase": "deploy",  "title": "Renewal Risk Scoring deploy" },
+    { "date": "2026-09-29", "phase": "prod",    "title": "Quarter review · pricing checkpoint" },
+    { "date": "2026-10-06", "phase": "dev",     "title": "Executive Dashboard full build" },
+    { "date": "2026-10-20", "phase": "prod",    "title": "Full 8-agent program in production" }
+  ],
   "agents": [
     {
       "name": "Tenant Screening Agent",
@@ -16,13 +67,12 @@
     },
     {
       "name": "Lease Renewal Agent",
-      "status": "ON_HOLD",
-      "domain": "tenant",
+      "status": "LIVE",
+      "domain": "lease",
       "description": "Manages the full lease renewal cycle \u2014 expiration notices, follow-ups, and owner approval.",
-      "blockedReason": "Awaiting Kelly's answers on CMA source + inspection backend + Renewals tab depth",
-      "blockedSince": "2026-06-17",
-      "liveSince": null,
-      "lastEventAt": null
+      "liveSince": "2026-06-24T00:00:00-04:00",
+      "lastEventAt": "2026-07-22T00:00:00-04:00",
+      "metric": "32 owner notices sent \u00b7 Sep + Oct cohorts complete"
     },
     {
       "name": "Owner Attrition Report",
