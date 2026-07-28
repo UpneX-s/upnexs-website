@@ -272,19 +272,15 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
           AI employees handle maintenance, leasing, tenant messages, applications, and back-office ops. 24/7. Inside AppFolio or Buildium. No new software to learn.
         </p>
         <div class="flex flex-wrap items-center gap-3 mb-6">
-          <button type="button" class="btn btn-trial btn-lg trial-btn" data-cta-source="hero">
-            🎁  Start 7-Day Free Trial
+          <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta>
+            Book Free Demo
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          </button>
-          <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-ghost btn-lg" data-cta="book-demo">
-            📅 Book Free Demo
           </a>
           <a href="#video" class="btn btn-ghost btn-lg">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             Watch 2-Min Demo
           </a>
         </div>
-        <p class="text-xs text-muted mb-6">✓ No credit card &nbsp;·&nbsp; ✓ Zero setup &nbsp;·&nbsp; ✓ First AI agent live in 24 hours</p>
         <div class="flex items-center gap-3 text-sm text-muted">
           <div class="flex -space-x-2">
             <div class="avatar bg-brand" style="width:28px;height:28px;font-size:12px;border:2px solid white">J</div>
@@ -706,15 +702,11 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
       </div>
 
       <div class="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
-        <p class="text-white/60 text-sm">Ready to see these numbers on <em class="text-white not-italic font-semibold">your</em> portfolio?</p>
-        <div class="flex flex-wrap items-center gap-3">
-          <button type="button" class="btn btn-trial trial-btn" data-cta-source="roi" style="padding:14px 24px">
-            🎁  Start 7-Day Free Trial
-          </button>
-          <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn" style="background:transparent;color:#FFF;border:1px solid rgba(255,255,255,0.25);padding:14px 24px">
-            📅 Book Demo
-          </a>
-        </div>
+        <p class="text-white/60 text-sm">Estimates based on typical mid-market PM operators. Actual savings vary by portfolio and workflow.</p>
+        <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn" style="background:#2ED3B7;color:#111827;box-shadow:0 4px 16px rgba(46,211,183,0.4);padding:14px 24px">
+          See it live on your portfolio
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
       </div>
     </div>
   </div>
@@ -1011,15 +1003,6 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
       <div style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#FCA5A5;color:#7F1D1D;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:1px">?</div>
       <span>How many hours did your team spend on admin last week? Multiply by $30/hr. That's your weekly AI-delay cost.</span>
     </div>
-    <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-      <button type="button" class="btn btn-trial btn-lg trial-btn" data-cta-source="cost-of-waiting">
-        🎁  Stop Overpaying — Start Free Trial
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-      </button>
-      <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-lg" style="background:transparent;color:#7F1D1D;border:1px solid #FCA5A5;padding:14px 22px">
-        📅 Book a Call
-      </a>
-    </div>
   </div>
 </section>
 
@@ -1205,14 +1188,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
 
 <!-- ============ STICKY MOBILE CTA ============ -->
 <div id="stickyCta" class="sticky-cta">
-  <div class="flex gap-2">
-    <button type="button" class="btn btn-trial flex-1 trial-btn" data-cta-source="sticky-mobile" style="padding:12px 16px;font-size:14px">
-      🎁 Start Free Trial
-    </button>
-    <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-ghost" style="padding:12px 16px;font-size:14px;flex-shrink:0" aria-label="Book Free Demo">
-      📅
-    </a>
-  </div>
+  <a href="https://calendly.com/hari-upnexs/30min" target="_blank" rel="noopener" class="btn btn-primary w-full">📅  Book Free Demo</a>
 </div>
 
 <!-- ============ TRIAL MODAL (full field set) ============ -->
@@ -1553,18 +1529,6 @@ function fireConfetti() {
   })();
 }
 
-// ============ TRIAL CTAs — wire every .trial-btn to open the modal ============
-document.querySelectorAll('.trial-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const source = btn.dataset.ctaSource || 'unknown';
-    console.log('[UpneX] Trial CTA clicked from:', source);
-    if (typeof UpneX !== 'undefined' && UpneX.track) UpneX.track('trial_cta_clicked', { source });
-    if (typeof gtag !== 'undefined') gtag('event', 'trial_cta_click', { cta_source: source });
-    openTrialModal();
-  });
-});
-
 // ============ TRIAL FORM SUBMIT ============
 trialForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -1578,19 +1542,7 @@ trialForm.addEventListener('submit', (e) => {
     document.body.style.overflow = 'hidden';
     fireConfetti();
     setTimeout(fireConfetti, 700);
-    // Meta Pixel StartTrial
     if (typeof fbq !== 'undefined') fbq('track', 'StartTrial', { value: 0, currency: 'USD' });
-    // Google Ads conversion — TODO: replace {TRIAL_LABEL} with the label from Google Ads → Conversions
-    // Setup: https://ads.google.com → Tools → Conversions → New conversion action → Website → "Start Trial"
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'conversion', {
-        send_to: 'AW-18312920511/{TRIAL_LABEL}',
-        value: 0,
-        currency: 'USD'
-      });
-      // Also fire as a generic GA4 sign_up event for analytics
-      gtag('event', 'sign_up', { method: 'trial_form' });
-    }
     UpneX.track('trial_form_submitted');
   });
 });
