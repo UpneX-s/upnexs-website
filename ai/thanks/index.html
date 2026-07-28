@@ -160,10 +160,9 @@ var ro = new IntersectionObserver(function(es) {
 }, {threshold:0.06, rootMargin:'0px 0px -10px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
 
-// Init analytics — booking_completed fires automatically via ?booked=1 detection in analytics.js
-// Also fires explicitly here as belt-and-suspenders (dedup prevents double-counting)
+// initAnalytics calls setupCalendly() which detects ?booked=1 and fires trackBookingCompleted.
+// No explicit call here — firing unconditionally would create false conversions on direct navigation.
 initAnalytics({page_name:'Thank You — Booking Confirmed', page_type:'conversion_page'});
-UpneX.trackBookingCompleted('thank_you_page');
 </script>
 </body>
 </html>
