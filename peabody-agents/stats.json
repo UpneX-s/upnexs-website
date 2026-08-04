@@ -1,11 +1,16 @@
 {
   "updated": "2026-08-04",
-  "screened": 81,
+  "screened": 82,
   "approved": 46,
   "review": 4,
-  "declined": 32,
+  "declined": 33,
   "avg_turnaround": "Minutes from submission",
   "recent": [
+    {
+      "date": "Aug 04, 2026",
+      "outcome": "DECLINE",
+      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
+    },
     {
       "date": "Aug 04, 2026",
       "outcome": "APPROVE",
@@ -39,11 +44,6 @@
     {
       "date": "Jul 28, 2026",
       "outcome": "APPROVE",
-      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
-    },
-    {
-      "date": "Jul 28, 2026",
-      "outcome": "DECLINE",
       "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
     }
   ]
