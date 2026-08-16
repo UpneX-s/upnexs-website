@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free AI Ops Diagnostic — For AOA Members</title>
+<meta name="description" content="Find out the 3 AI workflows that will save YOUR rental portfolio the most time — personalized report delivered in 24 hours. Free for AOA members." />
+<link rel="canonical" href="https://upnexs.com/aoa" />
+
+<!-- Open Graph -->
+<meta property="og:type"        content="website" />
+<meta property="og:url"         content="https://upnexs.com/aoa" />
+<meta property="og:title"       content="Free AI Ops Diagnostic — For AOA Members" />
+<meta property="og:description" content="The 3 AI workflows that will save YOUR portfolio the most time — personalized report in 24 hrs." />
+<meta property="og:site_name"   content="UpneX" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy:   '#1a3a5c',
+          navydk: '#122a45',
+          orange: '#ff6b1a',
+          orangedk:'#e55c0f',
+          ink:    '#111827',
+          muted:  '#6B7280',
+          line:   '#E5E7EB',
+          cream:  '#fef9f6',
+        },
+        fontFamily: { sans: ['Inter', 'sans-serif'] }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  .gradient-hero { background: linear-gradient(135deg, #1a3a5c 0%, #122a45 60%, #0d1e30 100%); }
+  .form-card { box-shadow: 0 4px 40px rgba(26,58,92,0.12); }
+  .badge { background: rgba(255,107,26,0.12); color: #ff6b1a; }
+  select, textarea, input[type="text"], input[type="email"], input[type="tel"] {
+    background-color: #fff;
+    border: 1.5px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.15s;
+    color: #111827;
+    -webkit-appearance: none;
+  }
+  select:focus, textarea:focus, input:focus { outline: none; border-color: #ff6b1a; box-shadow: 0 0 0 3px rgba(255,107,26,0.15); }
+  .checkbox-row { display: flex; align-items: flex-start; gap: 0.625rem; cursor: pointer; }
+  .checkbox-row input[type="checkbox"] { width: 1.125rem; height: 1.125rem; accent-color: #ff6b1a; margin-top: 0.15rem; flex-shrink: 0; }
+  .step-dot { width: 1.75rem; height: 1.75rem; border-radius: 50%; background: #ff6b1a; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; flex-shrink: 0; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.5s ease forwards; }
+</style>
+</head>
+<body class="bg-cream font-sans">
+
+<!-- ===== HERO ===== -->
+<section class="gradient-hero text-white px-5 pt-10 pb-14">
+  <div class="max-w-xl mx-auto">
+    <!-- Logo row -->
+    <div class="flex items-center gap-2 mb-8">
+      <span class="text-orange font-black text-xl tracking-tight">UpneX</span>
+      <span class="text-white/30 text-sm">|</span>
+      <span class="text-white/70 text-sm font-medium">For AOA Members</span>
+    </div>
+
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 badge px-3 py-1.5 rounded-full text-sm font-semibold mb-5">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      Free for AOA Members · Personalized in 24 hrs
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-3xl sm:text-4xl font-black leading-tight mb-4">
+      AI Ops Diagnostic<br/>
+      <span class="text-orange">for Your Rental Portfolio</span>
+    </h1>
+    <p class="text-white/75 text-lg leading-relaxed mb-8">
+      The 3 AI workflows that will save <em>your</em> portfolio the most time — personalized based on your properties, software, and biggest pain points. Delivered to your inbox in 24 hours.
+    </p>
+
+    <!-- What you get -->
+    <div class="space-y-3 mb-8">
+      <div class="flex items-start gap-3">
+        <div class="step-dot mt-0.5">1</div>
+        <div>
+          <p class="font-semibold text-white">Personalized workflow audit</p>
+          <p class="text-white/60 text-sm">Based on your unit count, software, and time drains</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="step-dot mt-0.5">2</div>
+        <div>
+          <p class="font-semibold text-white">Top 3 AI workflows ranked for your portfolio</p>
+          <p class="text-white/60 text-sm">With estimated hours/month saved for each</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="step-dot mt-0.5">3</div>
+        <div>
+          <p class="font-semibold text-white">Implementation roadmap</p>
+          <p class="text-white/60 text-sm">What it looks like to actually deploy these — no tech headaches</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="#form" class="block w-full text-center bg-orange hover:bg-orangedk text-white font-bold text-lg py-4 rounded-xl transition-colors">
+      Get My Free Diagnostic →
+    </a>
+    <p class="text-white/40 text-xs text-center mt-3">90 seconds to fill out. No spam. Just your personalized report.</p>
+  </div>
+</section>
+
+<!-- ===== FORM SECTION ===== -->
+<section id="form" class="px-5 py-10">
+  <div class="max-w-xl mx-auto">
+
+    <!-- Card -->
+    <div id="form-card" class="bg-white rounded-2xl form-card p-7 sm:p-9">
+      <h2 class="text-2xl font-black text-navy mb-1">Tell us about your portfolio</h2>
+      <p class="text-muted text-sm mb-7">Takes about 90 seconds. Your report is personalized based on your answers.</p>
+
+      <form id="aoa-form" class="space-y-6">
+
+        <!-- Q1: Name + Email -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-1.5">First name <span class="text-orange">*</span></label>
+            <input type="text" name="first_name" required placeholder="Sarah" autocomplete="given-name" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-1.5">Last name <span class="text-orange">*</span></label>
+            <input type="text" name="last_name" required placeholder="Johnson" autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-1.5">Email address <span class="text-orange">*</span></label>
+          <input type="email" name="email" required placeholder="sarah@example.com" autocomplete="email" />
+          <p class="text-xs text-muted mt-1">Your diagnostic is delivered here within 24 hours</p>
+        </div>
+
+        <!-- Q2: Phone -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-1.5">Phone number <span class="text-muted font-normal">(optional)</span></label>
+          <input type="tel" name="phone" placeholder="(555) 000-0000" autocomplete="tel" />
+        </div>
+
+        <!-- Q3: Unit count -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-1.5">How many units do you own or manage? <span class="text-orange">*</span></label>
+          <select name="units" required>
+            <option value="" disabled selected>Select your portfolio size</option>
+            <option value="1-4">1–4 units</option>
+            <option value="5-10">5–10 units</option>
+            <option value="11-20">11–20 units</option>
+            <option value="21-50">21–50 units</option>
+            <option value="50+">50+ units</option>
+          </select>
+        </div>
+
+        <!-- Q4: Software -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-1.5">What property management software are you using? <span class="text-orange">*</span></label>
+          <select name="software" required>
+            <option value="" disabled selected>Select your software</option>
+            <option value="AppFolio">AppFolio</option>
+            <option value="Buildium">Buildium</option>
+            <option value="Property Manager Cloud">Property Manager Cloud (PMC)</option>
+            <option value="Rent Manager">Rent Manager</option>
+            <option value="Yardi">Yardi</option>
+            <option value="DoorLoop">DoorLoop</option>
+            <option value="None/Spreadsheets">None / Spreadsheets</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <!-- Q5: Time drains (multi-select) -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-3">Which of these eats the most time in your week? <span class="text-orange">*</span> <span class="text-muted font-normal">(select all that apply)</span></label>
+          <div class="space-y-2.5" id="pain-checkboxes">
+            <label class="checkbox-row"><input type="checkbox" name="pain_points" value="Maintenance requests" /><span class="text-ink text-sm">Maintenance requests &amp; follow-ups</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="pain_points" value="Tenant screening" /><span class="text-ink text-sm">Tenant screening &amp; applications</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="pain_points" value="Tenant communication" /><span class="text-ink text-sm">Tenant communication &amp; inquiries</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="pain_points" value="Lease renewals" /><span class="text-ink text-sm">Lease renewals</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="pain_points" value="Owner reporting" /><span class="text-ink text-sm">Owner reporting</span></label>
+            <label class="checkbox-row"><input type="checkbox" name="pain_points" value="Bookkeeping/rent collection" /><span class="text-ink text-sm">Bookkeeping &amp; rent collection</span></label>
+          </div>
+        </div>
+
+        <!-- Q6: Biggest frustration -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-1.5">What's your biggest single frustration right now?</label>
+          <textarea name="frustration" rows="3" maxlength="200" placeholder="e.g. 'I spend all weekend answering tenant texts and I can never get ahead of maintenance requests...'" class="resize-none"></textarea>
+          <p class="text-xs text-muted mt-1">Max 200 characters — this is the most important question for personalizing your report</p>
+        </div>
+
+        <!-- Q7: AOA member -->
+        <div>
+          <label class="block text-sm font-semibold text-ink mb-2">Are you an AOA member?</label>
+          <div class="flex gap-4">
+            <label class="checkbox-row">
+              <input type="radio" name="aoa_member" value="Yes" class="w-4 h-4" style="accent-color:#ff6b1a" />
+              <span class="text-ink text-sm">Yes</span>
+            </label>
+            <label class="checkbox-row">
+              <input type="radio" name="aoa_member" value="No" class="w-4 h-4" style="accent-color:#ff6b1a" />
+              <span class="text-ink text-sm">No, but I'm interested</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="submit-btn" class="w-full bg-orange hover:bg-orangedk text-white font-bold text-lg py-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+          <span id="btn-text">Get My Free Diagnostic →</span>
+          <svg id="btn-spinner" class="hidden w-5 h-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+          </svg>
+        </button>
+        <p id="form-error" class="hidden text-red-600 text-sm text-center mt-2"></p>
+      </form>
+    </div>
+
+    <!-- Success state (hidden initially) -->
+    <div id="success-card" class="hidden bg-white rounded-2xl form-card p-7 sm:p-9 text-center fade-up">
+      <div class="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-5">
+        <svg class="w-9 h-9 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h2 class="text-2xl font-black text-navy mb-2">You're on the list!</h2>
+      <p class="text-muted mb-5">Your personalized AI Ops Diagnostic is being built now. Check your inbox in <strong class="text-navy">24 hours</strong>.</p>
+      <div class="bg-cream border border-line rounded-xl p-4 text-left mb-6">
+        <p class="text-sm font-semibold text-navy mb-1">While you wait — a 4-min walkthrough:</p>
+        <p class="text-sm text-muted">See exactly what an UpneX AI ops stack looks like in a real PM operation: maintenance routing, tenant comms, and lease renewals — all on autopilot.</p>
+        <a href="https://upnexs.com/ai/" class="inline-block mt-3 text-sm font-semibold text-orange hover:text-orangedk underline underline-offset-2">See how it works →</a>
+      </div>
+      <p class="text-xs text-muted">Questions? Email <a href="mailto:hari@upnexs.com" class="text-navy hover:text-orange">hari@upnexs.com</a></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== TRUST ANCHORS ===== -->
+<section class="px-5 pb-12">
+  <div class="max-w-xl mx-auto">
+    <div class="border-t border-line pt-8">
+      <p class="text-xs text-center text-muted uppercase tracking-widest font-semibold mb-6">Trusted by operators running 500+ units</p>
+      <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-4 border border-line text-center">
+          <p class="text-2xl font-black text-navy">500+</p>
+          <p class="text-xs text-muted mt-0.5">Units under management</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 border border-line text-center">
+          <p class="text-2xl font-black text-navy">8–12 hrs</p>
+          <p class="text-xs text-muted mt-0.5">Saved per month, per operator</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 border border-line text-center">
+          <p class="text-2xl font-black text-navy">24 hrs</p>
+          <p class="text-xs text-muted mt-0.5">Report delivery SLA</p>
+        </div>
+        <div class="bg-white rounded-xl p-4 border border-line text-center">
+          <p class="text-2xl font-black text-navy">$0</p>
+          <p class="text-xs text-muted mt-0.5">Cost to AOA members</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-5 border border-line mb-5">
+        <p class="text-sm text-ink italic leading-relaxed mb-2">"UpneX eliminated about 10 hours a week of back-office work for our team. The AI handles maintenance routing, tenant screening communications, and owner reporting automatically."</p>
+        <p class="text-xs font-semibold text-navy">Peabody Residential · 200+ units under management</p>
+      </div>
+
+      <div class="bg-white rounded-xl p-5 border border-line">
+        <p class="text-sm text-ink italic leading-relaxed mb-2">"The owner reporting alone was worth it. What used to take me half a day every week is now a 5-minute review of what the AI already put together."</p>
+        <p class="text-xs font-semibold text-navy">LS Properties · Multi-property portfolio</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-navy text-white/60 text-xs text-center px-5 py-6">
+  <p class="mb-1">Prepared for AOA members by <span class="text-white font-semibold">UpneX Solutions</span></p>
+  <!-- PLACEHOLDER — requires Jeff Faller / AOA approval before publishing with AOA logo/branding -->
+  <p class="text-white/30 mb-3">In collaboration with the Apartment Owners Association of California <span class="text-orange/50">[Pending AOA approval]</span></p>
+  <p><a href="mailto:hari@upnexs.com" class="hover:text-white">hari@upnexs.com</a> &nbsp;·&nbsp; <a href="https://upnexs.com" class="hover:text-white">upnexs.com</a> &nbsp;·&nbsp; <a href="https://upnexs.com/privacy/" class="hover:text-white">Privacy Policy</a></p>
+</footer>
+
+<script>
+// ─── Configuration ───────────────────────────────────────────────
+// Replace with your Google Apps Script Web App URL after deployment
+// See: ~/projects/upnex-aoa-pipeline/gas_webhook.js for the GAS code
+const WEBHOOK_URL = "REPLACE_WITH_GAS_WEBAPP_URL";
+// ─────────────────────────────────────────────────────────────────
+
+const form = document.getElementById("aoa-form");
+const card = document.getElementById("form-card");
+const success = document.getElementById("success-card");
+const submitBtn = document.getElementById("submit-btn");
+const btnText = document.getElementById("btn-text");
+const spinner = document.getElementById("btn-spinner");
+const errMsg = document.getElementById("form-error");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  errMsg.classList.add("hidden");
+
+  // Validate at least one pain point is checked
+  const checked = [...document.querySelectorAll('input[name="pain_points"]:checked')];
+  if (checked.length === 0) {
+    errMsg.textContent = "Please select at least one area that takes up your time.";
+    errMsg.classList.remove("hidden");
+    return;
+  }
+
+  // Loading state
+  submitBtn.disabled = true;
+  btnText.textContent = "Sending...";
+  spinner.classList.remove("hidden");
+
+  const data = {
+    first_name: form.first_name.value.trim(),
+    last_name: form.last_name.value.trim(),
+    email: form.email.value.trim(),
+    phone: form.phone.value.trim(),
+    units: form.units.value,
+    software: form.software.value,
+    pain_points: checked.map(c => c.value).join(", "),
+    frustration: form.frustration.value.trim(),
+    aoa_member: (form.querySelector('input[name="aoa_member"]:checked') || {}).value || "Not specified",
+    source: "aoa-trade-show-2026-08-19",
+    submitted_at: new Date().toISOString()
+  };
+
+  try {
+    if (WEBHOOK_URL === "REPLACE_WITH_GAS_WEBAPP_URL") {
+      // Demo mode — show success without actually submitting
+      await new Promise(r => setTimeout(r, 1200));
+    } else {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+    }
+    card.classList.add("hidden");
+    success.classList.remove("hidden");
+    success.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) {
+    errMsg.textContent = "Something went wrong. Please try again or email hari@upnexs.com";
+    errMsg.classList.remove("hidden");
+    submitBtn.disabled = false;
+    btnText.textContent = "Get My Free Diagnostic →";
+    spinner.classList.add("hidden");
+  }
+});
+
+// Smooth scroll for CTA
+document.querySelectorAll('a[href="#form"]').forEach(a => {
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    document.getElementById("form").scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => document.querySelector('#aoa-form input[name="first_name"]').focus(), 600);
+  });
+});
+</script>
+</body>
+</html>
