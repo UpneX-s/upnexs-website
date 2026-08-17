@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -668,7 +669,13 @@
 
 <script>
 // ─── Config ─────────────────────────────────────────
-const API_BASE = 'https://homeland-mediterranean-uni-corporations.trycloudflare.com';
+// ─── Email config (same channels as /ai pages) ───────
+const EMAILJS_CONFIG = {
+  publicKey:  'cQAXNRskNvru4mu4j',
+  serviceId:  'service_vhcikjr',
+  templateId: 'template_ymh1gz9',
+};
+if (window.emailjs) emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
 
 // ─── Screen routing ──────────────────────────────────
 function goTo(screenName) {
@@ -776,28 +783,65 @@ function sendEmail() {
   spinner.classList.remove('hidden');
   arrow.classList.add('hidden');
 
-  fetch(API_BASE + '/api/demo/send-result', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: name || 'there', email: email }),
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    if (data.ok) {
+  // Two independent delivery channels fire in parallel (same pattern as /ai
+  // pages); the send succeeds if at least one lands.
+  const timestamp = new Date().toLocaleString();
+  const subjectLine = '🔔 Experience Demo Report Request — ' + (name || email);
+  const messageBody =
+    '🔔 Experience Upnex AI — demo report requested\n\n' +
+    'Name:      ' + (name || '—') + '\n' +
+    'Email:     ' + email + '\n' +
+    'Workflow:  Rental Application Screening\n' +
+    'Property:  123 Main Street (sample)\n' +
+    'Applicant: John Miller (sample) — 3.57× income ratio, status Complete\n' +
+    'Submitted: ' + timestamp + '\n\n' +
+    'Send them the screening report and follow up.';
+
+  const emailjsPromise = new Promise(function(resolve) {
+    if (!window.emailjs) return resolve(false);
+    emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+      name: name || email, email: email,
+      from_name: name || email, from_email: email,
+      to_name: 'Hari Sundaram', to_email: 'hari@upnexs.com',
+      reply_to: email, recipient: 'hari@upnexs.com',
+      time: timestamp, timestamp: timestamp,
+      message: messageBody, subject: subjectLine,
+    })
+    .then(function() { console.log('[demo] ✅ EmailJS delivered'); resolve(true); })
+    .catch(function(err) { console.error('[demo] ❌ EmailJS failed:', err); resolve(false); });
+  });
+
+  const formsubmitPromise = new Promise(function(resolve) {
+    try {
+      const fd = new FormData();
+      fd.append('name', name || '');
+      fd.append('email', email);
+      fd.append('workflow', 'Rental Application Screening (demo)');
+      fd.append('_subject', subjectLine);
+      fd.append('_replyto', email);
+      fd.append('_template', 'table');
+      fd.append('_captcha', 'false');
+      fd.append('source', 'upnexs.com/experience');
+      fetch('https://formsubmit.co/ajax/hari@upnexs.com', {
+        method: 'POST', body: fd, headers: { 'Accept': 'application/json' },
+      })
+      .then(function(r) { resolve(r.ok); })
+      .catch(function() { resolve(false); });
+    } catch (e) { resolve(false); }
+  });
+
+  Promise.all([emailjsPromise, formsubmitPromise]).then(function(results) {
+    if (results[0] || results[1]) {
       document.getElementById('email-form').classList.add('hidden');
       document.getElementById('email-success').classList.remove('hidden');
     } else {
-      throw new Error(data.error || 'Send failed');
+      errEl.textContent = 'Something went wrong. Please try again or email hari@upnexs.com directly.';
+      errEl.classList.remove('hidden');
+      btn.disabled = false;
+      btnText.textContent = 'Send Report';
+      spinner.classList.add('hidden');
+      arrow.classList.remove('hidden');
     }
-  })
-  .catch(function(err) {
-    errEl.textContent = 'Something went wrong. Please try again or email hari@upnexs.com directly.';
-    errEl.classList.remove('hidden');
-    btn.disabled = false;
-    btnText.textContent = 'Send Report';
-    spinner.classList.add('hidden');
-    arrow.classList.remove('hidden');
-    console.error('[demo] email error:', err);
   });
 }
 

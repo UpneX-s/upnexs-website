@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -295,10 +296,13 @@
 </footer>
 
 <script>
-// ─── Configuration ───────────────────────────────────────────────
-// Replace with your Google Apps Script Web App URL after deployment
-// See: ~/projects/upnex-aoa-pipeline/gas_webhook.js for the GAS code
-const WEBHOOK_URL = "REPLACE_WITH_GAS_WEBAPP_URL";
+// ─── Email config (same channels as /ai pages) ───────────────────
+const EMAILJS_CONFIG = {
+  publicKey:  'cQAXNRskNvru4mu4j',
+  serviceId:  'service_vhcikjr',
+  templateId: 'template_ymh1gz9',
+};
+if (window.emailjs) emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
 // ─────────────────────────────────────────────────────────────────
 
 const form = document.getElementById("aoa-form");
@@ -341,17 +345,60 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    if (WEBHOOK_URL === "REPLACE_WITH_GAS_WEBAPP_URL") {
-      // Demo mode — show success without actually submitting
-      await new Promise(r => setTimeout(r, 1200));
-    } else {
-      await fetch(WEBHOOK_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-    }
+    // Two independent delivery channels fire in parallel (same pattern as
+    // /ai pages); the submission succeeds if at least one lands.
+    const timestamp = new Date().toLocaleString();
+    const fullName = data.first_name + " " + data.last_name;
+    const subjectLine = "🔔 AOA Diagnostic Request — " + fullName + " (" + (data.units || "?") + " units)";
+    const messageBody =
+      "🔔 New AOA AI Diagnostic request\n\n" +
+      "Name:        " + fullName + "\n" +
+      "Email:       " + data.email + "\n" +
+      "Phone:       " + (data.phone || "—") + "\n" +
+      "Units:       " + (data.units || "—") + "\n" +
+      "Software:    " + (data.software || "—") + "\n" +
+      "Pain points: " + (data.pain_points || "—") + "\n" +
+      "Frustration: " + (data.frustration || "(not provided)") + "\n" +
+      "AOA member:  " + data.aoa_member + "\n" +
+      "Source:      " + data.source + "\n" +
+      "Submitted:   " + timestamp + "\n\n" +
+      "Build and send their personalized diagnostic within 24 hours.";
+
+    const emailjsPromise = new Promise((resolve) => {
+      if (!window.emailjs) return resolve(false);
+      emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+        name: fullName, email: data.email,
+        from_name: fullName, from_email: data.email,
+        to_name: "Hari Sundaram", to_email: "hari@upnexs.com",
+        reply_to: data.email, recipient: "hari@upnexs.com",
+        phone: data.phone, portfolio: data.units,
+        pm_software: data.software, pain_point: data.pain_points,
+        time: timestamp, timestamp: timestamp,
+        message: messageBody, subject: subjectLine,
+      })
+      .then(() => { console.log("[aoa] ✅ EmailJS delivered"); resolve(true); })
+      .catch((err) => { console.error("[aoa] ❌ EmailJS failed:", err); resolve(false); });
+    });
+
+    const formsubmitPromise = new Promise((resolve) => {
+      try {
+        const fd = new FormData();
+        Object.entries(data).forEach(([k, v]) => fd.append(k, v || ""));
+        fd.append("_subject", subjectLine);
+        fd.append("_replyto", data.email);
+        fd.append("_template", "table");
+        fd.append("_captcha", "false");
+        fetch("https://formsubmit.co/ajax/hari@upnexs.com", {
+          method: "POST", body: fd, headers: { "Accept": "application/json" },
+        })
+        .then(r => resolve(r.ok))
+        .catch(() => resolve(false));
+      } catch (e) { resolve(false); }
+    });
+
+    const [ejs, fsub] = await Promise.all([emailjsPromise, formsubmitPromise]);
+    if (!ejs && !fsub) throw new Error("Both email channels failed");
+
     card.classList.add("hidden");
     success.classList.remove("hidden");
     success.scrollIntoView({ behavior: "smooth", block: "start" });
