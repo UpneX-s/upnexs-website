@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Experience Upnex AI</title>
+<meta name="description" content="Watch a real AI automation workflow run from trigger to output. No slideshow. No demo tour." />
+<link rel="canonical" href="https://upnexs.com/experience" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy:    '#1a3a5c',
+          navydk:  '#122a45',
+          orange:  '#ff6b1a',
+          orangedk:'#e55c0f',
+          ink:     '#111827',
+          muted:   '#6B7280',
+          line:    '#E5E7EB',
+          cream:   '#fafafa',
+          softblue:'#eef3f9',
+        },
+        fontFamily: { sans: ['Inter', 'sans-serif'] }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  * { -webkit-font-smoothing: antialiased; }
+  body { background: #fafafa; }
+
+  /* ── Screen transitions ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── Progress dots ── */
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #d1d5db; transition: all 0.3s; }
+  .dot.active { background: #ff6b1a; width: 24px; border-radius: 4px; }
+  .dot.done { background: #1a3a5c; }
+
+  /* ── Timeline step ── */
+  .step-row { display: flex; align-items: flex-start; gap: 14px; opacity: 0.35; transition: all 0.4s ease; }
+  .step-row.complete { opacity: 1; }
+  .step-row.complete .step-icon { background: #059669; border-color: #059669; }
+  .step-row.complete .step-icon svg { display: block; }
+  .step-row.current { opacity: 1; }
+  .step-row.current .step-icon { border-color: #ff6b1a; }
+  .step-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid #d1d5db; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px; transition: all 0.3s;
+  }
+  .step-icon svg { display: none; width: 16px; height: 16px; color: white; }
+  .step-connector { width: 2px; height: 20px; background: #e5e7eb; margin-left: 15px; margin-top: 2px; transition: background 0.3s; }
+  .step-connector.done { background: #059669; }
+
+  /* ── Result CTA fade-in ── */
+  .fade-in { opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+  .fade-in.show { opacity: 1; pointer-events: all; }
+
+  /* ── Card shadow ── */
+  .card-shadow { box-shadow: 0 4px 24px rgba(26,58,92,0.10); }
+
+  /* ── WOW statement ── */
+  .wow-headline { font-size: clamp(28px, 5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+
+  /* ── Email preview ── */
+  .email-preview { border: 1.5px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+  .email-header-bar { background: #f3f4f6; padding: 10px 16px; border-bottom: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; }
+  .email-body-preview { padding: 20px; background: #fff; }
+
+  /* ── Coming next modal ── */
+  #coming-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; align-items: center; justify-content: center; padding: 20px; }
+  #coming-modal.open { display: flex; }
+
+  /* ── Form inputs ── */
+  .field { background: #fff; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 11px 14px; font-size: 15px; width: 100%; transition: border-color 0.15s; color: #111827; font-family: inherit; outline: none; }
+  .field:focus { border-color: #ff6b1a; box-shadow: 0 0 0 3px rgba(255,107,26,0.12); }
+
+  /* ── Spinner (only for async wait) ── */
+  .spinner { width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body class="font-sans">
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 1: LANDING
+════════════════════════════════════════════ -->
+<div id="screen-landing" class="screen active">
+  <!-- Nav bar -->
+  <header class="bg-navy px-5 py-4">
+    <div class="max-w-2xl mx-auto flex items-center justify-between">
+      <a href="https://upnexs.com" class="text-orange font-black text-xl tracking-tight">UpneX</a>
+      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="text-white/70 hover:text-white text-sm font-medium transition-colors">Book a call →</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="px-5 pt-14 pb-10 max-w-2xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 bg-orange/10 text-orange text-sm font-semibold px-3 py-1.5 rounded-full mb-6">
+      <span class="w-2 h-2 rounded-full bg-orange animate-pulse"></span>
+      Live interactive demo
+    </div>
+    <h1 class="text-4xl sm:text-5xl font-black text-ink leading-tight tracking-tight mb-5">
+      See How Upnex AI<br/>Handles Real PM Work
+    </h1>
+    <p class="text-lg text-muted leading-relaxed mb-8 max-w-xl mx-auto">
+      Watch an actual automation workflow run from trigger to output. No slideshow. No demo tour. The work happens in front of you.
+    </p>
+    <button onclick="goTo('chooser')" class="bg-orange hover:bg-orangedk text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors inline-flex items-center gap-2">
+      Choose a Workflow
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </section>
+
+  <!-- Quick proof -->
+  <section class="px-5 pb-14 max-w-2xl mx-auto">
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-white rounded-xl p-4 text-center card-shadow">
+        <p class="text-2xl font-black text-navy">8 sec</p>
+        <p class="text-xs text-muted mt-1">Workflow runtime</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 text-center card-shadow">
+        <p class="text-2xl font-black text-navy">30 sec</p>
+        <p class="text-xs text-muted mt-1">Email in inbox</p>
+      </div>
+      <div class="bg-white rounded-xl p-4 text-center card-shadow">
+        <p class="text-2xl font-black text-navy">0 clicks</p>
+        <p class="text-xs text-muted mt-1">In production</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust footer -->
+  <div class="text-center text-xs text-muted pb-8 px-5">Controlled demonstration using sample property data.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 2: WORKFLOW CHOOSER
+════════════════════════════════════════════ -->
+<div id="screen-chooser" class="screen">
+  <div class="max-w-2xl mx-auto px-5 py-8">
+
+    <!-- Back + progress -->
+    <div class="flex items-center justify-between mb-8">
+      <button onclick="goTo('landing')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back
+      </button>
+      <div class="flex items-center gap-1.5" id="progress-chooser">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="w-10"></div>
+    </div>
+
+    <h2 class="text-2xl font-black text-ink mb-1">Which workflow do you want to see run?</h2>
+    <p class="text-muted text-sm mb-7">One workflow is live today. Five more are in development.</p>
+
+    <!-- Workflow cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+      <!-- Card 1: Rental Application (LIVE) -->
+      <button onclick="startWorkflow('rental')" class="text-left bg-white rounded-2xl p-5 card-shadow border-2 border-orange hover:shadow-lg transition-all group">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <span class="bg-orange text-white text-xs font-bold px-2.5 py-1 rounded-full">Live Demo</span>
+        </div>
+        <h3 class="font-bold text-ink text-base mb-1">Rental Application</h3>
+        <p class="text-xs text-muted leading-relaxed">Screens applicants, evaluates income ratio, prepares owner summary, notifies resident — automatically.</p>
+        <div class="mt-4 flex items-center gap-1 text-orange text-sm font-semibold group-hover:gap-2 transition-all">
+          Run this workflow
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </button>
+
+      <!-- Cards 2-6: Coming next -->
+      <button onclick="showComing('Maintenance Request Routing')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
+            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+        </div>
+        <h3 class="font-bold text-ink text-base mb-1">Maintenance Routing</h3>
+        <p class="text-xs text-muted leading-relaxed">Routes work orders, contacts vendors, and updates tenants without staff involvement.</p>
+      </button>
+
+      <button onclick="showComing('Lease Renewal')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
+            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+        </div>
+        <h3 class="font-bold text-ink text-base mb-1">Lease Renewal</h3>
+        <p class="text-xs text-muted leading-relaxed">Identifies expiring leases, prepares renewal offers, and tracks responses automatically.</p>
+      </button>
+
+      <button onclick="showComing('Tenant Communication')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
+            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+        </div>
+        <h3 class="font-bold text-ink text-base mb-1">Tenant Communication</h3>
+        <p class="text-xs text-muted leading-relaxed">Drafts and sends contextual responses to tenant inquiries using your tone and policies.</p>
+      </button>
+
+      <button onclick="showComing('Move-Out Processing')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
+            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </div>
+          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+        </div>
+        <h3 class="font-bold text-ink text-base mb-1">Move-Out Processing</h3>
+        <p class="text-xs text-muted leading-relaxed">Coordinates inspection, calculates deposit disposition, and sends move-out statements.</p>
+      </button>
+
+      <button onclick="showComing('Move-In Coordination')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
+            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          </div>
+          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+        </div>
+        <h3 class="font-bold text-ink text-base mb-1">Move-In Coordination</h3>
+        <p class="text-xs text-muted leading-relaxed">Sends key packets, utility setup reminders, and welcome messages on move-in day.</p>
+      </button>
+
+    </div>
+
+    <p class="text-center text-xs text-muted mt-6">Controlled demonstration using sample property data.</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 3: AUTOMATION RUNNING
+════════════════════════════════════════════ -->
+<div id="screen-running" class="screen">
+  <div class="max-w-2xl mx-auto px-5 py-8">
+
+    <!-- Back + progress -->
+    <div class="flex items-center justify-between mb-8">
+      <button onclick="goTo('chooser')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back
+      </button>
+      <div class="flex items-center gap-1.5">
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="w-10"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="mb-6">
+      <div class="inline-flex items-center gap-2 text-xs font-semibold text-orange bg-orange/10 px-3 py-1 rounded-full mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange animate-pulse"></span>
+        Rental Application · Running
+      </div>
+      <h2 class="text-2xl font-black text-ink">Automation workflow in progress</h2>
+    </div>
+
+    <!-- Trigger context -->
+    <div class="bg-softblue border border-blue-100 rounded-xl p-4 mb-7 flex items-start gap-3">
+      <div class="w-8 h-8 rounded-lg bg-navy/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+        <svg class="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-navy mb-1">Trigger received</p>
+        <p class="text-sm text-ink">New rental application submitted for <strong>123 Main Street</strong> — Applicant: <strong>John Miller</strong></p>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="bg-white rounded-2xl card-shadow p-6 mb-4" id="timeline-card">
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-5">Automation steps</p>
+
+      <div id="steps-container" class="space-y-0">
+
+        <div class="step-row" id="step-1">
+          <div>
+            <div class="step-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+          </div>
+          <div class="flex-1 pb-5">
+            <p class="font-semibold text-ink text-sm">Application Received</p>
+            <p class="text-xs text-muted mt-0.5">Application detected.</p>
+          </div>
+        </div>
+
+        <div class="step-row" id="step-2">
+          <div>
+            <div class="step-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+          </div>
+          <div class="flex-1 pb-5">
+            <p class="font-semibold text-ink text-sm">Information Processed</p>
+            <p class="text-xs text-muted mt-0.5">Applicant information extracted.</p>
+          </div>
+        </div>
+
+        <div class="step-row" id="step-3">
+          <div>
+            <div class="step-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+          </div>
+          <div class="flex-1 pb-5">
+            <p class="font-semibold text-ink text-sm">Screening Workflow</p>
+            <p class="text-xs text-muted mt-0.5">Screening criteria evaluated.</p>
+          </div>
+        </div>
+
+        <div class="step-row" id="step-4">
+          <div>
+            <div class="step-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+          </div>
+          <div class="flex-1 pb-5">
+            <p class="font-semibold text-ink text-sm">Property Information</p>
+            <p class="text-xs text-muted mt-0.5">Property and lease information checked.</p>
+          </div>
+        </div>
+
+        <div class="step-row" id="step-5">
+          <div>
+            <div class="step-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+          </div>
+          <div class="flex-1 pb-5">
+            <p class="font-semibold text-ink text-sm">AI Summary</p>
+            <p class="text-xs text-muted mt-0.5">Decision-ready summary prepared.</p>
+          </div>
+        </div>
+
+        <div class="step-row" id="step-6">
+          <div>
+            <div class="step-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+          </div>
+          <div class="flex-1">
+            <p class="font-semibold text-ink text-sm">Resident Communication</p>
+            <p class="text-xs text-muted mt-0.5">Applicant notification prepared.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Results button (hidden until complete) -->
+      <div id="results-btn" class="fade-in mt-7 pt-5 border-t border-line">
+        <button onclick="goTo('owner')" class="w-full bg-orange hover:bg-orangedk text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2">
+          View Results
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Trust copy -->
+    <div class="bg-gray-50 border border-line rounded-xl p-4 text-xs text-muted leading-relaxed">
+      <strong class="text-gray-600">Controlled demonstration.</strong> This is a controlled demonstration using sample data. In production, the application itself would trigger the workflow automatically. Your team would not need to open this page or click Start.
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 4: OWNER OUTPUT
+════════════════════════════════════════════ -->
+<div id="screen-owner" class="screen">
+  <div class="max-w-2xl mx-auto px-5 py-8">
+
+    <!-- Back + progress -->
+    <div class="flex items-center justify-between mb-8">
+      <button onclick="goTo('running')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back
+      </button>
+      <div class="flex items-center gap-1.5">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="w-10"></div>
+    </div>
+
+    <div class="mb-2">
+      <span class="text-xs font-semibold text-green-700 bg-green-50 px-3 py-1 rounded-full">Workflow complete</span>
+    </div>
+    <h2 class="text-2xl font-black text-ink mb-1 mt-3">AI-Prepared Owner Summary</h2>
+    <p class="text-sm text-muted mb-6">The applicant's stated income meets the configured demonstration criteria.</p>
+
+    <!-- Summary card -->
+    <div class="bg-white rounded-2xl card-shadow overflow-hidden mb-4">
+      <!-- Card header -->
+      <div class="bg-navy px-6 py-4">
+        <p class="text-xs font-semibold text-white/60 uppercase tracking-widest mb-0.5">Screening Summary</p>
+        <p class="text-white font-bold text-base">123 Main Street · Application #DEMO-001</p>
+      </div>
+      <!-- Summary rows -->
+      <div class="divide-y divide-line">
+        <div class="flex items-center justify-between px-6 py-3.5">
+          <span class="text-sm font-medium text-muted">Applicant</span>
+          <span class="text-sm font-semibold text-ink">John Miller</span>
+        </div>
+        <div class="flex items-center justify-between px-6 py-3.5">
+          <span class="text-sm font-medium text-muted">Monthly Rent</span>
+          <span class="text-sm font-semibold text-ink">$2,100</span>
+        </div>
+        <div class="flex items-center justify-between px-6 py-3.5">
+          <span class="text-sm font-medium text-muted">Monthly Income</span>
+          <span class="text-sm font-semibold text-ink">$7,500</span>
+        </div>
+        <div class="flex items-center justify-between px-6 py-3.5">
+          <span class="text-sm font-medium text-muted">Income-to-Rent</span>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-ink">3.57×</span>
+            <span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Meets 3× min</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between px-6 py-3.5">
+          <span class="text-sm font-medium text-muted">Application</span>
+          <span class="text-sm font-semibold text-green-600">Complete</span>
+        </div>
+        <div class="flex items-center justify-between px-6 py-4 bg-orange/5">
+          <span class="text-sm font-bold text-ink">AI Recommendation</span>
+          <span class="text-sm font-bold text-orange">Review</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-xs text-muted mb-6">Your property manager would see this summary immediately after the application is submitted. No one needed to run a report or check a system.</p>
+
+    <button onclick="goTo('email')" class="w-full bg-navy hover:bg-navydk text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2 mb-3">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      Send This Summary to My Email
+    </button>
+    <p class="text-center text-xs text-muted">Demonstration output — sent from sample data.</p>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 5: EMAIL CAPTURE
+════════════════════════════════════════════ -->
+<div id="screen-email" class="screen">
+  <div class="max-w-2xl mx-auto px-5 py-8">
+
+    <!-- Back + progress -->
+    <div class="flex items-center justify-between mb-8">
+      <button onclick="goTo('owner')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back
+      </button>
+      <div class="flex items-center gap-1.5">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="w-10"></div>
+    </div>
+
+    <h2 class="text-2xl font-black text-ink mb-1">Where should we send your copy?</h2>
+    <p class="text-sm text-muted mb-7">The same screening summary you just saw — delivered to your inbox in the next 30 seconds.</p>
+
+    <div class="bg-white rounded-2xl card-shadow p-6">
+      <div id="email-form">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-1.5">First name</label>
+            <input type="text" id="input-name" class="field" placeholder="Your name" autocomplete="given-name" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-ink mb-1.5">Email address <span class="text-orange">*</span></label>
+            <input type="email" id="input-email" class="field" placeholder="you@yourcompany.com" autocomplete="email" />
+          </div>
+        </div>
+        <p id="email-error" class="text-red-500 text-sm mt-3 hidden"></p>
+        <button onclick="sendEmail()" id="send-btn" class="w-full bg-orange hover:bg-orangedk text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2 mt-5">
+          <span id="send-btn-text">Send Report</span>
+          <span id="send-spinner" class="hidden"><div class="spinner"></div></span>
+          <svg id="send-arrow" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <p class="text-xs text-muted text-center mt-3">Demonstration output — sent from sample data.</p>
+      </div>
+
+      <!-- Success state -->
+      <div id="email-success" class="hidden text-center py-4">
+        <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-ink mb-2">Report sent.</h3>
+        <p class="text-sm text-muted mb-5">Check your inbox — the screening summary is on its way. Usually arrives in under 30 seconds.</p>
+        <button onclick="goTo('wow')" class="w-full bg-navy hover:bg-navydk text-white font-bold py-3 rounded-xl text-base transition-colors">
+          See what happened next →
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCREEN 6: WOW + RESIDENT VIEW + CTA
+════════════════════════════════════════════ -->
+<div id="screen-wow" class="screen">
+  <div class="max-w-2xl mx-auto px-5 py-8">
+
+    <!-- Back + progress -->
+    <div class="flex items-center justify-between mb-8">
+      <button onclick="goTo('email')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Back
+      </button>
+      <div class="flex items-center gap-1.5">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+      </div>
+      <div class="w-10"></div>
+    </div>
+
+    <!-- WOW statement -->
+    <div class="text-center py-8 px-2">
+      <p class="text-xs font-semibold text-orange uppercase tracking-widest mb-4">What just happened</p>
+      <p class="wow-headline text-ink mb-6">"The event triggered<br/>the work."</p>
+      <p class="text-base text-muted leading-relaxed max-w-lg mx-auto">
+        In production, your team doesn't open this screen. They don't click "Start." They don't tell the AI what to do. The operational event triggers the workflow automatically.
+      </p>
+    </div>
+
+    <div class="border-t border-line my-6"></div>
+
+    <!-- What actually ran -->
+    <div class="bg-softblue rounded-2xl p-5 mb-6">
+      <p class="text-xs font-semibold text-navy/60 uppercase tracking-widest mb-3">What ran automatically</p>
+      <div class="space-y-2.5">
+        <div class="flex items-start gap-2.5">
+          <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-sm text-ink">Application data extracted and structured</p>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-sm text-ink">Income-to-rent ratio calculated against your configured threshold (3×)</p>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-sm text-ink">Owner-ready screening summary prepared and delivered</p>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-sm text-ink">Resident notification drafted and queued</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resident communication preview -->
+    <div class="mb-6">
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration resident communication</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between">
+            <span><strong>To:</strong> john.miller@email.com</span>
+            <span class="bg-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded">Demo preview</span>
+          </div>
+          <div class="mt-1"><strong>Subject:</strong> Update on your application — 123 Main Street</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi John,</p>
+          <p class="text-sm text-ink mb-3">Thank you for your rental application for 123 Main Street. We've received your application and our team is currently reviewing it.</p>
+          <p class="text-sm text-ink mb-3">You can expect to hear back from us within 2 business days. If you have any questions in the meantime, feel free to reply to this email.</p>
+          <p class="text-sm text-ink">Best,<br/><strong>123 Main Street Management</strong></p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">This message would be sent automatically to the applicant. No staff involvement required.</p>
+    </div>
+
+    <!-- Final CTAs -->
+    <div class="bg-navy rounded-2xl p-6 text-center">
+      <p class="text-white font-bold text-lg mb-2">Ready to run workflows on your actual process?</p>
+      <p class="text-white/60 text-sm mb-5">We configure the automation around your software, your policies, and your team's workflow — not a generic template.</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="mailto:hari@upnexs.com?subject=Saw%20the%20demo%20%E2%80%94%20want%20to%20talk&body=Hi%20Hari%2C%0A%0AI%20just%20ran%20through%20the%20experience%20demo%20and%20want%20to%20learn%20more%20about%20running%20this%20on%20my%20process." class="flex-1 bg-orange hover:bg-orangedk text-white font-bold py-3.5 rounded-xl text-sm transition-colors text-center">
+          Run a Workflow With My Process →
+        </a>
+        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3.5 rounded-xl text-sm transition-colors text-center">
+          Book a Discovery Call
+        </a>
+      </div>
+    </div>
+
+    <!-- Try again -->
+    <div class="text-center mt-6">
+      <button onclick="goTo('chooser')" class="text-muted hover:text-navy text-sm underline underline-offset-2 transition-colors">Try another workflow</button>
+    </div>
+
+    <p class="text-center text-xs text-muted mt-8 pb-4">Controlled demonstration using sample property data. UpneX Solutions · <a href="mailto:hari@upnexs.com" class="hover:text-navy">hari@upnexs.com</a></p>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     COMING NEXT MODAL
+════════════════════════════════════════════ -->
+<div id="coming-modal">
+  <div class="bg-white rounded-2xl card-shadow p-7 max-w-sm w-full text-center">
+    <div class="w-12 h-12 rounded-xl bg-softblue flex items-center justify-center mx-auto mb-4">
+      <svg class="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    </div>
+    <h3 class="font-bold text-ink text-lg mb-2">Coming next</h3>
+    <p id="coming-name" class="font-semibold text-navy mb-3 text-base"></p>
+    <p class="text-sm text-muted mb-5">We're building this workflow. Want to see it when it's live — or talk through how it would apply to your portfolio?</p>
+    <div class="flex flex-col gap-2.5">
+      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="bg-orange hover:bg-orangedk text-white font-bold py-3 rounded-xl text-sm transition-colors">
+        Book a call to see it early →
+      </a>
+      <button onclick="closeComing()" class="text-muted hover:text-ink text-sm py-2 transition-colors">
+        Back to workflows
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ─── Config ─────────────────────────────────────────
+const API_BASE = 'https://homeland-mediterranean-uni-corporations.trycloudflare.com';
+
+// ─── Screen routing ──────────────────────────────────
+function goTo(screenName) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + screenName);
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  if (screenName === 'running') startTimeline();
+}
+
+// ─── Workflow trigger ────────────────────────────────
+function startWorkflow(name) {
+  if (name === 'rental') goTo('running');
+}
+
+// ─── Coming next modal ───────────────────────────────
+function showComing(name) {
+  document.getElementById('coming-name').textContent = name;
+  document.getElementById('coming-modal').classList.add('open');
+}
+function closeComing() {
+  document.getElementById('coming-modal').classList.remove('open');
+}
+document.getElementById('coming-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeComing();
+});
+
+// ─── Timeline animation ──────────────────────────────
+let timelineStarted = false;
+const STEP_DELAYS = [1400, 2800, 4200, 5600, 7000, 8600]; // ms from start
+
+function startTimeline() {
+  if (timelineStarted) return;
+  timelineStarted = true;
+
+  // Reset all steps
+  for (let i = 1; i <= 6; i++) {
+    const row = document.getElementById('step-' + i);
+    row.classList.remove('complete', 'current');
+  }
+  document.getElementById('results-btn').classList.remove('show');
+
+  // Mark step 1 as current immediately
+  document.getElementById('step-1').classList.add('current');
+
+  STEP_DELAYS.forEach(function(delay, idx) {
+    setTimeout(function() {
+      const stepNum = idx + 1;
+      const row = document.getElementById('step-' + stepNum);
+      row.classList.remove('current');
+      row.classList.add('complete');
+
+      // Mark next as current
+      const nextRow = document.getElementById('step-' + (stepNum + 1));
+      if (nextRow) nextRow.classList.add('current');
+
+      // After last step, show results button
+      if (stepNum === 6) {
+        setTimeout(function() {
+          const btn = document.getElementById('results-btn');
+          btn.classList.add('show');
+          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 600);
+      }
+    }, delay);
+  });
+}
+
+// Reset timeline when leaving the running screen
+document.querySelectorAll('.screen').forEach(function(s) {
+  const obs = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.attributeName === 'class' && !s.classList.contains('active') && s.id === 'screen-running') {
+        timelineStarted = false;
+      }
+    });
+  });
+  obs.observe(s, { attributes: true });
+});
+
+// ─── Email send ──────────────────────────────────────
+function sendEmail() {
+  const name  = document.getElementById('input-name').value.trim();
+  const email = document.getElementById('input-email').value.trim();
+  const errEl = document.getElementById('email-error');
+  const btn   = document.getElementById('send-btn');
+  const btnText = document.getElementById('send-btn-text');
+  const spinner = document.getElementById('send-spinner');
+  const arrow   = document.getElementById('send-arrow');
+
+  errEl.classList.add('hidden');
+
+  if (!email || !email.includes('@')) {
+    errEl.textContent = 'Please enter a valid email address.';
+    errEl.classList.remove('hidden');
+    document.getElementById('input-email').focus();
+    return;
+  }
+
+  // Loading state
+  btn.disabled = true;
+  btnText.textContent = 'Sending…';
+  spinner.classList.remove('hidden');
+  arrow.classList.add('hidden');
+
+  fetch(API_BASE + '/api/demo/send-result', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name || 'there', email: email }),
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.ok) {
+      document.getElementById('email-form').classList.add('hidden');
+      document.getElementById('email-success').classList.remove('hidden');
+    } else {
+      throw new Error(data.error || 'Send failed');
+    }
+  })
+  .catch(function(err) {
+    errEl.textContent = 'Something went wrong. Please try again or email hari@upnexs.com directly.';
+    errEl.classList.remove('hidden');
+    btn.disabled = false;
+    btnText.textContent = 'Send Report';
+    spinner.classList.add('hidden');
+    arrow.classList.remove('hidden');
+    console.error('[demo] email error:', err);
+  });
+}
+
+// Allow Enter key in email fields
+document.getElementById('input-email').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') sendEmail();
+});
+</script>
+
+</body>
+</html>
