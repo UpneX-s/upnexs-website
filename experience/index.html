@@ -36,16 +36,13 @@
   * { -webkit-font-smoothing: antialiased; }
   body { background: #fafafa; }
 
-  /* ── Screen transitions ── */
   .screen { display: none; }
   .screen.active { display: block; }
 
-  /* ── Progress dots ── */
   .dot { width: 8px; height: 8px; border-radius: 50%; background: #d1d5db; transition: all 0.3s; }
   .dot.active { background: #ff6b1a; width: 24px; border-radius: 4px; }
   .dot.done { background: #1a3a5c; }
 
-  /* ── Timeline step ── */
   .step-row { display: flex; align-items: flex-start; gap: 14px; opacity: 0.35; transition: all 0.4s ease; }
   .step-row.complete { opacity: 1; }
   .step-row.complete .step-icon { background: #059669; border-color: #059669; }
@@ -62,41 +59,31 @@
   .step-connector { width: 2px; height: 20px; background: #e5e7eb; margin-left: 15px; margin-top: 2px; transition: background 0.3s; }
   .step-connector.done { background: #059669; }
 
-  /* ── Result CTA fade-in ── */
   .fade-in { opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
   .fade-in.show { opacity: 1; pointer-events: all; }
 
-  /* ── Card shadow ── */
   .card-shadow { box-shadow: 0 4px 24px rgba(26,58,92,0.10); }
 
-  /* ── WOW statement ── */
   .wow-headline { font-size: clamp(28px, 5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
 
-  /* ── Email preview ── */
   .email-preview { border: 1.5px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
   .email-header-bar { background: #f3f4f6; padding: 10px 16px; border-bottom: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; }
   .email-body-preview { padding: 20px; background: #fff; }
 
-  /* ── Coming next modal ── */
   #coming-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; align-items: center; justify-content: center; padding: 20px; }
   #coming-modal.open { display: flex; }
 
-  /* ── Form inputs ── */
   .field { background: #fff; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 11px 14px; font-size: 15px; width: 100%; transition: border-color 0.15s; color: #111827; font-family: inherit; outline: none; }
   .field:focus { border-color: #ff6b1a; box-shadow: 0 0 0 3px rgba(255,107,26,0.12); }
 
-  /* ── Spinner (only for async wait) ── */
   .spinner { width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body class="font-sans">
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 1: LANDING
-════════════════════════════════════════════ -->
+<!-- SCREEN 1: LANDING -->
 <div id="screen-landing" class="screen active">
-  <!-- Nav bar -->
   <header class="bg-navy px-5 py-4">
     <div class="max-w-2xl mx-auto flex items-center justify-between">
       <a href="https://upnexs.com" class="text-orange font-black text-xl tracking-tight">UpneX</a>
@@ -104,7 +91,6 @@
     </div>
   </header>
 
-  <!-- Hero -->
   <section class="px-5 pt-14 pb-10 max-w-2xl mx-auto text-center">
     <div class="inline-flex items-center gap-2 bg-orange/10 text-orange text-sm font-semibold px-3 py-1.5 rounded-full mb-6">
       <span class="w-2 h-2 rounded-full bg-orange animate-pulse"></span>
@@ -122,12 +108,11 @@
     </button>
   </section>
 
-  <!-- Quick proof -->
   <section class="px-5 pb-14 max-w-2xl mx-auto">
     <div class="grid grid-cols-3 gap-3">
       <div class="bg-white rounded-xl p-4 text-center card-shadow">
-        <p class="text-2xl font-black text-navy">8 sec</p>
-        <p class="text-xs text-muted mt-1">Workflow runtime</p>
+        <p class="text-2xl font-black text-navy">48 sec</p>
+        <p class="text-xs text-muted mt-1">Guest card to reply</p>
       </div>
       <div class="bg-white rounded-xl p-4 text-center card-shadow">
         <p class="text-2xl font-black text-navy">30 sec</p>
@@ -140,24 +125,20 @@
     </div>
   </section>
 
-  <!-- Trust footer -->
   <div class="text-center text-xs text-muted pb-8 px-5">Controlled demonstration using sample property data.</div>
 </div>
 
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 2: WORKFLOW CHOOSER
-════════════════════════════════════════════ -->
+<!-- SCREEN 2: WORKFLOW CHOOSER -->
 <div id="screen-chooser" class="screen">
   <div class="max-w-2xl mx-auto px-5 py-8">
 
-    <!-- Back + progress -->
     <div class="flex items-center justify-between mb-8">
       <button onclick="goTo('landing')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Back
       </button>
-      <div class="flex items-center gap-1.5" id="progress-chooser">
+      <div class="flex items-center gap-1.5">
         <div class="dot active"></div>
         <div class="dot"></div>
         <div class="dot"></div>
@@ -168,9 +149,8 @@
     </div>
 
     <h2 class="text-2xl font-black text-ink mb-1">Which workflow do you want to see run?</h2>
-    <p class="text-muted text-sm mb-7">One workflow is live today. Five more are in development.</p>
+    <p class="text-muted text-sm mb-7">Two workflows are live today. Five more are in development.</p>
 
-    <!-- Workflow cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
       <!-- Card 1: Rental Application (LIVE) -->
@@ -189,7 +169,23 @@
         </div>
       </button>
 
-      <!-- Cards 2-6: Coming next -->
+      <!-- Card 2: Guest Card Response (LIVE) -->
+      <button onclick="startWorkflow('guest_card')" class="text-left bg-white rounded-2xl p-5 card-shadow border-2 border-navy hover:shadow-lg transition-all group">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-navy/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <span class="bg-navy text-white text-xs font-bold px-2.5 py-1 rounded-full">Live Demo</span>
+        </div>
+        <h3 class="font-bold text-ink text-base mb-1">Guest Card Response</h3>
+        <p class="text-xs text-muted leading-relaxed">Reads a prospect inquiry, evaluates qualification + pet policy, sends a personalized reply in 48 seconds.</p>
+        <div class="mt-4 flex items-center gap-1 text-navy text-sm font-semibold group-hover:gap-2 transition-all">
+          Run this workflow
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </button>
+
+      <!-- Cards 3-7: Coming next -->
       <button onclick="showComing('Maintenance Request Routing')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
         <div class="flex items-start justify-between mb-3">
           <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
@@ -215,7 +211,7 @@
       <button onclick="showComing('Tenant Communication')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
         <div class="flex items-start justify-between mb-3">
           <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
-            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
           <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
         </div>
@@ -252,13 +248,10 @@
 </div>
 
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 3: AUTOMATION RUNNING
-════════════════════════════════════════════ -->
+<!-- SCREEN 3: AUTOMATION RUNNING -->
 <div id="screen-running" class="screen">
   <div class="max-w-2xl mx-auto px-5 py-8">
 
-    <!-- Back + progress -->
     <div class="flex items-center justify-between mb-8">
       <button onclick="goTo('chooser')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -274,107 +267,79 @@
       <div class="w-10"></div>
     </div>
 
-    <!-- Header -->
     <div class="mb-6">
       <div class="inline-flex items-center gap-2 text-xs font-semibold text-orange bg-orange/10 px-3 py-1 rounded-full mb-3">
         <span class="w-1.5 h-1.5 rounded-full bg-orange animate-pulse"></span>
-        Rental Application · Running
+        <span id="running-badge">Rental Application · Running</span>
       </div>
       <h2 class="text-2xl font-black text-ink">Automation workflow in progress</h2>
     </div>
 
-    <!-- Trigger context -->
     <div class="bg-softblue border border-blue-100 rounded-xl p-4 mb-7 flex items-start gap-3">
       <div class="w-8 h-8 rounded-lg bg-navy/10 flex items-center justify-center flex-shrink-0 mt-0.5">
         <svg class="w-4 h-4 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
       </div>
       <div>
         <p class="text-xs font-semibold text-navy mb-1">Trigger received</p>
-        <p class="text-sm text-ink">New rental application submitted for <strong>123 Main Street</strong> — Applicant: <strong>John Miller</strong></p>
+        <p id="running-trigger" class="text-sm text-ink">New rental application submitted for <strong>123 Main Street</strong> — Applicant: <strong>John Miller</strong></p>
       </div>
     </div>
 
-    <!-- Timeline -->
     <div class="bg-white rounded-2xl card-shadow p-6 mb-4" id="timeline-card">
       <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-5">Automation steps</p>
 
       <div id="steps-container" class="space-y-0">
 
         <div class="step-row" id="step-1">
-          <div>
-            <div class="step-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-            </div>
-          </div>
+          <div><div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div></div>
           <div class="flex-1 pb-5">
-            <p class="font-semibold text-ink text-sm">Application Received</p>
-            <p class="text-xs text-muted mt-0.5">Application detected.</p>
+            <p id="step-1-title" class="font-semibold text-ink text-sm">Application Received</p>
+            <p id="step-1-sub" class="text-xs text-muted mt-0.5">Application detected.</p>
           </div>
         </div>
 
         <div class="step-row" id="step-2">
-          <div>
-            <div class="step-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-            </div>
-          </div>
+          <div><div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div></div>
           <div class="flex-1 pb-5">
-            <p class="font-semibold text-ink text-sm">Information Processed</p>
-            <p class="text-xs text-muted mt-0.5">Applicant information extracted.</p>
+            <p id="step-2-title" class="font-semibold text-ink text-sm">Information Processed</p>
+            <p id="step-2-sub" class="text-xs text-muted mt-0.5">Applicant information extracted.</p>
           </div>
         </div>
 
         <div class="step-row" id="step-3">
-          <div>
-            <div class="step-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-            </div>
-          </div>
+          <div><div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div></div>
           <div class="flex-1 pb-5">
-            <p class="font-semibold text-ink text-sm">Screening Workflow</p>
-            <p class="text-xs text-muted mt-0.5">Screening criteria evaluated.</p>
+            <p id="step-3-title" class="font-semibold text-ink text-sm">Screening Workflow</p>
+            <p id="step-3-sub" class="text-xs text-muted mt-0.5">Screening criteria evaluated.</p>
           </div>
         </div>
 
         <div class="step-row" id="step-4">
-          <div>
-            <div class="step-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-            </div>
-          </div>
+          <div><div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div></div>
           <div class="flex-1 pb-5">
-            <p class="font-semibold text-ink text-sm">Property Information</p>
-            <p class="text-xs text-muted mt-0.5">Property and lease information checked.</p>
+            <p id="step-4-title" class="font-semibold text-ink text-sm">Property Information</p>
+            <p id="step-4-sub" class="text-xs text-muted mt-0.5">Property and lease information checked.</p>
           </div>
         </div>
 
         <div class="step-row" id="step-5">
-          <div>
-            <div class="step-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-            </div>
-          </div>
+          <div><div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div></div>
           <div class="flex-1 pb-5">
-            <p class="font-semibold text-ink text-sm">AI Summary</p>
-            <p class="text-xs text-muted mt-0.5">Decision-ready summary prepared.</p>
+            <p id="step-5-title" class="font-semibold text-ink text-sm">AI Summary</p>
+            <p id="step-5-sub" class="text-xs text-muted mt-0.5">Decision-ready summary prepared.</p>
           </div>
         </div>
 
         <div class="step-row" id="step-6">
-          <div>
-            <div class="step-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-            </div>
-          </div>
+          <div><div class="step-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div></div>
           <div class="flex-1">
-            <p class="font-semibold text-ink text-sm">Resident Communication</p>
-            <p class="text-xs text-muted mt-0.5">Applicant notification prepared.</p>
+            <p id="step-6-title" class="font-semibold text-ink text-sm">Resident Communication</p>
+            <p id="step-6-sub" class="text-xs text-muted mt-0.5">Applicant notification prepared.</p>
           </div>
         </div>
 
       </div>
 
-      <!-- Results button (hidden until complete) -->
       <div id="results-btn" class="fade-in mt-7 pt-5 border-t border-line">
         <button onclick="goTo('owner')" class="w-full bg-orange hover:bg-orangedk text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2">
           View Results
@@ -383,22 +348,18 @@
       </div>
     </div>
 
-    <!-- Trust copy -->
     <div class="bg-gray-50 border border-line rounded-xl p-4 text-xs text-muted leading-relaxed">
-      <strong class="text-gray-600">Controlled demonstration.</strong> This is a controlled demonstration using sample data. In production, the application itself would trigger the workflow automatically. Your team would not need to open this page or click Start.
+      <strong class="text-gray-600">Controlled demonstration.</strong> This is a controlled demonstration using sample data. In production, the operational event itself would trigger the workflow automatically. Your team would not need to open this page or click Start.
     </div>
 
   </div>
 </div>
 
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 4: OWNER OUTPUT
-════════════════════════════════════════════ -->
+<!-- SCREEN 4: OWNER OUTPUT -->
 <div id="screen-owner" class="screen">
   <div class="max-w-2xl mx-auto px-5 py-8">
 
-    <!-- Back + progress -->
     <div class="flex items-center justify-between mb-8">
       <button onclick="goTo('running')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -417,18 +378,15 @@
     <div class="mb-2">
       <span class="text-xs font-semibold text-green-700 bg-green-50 px-3 py-1 rounded-full">Workflow complete</span>
     </div>
-    <h2 class="text-2xl font-black text-ink mb-1 mt-3">AI-Prepared Owner Summary</h2>
-    <p class="text-sm text-muted mb-6">The applicant's stated income meets the configured demonstration criteria.</p>
+    <h2 id="owner-title" class="text-2xl font-black text-ink mb-1 mt-3">AI-Prepared Owner Summary</h2>
+    <p id="owner-sub" class="text-sm text-muted mb-6">The applicant's stated income meets the configured demonstration criteria.</p>
 
-    <!-- Summary card -->
     <div class="bg-white rounded-2xl card-shadow overflow-hidden mb-4">
-      <!-- Card header -->
       <div class="bg-navy px-6 py-4">
-        <p class="text-xs font-semibold text-white/60 uppercase tracking-widest mb-0.5">Screening Summary</p>
-        <p class="text-white font-bold text-base">123 Main Street · Application #DEMO-001</p>
+        <p class="text-xs font-semibold text-white/60 uppercase tracking-widest mb-0.5">Summary</p>
+        <p id="owner-card-header" class="text-white font-bold text-base">123 Main Street · Application #DEMO-001</p>
       </div>
-      <!-- Summary rows -->
-      <div class="divide-y divide-line">
+      <div id="owner-rows" class="divide-y divide-line">
         <div class="flex items-center justify-between px-6 py-3.5">
           <span class="text-sm font-medium text-muted">Applicant</span>
           <span class="text-sm font-semibold text-ink">John Miller</span>
@@ -459,11 +417,11 @@
       </div>
     </div>
 
-    <p class="text-xs text-muted mb-6">Your property manager would see this summary immediately after the application is submitted. No one needed to run a report or check a system.</p>
+    <p id="owner-note" class="text-xs text-muted mb-6">Your property manager would see this summary immediately after the application is submitted. No one needed to run a report or check a system.</p>
 
-    <button onclick="goTo('email')" class="w-full bg-navy hover:bg-navydk text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2 mb-3">
+    <button id="owner-cta-btn" onclick="goTo('email')" class="w-full bg-navy hover:bg-navydk text-white font-bold py-3.5 rounded-xl text-base transition-colors flex items-center justify-center gap-2 mb-3">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-      Send This Summary to My Email
+      <span id="owner-cta">Send This Summary to My Email</span>
     </button>
     <p class="text-center text-xs text-muted">Demonstration output — sent from sample data.</p>
 
@@ -471,13 +429,10 @@
 </div>
 
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 5: EMAIL CAPTURE
-════════════════════════════════════════════ -->
+<!-- SCREEN 5: EMAIL CAPTURE -->
 <div id="screen-email" class="screen">
   <div class="max-w-2xl mx-auto px-5 py-8">
 
-    <!-- Back + progress -->
     <div class="flex items-center justify-between mb-8">
       <button onclick="goTo('owner')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -493,8 +448,8 @@
       <div class="w-10"></div>
     </div>
 
-    <h2 class="text-2xl font-black text-ink mb-1">Where should we send your copy?</h2>
-    <p class="text-sm text-muted mb-7">The same screening summary you just saw — delivered to your inbox in the next 30 seconds.</p>
+    <h2 id="email-title" class="text-2xl font-black text-ink mb-1">Where should we send your copy?</h2>
+    <p id="email-sub" class="text-sm text-muted mb-7">The same screening summary you just saw — delivered to your inbox in the next 30 seconds.</p>
 
     <div class="bg-white rounded-2xl card-shadow p-6">
       <div id="email-form">
@@ -517,13 +472,12 @@
         <p class="text-xs text-muted text-center mt-3">Demonstration output — sent from sample data.</p>
       </div>
 
-      <!-- Success state -->
       <div id="email-success" class="hidden text-center py-4">
         <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
         </div>
-        <h3 class="text-lg font-bold text-ink mb-2">Report sent.</h3>
-        <p class="text-sm text-muted mb-5">Check your inbox — the screening summary is on its way. Usually arrives in under 30 seconds.</p>
+        <h3 class="text-lg font-bold text-ink mb-2">Sent.</h3>
+        <p id="email-success-sub" class="text-sm text-muted mb-5">Check your inbox — the screening summary is on its way. Usually arrives in under 30 seconds.</p>
         <button onclick="goTo('wow')" class="w-full bg-navy hover:bg-navydk text-white font-bold py-3 rounded-xl text-base transition-colors">
           See what happened next →
         </button>
@@ -534,13 +488,10 @@
 </div>
 
 
-<!-- ═══════════════════════════════════════════
-     SCREEN 6: WOW + RESIDENT VIEW + CTA
-════════════════════════════════════════════ -->
+<!-- SCREEN 6: WOW + RESIDENT VIEW + CTA -->
 <div id="screen-wow" class="screen">
   <div class="max-w-2xl mx-auto px-5 py-8">
 
-    <!-- Back + progress -->
     <div class="flex items-center justify-between mb-8">
       <button onclick="goTo('email')" class="text-muted hover:text-ink flex items-center gap-1.5 text-sm transition-colors">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -556,21 +507,19 @@
       <div class="w-10"></div>
     </div>
 
-    <!-- WOW statement -->
     <div class="text-center py-8 px-2">
       <p class="text-xs font-semibold text-orange uppercase tracking-widest mb-4">What just happened</p>
       <p class="wow-headline text-ink mb-6">"The event triggered<br/>the work."</p>
-      <p class="text-base text-muted leading-relaxed max-w-lg mx-auto">
+      <p id="wow-sub" class="text-base text-muted leading-relaxed max-w-lg mx-auto">
         In production, your team doesn't open this screen. They don't click "Start." They don't tell the AI what to do. The operational event triggers the workflow automatically.
       </p>
     </div>
 
     <div class="border-t border-line my-6"></div>
 
-    <!-- What actually ran -->
     <div class="bg-softblue rounded-2xl p-5 mb-6">
       <p class="text-xs font-semibold text-navy/60 uppercase tracking-widest mb-3">What ran automatically</p>
-      <div class="space-y-2.5">
+      <div id="wow-bullets" class="space-y-2.5">
         <div class="flex items-start gap-2.5">
           <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
             <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
@@ -598,8 +547,7 @@
       </div>
     </div>
 
-    <!-- Resident communication preview -->
-    <div class="mb-6">
+    <div id="wow-preview" class="mb-6">
       <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration resident communication</p>
       <div class="email-preview">
         <div class="email-header-bar">
@@ -619,7 +567,6 @@
       <p class="text-xs text-muted mt-2">This message would be sent automatically to the applicant. No staff involvement required.</p>
     </div>
 
-    <!-- Final CTAs -->
     <div class="bg-navy rounded-2xl p-6 text-center">
       <p class="text-white font-bold text-lg mb-2">Ready to run workflows on your actual process?</p>
       <p class="text-white/60 text-sm mb-5">We configure the automation around your software, your policies, and your team's workflow — not a generic template.</p>
@@ -627,36 +574,28 @@
         <a href="mailto:hari@upnexs.com?subject=Saw%20the%20demo%20%E2%80%94%20want%20to%20talk&body=Hi%20Hari%2C%0A%0AI%20just%20ran%20through%20the%20experience%20demo%20and%20want%20to%20learn%20more%20about%20running%20this%20on%20my%20process." class="flex-1 bg-orange hover:bg-orangedk text-white font-bold py-3.5 rounded-xl text-sm transition-colors text-center">
           Run a Workflow With My Process →
         </a>
-        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3.5 rounded-xl text-sm transition-colors text-center">
+        <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="flex-1 bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition-colors text-center">
           Book a Discovery Call
         </a>
       </div>
+      <button onclick="goTo('chooser')" class="text-white/40 hover:text-white/70 text-sm underline underline-offset-2 transition-colors mt-4">Try another workflow</button>
     </div>
-
-    <!-- Try again -->
-    <div class="text-center mt-6">
-      <button onclick="goTo('chooser')" class="text-muted hover:text-navy text-sm underline underline-offset-2 transition-colors">Try another workflow</button>
-    </div>
-
-    <p class="text-center text-xs text-muted mt-8 pb-4">Controlled demonstration using sample property data. UpneX Solutions · <a href="mailto:hari@upnexs.com" class="hover:text-navy">hari@upnexs.com</a></p>
 
   </div>
 </div>
 
 
-<!-- ═══════════════════════════════════════════
-     COMING NEXT MODAL
-════════════════════════════════════════════ -->
+<!-- COMING NEXT MODAL -->
 <div id="coming-modal">
   <div class="bg-white rounded-2xl card-shadow p-7 max-w-sm w-full text-center">
-    <div class="w-12 h-12 rounded-xl bg-softblue flex items-center justify-center mx-auto mb-4">
-      <svg class="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <div class="w-12 h-12 rounded-full bg-softblue flex items-center justify-center mx-auto mb-4">
+      <svg class="w-6 h-6 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
     </div>
     <h3 class="font-bold text-ink text-lg mb-2">Coming next</h3>
     <p id="coming-name" class="font-semibold text-navy mb-3 text-base"></p>
     <p class="text-sm text-muted mb-5">We're building this workflow. Want to see it when it's live — or talk through how it would apply to your portfolio?</p>
-    <div class="flex flex-col gap-2.5">
-      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="bg-orange hover:bg-orangedk text-white font-bold py-3 rounded-xl text-sm transition-colors">
+    <div class="flex flex-col gap-2">
+      <a href="https://calendar.app.google/2juqXrLWWE2q441z6" target="_blank" rel="noopener" class="bg-navy text-white font-bold py-3 rounded-xl text-sm transition-colors">
         Book a call to see it early →
       </a>
       <button onclick="closeComing()" class="text-muted hover:text-ink text-sm py-2 transition-colors">
@@ -669,7 +608,6 @@
 
 <script>
 // ─── Config ─────────────────────────────────────────
-// ─── Email config (same channels as /ai pages) ───────
 const EMAILJS_CONFIG = {
   publicKey:  'cQAXNRskNvru4mu4j',
   serviceId:  'service_vhcikjr',
@@ -677,20 +615,183 @@ const EMAILJS_CONFIG = {
 };
 if (window.emailjs) emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
 
+const TRACKING_URL = 'https://t.upnexs.com/api/demo/send-result';
+
+// ─── Active workflow state ───────────────────────────
+let currentWorkflow = 'rental';
+
+const WORKFLOW_DATA = {
+  rental: {
+    badge: 'Rental Application · Running',
+    triggerHTML: 'New rental application submitted for <strong>123 Main Street</strong> — Applicant: <strong>John Miller</strong>',
+    steps: [
+      { title: 'Application Received',   sub: 'Application detected.' },
+      { title: 'Information Processed',  sub: 'Applicant information extracted.' },
+      { title: 'Screening Workflow',     sub: 'Screening criteria evaluated.' },
+      { title: 'Property Information',   sub: 'Property and lease information checked.' },
+      { title: 'AI Summary',             sub: 'Decision-ready summary prepared.' },
+      { title: 'Resident Communication', sub: 'Applicant notification prepared.' },
+    ],
+    ownerTitle:  'AI-Prepared Owner Summary',
+    ownerSub:    "The applicant's stated income meets the configured demonstration criteria.",
+    ownerHeader: '123 Main Street · Application #DEMO-001',
+    ownerRowsHTML: `
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Applicant</span><span class="text-sm font-semibold text-ink">John Miller</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Monthly Rent</span><span class="text-sm font-semibold text-ink">$2,100</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Monthly Income</span><span class="text-sm font-semibold text-ink">$7,500</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Income-to-Rent</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">3.57×</span><span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Meets 3× min</span></div></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Application</span><span class="text-sm font-semibold text-green-600">Complete</span></div>
+      <div class="flex items-center justify-between px-6 py-4 bg-orange/5"><span class="text-sm font-bold text-ink">AI Recommendation</span><span class="text-sm font-bold text-orange">Review</span></div>
+    `,
+    ownerNote:  'Your property manager would see this summary immediately after the application is submitted. No one needed to run a report or check a system.',
+    ownerCTA:   'Send This Summary to My Email',
+    emailTitle: 'Where should we send your copy?',
+    emailSub:   'The same screening summary you just saw — delivered to your inbox in the next 30 seconds.',
+    sendLabel:  'Send Report',
+    successSub: 'Check your inbox — the screening summary is on its way. Usually arrives in under 30 seconds.',
+    wowSub: 'In production, your team doesn\'t open this screen. They don\'t click "Start." They don\'t tell the AI what to do. The operational event triggers the workflow automatically.',
+    wowBulletsHTML: `
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Application data extracted and structured</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Income-to-rent ratio calculated against your configured threshold (3×)</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Owner-ready screening summary prepared and delivered</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Resident notification drafted and queued</p></div>
+    `,
+    wowPreviewHTML: `
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration resident communication</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between"><span><strong>To:</strong> john.miller@email.com</span><span class="bg-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded">Demo preview</span></div>
+          <div class="mt-1"><strong>Subject:</strong> Update on your application — 123 Main Street</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi John,</p>
+          <p class="text-sm text-ink mb-3">Thank you for your rental application for 123 Main Street. We've received your application and our team is currently reviewing it.</p>
+          <p class="text-sm text-ink mb-3">You can expect to hear back from us within 2 business days. If you have any questions in the meantime, feel free to reply to this email.</p>
+          <p class="text-sm text-ink">Best,<br/><strong>123 Main Street Management</strong></p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">This message would be sent automatically to the applicant. No staff involvement required.</p>
+    `,
+  },
+
+  guest_card: {
+    badge: 'Guest Card Response · Running',
+    triggerHTML: 'Guest card received at <strong>123 Main Street</strong> — Prospect: <strong>Sarah Johnson</strong> via AppFolio',
+    steps: [
+      { title: 'Guest Card Received',           sub: 'Prospect inquiry detected in AppFolio.' },
+      { title: 'Message Processed',             sub: 'Prospect intent + qualification signals extracted.' },
+      { title: 'Property Availability Checked', sub: 'Unit confirmed available.' },
+      { title: 'Qualification Matched',         sub: 'Budget + pet policy + timeline evaluated.' },
+      { title: 'Response Drafted',              sub: 'Personalized reply prepared with self-showing hours + qualification criteria.' },
+      { title: 'Prospect Notified',             sub: 'Reply sent via AppFolio.' },
+    ],
+    ownerTitle:  'AI-Prepared PM Summary',
+    ownerSub:    'Prospect qualified and reply sent automatically — no staff involvement.',
+    ownerHeader: '123 Main Street · Guest Card #GC-001',
+    ownerRowsHTML: `
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Prospect</span><span class="text-sm font-semibold text-ink">Sarah Johnson</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Property</span><span class="text-sm font-semibold text-ink">123 Main Street</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Budget</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">$2,300/mo</span><span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Matches list at $2,100</span></div></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Pet</span><div class="flex items-center gap-2"><span class="text-sm font-semibold text-ink">Small dog</span><span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Allowed per policy</span></div></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Showing Requested</span><span class="text-sm font-semibold text-ink">Weekend</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Time to Response</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">48 seconds</span><span class="text-xs bg-orange/10 text-orange font-semibold px-2 py-0.5 rounded-full">vs 6+ hr avg</span></div></div>
+      <div class="flex items-center justify-between px-6 py-4 bg-green-50/50"><span class="text-sm font-bold text-ink">Reply Sent</span><span class="text-sm font-bold text-green-600">Confirmed ✓</span></div>
+    `,
+    ownerNote:  'Reply included self-showing hours + lockbox code + qualification requirements. Sent automatically within AppFolio.',
+    ownerCTA:   'See the Reply Sarah Received →',
+    emailTitle: 'Where should we send Sarah\'s reply?',
+    emailSub:   'Enter your email — you\'ll receive the exact automated reply Sarah got in her inbox, within 30 seconds.',
+    sendLabel:  'Send to My Inbox',
+    successSub: 'Check your inbox — the reply Sarah received is on its way. Usually arrives in under 30 seconds.',
+    wowSub: '48 seconds from guest card to reply. No one opened AppFolio. No one wrote an email. No one decided what to say.',
+    wowBulletsHTML: `
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Guest card intent extracted — showing request, budget, pet</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Property availability confirmed in AppFolio</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Pet policy evaluated — unit allows small dogs, one-time deposit applied</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Personalized reply drafted with self-showing hours + lockbox code + qualification criteria</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Reply sent via AppFolio — prospect notified in <strong>48 seconds</strong></p></div>
+    `,
+    wowPreviewHTML: `
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Automated reply sent to Sarah Johnson (48 sec after inquiry)</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between"><span><strong>To:</strong> sarah.johnson@email.com</span><span class="bg-orange/10 text-orange text-xs px-2 py-0.5 rounded font-semibold">48 sec</span></div>
+          <div class="mt-1"><strong>Subject:</strong> Re: 123 Main Street inquiry</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi Sarah,</p>
+          <p class="text-sm text-ink mb-3">Thanks for reaching out about 123 Main Street. The unit is available and welcomes small dogs (under 40 lbs, one-time pet deposit applies).</p>
+          <p class="text-sm text-ink mb-3"><strong>Self-guided showings:</strong> available daily 8 AM – 8 PM. Call (512) 555-0100 and reference lockbox code #4729.</p>
+          <p class="text-sm text-ink mb-3"><strong>To qualify:</strong> 3× income-to-rent ratio, credit score 650+, and a completed application at our portal.</p>
+          <p class="text-sm text-ink mb-3">Reply here if you'd prefer a virtual tour instead — happy to schedule one.</p>
+          <p class="text-sm text-ink">Looking forward to it.<br/><strong>— Property Management Team</strong></p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">Demonstration guest card. In production, this reply fires automatically within 60 seconds of any incoming guest card via AppFolio integration.</p>
+    `,
+  },
+};
+
 // ─── Screen routing ──────────────────────────────────
 function goTo(screenName) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const el = document.getElementById('screen-' + screenName);
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  var el = document.getElementById('screen-' + screenName);
   if (el) {
     el.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  if (screenName === 'running') startTimeline();
+  if (screenName === 'running') { renderRunningScreen(); startTimeline(); }
+  if (screenName === 'owner')   renderOwnerScreen();
+  if (screenName === 'email')   renderEmailScreen();
+  if (screenName === 'wow')     renderWowScreen();
 }
 
 // ─── Workflow trigger ────────────────────────────────
 function startWorkflow(name) {
-  if (name === 'rental') goTo('running');
+  if (name !== 'rental' && name !== 'guest_card') return;
+  currentWorkflow = name;
+  // Reset email form state
+  document.getElementById('email-form').classList.remove('hidden');
+  document.getElementById('email-success').classList.add('hidden');
+  document.getElementById('input-name').value = '';
+  document.getElementById('input-email').value = '';
+  goTo('running');
+}
+
+// ─── Content renderers ───────────────────────────────
+function renderRunningScreen() {
+  var wf = WORKFLOW_DATA[currentWorkflow];
+  document.getElementById('running-badge').textContent = wf.badge;
+  document.getElementById('running-trigger').innerHTML = wf.triggerHTML;
+  wf.steps.forEach(function(step, i) {
+    document.getElementById('step-' + (i+1) + '-title').textContent = step.title;
+    document.getElementById('step-' + (i+1) + '-sub').textContent   = step.sub;
+  });
+}
+
+function renderOwnerScreen() {
+  var wf = WORKFLOW_DATA[currentWorkflow];
+  document.getElementById('owner-title').textContent      = wf.ownerTitle;
+  document.getElementById('owner-sub').textContent        = wf.ownerSub;
+  document.getElementById('owner-card-header').textContent = wf.ownerHeader;
+  document.getElementById('owner-rows').innerHTML         = wf.ownerRowsHTML;
+  document.getElementById('owner-note').textContent       = wf.ownerNote;
+  document.getElementById('owner-cta').textContent        = wf.ownerCTA;
+}
+
+function renderEmailScreen() {
+  var wf = WORKFLOW_DATA[currentWorkflow];
+  document.getElementById('email-title').textContent      = wf.emailTitle;
+  document.getElementById('email-sub').textContent        = wf.emailSub;
+  document.getElementById('send-btn-text').textContent    = wf.sendLabel;
+  document.getElementById('email-success-sub').textContent = wf.successSub;
+}
+
+function renderWowScreen() {
+  var wf = WORKFLOW_DATA[currentWorkflow];
+  document.getElementById('wow-sub').textContent      = wf.wowSub;
+  document.getElementById('wow-bullets').innerHTML    = wf.wowBulletsHTML;
+  document.getElementById('wow-preview').innerHTML    = wf.wowPreviewHTML;
 }
 
 // ─── Coming next modal ───────────────────────────────
@@ -706,38 +807,30 @@ document.getElementById('coming-modal').addEventListener('click', function(e) {
 });
 
 // ─── Timeline animation ──────────────────────────────
-let timelineStarted = false;
-const STEP_DELAYS = [1400, 2800, 4200, 5600, 7000, 8600]; // ms from start
+var timelineStarted = false;
+var STEP_DELAYS = [1400, 2800, 4200, 5600, 7000, 8600];
 
 function startTimeline() {
   if (timelineStarted) return;
   timelineStarted = true;
 
-  // Reset all steps
-  for (let i = 1; i <= 6; i++) {
-    const row = document.getElementById('step-' + i);
-    row.classList.remove('complete', 'current');
+  for (var i = 1; i <= 6; i++) {
+    document.getElementById('step-' + i).classList.remove('complete', 'current');
   }
   document.getElementById('results-btn').classList.remove('show');
-
-  // Mark step 1 as current immediately
   document.getElementById('step-1').classList.add('current');
 
   STEP_DELAYS.forEach(function(delay, idx) {
     setTimeout(function() {
-      const stepNum = idx + 1;
-      const row = document.getElementById('step-' + stepNum);
+      var stepNum = idx + 1;
+      var row = document.getElementById('step-' + stepNum);
       row.classList.remove('current');
       row.classList.add('complete');
-
-      // Mark next as current
-      const nextRow = document.getElementById('step-' + (stepNum + 1));
+      var nextRow = document.getElementById('step-' + (stepNum + 1));
       if (nextRow) nextRow.classList.add('current');
-
-      // After last step, show results button
       if (stepNum === 6) {
         setTimeout(function() {
-          const btn = document.getElementById('results-btn');
+          var btn = document.getElementById('results-btn');
           btn.classList.add('show');
           btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 600);
@@ -746,9 +839,8 @@ function startTimeline() {
   });
 }
 
-// Reset timeline when leaving the running screen
 document.querySelectorAll('.screen').forEach(function(s) {
-  const obs = new MutationObserver(function(mutations) {
+  var obs = new MutationObserver(function(mutations) {
     mutations.forEach(function(m) {
       if (m.attributeName === 'class' && !s.classList.contains('active') && s.id === 'screen-running') {
         timelineStarted = false;
@@ -760,13 +852,14 @@ document.querySelectorAll('.screen').forEach(function(s) {
 
 // ─── Email send ──────────────────────────────────────
 function sendEmail() {
-  const name  = document.getElementById('input-name').value.trim();
-  const email = document.getElementById('input-email').value.trim();
-  const errEl = document.getElementById('email-error');
-  const btn   = document.getElementById('send-btn');
-  const btnText = document.getElementById('send-btn-text');
-  const spinner = document.getElementById('send-spinner');
-  const arrow   = document.getElementById('send-arrow');
+  var name    = document.getElementById('input-name').value.trim();
+  var email   = document.getElementById('input-email').value.trim();
+  var errEl   = document.getElementById('email-error');
+  var btn     = document.getElementById('send-btn');
+  var btnText = document.getElementById('send-btn-text');
+  var spinner = document.getElementById('send-spinner');
+  var arrow   = document.getElementById('send-arrow');
+  var wf      = WORKFLOW_DATA[currentWorkflow];
 
   errEl.classList.add('hidden');
 
@@ -777,27 +870,30 @@ function sendEmail() {
     return;
   }
 
-  // Loading state
   btn.disabled = true;
   btnText.textContent = 'Sending…';
   spinner.classList.remove('hidden');
   arrow.classList.add('hidden');
 
-  // Two independent delivery channels fire in parallel (same pattern as /ai
-  // pages); the send succeeds if at least one lands.
-  const timestamp = new Date().toLocaleString();
-  const subjectLine = '🔔 Experience Demo Report Request — ' + (name || email);
-  const messageBody =
-    '🔔 Experience Upnex AI — demo report requested\n\n' +
+  var timestamp  = new Date().toLocaleString();
+  var wfLabel    = currentWorkflow === 'guest_card' ? 'Guest Card Response' : 'Rental Application Screening';
+  var subjectLine = '🔔 Experience Demo — ' + wfLabel + ' — ' + (name || email);
+  var messageBody =
+    '🔔 Experience Upnex AI — demo run\n\n' +
     'Name:      ' + (name || '—') + '\n' +
     'Email:     ' + email + '\n' +
-    'Workflow:  Rental Application Screening\n' +
-    'Property:  123 Main Street (sample)\n' +
-    'Applicant: John Miller (sample) — 3.57× income ratio, status Complete\n' +
-    'Submitted: ' + timestamp + '\n\n' +
-    'Send them the screening report and follow up.';
+    'Workflow:  ' + wfLabel + '\n' +
+    'Submitted: ' + timestamp;
 
-  const emailjsPromise = new Promise(function(resolve) {
+  // Primary: tracking server sends actual email to the visitor
+  var trackingPromise = fetch(TRACKING_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, name: name || 'there', workflow: currentWorkflow }),
+  }).then(function(r) { return r.ok; }).catch(function() { return false; });
+
+  // Fallback: notify Hari via EmailJS
+  var emailjsPromise = new Promise(function(resolve) {
     if (!window.emailjs) return resolve(false);
     emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
       name: name || email, email: email,
@@ -807,45 +903,26 @@ function sendEmail() {
       time: timestamp, timestamp: timestamp,
       message: messageBody, subject: subjectLine,
     })
-    .then(function() { console.log('[demo] ✅ EmailJS delivered'); resolve(true); })
-    .catch(function(err) { console.error('[demo] ❌ EmailJS failed:', err); resolve(false); });
+    .then(function() { resolve(true); })
+    .catch(function() { resolve(false); });
   });
 
-  const formsubmitPromise = new Promise(function(resolve) {
-    try {
-      const fd = new FormData();
-      fd.append('name', name || '');
-      fd.append('email', email);
-      fd.append('workflow', 'Rental Application Screening (demo)');
-      fd.append('_subject', subjectLine);
-      fd.append('_replyto', email);
-      fd.append('_template', 'table');
-      fd.append('_captcha', 'false');
-      fd.append('source', 'upnexs.com/experience');
-      fetch('https://formsubmit.co/ajax/hari@upnexs.com', {
-        method: 'POST', body: fd, headers: { 'Accept': 'application/json' },
-      })
-      .then(function(r) { resolve(r.ok); })
-      .catch(function() { resolve(false); });
-    } catch (e) { resolve(false); }
-  });
-
-  Promise.all([emailjsPromise, formsubmitPromise]).then(function(results) {
+  Promise.all([trackingPromise, emailjsPromise]).then(function(results) {
     if (results[0] || results[1]) {
       document.getElementById('email-form').classList.add('hidden');
       document.getElementById('email-success').classList.remove('hidden');
+      document.getElementById('email-success-sub').textContent = wf.successSub;
     } else {
       errEl.textContent = 'Something went wrong. Please try again or email hari@upnexs.com directly.';
       errEl.classList.remove('hidden');
       btn.disabled = false;
-      btnText.textContent = 'Send Report';
+      btnText.textContent = wf.sendLabel;
       spinner.classList.add('hidden');
       arrow.classList.remove('hidden');
     }
   });
 }
 
-// Allow Enter key in email fields
 document.getElementById('input-email').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') sendEmail();
 });
