@@ -149,7 +149,7 @@
     </div>
 
     <h2 class="text-2xl font-black text-ink mb-1">Which workflow do you want to see run?</h2>
-    <p class="text-muted text-sm mb-7">Two workflows are live today. Five more are in development.</p>
+    <p class="text-muted text-sm mb-7">All 7 automation workflows are live — run any of them end-to-end.</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
@@ -185,60 +185,80 @@
         </div>
       </button>
 
-      <!-- Cards 3-7: Coming next -->
-      <button onclick="showComing('Maintenance Request Routing')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+      <!-- Cards 3-7: All Live -->
+      <button onclick="startWorkflow('maintenance')" class="text-left bg-white rounded-2xl p-5 card-shadow border-2 border-orange hover:shadow-lg transition-all group">
         <div class="flex items-start justify-between mb-3">
-          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
-            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <div class="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </div>
-          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+          <span class="bg-orange text-white text-xs font-bold px-2.5 py-1 rounded-full">Live Demo</span>
         </div>
         <h3 class="font-bold text-ink text-base mb-1">Maintenance Routing</h3>
         <p class="text-xs text-muted leading-relaxed">Routes work orders, contacts vendors, and updates tenants without staff involvement.</p>
+        <div class="mt-4 flex items-center gap-1 text-orange text-sm font-semibold group-hover:gap-2 transition-all">
+          Run this workflow
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
       </button>
 
-      <button onclick="showComing('Lease Renewal')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+      <button onclick="startWorkflow('renewal')" class="text-left bg-white rounded-2xl p-5 card-shadow border-2 border-orange hover:shadow-lg transition-all group">
         <div class="flex items-start justify-between mb-3">
-          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
-            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <div class="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
           </div>
-          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+          <span class="bg-orange text-white text-xs font-bold px-2.5 py-1 rounded-full">Live Demo</span>
         </div>
         <h3 class="font-bold text-ink text-base mb-1">Lease Renewal</h3>
         <p class="text-xs text-muted leading-relaxed">Identifies expiring leases, prepares renewal offers, and tracks responses automatically.</p>
+        <div class="mt-4 flex items-center gap-1 text-orange text-sm font-semibold group-hover:gap-2 transition-all">
+          Run this workflow
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
       </button>
 
-      <button onclick="showComing('Tenant Communication')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+      <button onclick="startWorkflow('comms')" class="text-left bg-white rounded-2xl p-5 card-shadow border-2 border-orange hover:shadow-lg transition-all group">
         <div class="flex items-start justify-between mb-3">
-          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
-            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <div class="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
           </div>
-          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+          <span class="bg-orange text-white text-xs font-bold px-2.5 py-1 rounded-full">Live Demo</span>
         </div>
         <h3 class="font-bold text-ink text-base mb-1">Tenant Communication</h3>
         <p class="text-xs text-muted leading-relaxed">Drafts and sends contextual responses to tenant inquiries using your tone and policies.</p>
+        <div class="mt-4 flex items-center gap-1 text-orange text-sm font-semibold group-hover:gap-2 transition-all">
+          Run this workflow
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
       </button>
 
-      <button onclick="showComing('Move-Out Processing')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+      <button onclick="startWorkflow('moveout')" class="text-left bg-white rounded-2xl p-5 card-shadow border-2 border-orange hover:shadow-lg transition-all group">
         <div class="flex items-start justify-between mb-3">
-          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
-            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <div class="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
           </div>
-          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+          <span class="bg-orange text-white text-xs font-bold px-2.5 py-1 rounded-full">Live Demo</span>
         </div>
         <h3 class="font-bold text-ink text-base mb-1">Move-Out Processing</h3>
         <p class="text-xs text-muted leading-relaxed">Coordinates inspection, calculates deposit disposition, and sends move-out statements.</p>
+        <div class="mt-4 flex items-center gap-1 text-orange text-sm font-semibold group-hover:gap-2 transition-all">
+          Run this workflow
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
       </button>
 
-      <button onclick="showComing('Move-In Coordination')" class="text-left bg-white rounded-2xl p-5 border border-line hover:border-navy/20 transition-all opacity-70">
+      <button onclick="startWorkflow('movein')" class="text-left bg-white rounded-2xl p-5 card-shadow border-2 border-orange hover:shadow-lg transition-all group">
         <div class="flex items-start justify-between mb-3">
-          <div class="w-10 h-10 rounded-xl bg-softblue flex items-center justify-center">
-            <svg class="w-5 h-5 text-navy/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <div class="w-10 h-10 rounded-xl bg-orange/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           </div>
-          <span class="bg-gray-100 text-gray-500 text-xs font-semibold px-2.5 py-1 rounded-full">Coming next</span>
+          <span class="bg-orange text-white text-xs font-bold px-2.5 py-1 rounded-full">Live Demo</span>
         </div>
         <h3 class="font-bold text-ink text-base mb-1">Move-In Coordination</h3>
         <p class="text-xs text-muted leading-relaxed">Sends key packets, utility setup reminders, and welcome messages on move-in day.</p>
+        <div class="mt-4 flex items-center gap-1 text-orange text-sm font-semibold group-hover:gap-2 transition-all">
+          Run this workflow
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
       </button>
 
     </div>
@@ -615,7 +635,7 @@ const EMAILJS_CONFIG = {
 };
 if (window.emailjs) emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
 
-const TRACKING_URL = 'https://permissions-cornell-oval-smallest.trycloudflare.com/api/demo/send-result';
+const TRACKING_URL = 'https://t.upnexs.com/api/demo/send-result';
 
 // ─── Active workflow state ───────────────────────────
 let currentWorkflow = 'rental';
@@ -730,6 +750,272 @@ const WORKFLOW_DATA = {
       <p class="text-xs text-muted mt-2">Demonstration guest card. In production, this reply fires automatically within 60 seconds of any incoming guest card via AppFolio integration.</p>
     `,
   },
+  maintenance: {
+    badge: 'Maintenance Routing · Running',
+    triggerHTML: '"AC stopped working last night — house is getting hot and we have young kids." — <strong>John Miller</strong>, 123 Main Street · Received 11:47 PM',
+    steps: [
+      { title: 'Request Received',            sub: 'Maintenance ticket detected.' },
+      { title: 'Issue Classified',            sub: 'HVAC — AC not cooling.' },
+      { title: 'Priority Determined',         sub: 'High — safety concern (heat + young occupants).' },
+      { title: 'Property Context Evaluated',  sub: 'HVAC vendor on file: CoolAir Solutions.' },
+      { title: 'Work Order Prepared',         sub: 'Dispatch drafted for CoolAir, morning slot.' },
+      { title: 'Resident Response Prepared',  sub: 'Confirmation + ETA drafted.' },
+    ],
+    ownerTitle:  'AI-Prepared Maintenance Work Order',
+    ownerSub:    'High-priority issue detected — vendor dispatched in 4 minutes.',
+    ownerHeader: '123 Main Street · Work Order #WO-0391',
+    ownerRowsHTML: `
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Resident</span><span class="text-sm font-semibold text-ink">John Miller — Unit 2B</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Issue</span><span class="text-sm font-semibold text-ink">HVAC — AC not cooling</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Priority</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">High</span><span class="text-xs font-semibold px-2 py-0.5 rounded-full" style="background:#fef3c7;color:#92400e">Safety concern</span></div></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Assigned Vendor</span><span class="text-sm font-semibold text-ink">CoolAir Solutions (per PM agreement)</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">ETA</span><span class="text-sm font-semibold text-ink">Tomorrow 8–11 AM</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Cost Estimate</span><span class="text-sm font-semibold text-ink">$200–450 (per vendor tier)</span></div>
+      <div class="flex items-center justify-between px-6 py-4 bg-orange/5"><span class="text-sm font-bold text-ink">Time to Dispatch</span><span class="text-sm font-bold text-orange">4 minutes</span></div>
+    `,
+    ownerNote:  'Industry average response to maintenance requests is 18+ hours. UpneX had a vendor dispatched in 4 minutes — before John woke up.',
+    ownerCTA:   'Send This Work Order to My Email',
+    emailTitle: 'Where should we send your copy?',
+    emailSub:   'The same maintenance work order summary — delivered to your inbox in the next 30 seconds.',
+    sendLabel:  'Send Report',
+    successSub: 'Check your inbox — the work order is on its way.',
+    wowSub: 'In production, your team doesn\'t check a portal or call a vendor. The moment the request arrives, the workflow fires — priority determined, vendor dispatched, tenant confirmed.',
+    wowBulletsHTML: `
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Maintenance request classified: HVAC — AC not cooling</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Priority set to High — safety concern with heat and young occupants</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Vendor retrieved from PM agreement: CoolAir Solutions dispatched</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Resident notified with vendor name and ETA: tomorrow 8–11 AM</p></div>
+    `,
+    wowPreviewHTML: `
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration resident communication</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between"><span><strong>To:</strong> john.miller@email.com</span><span class="bg-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded">Demo preview</span></div>
+          <div class="mt-1"><strong>Subject:</strong> Your AC repair — CoolAir arriving tomorrow 8–11 AM</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi John,</p>
+          <p class="text-sm text-ink mb-3">Your AC repair request has been logged. CoolAir Solutions will be at 123 Main Street tomorrow between 8 AM and 11 AM. The technician will call you 30 minutes before arrival.</p>
+          <p class="text-sm text-ink mb-3">If it becomes unsafe overnight, call our after-hours line and we'll expedite.</p>
+          <p class="text-sm text-ink">— Property Management Team</p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">Demonstration maintenance request. In production, tickets trigger this workflow the moment they arrive from tenant text, email, or portal.</p>
+    `,
+  },
+  renewal: {
+    badge: 'Lease Renewal · Running',
+    triggerHTML: 'Lease at <strong>456 Oak Avenue, Unit 3A</strong> expires in <strong>60 days</strong> — Tenant: <strong>Sarah Johnson</strong> · 2-year resident',
+    steps: [
+      { title: 'Lease Identified',          sub: 'Expiring lease detected — 60 days out.' },
+      { title: 'Tenant History Reviewed',   sub: 'Payment record pulled: 24 on-time payments.' },
+      { title: 'Renewal Terms Calculated',  sub: 'Market rate: $2,350. Preferred rate: $2,275.' },
+      { title: 'Renewal Offer Prepared',    sub: 'Offer letter drafted with preferred rate.' },
+      { title: 'Communication Drafted',     sub: 'Tenant notification email prepared.' },
+      { title: 'Owner Summary Prepared',    sub: 'Renewal summary ready for PM review.' },
+    ],
+    ownerTitle:  'AI-Prepared Lease Renewal Summary',
+    ownerSub:    'Sarah qualifies for a preferred renewal rate based on 24 months of on-time payments.',
+    ownerHeader: '456 Oak Avenue, Unit 3A · Renewal #LR-0148',
+    ownerRowsHTML: `
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Tenant</span><span class="text-sm font-semibold text-ink">Sarah Johnson — 2-year resident</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Current Rent</span><span class="text-sm font-semibold text-ink">$2,200/month</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Proposed Renewal</span><span class="text-sm font-semibold text-ink">$2,275/month <span class="text-xs text-muted">(market: $2,350)</span></span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Lease Expiry</span><span class="text-sm font-semibold text-ink">October 31, 2026</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Payment History</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">24/24 on time</span><span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Perfect</span></div></div>
+      <div class="flex items-center justify-between px-6 py-4 bg-orange/5"><span class="text-sm font-bold text-ink">AI Recommendation</span><span class="text-sm font-bold text-orange">Approve Renewal</span></div>
+    `,
+    ownerNote:  '2-year tenant with perfect payment history. A preferred renewal rate retains a proven resident and avoids a 30–45 day vacancy.',
+    ownerCTA:   'Send This Renewal Report to My Email',
+    emailTitle: 'Where should we send your copy?',
+    emailSub:   'The same renewal summary — delivered to your inbox in the next 30 seconds.',
+    sendLabel:  'Send Report',
+    successSub: 'Check your inbox — the renewal summary is on its way.',
+    wowSub: 'In production, your team doesn\'t track expiry dates manually. The moment a lease enters the 60-day window, the renewal workflow fires — history pulled, offer calculated, tenant notified.',
+    wowBulletsHTML: `
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Expiring lease detected 60 days out — Sarah Johnson, Unit 3A</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">24-month payment history retrieved: perfect record flagged</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Preferred rate calculated: $2,275 vs. $2,350 market (retain proven resident)</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Renewal offer drafted and sent — owner summary prepared for review</p></div>
+    `,
+    wowPreviewHTML: `
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration tenant communication</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between"><span><strong>To:</strong> sarah.johnson@email.com</span><span class="bg-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded">Demo preview</span></div>
+          <div class="mt-1"><strong>Subject:</strong> Your lease renewal offer — 456 Oak Avenue</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi Sarah,</p>
+          <p class="text-sm text-ink mb-3">Your lease at 456 Oak Avenue, Unit 3A expires October 31. We'd love to have you stay — as a 2-year resident in good standing, we're offering a preferred renewal rate of $2,275/month (below the current market rate of $2,350).</p>
+          <p class="text-sm text-ink mb-3">To accept, simply reply to this email or sign the renewal offer at the portal by September 15.</p>
+          <p class="text-sm text-ink">Thank you for being a great tenant.<br/><strong>— Property Management Team</strong></p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">Demonstration lease renewal. In production, this workflow fires the moment a lease enters the 60-day expiry window.</p>
+    `,
+  },
+  comms: {
+    badge: 'Tenant Communication · Running',
+    triggerHTML: '"Hi, I\'m interested in the 2BR unit at Oak Ave — do you allow small dogs and is it still available?" — <strong>Maria Chen</strong> · Received 9:14 AM',
+    steps: [
+      { title: 'Inquiry Received',          sub: 'Incoming email inquiry detected.' },
+      { title: 'Intent Classified',         sub: 'Availability + pet policy question identified.' },
+      { title: 'Property Status Checked',   sub: 'Unit 3B: available August 15.' },
+      { title: 'Pet Policy Retrieved',      sub: 'Dogs under 40 lbs permitted; $400 deposit.' },
+      { title: 'Response Drafted',          sub: 'Complete answer prepared from property data.' },
+      { title: 'Quality Review',            sub: 'Tone and accuracy verified — ready to send.' },
+    ],
+    ownerTitle:  'AI-Drafted Tenant Response',
+    ownerSub:    'Inquiry answered completely — availability confirmed, pet policy included, showing instructions provided.',
+    ownerHeader: 'Inquiry Response · Maria Chen — 9:14 AM',
+    ownerRowsHTML: `
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Prospect</span><span class="text-sm font-semibold text-ink">Maria Chen</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Inquiry Type</span><span class="text-sm font-semibold text-ink">Availability + pet policy</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Unit</span><span class="text-sm font-semibold text-ink">456 Oak Avenue, Unit 3B — 2BR</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Availability</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">August 15</span><span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Available</span></div></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Pet Policy</span><span class="text-sm font-semibold text-ink">Dogs ≤40 lbs · $400 deposit</span></div>
+      <div class="flex items-center justify-between px-6 py-4 bg-orange/5"><span class="text-sm font-bold text-ink">Response Time</span><span class="text-sm font-bold text-orange">Under 60 seconds</span></div>
+    `,
+    ownerNote:  'Average response time for PM email inquiries is 4–8 hours. This complete, accurate response was drafted in under 60 seconds from your property data.',
+    ownerCTA:   'Send This Response to My Email',
+    emailTitle: 'Where should we send your copy?',
+    emailSub:   'The draft response to Maria — delivered to your inbox in the next 30 seconds.',
+    sendLabel:  'Send Draft',
+    successSub: 'Check your inbox — the draft response is on its way.',
+    wowSub: 'In production, every tenant inquiry — email, text, or portal message — gets an immediate, accurate response drafted from your property data. Your team reviews and approves.',
+    wowBulletsHTML: `
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Inquiry classified: availability + pet policy question</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Unit status and pet policy retrieved from property data</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Complete response drafted: availability, pet policy, showing instructions</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Response ready for PM review — delivered in under 60 seconds</p></div>
+    `,
+    wowPreviewHTML: `
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration response draft</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between"><span><strong>To:</strong> maria.chen@email.com</span><span class="bg-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded">Demo preview</span></div>
+          <div class="mt-1"><strong>Subject:</strong> Re: 2BR at Oak Ave — availability and pet policy</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi Maria,</p>
+          <p class="text-sm text-ink mb-3">Thanks for reaching out! The 2BR at 456 Oak Avenue is available August 15 — and yes, we do allow small dogs (under 40 lbs) with a one-time $400 pet deposit.</p>
+          <p class="text-sm text-ink mb-3"><strong>To schedule a showing:</strong> self-guided tours are available daily 8 AM – 7 PM. Reply here to book or call (512) 555-0100.</p>
+          <p class="text-sm text-ink">Looking forward to showing you the unit!<br/><strong>— Property Management Team</strong></p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">Demonstration inquiry response. In production, every incoming message triggers this workflow within seconds of arrival.</p>
+    `,
+  },
+  moveout: {
+    badge: 'Move-Out Processing · Running',
+    triggerHTML: '<strong>David Park</strong> vacated <strong>789 Elm Drive, Unit 4B</strong> on <strong>July 31</strong> — Security deposit: $2,100 · Inspection completed',
+    steps: [
+      { title: 'Move-Out Triggered',          sub: 'Vacate confirmed — deposit processing initiated.' },
+      { title: 'Lease Terms Retrieved',       sub: 'Original deposit and cleaning standards pulled.' },
+      { title: 'Inspection Report Processed', sub: 'Charges: $150 cleaning, $0 damage.' },
+      { title: 'Charges Calculated',          sub: 'Net refund: $1,950.' },
+      { title: 'Disposition Prepared',        sub: 'Itemized statement drafted.' },
+      { title: 'Statement Drafted',           sub: 'Move-out letter and deposit refund ready.' },
+    ],
+    ownerTitle:  'AI-Prepared Move-Out Statement',
+    ownerSub:    'Deposit disposition calculated — itemized statement ready within minutes of inspection.',
+    ownerHeader: '789 Elm Drive, Unit 4B · Move-Out #MO-0223',
+    ownerRowsHTML: `
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Tenant</span><span class="text-sm font-semibold text-ink">David Park</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Move-Out Date</span><span class="text-sm font-semibold text-ink">July 31, 2026</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Security Deposit</span><span class="text-sm font-semibold text-ink">$2,100</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Cleaning Fee</span><span class="text-sm font-semibold text-ink">$150</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Damage Charges</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">$0</span><span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Clean</span></div></div>
+      <div class="flex items-center justify-between px-6 py-4 bg-orange/5"><span class="text-sm font-bold text-ink">Deposit Refund</span><span class="text-sm font-bold text-orange">$1,950</span></div>
+    `,
+    ownerNote:  'Move-out statements typically take 3–5 days of staff time. This statement was prepared within 8 minutes of the inspection report being filed.',
+    ownerCTA:   'Send This Statement to My Email',
+    emailTitle: 'Where should we send your copy?',
+    emailSub:   'The same deposit disposition statement — delivered to your inbox in the next 30 seconds.',
+    sendLabel:  'Send Statement',
+    successSub: 'Check your inbox — the deposit statement is on its way.',
+    wowSub: 'In production, the moment an inspection report is filed, the workflow fires — lease terms pulled, charges calculated, statement prepared and sent automatically.',
+    wowBulletsHTML: `
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Vacate confirmed — move-out deposit processing triggered</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Inspection charges calculated: $150 cleaning, $0 damage</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Deposit refund calculated: $1,950 — itemized statement drafted</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Move-out letter and deposit statement ready in 8 minutes</p></div>
+    `,
+    wowPreviewHTML: `
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration move-out statement</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between"><span><strong>To:</strong> david.park@email.com</span><span class="bg-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded">Demo preview</span></div>
+          <div class="mt-1"><strong>Subject:</strong> Your move-out statement — 789 Elm Drive, Unit 4B</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi David,</p>
+          <p class="text-sm text-ink mb-3">Thank you for your tenancy. Here is your move-out statement for Unit 4B at 789 Elm Drive.</p>
+          <p class="text-sm text-ink mb-1"><strong>Security deposit held:</strong> $2,100.00</p>
+          <p class="text-sm text-ink mb-1"><strong>Cleaning fee:</strong> – $150.00</p>
+          <p class="text-sm text-ink mb-3"><strong>Deposit refund:</strong> $1,950.00</p>
+          <p class="text-sm text-ink mb-3">Your refund will be mailed to your forwarding address within 21 days. Please confirm your address by replying to this email.</p>
+          <p class="text-sm text-ink">Thank you,<br/><strong>— Property Management Team</strong></p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">Demonstration move-out statement. In production, this fires automatically once the inspection report is filed.</p>
+    `,
+  },
+  movein: {
+    badge: 'Move-In Coordination · Running',
+    triggerHTML: '<strong>Lisa Torres</strong> moving into <strong>123 Maple Court, Unit 1A</strong> on <strong>August 1</strong> — Lease executed · Access codes confirmed',
+    steps: [
+      { title: 'Move-In Triggered',           sub: 'Lease executed — move-in coordination started.' },
+      { title: 'Lease Terms Verified',        sub: 'Rent, deposit, and move-in date confirmed.' },
+      { title: 'Access Credentials Prepared', sub: 'Lockbox code and entry instructions compiled.' },
+      { title: 'Utilities Checklist Built',   sub: 'Electric, water, internet providers listed.' },
+      { title: 'Welcome Packet Assembled',    sub: 'Key info, contacts, and policies gathered.' },
+      { title: 'Communication Drafted',       sub: 'Move-in day message and packet prepared.' },
+    ],
+    ownerTitle:  'AI-Prepared Move-In Coordination',
+    ownerSub:    "Lisa's move-in packet assembled — welcome message ready for day-one delivery.",
+    ownerHeader: '123 Maple Court, Unit 1A · Move-In #MI-0087',
+    ownerRowsHTML: `
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Tenant</span><span class="text-sm font-semibold text-ink">Lisa Torres</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Move-In Date</span><span class="text-sm font-semibold text-ink">August 1, 2026</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Monthly Rent</span><span class="text-sm font-semibold text-ink">$1,850/month</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Access Method</span><span class="text-sm font-semibold text-ink">Lockbox code #7291 + digital fob</span></div>
+      <div class="flex items-center justify-between px-6 py-3.5"><span class="text-sm font-medium text-muted">Utilities Checklist</span><div class="flex items-center gap-2"><span class="text-sm font-bold text-ink">3 providers</span><span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded-full">✓ Included</span></div></div>
+      <div class="flex items-center justify-between px-6 py-4 bg-orange/5"><span class="text-sm font-bold text-ink">Coordination Time</span><span class="text-sm font-bold text-orange">Under 3 minutes</span></div>
+    `,
+    ownerNote:  'Move-in coordination typically takes 45–60 minutes of staff time. Lisa’s complete welcome packet was assembled in under 3 minutes.',
+    ownerCTA:   'Send This Packet Summary to My Email',
+    emailTitle: 'Where should we send your copy?',
+    emailSub:   'The same move-in coordination summary — delivered to your inbox in the next 30 seconds.',
+    sendLabel:  'Send Summary',
+    successSub: 'Check your inbox — the move-in packet is on its way.',
+    wowSub: 'In production, the moment a lease is executed, the move-in workflow fires — access credentials prepared, utilities checklist sent, welcome message delivered on day one.',
+    wowBulletsHTML: `
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Lease executed — move-in coordination triggered for Lisa Torres</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Access credentials compiled: lockbox code #7291, digital fob instructions</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Utilities checklist built: 3 providers with setup links</p></div>
+      <div class="flex items-start gap-2.5"><div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><p class="text-sm text-ink">Welcome packet assembled and move-in message ready for day one</p></div>
+    `,
+    wowPreviewHTML: `
+      <p class="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Demonstration move-in welcome</p>
+      <div class="email-preview">
+        <div class="email-header-bar">
+          <div class="flex items-center justify-between"><span><strong>To:</strong> lisa.torres@email.com</span><span class="bg-gray-200 text-gray-500 text-xs px-2 py-0.5 rounded">Demo preview</span></div>
+          <div class="mt-1"><strong>Subject:</strong> Welcome home, Lisa — everything you need for move-in day</div>
+        </div>
+        <div class="email-body-preview">
+          <p class="text-sm text-ink mb-3">Hi Lisa,</p>
+          <p class="text-sm text-ink mb-3">Welcome to 123 Maple Court! Here's everything you need for move-in day:</p>
+          <p class="text-sm text-ink mb-1"><strong>Access:</strong> Lockbox code #7291 at the front door. Your digital fob will be activated by 8 AM.</p>
+          <p class="text-sm text-ink mb-1"><strong>Electric:</strong> Austin Energy — set up at austinenergy.com (use your unit address as the account reference).</p>
+          <p class="text-sm text-ink mb-3"><strong>Internet:</strong> AT&amp;T Fiber pre-wired — call 800-288-2020 to activate.</p>
+          <p class="text-sm text-ink">We're here if you need anything.<br/><strong>— Property Management Team</strong></p>
+        </div>
+      </div>
+      <p class="text-xs text-muted mt-2">Demonstration move-in welcome. In production, this fires automatically the moment a lease is executed.</p>
+    `,
+  },
 };
 
 // ─── Screen routing ──────────────────────────────────
@@ -748,7 +1034,7 @@ function goTo(screenName) {
 
 // ─── Workflow trigger ────────────────────────────────
 function startWorkflow(name) {
-  if (name !== 'rental' && name !== 'guest_card') return;
+  if (!WORKFLOW_DATA[name]) return;
   currentWorkflow = name;
   // Reset email form state
   document.getElementById('email-form').classList.remove('hidden');
