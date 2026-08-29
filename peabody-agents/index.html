@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Peabody Residential — Agent Program Dashboard | UpneX</title>
+<title>Peabody Residential — Client Dashboard | UpneX</title>
 <style>
   :root{
     --navy:#1a2e4a;
@@ -16,11 +16,11 @@
     --blue-light:#3d8bff;
     --green:#1faa59;
     --amber:#e0951b;
+    --red:#c0392b;
     --grey:#7b8aa0;
     --ink:#1a2233;
     --line:#e5eaf2;
     --bg:#f4f7fc;
-    /* 8 lifecycle phase colors */
     --p-design:#7c4dff; --p-dev:#0066cc; --p-test:#e0951b; --p-deploy:#14a0a0;
     --p-prod:#1faa59; --p-maint:#7b8aa0; --p-update:#3d8bff; --p-upgrade:#4a3ec9;
   }
@@ -28,12 +28,10 @@
   html{scroll-behavior:smooth}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--ink);
-    -webkit-font-smoothing:antialiased;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
   }
 
-  /* ---------- PIN LOCK SCREEN ---------- */
+  /* ---------- PIN LOCK ---------- */
   #lock{
     position:fixed;inset:0;z-index:1000;
     background:radial-gradient(circle at 50% 30%, #234066 0%, var(--navy) 45%, var(--navy-deep) 100%);
@@ -45,34 +43,18 @@
   .lock-logo{font-size:30px;font-weight:800;letter-spacing:-1px;margin-bottom:6px}
   .lock-logo span{color:var(--blue-light)}
   .lock-sub{color:#9fb3d1;font-size:14px;margin-bottom:38px;letter-spacing:.3px}
-  .lock-icon{
-    width:58px;height:58px;border-radius:16px;margin-bottom:22px;
-    background:rgba(61,139,255,.14);border:1px solid rgba(61,139,255,.35);
-    display:flex;align-items:center;justify-content:center;font-size:26px;
-  }
+  .lock-icon{width:58px;height:58px;border-radius:16px;margin-bottom:22px;background:rgba(61,139,255,.14);border:1px solid rgba(61,139,255,.35);display:flex;align-items:center;justify-content:center;font-size:26px}
   .lock-title{font-size:19px;font-weight:600;margin-bottom:6px}
   .lock-hint{color:#8fa4c4;font-size:13px;margin-bottom:26px}
   .pin-row{display:flex;gap:10px;margin-bottom:18px}
-  .pin-box{
-    width:46px;height:56px;border-radius:12px;
-    background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);
-    color:#fff;font-size:24px;font-weight:700;text-align:center;
-    transition:border-color .15s, background .15s, transform .15s;
-    outline:none;-moz-appearance:textfield;
-  }
+  .pin-box{width:46px;height:56px;border-radius:12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);color:#fff;font-size:24px;font-weight:700;text-align:center;transition:border-color .15s,background .15s,transform .15s;outline:none;-moz-appearance:textfield}
   .pin-box::-webkit-outer-spin-button,.pin-box::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   .pin-box:focus{border-color:var(--blue-light);background:rgba(61,139,255,.12);transform:translateY(-2px)}
   .pin-box.filled{border-color:rgba(61,139,255,.6)}
   .pin-err{color:#ff7b7b;font-size:13.5px;height:18px;opacity:0;transition:opacity .2s}
   .pin-err.show{opacity:1}
   .pin-row.shake{animation:shake .45s}
-  @keyframes shake{
-    0%,100%{transform:translateX(0)}
-    20%{transform:translateX(-9px)}
-    40%{transform:translateX(8px)}
-    60%{transform:translateX(-6px)}
-    80%{transform:translateX(4px)}
-  }
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
   .lock-foot{position:absolute;bottom:26px;color:#6f86a8;font-size:12px}
 
   /* ---------- DASHBOARD ---------- */
@@ -80,43 +62,83 @@
   #app.show{opacity:1}
   .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
-  header.top{
-    background:linear-gradient(135deg,var(--navy) 0%,var(--navy-deep) 100%);
-    color:#fff;padding:30px 0 34px;
-  }
+  header.top{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-deep) 100%);color:#fff;padding:28px 0 0}
   .brand{font-size:25px;font-weight:800;letter-spacing:-.6px}
   .brand .x{color:#7fa8d8;font-weight:500;margin:0 8px;font-size:20px}
   .brand .raut{color:#fff;font-weight:700}
   .top-sub{color:#a9bdda;font-size:14.5px;margin-top:6px}
   .top-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;align-items:center}
-  .meta-chip{
-    display:inline-flex;align-items:center;gap:7px;font-size:12.5px;
-    color:#cbd9ee;background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.12);padding:6px 12px;border-radius:20px;
-  }
+  .meta-chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:#cbd9ee;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:6px 12px;border-radius:20px}
   .meta-chip b{color:#fff;font-weight:600}
 
-  /* stats */
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-26px}
-  .stat{
-    background:#fff;border-radius:14px;padding:20px 18px;
-    box-shadow:0 8px 24px rgba(26,46,74,.08);border:1px solid var(--line);
+  /* ---------- TABS ---------- */
+  .tab-bar{display:flex;gap:0;margin-top:22px;border-bottom:none}
+  .tab-btn{
+    padding:11px 28px;font-size:14px;font-weight:700;cursor:pointer;
+    border:none;background:rgba(255,255,255,.07);color:#9fb3d1;
+    border-radius:10px 10px 0 0;margin-right:4px;
+    transition:background .15s,color .15s;letter-spacing:.2px;
   }
+  .tab-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+  .tab-btn.active{background:#f4f7fc;color:var(--navy)}
+
+  /* ---------- TAB PANELS ---------- */
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+
+  /* ---------- STATS ROW ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-4px}
+  .stat{background:#fff;border-radius:14px;padding:20px 18px;box-shadow:0 8px 24px rgba(26,46,74,.08);border:1px solid var(--line)}
   .stat .n{font-size:30px;font-weight:800;color:var(--navy);line-height:1}
   .stat .l{font-size:12.5px;color:var(--grey);margin-top:8px;font-weight:500}
   .stat.accent .n{color:var(--blue)}
   .stat.green .n{color:var(--green)}
 
-  /* section headers */
+  /* ---------- PORTFOLIO METRICS ---------- */
+  .port-section{margin:36px 0 0}
+  .port-head{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .port-sub{font-size:13px;color:var(--grey);margin-bottom:18px}
+  .metric-grid{display:grid;gap:14px}
+  .mg-3{grid-template-columns:repeat(3,1fr)}
+  .mg-4{grid-template-columns:repeat(4,1fr)}
+  .mg-5{grid-template-columns:repeat(5,1fr)}
+  .mcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 16px;box-shadow:0 3px 12px rgba(26,46,74,.05)}
+  .mcard .mv{font-size:26px;font-weight:800;color:var(--navy);line-height:1}
+  .mcard .ml{font-size:12px;color:var(--grey);margin-top:7px;font-weight:500}
+  .mcard .ms{font-size:11px;color:var(--grey);margin-top:4px}
+  .mcard.accent .mv{color:var(--blue)}
+  .mcard.green .mv{color:var(--green)}
+  .mcard.amber .mv{color:var(--amber)}
+  .mcard.red .mv{color:var(--red)}
+
+  .prog-wrap{margin-top:14px}
+  .prog-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
+  .prog-label span{color:var(--grey)}
+  .prog-bar{height:8px;background:#e7ebf2;border-radius:4px;overflow:hidden}
+  .prog-fill{height:100%;border-radius:4px;transition:width .5s ease}
+
+  .twin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .big-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 20px;box-shadow:0 3px 12px rgba(26,46,74,.05)}
+  .big-card h4{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:16px}
+  .kv-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .kv-row:last-child{border-bottom:none}
+  .kv-row .kv-k{color:var(--grey)}
+  .kv-row .kv-v{font-weight:700;color:var(--ink)}
+  .kv-row .kv-v.pos{color:var(--green)}
+  .kv-row .kv-v.neg{color:var(--red)}
+  .kv-row .kv-v.warn{color:var(--amber)}
+
+  .stale-banner{display:none;background:#fff8e6;border:1px solid #f0c040;border-radius:10px;padding:10px 16px;font-size:12.5px;color:#7a5a00;margin:16px 0 0;align-items:center;gap:8px}
+  .stale-banner.show{display:flex}
+
+  /* ---------- SECTION HEADERS (Agents tab) ---------- */
   .sec-head{display:flex;align-items:center;gap:10px;margin:38px 0 5px;font-size:17px;font-weight:800;color:var(--navy)}
   .sec-sub{font-size:13px;color:var(--grey);margin-bottom:18px;line-height:1.5}
 
-  /* phase legend */
+  /* ---------- KANBAN ---------- */
   .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
   .lg{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#3a4658;background:#fff;border:1px solid var(--line);padding:5px 11px;border-radius:20px}
   .lg .sw{width:10px;height:10px;border-radius:50%}
-
-  /* ---------- KANBAN ---------- */
   .kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;align-items:start}
   .col{background:#eef2f8;border:1px solid var(--line);border-radius:14px;padding:12px 12px 16px;min-height:120px}
   .col.live{background:#eafaf0;border-color:#c9ead6}
@@ -155,51 +177,31 @@
   .ev b{color:var(--ink);font-weight:700}
   .ev span{color:#6a7688}
 
-  /* activity table */
-  .activity{
-    background:#fff;border-radius:14px;border:1px solid var(--line);
-    box-shadow:0 3px 12px rgba(26,46,74,.05);overflow:hidden;
-  }
+  /* ---------- ACTIVITY TABLE ---------- */
+  .activity{background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 3px 12px rgba(26,46,74,.05);overflow:hidden}
   .activity table{width:100%;border-collapse:collapse;font-size:13px}
-  .activity th{
-    text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
-    color:var(--grey);background:#fafbfe;padding:11px 16px;border-bottom:1px solid var(--line);
-  }
+  .activity th{text-align:left;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--grey);background:#fafbfe;padding:11px 16px;border-bottom:1px solid var(--line)}
   .activity td{padding:13px 16px;border-bottom:1px solid var(--line);color:#3a4658;vertical-align:top}
   .activity tr:last-child td{border-bottom:none}
   .activity .sub{color:var(--grey);font-size:11.5px;margin-top:2px}
 
-  /* recipients */
-  .recip-wrap{
-    background:#fff;border-radius:14px;border:1px solid var(--line);
-    box-shadow:0 3px 12px rgba(26,46,74,.05);padding:20px;
-  }
+  /* ---------- RECIPIENTS ---------- */
+  .recip-wrap{background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 3px 12px rgba(26,46,74,.05);padding:20px}
   .recip{display:flex;flex-wrap:wrap;gap:12px}
-  .recip-card{flex:1 1 220px;border:1px solid var(--line);border-radius:11px;padding:13px 15px;background:#fbfcfe}
+  .recip-card{flex:1 1 180px;border:1px solid var(--line);border-radius:11px;padding:13px 15px;background:#fbfcfe}
   .recip-card .rn{font-size:14px;font-weight:700;color:var(--ink)}
-  .recip-card .re{font-size:12.5px;color:var(--blue);margin-top:3px}
-  .recip-card .rr{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--grey);margin-top:7px}
+  .recip-card .rr{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--grey);margin-top:7px}
   .recip-note{font-size:12.5px;color:var(--grey);margin-top:14px;line-height:1.5}
-  .recip-note a{color:var(--blue);text-decoration:none;font-weight:600}
 
   footer{margin:46px 0 40px;text-align:center;color:var(--grey);font-size:12.5px;line-height:1.9}
   footer .strong{color:var(--navy);font-weight:600}
   footer a{color:var(--blue);text-decoration:none}
   .foot-sep{width:46px;height:3px;background:var(--line);margin:0 auto 22px;border-radius:3px}
 
-  @media(max-width:1000px){
-    .kanban,.cal-grid{grid-template-columns:repeat(2,1fr)}
-  }
-  @media(max-width:820px){
-    .stats{grid-template-columns:repeat(2,1fr);margin-top:18px}
-  }
-  @media(max-width:560px){
-    .kanban,.cal-grid{grid-template-columns:1fr}
-  }
-  @media(max-width:430px){
-    .pin-box{width:40px;height:50px;font-size:20px}
-    .brand{font-size:21px}
-  }
+  @media(max-width:1000px){.kanban,.cal-grid{grid-template-columns:repeat(2,1fr)}.mg-5{grid-template-columns:repeat(3,1fr)}.mg-4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}.twin-grid{grid-template-columns:1fr}.mg-3{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.kanban,.cal-grid{grid-template-columns:1fr}.mg-3,.mg-4,.mg-5{grid-template-columns:1fr}}
+  @media(max-width:430px){.pin-box{width:40px;height:50px;font-size:20px}.brand{font-size:21px}.tab-btn{padding:9px 16px;font-size:13px}}
 </style>
 </head>
 <body>
@@ -228,325 +230,521 @@
   <header class="top">
     <div class="wrap">
       <div class="brand">UpneX<span class="x">—</span><span class="raut">Peabody Residential</span></div>
-      <div class="top-sub">Agent Program Dashboard · Live Engagement</div>
+      <div class="top-sub">Client Dashboard · Live Portfolio & Agent Program</div>
       <div class="top-meta">
-        <span class="meta-chip">🟢 <b id="chip-live">— live</b> in production</span>
+        <span class="meta-chip">🟢 <b id="chip-live">—</b> live in production</span>
         <span class="meta-chip">🧪 <b id="chip-test">—</b> in test / pilot</span>
         <span class="meta-chip">🛠 <b id="chip-roadmap">—</b> on the roadmap</span>
         <span class="meta-chip">📅 Live since <b id="chip-since">—</b></span>
       </div>
+      <!-- TAB BAR lives inside header so it overlaps the bg seam -->
+      <div class="tab-bar" style="margin-top:22px">
+        <button class="tab-btn active" id="tab-agents-btn" onclick="switchTab('agents')">🤖 AI Agents</button>
+        <button class="tab-btn" id="tab-portfolio-btn" onclick="switchTab('portfolio')">📊 Portfolio</button>
+      </div>
     </div>
   </header>
 
-  <div class="wrap">
-    <!-- stats -->
-    <div class="stats">
-      <div class="stat accent"><div class="n" id="stat-screened">—</div><div class="l">Applications Screened</div></div>
-      <div class="stat green"><div class="n" id="stat-live">—</div><div class="l">Agents Live in Production</div></div>
-      <div class="stat"><div class="n" id="stat-building">—</div><div class="l">In Build / Roadmap</div></div>
-      <div class="stat accent"><div class="n" id="stat-days">—</div><div class="l">Days Live</div></div>
-    </div>
+  <div class="wrap" style="padding-top:28px;padding-bottom:40px">
 
-    <!-- ============ KANBAN ============ -->
-    <div class="sec-head">🗂 Agent Pipeline — where each agent is today</div>
-    <div class="sec-sub">Every agent moves left → right through its lifecycle. The colored bar on each card shows the phases it has already crossed.</div>
-    <div class="legend" id="legend"></div>
-    <div class="kanban" id="kanban"><div class="col"><div class="kc-desc">Loading agents…</div></div></div>
+    <!-- ============================= TAB: AI AGENTS ============================= -->
+    <div class="tab-panel active" id="panel-agents">
 
-    <!-- ============ CALENDAR ============ -->
-    <div class="sec-head" style="margin-top:44px">📅 Work Calendar — what we shipped, day by day</div>
-    <div class="sec-sub">Each marker is an agent milestone, colored by the phase of work. Dashed months ahead are the planned roadmap.</div>
-    <div class="cal-grid" id="calendar"><div class="month"><div class="kc-desc">Loading calendar…</div></div></div>
+      <!-- stats -->
+      <div class="stats" style="margin-top:0">
+        <div class="stat accent"><div class="n" id="stat-screened">—</div><div class="l">Applications Screened</div></div>
+        <div class="stat green"><div class="n" id="stat-live">—</div><div class="l">Agents Live in Production</div></div>
+        <div class="stat"><div class="n" id="stat-building">—</div><div class="l">In Build / Roadmap</div></div>
+        <div class="stat accent"><div class="n" id="stat-days">—</div><div class="l">Days Live</div></div>
+      </div>
 
-    <!-- ============ SCREENING ACTIVITY ============ -->
-    <div class="sec-head" style="margin-top:44px">📋 Recent Screening Activity <span class="col-count" id="act-count" style="font-size:12px">—</span></div>
-    <div class="sec-sub">De-identified by design — applicant names stay out of the dashboard; full reports go by email to the recipients below.</div>
-    <div class="activity">
-      <table>
-        <thead>
-          <tr><th>Date</th><th>Outcome</th><th>Recipients</th><th>Delivery</th></tr>
-        </thead>
-        <tbody id="act-body">
-          <tr><td colspan="4" style="color:#8a96a8">Loading latest activity…</td></tr>
-        </tbody>
-      </table>
-    </div>
+      <!-- KANBAN -->
+      <div class="sec-head">🗂 Agent Pipeline — where each agent is today</div>
+      <div class="sec-sub">Every agent moves left → right through its lifecycle. The colored bar on each card shows the phases it has already crossed.</div>
+      <div class="legend" id="legend"></div>
+      <div class="kanban" id="kanban"><div class="col"><div class="kc-desc">Loading agents…</div></div></div>
 
-    <!-- ============ RECIPIENTS ============ -->
-    <div class="sec-head" style="margin-top:44px">👥 Report Recipients</div>
-    <div class="sec-sub">Where agent reports are delivered.</div>
-    <div class="recip-wrap">
-      <div class="recip">
-        <div class="recip-card">
-          <div class="rn">Kelly Scott</div>
-          <div class="re">kelly@peabodyresidential.com</div>
-          <div class="rr">Primary Recipient</div>
+      <!-- CALENDAR -->
+      <div class="sec-head" style="margin-top:44px">📅 Work Calendar — what we shipped, day by day</div>
+      <div class="sec-sub">Each marker is an agent milestone, colored by the phase of work. Dashed months ahead are the planned roadmap.</div>
+      <div class="cal-grid" id="calendar"><div class="month"><div class="kc-desc">Loading calendar…</div></div></div>
+
+      <!-- SCREENING ACTIVITY -->
+      <div class="sec-head" style="margin-top:44px">📋 Recent Screening Activity <span class="col-count" id="act-count" style="font-size:12px">—</span></div>
+      <div class="sec-sub">De-identified by design — applicant names stay out of the dashboard; full reports go by email to the recipients below.</div>
+      <div class="activity">
+        <table>
+          <thead><tr><th>Date</th><th>Outcome</th><th>Recipients</th><th>Delivery</th></tr></thead>
+          <tbody id="act-body"><tr><td colspan="4" style="color:#8a96a8">Loading latest activity…</td></tr></tbody>
+        </table>
+      </div>
+
+      <!-- RECIPIENTS -->
+      <div class="sec-head" style="margin-top:44px">👥 Report Recipients</div>
+      <div class="sec-sub">Where agent reports are delivered.</div>
+      <div class="recip-wrap">
+        <div class="recip">
+          <div class="recip-card"><div class="rn">Kelly Scott</div><div class="rr">Primary Recipient</div></div>
+          <div class="recip-card"><div class="rn">Leasing Team</div><div class="rr">Recipient</div></div>
+          <div class="recip-card"><div class="rn">Tino</div><div class="rr">Recipient</div></div>
+          <div class="recip-card"><div class="rn">Hari Sundar</div><div class="rr">UpneX · CC</div></div>
         </div>
-        <div class="recip-card">
-          <div class="rn">Leasing</div>
-          <div class="re">leasing@peabodyresidential.com</div>
-          <div class="rr">Recipient</div>
+        <div class="recip-note">To update report recipients, contact your UpneX account manager.</div>
+      </div>
+
+    </div><!-- /panel-agents -->
+
+    <!-- ============================= TAB: PORTFOLIO ============================= -->
+    <div class="tab-panel" id="panel-portfolio">
+
+      <div class="stale-banner" id="stale-banner">
+        ⚠️ Portfolio data is more than 24 hours old — syncs automatically each morning.
+      </div>
+
+      <!-- ── LEASING & OCCUPANCY ── -->
+      <div class="port-section">
+        <div class="port-head">🏠 Leasing &amp; Occupancy</div>
+        <div class="port-sub">Unit count and occupancy across the full portfolio. Data as of <span id="port-date">—</span>.</div>
+
+        <div class="metric-grid mg-5">
+          <div class="mcard accent">
+            <div class="mv" id="p-total-units">—</div>
+            <div class="ml">Total Units</div>
+          </div>
+          <div class="mcard green">
+            <div class="mv" id="p-occupied">—</div>
+            <div class="ml">Occupied</div>
+          </div>
+          <div class="mcard amber">
+            <div class="mv" id="p-vacant">—</div>
+            <div class="ml">Vacant</div>
+          </div>
+          <div class="mcard">
+            <div class="mv" id="p-preleased">—</div>
+            <div class="ml">Pre-Leased</div>
+            <div class="ms">Vacant-Rented</div>
+          </div>
+          <div class="mcard">
+            <div class="mv" id="p-rentready">—</div>
+            <div class="ml">Rent Ready</div>
+          </div>
         </div>
-        <div class="recip-card">
-          <div class="rn">Tino</div>
-          <div class="re">tino@peabodyresidential.com</div>
-          <div class="rr">Recipient</div>
-        </div>
-        <div class="recip-card">
-          <div class="rn">Hari Sundar</div>
-          <div class="re">hari@upnexs.com</div>
-          <div class="rr">UpneX · CC</div>
+
+        <div class="prog-wrap" style="margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px">Occupancy Rate</div>
+          <div class="prog-label">
+            <span id="p-occ-label">—% occupied</span>
+            <span id="p-occ-pct" style="font-weight:700;color:var(--navy)">—%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="p-occ-bar" style="background:var(--green);width:0%"></div></div>
+          <div style="font-size:11.5px;color:var(--grey);margin-top:10px" id="p-occ-detail">—</div>
         </div>
       </div>
-      <div class="recip-note">Want to add team members to the reports? Reply to any report email or contact <a href="mailto:hari@upnexs.com">hari@upnexs.com</a>.</div>
-    </div>
+
+      <!-- ── FINANCE ── -->
+      <div class="port-section">
+        <div class="port-head">💰 Financial Summary</div>
+        <div class="port-sub">Portfolio-wide revenue and receivables. Collected reflects YTD operating income.</div>
+
+        <div class="metric-grid mg-4">
+          <div class="mcard accent">
+            <div class="mv" id="p-market-rent">—</div>
+            <div class="ml">Market Rent / Month</div>
+            <div class="ms">Full potential if all units filled at market</div>
+          </div>
+          <div class="mcard">
+            <div class="mv" id="p-sched-rent">—</div>
+            <div class="ml">Scheduled Rent / Month</div>
+            <div class="ms">Actual contracted rent roll</div>
+          </div>
+          <div class="mcard green">
+            <div class="mv" id="p-collected">—</div>
+            <div class="ml">Collected (YTD)</div>
+            <div class="ms">Total operating income this year</div>
+          </div>
+          <div class="mcard amber">
+            <div class="mv" id="p-receivable">—</div>
+            <div class="ml">Amount Receivable</div>
+            <div class="ms">Outstanding balance</div>
+          </div>
+        </div>
+
+        <div class="twin-grid">
+          <div class="big-card">
+            <h4>Receivables Breakdown</h4>
+            <div class="kv-row"><span class="kv-k">Good Debt</span><span class="kv-v pos" id="p-good-debt">—</span></div>
+            <div class="kv-row"><span class="kv-k">Bad Debt (Eviction)</span><span class="kv-v neg" id="p-bad-debt">—</span></div>
+            <div class="kv-row"><span class="kv-k">Concessions (YTD)</span><span class="kv-v warn" id="p-concessions">—</span></div>
+          </div>
+          <div class="big-card">
+            <h4>Revenue Health</h4>
+            <div class="kv-row"><span class="kv-k">Delinquency Rate</span><span class="kv-v" id="p-delinq-rate">—</span></div>
+            <div class="kv-row"><span class="kv-k">Gap to Market</span><span class="kv-v warn" id="p-gap">—</span></div>
+            <div style="margin-top:14px">
+              <div class="prog-label">
+                <span style="font-size:12px;color:var(--grey)">Delinquency</span>
+                <span id="p-delinq-pct" style="font-size:12px;font-weight:700;color:var(--red)">—%</span>
+              </div>
+              <div class="prog-bar"><div class="prog-fill" id="p-delinq-bar" style="background:var(--red);width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MAINTENANCE ── -->
+      <div class="port-section">
+        <div class="port-head">🔧 Maintenance &amp; Work Orders</div>
+        <div class="port-sub">Open and closed work order counts across all properties.</div>
+
+        <div class="metric-grid mg-3">
+          <div class="mcard">
+            <div class="mv" id="p-total-req">—</div>
+            <div class="ml">Total Requests</div>
+          </div>
+          <div class="mcard red">
+            <div class="mv" id="p-open-req">—</div>
+            <div class="ml">Open</div>
+            <div class="ms">Needs attention</div>
+          </div>
+          <div class="mcard green">
+            <div class="mv" id="p-closed-req">—</div>
+            <div class="ml">Closed</div>
+            <div class="ms">Resolved</div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px">Completion Rate</div>
+          <div class="prog-label">
+            <span id="p-comp-label">—% resolved</span>
+            <span id="p-comp-pct" style="font-weight:700;color:var(--navy)">—%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="p-comp-bar" style="background:var(--green);width:0%"></div></div>
+          <div style="font-size:11.5px;color:var(--grey);margin-top:10px" id="p-comp-detail">—</div>
+        </div>
+      </div>
+
+      <!-- ── RENEWAL ── -->
+      <div class="port-section" style="margin-bottom:40px">
+        <div class="port-head">🔄 Lease Renewals</div>
+        <div class="port-sub">Renewal pipeline and outcomes across all active leases.</div>
+
+        <div class="metric-grid mg-4">
+          <div class="mcard accent">
+            <div class="mv" id="p-offers">—</div>
+            <div class="ml">Renewal Offers Sent</div>
+          </div>
+          <div class="mcard green">
+            <div class="mv" id="p-renewed">—</div>
+            <div class="ml">Renewed</div>
+          </div>
+          <div class="mcard red">
+            <div class="mv" id="p-not-renewed">—</div>
+            <div class="ml">Not Renewed</div>
+          </div>
+          <div class="mcard amber">
+            <div class="mv" id="p-mtm">—</div>
+            <div class="ml">Month-to-Month</div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px">Renewal Rate</div>
+          <div class="prog-label">
+            <span id="p-renew-label">—% of offers renewed</span>
+            <span id="p-renew-pct" style="font-weight:700;color:var(--navy)">—%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="p-renew-bar" style="background:var(--blue);width:0%"></div></div>
+        </div>
+      </div>
+
+    </div><!-- /panel-portfolio -->
 
     <footer>
       <div class="foot-sep"></div>
       <div class="strong">Built exclusively for Peabody Residential by UpneX Solutions</div>
-      <div>Questions? Email <a href="mailto:hari@upnexs.com">hari@upnexs.com</a></div>
       <div>This dashboard is private and secured with your client PIN.</div>
-      <div style="margin-top:8px">Last updated <span class="strong" id="last-updated">—</span> · refreshes automatically on every visit</div>
+      <div style="margin-top:8px">AI Agents data: last updated <span class="strong" id="last-updated">—</span></div>
     </footer>
-  </div>
-</div>
+
+  </div><!-- /wrap -->
+</div><!-- /app -->
 
 <script>
-// ===================================================================
-//  PEABODY DASHBOARD — thin renderer.
-//  All real data lives in activity.json (single source of truth):
-//    engagement · phases[] · columns[] · board[] · calendar[] · activity[]
-//  This file just fetches it and paints. Fallback below keeps the page
-//  from blanking if activity.json can't be fetched.
-// ===================================================================
-var FALLBACK = {
-  engagement: { liveSince: '2026-06-16', status: 'Active' },
-  phases: [], columns: [], board: [], calendar: [], activity: [], lastUpdated: null
-};
+// =========================================================================
+//  PEABODY UNIFIED DASHBOARD
+//  Tab 1 (AI Agents): activity.json
+//  Tab 2 (Portfolio): portfolio.json
+//  Zero PII in either JSON — numbers and outcomes only.
+// =========================================================================
 
+// ---------- TAB SWITCHING ----------
+function switchTab(name){
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('panel-'+name).classList.add('active');
+  document.getElementById('tab-'+name+'-btn').classList.add('active');
+  try{ sessionStorage.setItem('pb_tab', name); }catch(e){}
+}
+
+// Restore tab from session
 (function(){
-  var TZ = 'America/New_York';
-  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var DOW = ['S','M','T','W','T','F','S'];
-
-  function set(id, txt){ var e = document.getElementById(id); if(e && txt!=null) e.textContent = txt; }
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-  function parseDate(s){ return new Date((s||'') + 'T00:00:00-04:00'); }
-  function fmtDate(d){ return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', timeZone: TZ }); }
-  function fmtStamp(d){ return d.toLocaleString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit', timeZone: TZ }); }
-  function nowET(){ // {y,m,d} in ET
-    var p={}, parts=new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
-    parts.forEach(function(x){ p[x.type]=x.value; });
-    return { y:+p.year, m:+p.month, d:+p.day };
-  }
-
-  var PHASE = {}; // key -> {label,color}
-  var DOMAIN_LABEL = { tenant:'Tenant Lifecycle', owner:'Owner Relations', lease:'Leasing', fin:'Finance', ops:'Operations', lead:'Leasing' };
-
-  function renderHeader(data){
-    var board = data.board || [];
-    var live = board.filter(function(a){ return a.column==='prod'; }).length;
-    var test = board.filter(function(a){ return a.column==='test' || a.column==='deploy'; }).length;
-    var road = board.filter(function(a){ return a.column==='planned' || a.column==='dev'; }).length;
-    set('chip-live', live + ' live'); set('chip-test', test); set('chip-roadmap', road);
-    set('stat-live', live); set('stat-building', road + test);
-
-    var since = parseDate((data.engagement||FALLBACK.engagement).liveSince);
-    set('chip-since', fmtDate(since));
-    var t = nowET();
-    var today = new Date(Date.UTC(t.y, t.m-1, t.d));
-    var s0 = new Date(Date.UTC(since.getFullYear(), since.getMonth(), since.getDate()));
-    set('stat-days', Math.max(0, Math.round((today - s0)/86400000)));
-  }
-
-  function renderLegend(phases){
-    var el = document.getElementById('legend'); if(!el) return;
-    el.innerHTML = phases.map(function(p){
-      return '<span class="lg"><span class="sw" style="background:'+p.color+'"></span>'+esc(p.label)+'</span>';
-    }).join('');
-  }
-
-  function trackHtml(crossed, phases){
-    var set = {}; (crossed||[]).forEach(function(k){ set[k]=1; });
-    return '<div class="track">' + phases.map(function(p){
-      return '<i class="t" style="background:'+(set[p.key]?p.color:'#e7ebf2')+'"></i>';
-    }).join('') + '</div>';
-  }
-
-  function renderKanban(data){
-    var cols = data.columns || [], board = data.board || [], phases = data.phases || [];
-    var el = document.getElementById('kanban'); if(!el) return;
-    el.innerHTML = cols.map(function(col){
-      var cards = board.filter(function(a){ return a.column===col.key; });
-      var cardHtml = cards.map(function(a){
-        var whenColor = (PHASE[(a.crossed||[]).slice(-1)[0]]||{}).color || col.color;
-        return '<div class="kcard">' +
-          '<div class="kc-name">'+esc(a.name)+'</div>' +
-          '<span class="kc-dom d-'+esc(a.domain)+'">'+esc(DOMAIN_LABEL[a.domain]||a.domain)+'</span>' +
-          '<div class="kc-desc">'+esc(a.blurb)+'</div>' +
-          trackHtml(a.crossed, phases) +
-          '<div class="kc-when"><span class="dot" style="background:'+whenColor+'"></span>'+esc(a.when)+'</div>' +
-        '</div>';
-      }).join('') || '<div class="kc-desc" style="color:#98a4b6">—</div>';
-      var liveCls = col.key==='prod' ? ' live' : '';
-      return '<div class="col'+liveCls+'">' +
-        '<div class="col-head"><span class="col-title" style="color:'+col.color+'">'+esc(col.title)+'</span>' +
-        '<span class="col-count">'+cards.length+'</span></div>' + cardHtml + '</div>';
-    }).join('');
-  }
-
-  function renderCalendar(data){
-    var cal = data.calendar || [];
-    var el = document.getElementById('calendar'); if(!el) return;
-    if(!cal.length){ el.innerHTML=''; return; }
-    // group by year-month
-    var groups = {}; // "2026-6" -> [events]
-    cal.forEach(function(e){
-      var d = parseDate(e.date);
-      var key = d.getFullYear()+'-'+(d.getMonth());
-      (groups[key] = groups[key] || []).push({ day:d.getDate(), phase:e.phase, title:e.title, y:d.getFullYear(), m:d.getMonth() });
-    });
-    var keys = Object.keys(groups).sort(function(a,b){
-      var A=a.split('-'), B=b.split('-'); return (+A[0]*12+ +A[1]) - (+B[0]*12+ +B[1]);
-    });
-    var t = nowET();
-    var curIdx = t.y*12 + (t.m-1);
-    el.innerHTML = keys.map(function(k){
-      var evs = groups[k]; var y=evs[0].y, m=evs[0].m;
-      var isFuture = (y*12+m) > curIdx;
-      var firstDow = new Date(y, m, 1).getDay();
-      var dim = new Date(y, m+1, 0).getDate();
-      var markByDay = {}; evs.forEach(function(e){ markByDay[e.day]=e.phase; });
-      var cells='';
-      for(var i=0;i<firstDow;i++) cells+='<div class="day"></div>';
-      for(var dd=1;dd<=dim;dd++){
-        var isToday = (y===t.y && m===(t.m-1) && dd===t.d);
-        var ph = markByDay[dd];
-        var cls = 'day' + (ph?' mark':'') + (isToday?' today':'');
-        var stl = ph ? ' style="background:'+((PHASE[ph]||{}).color||'#7b8aa0')+'"' : '';
-        cells += '<div class="'+cls+'"'+stl+'>'+dd+'</div>';
-      }
-      var evHtml = evs.sort(function(a,b){return a.day-b.day;}).map(function(e){
-        var c = (PHASE[e.phase]||{}).color || '#7b8aa0';
-        return '<div class="ev"><span class="edot" style="background:'+c+'"></span>'+
-          '<div><b>'+MONTHS[m].slice(0,3)+' '+e.day+'</b> — <span>'+esc(e.title)+'</span></div></div>';
-      }).join('');
-      var tag = isFuture ? 'ROADMAP' : 'LIVE';
-      return '<div class="month'+(isFuture?' planned':'')+'">' +
-        '<div class="m-name">'+MONTHS[m]+' '+y+' <span class="m-tag">'+tag+'</span></div>' +
-        '<div class="dow">'+DOW.map(function(x){return '<span>'+x+'</span>';}).join('')+'</div>' +
-        '<div class="days">'+cells+'</div>' +
-        '<div class="m-events">'+evHtml+'</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  function renderActivity(data){
-    var acts = data.activity || [];
-    var latest = {};
-    acts.forEach(function(e){ var k=e.subject||e.id; if(!latest[k]||(e.ts||'')>(latest[k].ts||'')) latest[k]=e; });
-    var screened = Object.keys(latest).length;
-    set('stat-screened', screened);
-    var ac = document.getElementById('act-count'); if(ac) ac.textContent = screened + ' total';
-
-    var body = document.getElementById('act-body');
-    var top = acts.slice(0, 10);
-    if(body && top.length){
-      body.innerHTML = top.map(function(r){
-        var d = r.ts ? fmtDate(new Date(r.ts)) : '';
-        var col = r.outcome==='APPROVE' ? '#0f7a3d' : (r.outcome==='DECLINE' ? '#b3261e' : '#b8860b');
-        var ico = r.outcome==='APPROVE' ? '✅ APPROVE' : (r.outcome==='DECLINE' ? '❌ DECLINE' : '🔍 IN REVIEW');
-        var status = r.status || 'Delivered';
-        var isDraft = /draft/i.test(status);
-        var sCol = isDraft ? '#b8860b' : '#0f7a3d';
-        var sBg  = isDraft ? '#fdf1d8' : '#e3f7ec';
-        var sCell = '<span style="color:'+sCol+';background:'+sBg+';font-weight:700;font-size:11px;padding:3px 9px;border-radius:6px;white-space:nowrap">'+esc(status)+'</span>';
-        var subj = '<div class="sub">'+esc(r.subject||'')+' · '+esc(r.action||'')+'</div>';
-        return '<tr><td>'+d+'</td><td><span style="color:'+col+';font-weight:700">'+ico+'</span>'+subj+'</td><td>Kelly, Leasing, Tino · Hari CC</td><td>'+sCell+'</td></tr>';
-      }).join('');
-    } else if(body){
-      body.innerHTML = '<tr><td colspan="4" style="color:#8a96a8">No screenings yet.</td></tr>';
-    }
-    set('last-updated', data.lastUpdated ? fmtStamp(new Date(data.lastUpdated)) : fmtStamp(new Date()));
-  }
-
-  function render(data){
-    (data.phases||[]).forEach(function(p){ PHASE[p.key]=p; });
-    try { renderHeader(data); } catch(e){}
-    try { renderLegend(data.phases||[]); } catch(e){}
-    try { renderKanban(data); } catch(e){}
-    try { renderCalendar(data); } catch(e){}
-    try { renderActivity(data); } catch(e){}
-  }
-
-  fetch('activity.json?_='+Date.now())
-    .then(function(r){ return r.json(); })
-    .then(render)
-    .catch(function(){ render(FALLBACK); });
+  try{ var t = sessionStorage.getItem('pb_tab'); if(t) switchTab(t); }catch(e){}
 })();
 
+// ---------- UTILITIES ----------
+var TZ = 'America/New_York';
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var DOW = ['S','M','T','W','T','F','S'];
+
+function set(id, txt){ var e=document.getElementById(id); if(e && txt!=null) e.textContent=txt; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function parseDate(s){ return new Date((s||'')+'T00:00:00-04:00'); }
+function fmtDate(d){ return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:TZ}); }
+function fmtStamp(d){ return d.toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZone:TZ}); }
+function nowET(){
+  var p={}, parts=new Intl.DateTimeFormat('en-US',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  parts.forEach(function(x){ p[x.type]=x.value; });
+  return {y:+p.year,m:+p.month,d:+p.day};
+}
+function fmt$(v){ return '$'+(v||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+
+// ---------- AGENTS TAB ----------
+var PHASE = {};
+var DOMAIN_LABEL = {tenant:'Tenant Lifecycle',owner:'Owner Relations',lease:'Leasing',fin:'Finance',ops:'Operations',lead:'Leasing'};
+var FALLBACK = {engagement:{liveSince:'2026-06-16',status:'Active'},phases:[],columns:[],board:[],calendar:[],activity:[],lastUpdated:null};
+
+function renderHeader(data){
+  var board=data.board||[];
+  var live=board.filter(function(a){return a.column==='prod';}).length;
+  var test=board.filter(function(a){return a.column==='test'||a.column==='deploy';}).length;
+  var road=board.filter(function(a){return a.column==='planned'||a.column==='dev';}).length;
+  set('chip-live',live+' live'); set('chip-test',test); set('chip-roadmap',road);
+  set('stat-live',live); set('stat-building',road+test);
+  var since=parseDate((data.engagement||FALLBACK.engagement).liveSince);
+  set('chip-since',fmtDate(since));
+  var t=nowET();
+  var today=new Date(Date.UTC(t.y,t.m-1,t.d));
+  var s0=new Date(Date.UTC(since.getFullYear(),since.getMonth(),since.getDate()));
+  set('stat-days',Math.max(0,Math.round((today-s0)/86400000)));
+}
+function renderLegend(phases){
+  var el=document.getElementById('legend'); if(!el) return;
+  el.innerHTML=phases.map(function(p){return '<span class="lg"><span class="sw" style="background:'+p.color+'"></span>'+esc(p.label)+'</span>';}).join('');
+}
+function trackHtml(crossed,phases){
+  var s={}; (crossed||[]).forEach(function(k){s[k]=1;});
+  return '<div class="track">'+phases.map(function(p){return '<i class="t" style="background:'+(s[p.key]?p.color:'#e7ebf2')+'"></i>';}).join('')+'</div>';
+}
+function renderKanban(data){
+  var cols=data.columns||[],board=data.board||[],phases=data.phases||[];
+  var el=document.getElementById('kanban'); if(!el) return;
+  el.innerHTML=cols.map(function(col){
+    var cards=board.filter(function(a){return a.column===col.key;});
+    var cardHtml=cards.map(function(a){
+      var whenColor=(PHASE[(a.crossed||[]).slice(-1)[0]]||{}).color||col.color;
+      return '<div class="kcard"><div class="kc-name">'+esc(a.name)+'</div>'+
+        '<span class="kc-dom d-'+esc(a.domain)+'">'+esc(DOMAIN_LABEL[a.domain]||a.domain)+'</span>'+
+        '<div class="kc-desc">'+esc(a.blurb)+'</div>'+trackHtml(a.crossed,phases)+
+        '<div class="kc-when"><span class="dot" style="background:'+whenColor+'"></span>'+esc(a.when)+'</div></div>';
+    }).join('')||'<div class="kc-desc" style="color:#98a4b6">—</div>';
+    var liveCls=col.key==='prod'?' live':'';
+    return '<div class="col'+liveCls+'"><div class="col-head"><span class="col-title" style="color:'+col.color+'">'+esc(col.title)+'</span><span class="col-count">'+cards.length+'</span></div>'+cardHtml+'</div>';
+  }).join('');
+}
+function renderCalendar(data){
+  var cal=data.calendar||[], el=document.getElementById('calendar'); if(!el) return;
+  if(!cal.length){el.innerHTML='';return;}
+  var groups={};
+  cal.forEach(function(e){var d=parseDate(e.date);var key=d.getFullYear()+'-'+(d.getMonth());(groups[key]=groups[key]||[]).push({day:d.getDate(),phase:e.phase,title:e.title,y:d.getFullYear(),m:d.getMonth()});});
+  var keys=Object.keys(groups).sort(function(a,b){var A=a.split('-'),B=b.split('-');return(+A[0]*12+ +A[1])-(+B[0]*12+ +B[1]);});
+  var t=nowET(), curIdx=t.y*12+(t.m-1);
+  el.innerHTML=keys.map(function(k){
+    var evs=groups[k];var y=evs[0].y,m=evs[0].m;
+    var isFuture=(y*12+m)>curIdx;
+    var firstDow=new Date(y,m,1).getDay(), dim=new Date(y,m+1,0).getDate();
+    var markByDay={};evs.forEach(function(e){markByDay[e.day]=e.phase;});
+    var cells='';
+    for(var i=0;i<firstDow;i++) cells+='<div class="day"></div>';
+    for(var dd=1;dd<=dim;dd++){
+      var isToday=(y===t.y&&m===(t.m-1)&&dd===t.d);
+      var ph=markByDay[dd];
+      var cls='day'+(ph?' mark':'')+(isToday?' today':'');
+      var stl=ph?' style="background:'+((PHASE[ph]||{}).color||'#7b8aa0')+'"':'';
+      cells+='<div class="'+cls+'"'+stl+'>'+dd+'</div>';
+    }
+    var evHtml=evs.sort(function(a,b){return a.day-b.day;}).map(function(e){
+      var c=(PHASE[e.phase]||{}).color||'#7b8aa0';
+      return '<div class="ev"><span class="edot" style="background:'+c+'"></span><div><b>'+MONTHS[m].slice(0,3)+' '+e.day+'</b> — <span>'+esc(e.title)+'</span></div></div>';
+    }).join('');
+    var tag=isFuture?'ROADMAP':'LIVE';
+    return '<div class="month'+(isFuture?' planned':'')+'"><div class="m-name">'+MONTHS[m]+' '+y+' <span class="m-tag">'+tag+'</span></div>'+
+      '<div class="dow">'+DOW.map(function(x){return '<span>'+x+'</span>';}).join('')+'</div>'+
+      '<div class="days">'+cells+'</div><div class="m-events">'+evHtml+'</div></div>';
+  }).join('');
+}
+function renderActivity(data){
+  var acts=data.activity||[];
+  var latest={};
+  acts.forEach(function(e){var k=e.subject||e.id;if(!latest[k]||(e.ts||'')>(latest[k].ts||''))latest[k]=e;});
+  var screened=Object.keys(latest).length;
+  set('stat-screened',screened);
+  var ac=document.getElementById('act-count'); if(ac) ac.textContent=screened+' total';
+  var body=document.getElementById('act-body');
+  var top=acts.slice(0,10);
+  if(body&&top.length){
+    body.innerHTML=top.map(function(r){
+      var d=r.ts?fmtDate(new Date(r.ts)):'';
+      var col=r.outcome==='APPROVE'?'#0f7a3d':(r.outcome==='DECLINE'?'#b3261e':'#b8860b');
+      var ico=r.outcome==='APPROVE'?'✅ APPROVE':(r.outcome==='DECLINE'?'❌ DECLINE':'🔍 IN REVIEW');
+      var status=r.status||'Delivered';
+      var isDraft=/draft/i.test(status);
+      var sCol=isDraft?'#b8860b':'#0f7a3d', sBg=isDraft?'#fdf1d8':'#e3f7ec';
+      var sCell='<span style="color:'+sCol+';background:'+sBg+';font-weight:700;font-size:11px;padding:3px 9px;border-radius:6px;white-space:nowrap">'+esc(status)+'</span>';
+      return '<tr><td>'+d+'</td><td><span style="color:'+col+';font-weight:700">'+ico+'</span><div class="sub">'+esc(r.subject||'')+' · '+esc(r.action||'')+'</div></td><td>Kelly, Leasing, Tino · Hari CC</td><td>'+sCell+'</td></tr>';
+    }).join('');
+  } else if(body){
+    body.innerHTML='<tr><td colspan="4" style="color:#8a96a8">No screenings yet.</td></tr>';
+  }
+  set('last-updated',data.lastUpdated?fmtStamp(new Date(data.lastUpdated)):fmtStamp(new Date()));
+}
+function renderAgents(data){
+  (data.phases||[]).forEach(function(p){PHASE[p.key]=p;});
+  try{renderHeader(data);}catch(e){}
+  try{renderLegend(data.phases||[]);}catch(e){}
+  try{renderKanban(data);}catch(e){}
+  try{renderCalendar(data);}catch(e){}
+  try{renderActivity(data);}catch(e){}
+}
+
+// ---------- PORTFOLIO TAB ----------
+function renderPortfolio(d){
+  // Stale check (>24h)
+  if(d.updated){
+    var age=(Date.now()-new Date(d.updated).getTime())/3600000;
+    if(age>24){ var b=document.getElementById('stale-banner'); if(b) b.classList.add('show'); }
+  }
+
+  // Date label
+  if(d.data_as_of){
+    var dt=new Date(d.data_as_of);
+    set('port-date', dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:TZ}));
+  }
+
+  var l=d.leasing||{}, f=d.finance||{}, m=d.maintenance||{}, r=d.renewal||{};
+
+  // Leasing
+  set('p-total-units', l.total_units);
+  set('p-occupied', l.occupied_units);
+  set('p-vacant', l.vacant_units);
+  set('p-preleased', l.pre_leased);
+  set('p-rentready', l.rent_ready_units);
+
+  var occ=l.occupancy_pct||0;
+  set('p-occ-pct', occ+'%');
+  set('p-occ-label', occ+'% occupied');
+  var occBar=document.getElementById('p-occ-bar');
+  if(occBar) occBar.style.width=Math.min(occ,100)+'%';
+  set('p-occ-detail', (l.occupied_units||0)+' occupied · '+(l.vacant_units||0)+' vacant · '+(l.pre_leased||0)+' pre-leased');
+
+  // Finance
+  set('p-market-rent', fmt$(f.market_rent));
+  set('p-sched-rent', fmt$(f.scheduled_rent));
+  set('p-collected', fmt$(f.collected));
+  set('p-receivable', fmt$(f.amount_receivable));
+  set('p-good-debt', fmt$(f.good_debt));
+  set('p-bad-debt', fmt$(f.bad_debt));
+  set('p-concessions', fmt$(f.concessions));
+  var delinq=f.delinquency_rate||0;
+  set('p-delinq-rate', delinq+'%');
+  set('p-delinq-pct', delinq+'%');
+  var delinqBar=document.getElementById('p-delinq-bar');
+  if(delinqBar) delinqBar.style.width=Math.min(delinq,100)+'%';
+  set('p-gap', fmt$(f.gap_to_market));
+
+  // Maintenance
+  set('p-total-req', m.total_requests);
+  set('p-open-req', m.open_requests);
+  set('p-closed-req', m.closed_requests);
+  var comp=m.completion_rate||0;
+  set('p-comp-pct', comp+'%');
+  set('p-comp-label', comp+'% resolved');
+  var compBar=document.getElementById('p-comp-bar');
+  if(compBar) compBar.style.width=Math.min(comp,100)+'%';
+  set('p-comp-detail', (m.closed_requests||0)+' resolved of '+(m.total_requests||0)+' total · '+(m.open_requests||0)+' open');
+
+  // Renewal
+  set('p-offers', r.total_offers);
+  set('p-renewed', r.renewed);
+  set('p-not-renewed', r.not_renewed);
+  set('p-mtm', r.month_to_month);
+  var rr=r.renewal_rate||0;
+  set('p-renew-pct', rr+'%');
+  set('p-renew-label', rr+'% of offers renewed');
+  var renewBar=document.getElementById('p-renew-bar');
+  if(renewBar) renewBar.style.width=Math.min(rr,100)+'%';
+}
+
+// ---------- LOAD DATA ----------
+fetch('activity.json?_='+Date.now())
+  .then(function(r){return r.json();})
+  .then(renderAgents)
+  .catch(function(){renderAgents(FALLBACK);});
+
+fetch('portfolio.json?_='+Date.now())
+  .then(function(r){return r.json();})
+  .then(renderPortfolio)
+  .catch(function(e){console.warn('portfolio.json not available',e);});
+
+// ---------- PIN ----------
 (function(){
-  // ---- PIN config (obfuscated: base64 of the 6-digit PIN, split to avoid plain-text) ----
-  var _a="ODE2", _b="MjQw";              // btoa("816240") split in two
+  var _a="ODE2", _b="MjQw";
   var EXPECT=_a+_b;
   var KEY="peabody_portal_ok";
-
   var lock=document.getElementById("lock");
   var app=document.getElementById("app");
   var row=document.getElementById("pinRow");
   var err=document.getElementById("pinErr");
   var boxes=Array.prototype.slice.call(row.querySelectorAll(".pin-box"));
-
-  function reveal(){
-    lock.classList.add("hidden");
-    app.classList.add("show");
-  }
-
-  try{ if(sessionStorage.getItem(KEY)==="1"){ reveal(); return; } }catch(e){}
-
-  function current(){ return boxes.map(function(b){return b.value;}).join(""); }
-
+  function reveal(){lock.classList.add("hidden");app.classList.add("show");}
+  try{if(sessionStorage.getItem(KEY)==="1"){reveal();return;}}catch(e){}
+  function current(){return boxes.map(function(b){return b.value;}).join("");}
   function check(){
-    var entered=current();
-    if(entered.length<6) return;
+    var entered=current(); if(entered.length<6) return;
     var ok=false;
-    try{ ok=(btoa(entered)===EXPECT); }catch(e){ ok=false; }
+    try{ok=(btoa(entered)===EXPECT);}catch(e){ok=false;}
     if(ok){
-      try{ sessionStorage.setItem(KEY,"1"); }catch(e){}
-      err.classList.remove("show");
-      reveal();
+      try{sessionStorage.setItem(KEY,"1");}catch(e){}
+      err.classList.remove("show"); reveal();
     }else{
       err.classList.add("show");
-      row.classList.remove("shake"); void row.offsetWidth; row.classList.add("shake");
-      boxes.forEach(function(b){ b.value=""; b.classList.remove("filled"); });
+      row.classList.remove("shake");void row.offsetWidth;row.classList.add("shake");
+      boxes.forEach(function(b){b.value="";b.classList.remove("filled");});
       boxes[0].focus();
     }
   }
-
   boxes.forEach(function(box,i){
     box.addEventListener("input",function(){
       this.value=this.value.replace(/[^0-9]/g,"").slice(0,1);
-      this.classList.toggle("filled", this.value!=="");
+      this.classList.toggle("filled",this.value!=="");
       err.classList.remove("show");
-      if(this.value && i<boxes.length-1){ boxes[i+1].focus(); }
-      if(i===boxes.length-1 && this.value){ check(); }
-      else if(current().length===6){ check(); }
+      if(this.value&&i<boxes.length-1){boxes[i+1].focus();}
+      if(i===boxes.length-1&&this.value){check();}
+      else if(current().length===6){check();}
     });
     box.addEventListener("keydown",function(e){
-      if(e.key==="Backspace" && !this.value && i>0){ boxes[i-1].focus(); boxes[i-1].value=""; boxes[i-1].classList.remove("filled"); e.preventDefault(); }
-      if(e.key==="Enter"){ check(); }
+      if(e.key==="Backspace"&&!this.value&&i>0){boxes[i-1].focus();boxes[i-1].value="";boxes[i-1].classList.remove("filled");e.preventDefault();}
+      if(e.key==="Enter"){check();}
     });
     box.addEventListener("paste",function(e){
       e.preventDefault();
       var d=(e.clipboardData||window.clipboardData).getData("text").replace(/[^0-9]/g,"").slice(0,6);
-      boxes.forEach(function(b,j){ b.value=d[j]||""; b.classList.toggle("filled",!!d[j]); });
-      if(d.length>=6){ check(); } else if(d.length){ boxes[Math.min(d.length,5)].focus(); }
+      boxes.forEach(function(b,j){b.value=d[j]||"";b.classList.toggle("filled",!!d[j]);});
+      if(d.length>=6){check();}else if(d.length){boxes[Math.min(d.length,5)].focus();}
     });
   });
-
-  setTimeout(function(){ boxes[0].focus(); },200);
+  setTimeout(function(){boxes[0].focus();},200);
 })();
-
 </script>
 </body>
 </html>
