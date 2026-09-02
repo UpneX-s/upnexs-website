@@ -1502,29 +1502,99 @@ const BUILDIUM_DOMAINS = [
     icon: "👥",
     color: "#2563EB",
     bg: "rgba(37,99,235,0.08)",
-    desc: "Application processing — automated from first notification",
+    desc: "Application through move-out — every tenant milestone, automated",
     open: true,
     workflows: [
       {
         title: "Rental Application Processing",
-        desc: "New applications are reviewed, logged, and summarized for your leasing team — automatically.",
+        live: true,
+        desc: "Automatically screen new applicants and deliver a decision-ready report to your leasing team.",
         complexity: "Standard",
         nodes: {
           trigger: { icon: "📧", label: "Email Trigger",     sub: "New Application Alert"      },
-          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Extracts & reviews"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Reviews & screens"          },
           action:  { icon: "🏢", label: "Buildium Action",  sub: "Update application status"  },
-          output:  { icon: "📋", label: "Output",           sub: "Screening summary to manager" }
+          output:  { icon: "📋", label: "Output",           sub: "Report to leasing manager"  }
         },
         detail: {
-          what: "When a new rental application arrives from Buildium, UpneX reads the notification, extracts the applicant's details, logs the screening steps in Buildium, and delivers a clear screening summary to your leasing manager — so every application gets the same fast, consistent review.",
-          trigger: "A 'New Rental Application' notification email from Buildium.",
+          what: "When a new rental application arrives from Buildium, UpneX reads the notification, extracts the applicant's information, requests their credit and background check through Buildium, and delivers a clear screening summary to your leasing team — so no application sits unreviewed.",
+          trigger: "A 'New Application Received' notification from Buildium lands in your inbox.",
           aiDoes: [
-            "Reads the application email and identifies the applicant and unit",
-            "Extracts all key applicant details from the Buildium notification",
-            "Updates the application status and screening notes in Buildium",
-            "Formats a clear screening summary for your leasing manager's review"
+            "Reads the application email and identifies the applicant by name and unit",
+            "Requests credit and background screening through Buildium",
+            "Evaluates results against your pre-set qualification criteria",
+            "Formats a screening summary with a clear pass / review / decline status"
           ],
-          output: "Screening summary emailed to your leasing manager with all relevant applicant details and a review recommendation.",
+          output: "Screening report emailed to your leasing manager with a recommendation and all relevant details.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Lease Renewal Campaign",
+        desc: "Reach out to expiring leases 90 days out with a personalized renewal offer — and track every response.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "90 days before expiry"      },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Identifies & personalizes"  },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Send renewal offer"          },
+          output:  { icon: "📊", label: "Output",           sub: "Renewal pipeline report"    }
+        },
+        detail: {
+          what: "Every day, UpneX checks for leases expiring within 90 days and automatically starts a renewal conversation. It sends a personalized offer through Buildium, tracks responses, and keeps your renewal pipeline visible — so you're never caught off guard by an unexpected vacancy.",
+          trigger: "Scheduled daily check; flags any lease expiring within the next 90 days.",
+          aiDoes: [
+            "Identifies all leases expiring in the next 90 days",
+            "Personalizes each renewal offer with tenant name, unit, and proposed new rate",
+            "Logs the outreach in Buildium and tracks each tenant's response status",
+            "Escalates non-responses automatically at the 30-day and 60-day marks"
+          ],
+          output: "Personalized renewal email to each tenant + a weekly renewal pipeline status report for your team.",
+          deploy: "3–5 days"
+        }
+      },
+      {
+        title: "Move-In Coordination",
+        desc: "The moment a lease is signed, the entire move-in process kicks off — welcome email, inspection, and portal access.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "✍️", label: "Email Trigger",     sub: "Lease Signed Alert"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Creates move-in checklist"  },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Schedule inspection"         },
+          output:  { icon: "🏠", label: "Output",           sub: "Welcome email to tenant"    }
+        },
+        detail: {
+          what: "When Buildium confirms a lease is signed, UpneX immediately creates the move-in checklist, schedules the pre-move inspection, sets up the tenant's portal access, and sends them a professional welcome email with everything they need for day one.",
+          trigger: "A 'Lease Signed' confirmation notification from Buildium.",
+          aiDoes: [
+            "Confirms lease details — tenant name, unit, and move-in date",
+            "Schedules the pre-move inspection in Buildium",
+            "Sets up the tenant's portal access and sends login credentials",
+            "Prepares a personalized move-in welcome email with key contacts and instructions"
+          ],
+          output: "Welcome email to the new tenant with their move-in date, inspection time, portal access, and your team's contact information.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Notice to Vacate Processing",
+        desc: "When a tenant gives notice, records update instantly and the turnover clock starts automatically.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "NTV Received Alert"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Logs & routes NTV"          },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Update unit status"          },
+          output:  { icon: "📬", label: "Output",           sub: "Owner notice + timeline"    }
+        },
+        detail: {
+          what: "When a Notice to Vacate arrives, UpneX logs the key details, updates the unit's status in Buildium to 'Pending Vacancy,' creates a turnover task list, and immediately notifies the property owner — so your team has the full timeline without any manual data entry.",
+          trigger: "A 'Notice to Vacate Received' notification from Buildium.",
+          aiDoes: [
+            "Extracts move-out date, unit number, and tenant name from the notice",
+            "Updates Buildium unit status to 'Pending Vacancy'",
+            "Creates a turnover task list covering cleaning, repairs, and re-listing",
+            "Calculates the days remaining on the lease for turnover planning"
+          ],
+          output: "Immediate notification to the property owner with the move-out date and projected turnover timeline.",
           deploy: "2–3 days"
         }
       }
@@ -1541,25 +1611,49 @@ const BUILDIUM_DOMAINS = [
     workflows: [
       {
         title: "Maintenance Request Triage",
+        live: true,
         desc: "Every new request gets classified and routed to the right vendor — in minutes, not hours.",
         complexity: "Standard",
         nodes: {
-          trigger: { icon: "📧", label: "Email Trigger",     sub: "New Maintenance Request"    },
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "New Work Order Alert"       },
           ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Classifies urgency"         },
           action:  { icon: "🏢", label: "Buildium Action",  sub: "Assign & route vendor"      },
           output:  { icon: "✅", label: "Output",           sub: "Tenant ACK + vendor alert"  }
         },
         detail: {
-          what: "When a maintenance request comes in through Buildium, UpneX reads the description, assigns an urgency level (Emergency, Urgent, or Routine), routes it to the right vendor, and confirms receipt with the tenant — all within minutes of the request being submitted.",
-          trigger: "A 'New Maintenance Request' notification email from Buildium.",
+          what: "When a maintenance request comes in through Buildium, UpneX reads the description, assigns an urgency level (Emergency, Urgent, or Routine), routes it to the right vendor based on your preferences, and confirms receipt with the tenant — all within minutes of the request being submitted.",
+          trigger: "A 'New Maintenance Request' notification from Buildium.",
           aiDoes: [
             "Reads the issue description and assigns an urgency level",
             "Identifies the correct trade vendor (plumber, HVAC, electrician, general)",
-            "Assigns priority in Buildium and adds internal triage notes",
+            "Assigns priority in Buildium and adds clear internal triage notes",
             "Drafts a tenant acknowledgement with an estimated response window"
           ],
           output: "Tenant acknowledgement email confirming the request + dispatch notification to the assigned vendor.",
           deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Emergency Work Order Routing",
+        desc: "Flooding, no heat, electrical hazards — emergencies get escalated instantly, every time.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🚨", label: "Email Trigger",     sub: "Emergency Work Order"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Detects emergency type"     },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Escalate to emergency vendor"},
+          output:  { icon: "📲", label: "Output",           sub: "PM alert + tenant ETA"      }
+        },
+        detail: {
+          what: "UpneX detects emergency keywords the moment a request comes in, immediately bypasses standard routing, escalates to your on-call emergency vendor, and simultaneously alerts the property manager and the tenant with a response timeline — no waiting, no missed emergencies.",
+          trigger: "A maintenance request containing emergency-level keywords (flood, gas leak, no heat, electrical).",
+          aiDoes: [
+            "Identifies emergency keywords and verifies the situation type",
+            "Bypasses standard routing — routes directly to your emergency vendor",
+            "Marks the work order as Priority 1 in Buildium immediately",
+            "Sends simultaneous alerts to property manager and tenant"
+          ],
+          output: "Instant alert to your property manager + an ETA confirmation sent to the tenant from the emergency vendor.",
+          deploy: "3–4 days"
         }
       },
       {
@@ -1570,7 +1664,7 @@ const BUILDIUM_DOMAINS = [
           trigger: { icon: "📧", label: "Email Trigger",     sub: "Work Order Completed"       },
           ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Logs & drafts follow-up"    },
           action:  { icon: "🏢", label: "Buildium Action",  sub: "Update work order status"   },
-          output:  { icon: "⭐", label: "Output",           sub: "Tenant check-in + owner note" }
+          output:  { icon: "⭐", label: "Output",           sub: "Tenant check-in + owner note"}
         },
         detail: {
           what: "When a work order is marked complete in Buildium, UpneX updates the status, sends the tenant a brief follow-up asking if everything is resolved, and notifies the property owner that the issue has been handled. Simple, professional, and fully automated.",
@@ -1583,6 +1677,429 @@ const BUILDIUM_DOMAINS = [
           ],
           output: "Tenant satisfaction follow-up email + a short owner notification confirming the maintenance is complete.",
           deploy: "1–2 days"
+        }
+      },
+      {
+        title: "Recurring Maintenance Scheduler",
+        desc: "HVAC filters, pest control, dryer vents — preventive maintenance scheduled and tracked every month.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "Monthly calendar run"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Identifies units due"       },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Create PM work orders"      },
+          output:  { icon: "📅", label: "Output",           sub: "Vendor schedule + owner notice"}
+        },
+        detail: {
+          what: "UpneX runs a monthly sweep across all your units, identifies what preventive maintenance is due, creates the work orders in Buildium, matches them to your preferred vendors, and sends owners a heads-up — so nothing falls through the cracks and vendors can batch their visits efficiently.",
+          trigger: "Scheduled run on the 1st of each month.",
+          aiDoes: [
+            "Pulls all units due for scheduled maintenance based on your configured intervals",
+            "Creates the appropriate work orders in Buildium for each unit and service type",
+            "Matches each work order to your preferred vendor for that service",
+            "Groups visits by building or area to minimize vendor travel time"
+          ],
+          output: "A monthly vendor schedule with all visits organized + owner notification listing all planned maintenance.",
+          deploy: "4–5 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Leasing & Vacancy Marketing",
+    icon: "🏘️",
+    color: "#16A34A",
+    bg: "rgba(22,163,74,0.08)",
+    desc: "Fill units faster with less manual work",
+    open: false,
+    workflows: [
+      {
+        title: "New Vacancy Alert",
+        desc: "The moment a unit goes vacant, the listing process kicks off automatically.",
+        complexity: "Simple",
+        nodes: {
+          trigger: { icon: "🔔", label: "Email Trigger",     sub: "Unit Marked Vacant"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Captures unit details"      },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Update availability"         },
+          output:  { icon: "📝", label: "Output",           sub: "Listing draft ready"        }
+        },
+        detail: {
+          what: "As soon as Buildium marks a unit vacant, UpneX captures all the unit details, verifies that the listing description and photos are current, and prepares a draft listing ready for your review — so you can have it live in hours, not days.",
+          trigger: "A 'Unit Marked Vacant' status change in Buildium.",
+          aiDoes: [
+            "Captures unit details — address, beds/baths, square footage, and asking rent",
+            "Verifies the current listing description and confirms photos are on file",
+            "Updates the unit's availability status in Buildium",
+            "Flags any missing listing information that needs to be filled in before going live"
+          ],
+          output: "A listing draft ready for your review + a live vacancy report showing all current open units.",
+          deploy: "1–2 days"
+        }
+      },
+      {
+        title: "Showing Request Scheduling",
+        desc: "Convert every inquiry email into a confirmed showing — automatically.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "Prospect Inquiry"           },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Collects availability"      },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Log prospect & schedule"    },
+          output:  { icon: "📅", label: "Output",           sub: "Confirmation + calendar invite"}
+        },
+        detail: {
+          what: "When a prospect inquires about a rental, UpneX responds with available showing times, collects their information and availability, logs them as a new prospect in Buildium, and sends both the prospect and your leasing agent a confirmed calendar invite — no back-and-forth needed.",
+          trigger: "An inquiry email about a listed rental unit.",
+          aiDoes: [
+            "Responds to the prospect with available showing time slots",
+            "Collects the prospect's contact details and preferred availability",
+            "Creates a new prospect record in Buildium",
+            "Confirms the showing and generates calendar invites for both parties"
+          ],
+          output: "A showing confirmation email to the prospect + a calendar invite sent to your leasing agent.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Prospect Follow-up Sequence",
+        desc: "After every showing, a 3-touch follow-up runs automatically to move prospects toward an application.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🔔", label: "Email/Manual Trigger", sub: "Showing Completed"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Starts follow-up sequence" },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Log follow-up activity"     },
+          output:  { icon: "📬", label: "Output",           sub: "Day 1, 3, 7 follow-ups"    }
+        },
+        detail: {
+          what: "After a showing is completed, UpneX automatically runs a 3-touch follow-up sequence. Day 1: a warm check-in. Day 3: answers to common questions with an application link. Day 7: a gentle urgency message if the unit is still available. All messages are personalized and logged in Buildium.",
+          trigger: "A showing completed notification or a manual trigger from your leasing agent.",
+          aiDoes: [
+            "Initiates the follow-up sequence immediately after the showing is logged",
+            "Personalizes each message with the prospect's name and unit details",
+            "Spaces messages at Day 1, Day 3, and Day 7 intervals automatically",
+            "Logs all follow-up activity in the prospect's Buildium record"
+          ],
+          output: "Three personalized follow-up emails sent to the prospect over 7 days, each with an application link and clear next steps.",
+          deploy: "3–4 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: "Owner Relations & Reporting",
+    icon: "📊",
+    color: "#7C3AED",
+    bg: "rgba(124,58,237,0.08)",
+    desc: "Keep every owner informed without the manual effort",
+    open: false,
+    workflows: [
+      {
+        title: "Monthly Owner Report",
+        desc: "Every owner gets a polished financial and operations report on the 1st — no manual work required.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "1st of each month"          },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Pulls & formats data"       },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Pull income & expense data"  },
+          output:  { icon: "📄", label: "Output",           sub: "PDF report to each owner"   }
+        },
+        detail: {
+          what: "On the 1st of every month, UpneX pulls each property's income, expenses, vacancy status, and maintenance activity from Buildium, formats it into a clean owner report, and emails it directly to each owner — personalized per property and branded with your company name.",
+          trigger: "Scheduled — runs automatically on the 1st of each month.",
+          aiDoes: [
+            "Pulls monthly income, expenses, and maintenance data from Buildium for each property",
+            "Calculates key metrics: net income, vacancy rate, and maintenance spend",
+            "Formats a professional, easy-to-read report for each property owner",
+            "Sends individual reports to each owner covering only their properties"
+          ],
+          output: "A formatted owner report emailed to each property owner on the 1st, covering monthly financials, vacancy status, and maintenance highlights.",
+          deploy: "4–5 days"
+        }
+      },
+      {
+        title: "New Owner Onboarding",
+        desc: "Welcome every new owner with a seamless onboarding flow from intake form to portal access.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "New Owner Intake Form"      },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Collects property details"  },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Create owner record"         },
+          output:  { icon: "🤝", label: "Output",           sub: "Welcome email + portal access"}
+        },
+        detail: {
+          what: "When a new owner submits their intake form, UpneX collects all the property and ownership details, creates their record in Buildium, sets up their owner portal, and sends a professional welcome email with login credentials and an onboarding checklist — ready from day one.",
+          trigger: "A new owner intake form submission arrives in your management inbox.",
+          aiDoes: [
+            "Extracts owner and property details from the intake form submission",
+            "Creates the owner and property records in Buildium",
+            "Sets up owner portal access and prepares login credentials",
+            "Assembles an onboarding checklist with clear next steps for the owner"
+          ],
+          output: "Welcome email to the new owner with their portal login, access credentials, and a step-by-step onboarding checklist.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Owner Ad-Hoc Request Routing",
+        desc: "When an owner emails your team, their request is classified, assigned, and acknowledged in seconds.",
+        complexity: "Simple",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "Owner Email Received"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Classifies request type"    },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Log & assign request"        },
+          output:  { icon: "✅", label: "Output",           sub: "Owner ACK + internal task"  }
+        },
+        detail: {
+          what: "When an owner emails your team — whether it's a financial question, a maintenance concern, or a lease inquiry — UpneX reads it, classifies the request type, routes it to the right team member, and sends the owner a professional acknowledgement so they know their message was received and is being handled.",
+          trigger: "An email from a property owner to your management inbox.",
+          aiDoes: [
+            "Reads and classifies the owner's request (financial, maintenance, leasing, or general)",
+            "Logs the request in Buildium with appropriate notes and context",
+            "Assigns the request to the correct team member based on request type",
+            "Drafts a professional acknowledgement for the owner confirming receipt"
+          ],
+          output: "An acknowledgement email to the owner + an internal task created in Buildium for the responsible team member.",
+          deploy: "1–2 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "Resident Communications",
+    icon: "💬",
+    color: "#B45309",
+    bg: "rgba(180,83,9,0.08)",
+    desc: "Rent reminders, late notices, and compliance — on autopilot",
+    open: false,
+    workflows: [
+      {
+        title: "Rent Reminder Sequence",
+        desc: "A friendly reminder goes out to all tenants on the 25th — keeping rent collection smooth and on time.",
+        complexity: "Simple",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "25th of each month"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Pulls active tenant list"   },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Log communication"           },
+          output:  { icon: "📧", label: "Output",           sub: "Reminder to all tenants"    }
+        },
+        detail: {
+          what: "On the 25th of every month, UpneX automatically sends a personalized rent reminder to every active tenant, confirms the due date and payment portal link, logs the communication in Buildium, and verifies delivery — consistent, professional, zero manual effort.",
+          trigger: "Scheduled — runs automatically on the 25th of each month.",
+          aiDoes: [
+            "Pulls the full list of active tenants from Buildium",
+            "Personalizes each reminder with the tenant's name and unit details",
+            "Confirms the rent due date and includes the payment portal link",
+            "Logs the outreach in each tenant's Buildium communication record"
+          ],
+          output: "Personalized rent reminder email sent to every active tenant with due date, amount, and payment instructions.",
+          deploy: "1–2 days"
+        }
+      },
+      {
+        title: "Late Payment Notice",
+        desc: "Delinquent tenants receive a professional late notice automatically on the 5th — no awkward manual follow-up.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "5th of each month"          },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Identifies overdue accounts" },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Update ledger notes"         },
+          output:  { icon: "📩", label: "Output",           sub: "Late notice to tenant"      }
+        },
+        detail: {
+          what: "On the 5th of every month, UpneX checks Buildium for tenants with outstanding balances, generates a legally compliant late notice for each one, updates their ledger with a late fee notation, and sends the notice — professional, consistent, and fully documented for compliance.",
+          trigger: "Scheduled — runs on the 5th of each month.",
+          aiDoes: [
+            "Queries Buildium for all tenants with unpaid balances as of the 5th",
+            "Generates a legally compliant late payment notice for each delinquent tenant",
+            "Adds a late fee notation to the tenant's ledger in Buildium",
+            "Records the notice delivery date and method for compliance documentation"
+          ],
+          output: "Late notice email to each delinquent tenant showing their outstanding balance, late fee, and payment instructions.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Renter's Insurance Compliance",
+        desc: "Automatically identify tenants without active coverage and send compliance reminders each month.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "Monthly compliance check"   },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Identifies non-compliant tenants"},
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Log compliance status"       },
+          output:  { icon: "📧", label: "Output",           sub: "Reminder to non-compliant tenants"}
+        },
+        detail: {
+          what: "Every month, UpneX cross-checks your active tenant roster against insurance compliance records. Any tenant with missing or expired renter's insurance automatically receives a polite reminder with instructions — and the non-compliance is logged in Buildium for your records.",
+          trigger: "Scheduled — runs monthly on a day you configure.",
+          aiDoes: [
+            "Cross-references the active tenant list with your renter's insurance compliance records",
+            "Identifies tenants whose insurance is missing or has expired",
+            "Updates the compliance status in Buildium for each tenant",
+            "Drafts a personalized reminder citing the lease requirement and submission instructions"
+          ],
+          output: "Compliance reminder email to each non-compliant tenant with instructions for uploading or submitting proof of insurance.",
+          deploy: "2–3 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: "Financial Administration",
+    icon: "💰",
+    color: "#DC2626",
+    bg: "rgba(220,38,38,0.08)",
+    desc: "Delinquency, NSF notices, and deposit accounting — handled",
+    open: false,
+    workflows: [
+      {
+        title: "Delinquency Escalation",
+        desc: "Accounts 10+ days overdue are automatically escalated with formal notices and a management report.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "Daily overdue check"        },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Pulls delinquency list"     },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Flag accounts for escalation"},
+          output:  { icon: "⚠️", label: "Output",           sub: "Report + escalation notices" }
+        },
+        detail: {
+          what: "When a tenant's balance is 10 or more days overdue, UpneX flags the account in Buildium, sends a formal escalation notice to the tenant, and delivers a delinquency report to your property manager — creating a documented, professional escalation trail without any manual follow-up.",
+          trigger: "Scheduled daily check; escalates any account 10 or more days past due.",
+          aiDoes: [
+            "Queries Buildium daily for all accounts that are 10+ days overdue",
+            "Flags each delinquent account with escalation status in Buildium",
+            "Generates a formal escalation notice citing the relevant lease terms",
+            "Compiles a delinquency summary report for property manager review"
+          ],
+          output: "Formal escalation notice sent to each delinquent tenant + a delinquency report delivered to your property manager.",
+          deploy: "3–4 days"
+        }
+      },
+      {
+        title: "NSF / Returned Payment Notice",
+        desc: "When a payment is returned, the tenant gets an NSF notice and the ledger is updated — automatically.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "Payment Returned Alert"     },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Extracts payment details"   },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Reverse payment + add NSF fee"},
+          output:  { icon: "📩", label: "Output",           sub: "NSF notice to tenant"       }
+        },
+        detail: {
+          what: "When Buildium sends a 'Payment Returned' notification, UpneX extracts the relevant details, reverses the payment in Buildium, applies the NSF fee per your policy, and sends the tenant a professional NSF notice with clear instructions for resubmitting payment — all within minutes of the notification.",
+          trigger: "A 'Payment Returned / NSF' notification email from Buildium.",
+          aiDoes: [
+            "Extracts tenant name, unit, payment amount, and return reason from the notification",
+            "Reverses the failed payment entry in Buildium",
+            "Applies the NSF fee to the tenant's ledger per your fee schedule",
+            "Prepares an NSF notice with the total balance due and re-submission instructions"
+          ],
+          output: "NSF notice to the tenant showing the returned amount, NSF fee, total balance due, and instructions for resubmitting payment.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Move-Out Deposit Accounting",
+        desc: "Calculate and send the deposit disposition letter automatically after every move-out.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "Move-Out Complete"          },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Collects charges & calculates"},
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Process deposit deductions"  },
+          output:  { icon: "📄", label: "Output",           sub: "Deposit disposition letter"  }
+        },
+        detail: {
+          what: "After a tenant moves out, UpneX collects the inspection report and any repair or cleaning charges, runs the deposit calculation in Buildium, and generates an itemized deposit disposition letter — delivered within the legally required timeframe so your company stays protected.",
+          trigger: "A move-out completion notification or a finalized move-out inspection report.",
+          aiDoes: [
+            "Collects inspection findings and itemized repair and cleaning costs",
+            "Calculates total deposit deductions against the original deposit amount held",
+            "Checks the state-mandated notice deadline for deposit return",
+            "Generates an itemized disposition letter with clear descriptions of each deduction"
+          ],
+          output: "Itemized security deposit disposition letter sent to the former tenant with all deduction details and any refund amount due.",
+          deploy: "3–5 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: "Compliance & Inspections",
+    icon: "📋",
+    color: "#475569",
+    bg: "rgba(71,85,105,0.08)",
+    desc: "Stay compliant without manual tracking or missed deadlines",
+    open: false,
+    workflows: [
+      {
+        title: "Routine Inspection Scheduling",
+        desc: "Every unit gets inspected on schedule — tenants notified, inspectors booked, all automatic.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger", sub: "6-month interval check"     },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Identifies units due"       },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Schedule + notify tenant"   },
+          output:  { icon: "📅", label: "Output",           sub: "Inspector invite + tenant notice"}
+        },
+        detail: {
+          what: "Every six months (or on your preferred interval), UpneX identifies which units are due for a routine inspection, schedules it in Buildium, sends the tenant the legally required 24-hour entry notice, and sends the inspector a confirmed calendar invite — all without your team tracking a single date manually.",
+          trigger: "Scheduled check against each unit's last inspection date.",
+          aiDoes: [
+            "Compares each unit's last inspection date against your required inspection interval",
+            "Identifies all units overdue or coming due within the next 30 days",
+            "Schedules the inspection in Buildium and confirms inspector availability",
+            "Drafts the 24-hour entry notice required by law and logs it in Buildium"
+          ],
+          output: "A calendar invite for the inspector + a legally-required 24-hour entry notice sent to the tenant.",
+          deploy: "3–4 days"
+        }
+      },
+      {
+        title: "Required Notice Automation",
+        desc: "Lease violations, NTVs, and legal events trigger the correct notice — sent automatically, on time.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",     sub: "Legal Event Detected"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Selects correct notice"     },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Log notice delivery"         },
+          output:  { icon: "📩", label: "Output",           sub: "Compliant notice to tenant" }
+        },
+        detail: {
+          what: "When a legal event occurs — a lease violation, notice to vacate, or non-payment situation — UpneX selects the correct notice template based on state law requirements, personalizes it, logs the delivery in Buildium, and sends it to the tenant within the required timeframe.",
+          trigger: "A triggering legal event: lease violation, NTV filing, or formal non-payment notice.",
+          aiDoes: [
+            "Identifies the legal event type and determines which notice is required",
+            "Selects the correct state law-compliant notice template for the situation",
+            "Personalizes the notice with tenant details, unit, lease dates, and event specifics",
+            "Records the notice delivery date and method in Buildium for compliance documentation"
+          ],
+          output: "The legally-required notice sent to the tenant by email, with delivery confirmation logged in Buildium.",
+          deploy: "3–5 days"
+        }
+      },
+      {
+        title: "Habitability Compliance Tracking",
+        desc: "Issues that threaten habitability get escalated immediately — no gaps, no liability exposure.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🔔", label: "Email Trigger",     sub: "Habitability Issue Flagged"  },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",   sub: "Escalates for priority"     },
+          action:  { icon: "🏢", label: "Buildium Action",  sub: "Create urgent work order"   },
+          output:  { icon: "🚨", label: "Output",           sub: "Emergency dispatch + owner alert"}
+        },
+        detail: {
+          what: "When a maintenance issue contains habitability-level concerns — mold, no heat in winter, structural damage, or pest infestation — UpneX automatically escalates it to a Priority 1 work order, dispatches your emergency vendor, and alerts the property owner, creating a time-stamped record that protects your company.",
+          trigger: "A maintenance request or inspector finding containing habitability-level keywords.",
+          aiDoes: [
+            "Detects habitability keywords (mold, no heat, structural damage, infestation)",
+            "Escalates the request to Priority 1 urgency immediately in Buildium",
+            "Creates an urgent work order and routes it to your designated emergency vendor",
+            "Documents the escalation with timestamps for legal protection and compliance"
+          ],
+          output: "Emergency vendor dispatch notification + owner alert describing the issue and confirming escalation.",
+          deploy: "3–4 days"
         }
       }
     ]
@@ -1600,29 +2117,99 @@ const PROPERTYWARE_DOMAINS = [
     icon: "👥",
     color: "#2563EB",
     bg: "rgba(37,99,235,0.08)",
-    desc: "Application processing — automated from first notification",
+    desc: "Application through move-out — every tenant milestone, automated",
     open: true,
     workflows: [
       {
         title: "Rental Application Processing",
-        desc: "New applications are reviewed, logged, and summarized for your leasing team — automatically.",
+        live: true,
+        desc: "Automatically screen new applicants and deliver a decision-ready report to your leasing team.",
         complexity: "Standard",
         nodes: {
-          trigger: { icon: "📧", label: "Email Trigger",          sub: "New Application Submitted"  },
-          ai:      { icon: "🤖", label: "UpneX AI Agent",        sub: "Extracts applicant info"    },
-          action:  { icon: "🏢", label: "PropertyWare Action",   sub: "Log screening workflow"     },
-          output:  { icon: "📋", label: "Output",                sub: "Screening report to manager" }
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "New Application Submitted"  },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Reviews & screens"          },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Log screening workflow"     },
+          output:  { icon: "📋", label: "Output",              sub: "Report to leasing manager"  }
         },
         detail: {
-          what: "When a new application is submitted through PropertyWare, UpneX reads the notification, extracts the applicant's details, logs the screening workflow steps in PropertyWare, and emails a clear screening report to your leasing manager — consistent, fast, and fully trackable.",
-          trigger: "A 'New Application Submitted' notification email from PropertyWare.",
+          what: "When a new application is submitted through PropertyWare, UpneX reads the notification, extracts the applicant's information, logs the screening steps in PropertyWare, and delivers a clear screening summary to your leasing team — so no application sits unreviewed.",
+          trigger: "A 'New Application Submitted' notification from PropertyWare lands in your inbox.",
           aiDoes: [
-            "Reads the notification and identifies the applicant and property",
-            "Extracts applicant name, contact details, and unit applied for",
-            "Logs the screening workflow steps and updates the application status in PropertyWare",
-            "Formats a screening summary for your leasing manager's review"
+            "Reads the application notification and identifies the applicant by name and unit",
+            "Extracts all key applicant details from the PropertyWare notification",
+            "Logs the screening workflow steps and updates application status in PropertyWare",
+            "Formats a screening summary with a clear pass / review / decline status"
           ],
-          output: "Screening report emailed to your leasing manager with applicant details and a clear review recommendation.",
+          output: "Screening report emailed to your leasing manager with a recommendation and all relevant details.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Lease Renewal Campaign",
+        desc: "Reach out to expiring leases 90 days out with a personalized renewal offer — and track every response.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "90 days before expiry"      },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Identifies & personalizes"  },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Send renewal offer"          },
+          output:  { icon: "📊", label: "Output",              sub: "Renewal pipeline report"    }
+        },
+        detail: {
+          what: "Every day, UpneX checks for leases expiring within 90 days and automatically starts a renewal conversation. It sends a personalized offer through PropertyWare, tracks responses, and keeps your renewal pipeline visible — so you're never caught off guard by an unexpected vacancy.",
+          trigger: "Scheduled daily check; flags any lease expiring within the next 90 days.",
+          aiDoes: [
+            "Identifies all leases expiring in the next 90 days",
+            "Personalizes each renewal offer with tenant name, unit, and proposed new rate",
+            "Logs the outreach in PropertyWare and tracks each tenant's response status",
+            "Escalates non-responses automatically at the 30-day and 60-day marks"
+          ],
+          output: "Personalized renewal email to each tenant + a weekly renewal pipeline status report for your team.",
+          deploy: "3–5 days"
+        }
+      },
+      {
+        title: "Move-In Coordination",
+        desc: "The moment a lease is signed, the entire move-in process kicks off — welcome email, inspection, and portal access.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "✍️", label: "Email Trigger",        sub: "Lease Signed Alert"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Creates move-in checklist"  },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Schedule inspection"         },
+          output:  { icon: "🏠", label: "Output",              sub: "Welcome email to tenant"    }
+        },
+        detail: {
+          what: "When PropertyWare confirms a lease is signed, UpneX immediately creates the move-in checklist, schedules the pre-move inspection, sets up the tenant's portal access, and sends them a professional welcome email with everything they need for day one.",
+          trigger: "A 'Lease Signed' confirmation notification from PropertyWare.",
+          aiDoes: [
+            "Confirms lease details — tenant name, unit, and move-in date",
+            "Schedules the pre-move inspection in PropertyWare",
+            "Sets up the tenant's portal access and sends login credentials",
+            "Prepares a personalized move-in welcome email with key contacts and instructions"
+          ],
+          output: "Welcome email to the new tenant with their move-in date, inspection time, portal access, and your team's contact information.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Notice to Vacate Processing",
+        desc: "When a tenant gives notice, records update instantly and the turnover clock starts automatically.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "NTV Received Alert"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Logs & routes NTV"          },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Update unit status"          },
+          output:  { icon: "📬", label: "Output",              sub: "Owner notice + timeline"    }
+        },
+        detail: {
+          what: "When a Notice to Vacate arrives, UpneX logs the key details, updates the unit's status in PropertyWare to 'Pending Vacancy,' creates a turnover task list, and immediately notifies the property owner — so your team has the full timeline without any manual data entry.",
+          trigger: "A 'Notice to Vacate Received' notification from PropertyWare.",
+          aiDoes: [
+            "Extracts move-out date, unit number, and tenant name from the notice",
+            "Updates PropertyWare unit status to 'Pending Vacancy'",
+            "Creates a turnover task list covering cleaning, repairs, and re-listing",
+            "Calculates the days remaining on the lease for turnover planning"
+          ],
+          output: "Immediate notification to the property owner with the move-out date and projected turnover timeline.",
           deploy: "2–3 days"
         }
       }
@@ -1634,30 +2221,180 @@ const PROPERTYWARE_DOMAINS = [
     icon: "🔧",
     color: "#D97706",
     bg: "rgba(217,119,6,0.08)",
-    desc: "Work requests handled and routed the moment they arrive",
+    desc: "From request to resolution — faster, with less back-and-forth",
     open: false,
     workflows: [
       {
         title: "Maintenance Request Triage",
-        desc: "Every new work request is classified and routed — no manual review needed.",
+        live: true,
+        desc: "Every new work request is classified and routed to the right vendor — in minutes, not hours.",
         complexity: "Standard",
         nodes: {
-          trigger: { icon: "📧", label: "Email Trigger",          sub: "New Work Request"           },
-          ai:      { icon: "🤖", label: "UpneX AI Agent",        sub: "Classifies & routes"        },
-          action:  { icon: "🏢", label: "PropertyWare Action",   sub: "Create / update work order" },
-          output:  { icon: "✅", label: "Output",                sub: "Tenant ACK + vendor notice" }
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "New Work Request"           },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Classifies urgency"         },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Create / update work order" },
+          output:  { icon: "✅", label: "Output",              sub: "Tenant ACK + vendor alert"  }
         },
         detail: {
-          what: "When a maintenance request arrives through PropertyWare, UpneX reads the issue description, assigns an urgency level, routes it to the appropriate vendor, creates or updates the work order in PropertyWare, and confirms receipt with the tenant — all automatically.",
-          trigger: "A 'New Work Request' notification email from PropertyWare.",
+          what: "When a maintenance request arrives through PropertyWare, UpneX reads the issue description, assigns an urgency level (Emergency, Urgent, or Routine), routes it to the right vendor based on your preferences, creates the work order in PropertyWare, and confirms receipt with the tenant — all within minutes.",
+          trigger: "A 'New Work Request' notification from PropertyWare.",
           aiDoes: [
             "Reads the issue description and assigns an urgency level",
-            "Identifies the correct trade vendor for the issue type",
-            "Creates or updates the work order in PropertyWare with triage notes",
+            "Identifies the correct trade vendor (plumber, HVAC, electrician, general)",
+            "Creates or updates the work order in PropertyWare with clear triage notes",
             "Drafts a tenant acknowledgement with an estimated response window"
           ],
-          output: "Tenant acknowledgement email + vendor notification with work order details.",
+          output: "Tenant acknowledgement email confirming the request + dispatch notification to the assigned vendor.",
           deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Emergency Work Order Routing",
+        desc: "Flooding, no heat, electrical hazards — emergencies get escalated instantly, every time.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🚨", label: "Email Trigger",        sub: "Emergency Work Request"     },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Detects emergency type"     },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Escalate to emergency vendor"},
+          output:  { icon: "📲", label: "Output",              sub: "PM alert + tenant ETA"      }
+        },
+        detail: {
+          what: "UpneX detects emergency keywords the moment a request comes in, immediately bypasses standard routing, escalates to your on-call emergency vendor, and simultaneously alerts the property manager and the tenant with a response timeline — no waiting, no missed emergencies.",
+          trigger: "A maintenance request containing emergency-level keywords (flood, gas leak, no heat, electrical).",
+          aiDoes: [
+            "Identifies emergency keywords and verifies the situation type",
+            "Bypasses standard routing — routes directly to your emergency vendor",
+            "Marks the work order as Priority 1 in PropertyWare immediately",
+            "Sends simultaneous alerts to property manager and tenant"
+          ],
+          output: "Instant alert to your property manager + an ETA confirmation sent to the tenant from the emergency vendor.",
+          deploy: "3–4 days"
+        }
+      },
+      {
+        title: "Work Order Completion Follow-up",
+        desc: "Close the loop on every completed repair with a tenant check-in and a brief owner update.",
+        complexity: "Simple",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "Work Order Completed"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Logs & drafts follow-up"    },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Update work order status"   },
+          output:  { icon: "⭐", label: "Output",              sub: "Tenant check-in + owner note"}
+        },
+        detail: {
+          what: "When a work order is marked complete in PropertyWare, UpneX updates the status, sends the tenant a brief follow-up asking if everything is resolved, and notifies the property owner that the issue has been handled. Simple, professional, and fully automated.",
+          trigger: "A 'Work Order Completed' status change notification from PropertyWare.",
+          aiDoes: [
+            "Confirms completion details from the PropertyWare work order notification",
+            "Updates work order status and closing notes in PropertyWare",
+            "Drafts a friendly tenant follow-up to confirm the issue is fully resolved",
+            "Prepares a brief owner update summarizing the completed work"
+          ],
+          output: "Tenant satisfaction follow-up email + a short owner notification confirming the maintenance is complete.",
+          deploy: "1–2 days"
+        }
+      },
+      {
+        title: "Recurring Maintenance Scheduler",
+        desc: "HVAC filters, pest control, dryer vents — preventive maintenance scheduled and tracked every month.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "Monthly calendar run"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Identifies units due"       },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Create PM work orders"      },
+          output:  { icon: "📅", label: "Output",              sub: "Vendor schedule + owner notice"}
+        },
+        detail: {
+          what: "UpneX runs a monthly sweep across all your units, identifies what preventive maintenance is due, creates the work orders in PropertyWare, matches them to your preferred vendors, and sends owners a heads-up — so nothing falls through the cracks and vendors can batch their visits efficiently.",
+          trigger: "Scheduled run on the 1st of each month.",
+          aiDoes: [
+            "Pulls all units due for scheduled maintenance based on your configured intervals",
+            "Creates the appropriate work orders in PropertyWare for each unit and service type",
+            "Matches each work order to your preferred vendor for that service",
+            "Groups visits by building or area to minimize vendor travel time"
+          ],
+          output: "A monthly vendor schedule with all visits organized + owner notification listing all planned maintenance.",
+          deploy: "4–5 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Leasing & Vacancy Marketing",
+    icon: "🏘️",
+    color: "#16A34A",
+    bg: "rgba(22,163,74,0.08)",
+    desc: "Fill units faster with less manual work",
+    open: false,
+    workflows: [
+      {
+        title: "New Vacancy Alert",
+        desc: "The moment a unit goes vacant, the listing process kicks off automatically.",
+        complexity: "Simple",
+        nodes: {
+          trigger: { icon: "🔔", label: "Email Trigger",        sub: "Unit Marked Vacant"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Captures unit details"      },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Update availability"         },
+          output:  { icon: "📝", label: "Output",              sub: "Listing draft ready"        }
+        },
+        detail: {
+          what: "As soon as PropertyWare marks a unit vacant, UpneX captures all the unit details, verifies that the listing description and photos are current, and prepares a draft listing ready for your review — so you can have it live in hours, not days.",
+          trigger: "A 'Unit Marked Vacant' status change in PropertyWare.",
+          aiDoes: [
+            "Captures unit details — address, beds/baths, square footage, and asking rent",
+            "Verifies the current listing description and confirms photos are on file",
+            "Updates the unit's availability status in PropertyWare",
+            "Flags any missing listing information that needs to be filled in before going live"
+          ],
+          output: "A listing draft ready for your review + a live vacancy report showing all current open units.",
+          deploy: "1–2 days"
+        }
+      },
+      {
+        title: "Showing Request Scheduling",
+        desc: "Convert every inquiry email into a confirmed showing — automatically.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "Prospect Inquiry"           },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Collects availability"      },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Log prospect & schedule"    },
+          output:  { icon: "📅", label: "Output",              sub: "Confirmation + calendar invite"}
+        },
+        detail: {
+          what: "When a prospect inquires about a rental, UpneX responds with available showing times, collects their information and availability, logs them as a new prospect in PropertyWare, and sends both the prospect and your leasing agent a confirmed calendar invite — no back-and-forth needed.",
+          trigger: "An inquiry email about a listed rental unit.",
+          aiDoes: [
+            "Responds to the prospect with available showing time slots",
+            "Collects the prospect's contact details and preferred availability",
+            "Creates a new prospect record in PropertyWare",
+            "Confirms the showing and generates calendar invites for both parties"
+          ],
+          output: "A showing confirmation email to the prospect + a calendar invite sent to your leasing agent.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Prospect Follow-up Sequence",
+        desc: "After every showing, a 3-touch follow-up runs automatically to move prospects toward an application.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🔔", label: "Email/Manual Trigger", sub: "Showing Completed"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Starts follow-up sequence" },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Log follow-up activity"     },
+          output:  { icon: "📬", label: "Output",              sub: "Day 1, 3, 7 follow-ups"    }
+        },
+        detail: {
+          what: "After a showing is completed, UpneX automatically runs a 3-touch follow-up sequence. Day 1: a warm check-in. Day 3: answers to common questions with an application link. Day 7: a gentle urgency message if the unit is still available. All messages are personalized and logged in PropertyWare.",
+          trigger: "A showing completed notification or a manual trigger from your leasing agent.",
+          aiDoes: [
+            "Initiates the follow-up sequence immediately after the showing is logged",
+            "Personalizes each message with the prospect's name and unit details",
+            "Spaces messages at Day 1, Day 3, and Day 7 intervals automatically",
+            "Logs all follow-up activity in the prospect's PropertyWare record"
+          ],
+          output: "Three personalized follow-up emails sent to the prospect over 7 days, each with an application link and clear next steps.",
+          deploy: "3–4 days"
         }
       }
     ]
@@ -1668,30 +2405,316 @@ const PROPERTYWARE_DOMAINS = [
     icon: "📊",
     color: "#7C3AED",
     bg: "rgba(124,58,237,0.08)",
-    desc: "Automated owner reporting — no manual assembly required",
+    desc: "Keep every owner informed without the manual effort",
     open: false,
     workflows: [
       {
         title: "Monthly Owner Report",
-        desc: "Every owner gets a property performance report on the 1st — pulled from PropertyWare, sent automatically.",
+        desc: "Every owner gets a polished financial and operations report on the 1st — no manual work required.",
         complexity: "Advanced",
         nodes: {
-          trigger: { icon: "🗓️", label: "Scheduled Trigger",      sub: "1st of each month"          },
-          ai:      { icon: "🤖", label: "UpneX AI Agent",        sub: "Pulls & formats data"       },
-          action:  { icon: "🏢", label: "PropertyWare Action",   sub: "Confirm report data"        },
-          output:  { icon: "📄", label: "Output",                sub: "Owner report via email"     }
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "1st of each month"          },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Pulls & formats data"       },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Pull income & expense data"  },
+          output:  { icon: "📄", label: "Output",              sub: "PDF report to each owner"   }
         },
         detail: {
-          what: "On the 1st of every month, UpneX pulls each property's performance data from PropertyWare, formats it into a clean owner report covering income, vacancies, and maintenance activity, and emails it directly to each owner — branded and personalized, with no manual work required.",
+          what: "On the 1st of every month, UpneX pulls each property's income, expenses, vacancy status, and maintenance activity from PropertyWare, formats it into a clean owner report, and emails it directly to each owner — personalized per property and branded with your company name.",
           trigger: "Scheduled — runs automatically on the 1st of each month.",
           aiDoes: [
-            "Pulls monthly income, expense, and maintenance data from PropertyWare",
+            "Pulls monthly income, expenses, and maintenance data from PropertyWare for each property",
             "Calculates key metrics: net income, vacancy rate, and maintenance spend",
             "Formats a professional, easy-to-read report for each property owner",
             "Sends individual reports to each owner covering only their properties"
           ],
-          output: "Formatted monthly owner report emailed to each property owner on the 1st, covering financials, vacancy status, and maintenance highlights.",
+          output: "A formatted owner report emailed to each property owner on the 1st, covering monthly financials, vacancy status, and maintenance highlights.",
           deploy: "4–5 days"
+        }
+      },
+      {
+        title: "New Owner Onboarding",
+        desc: "Welcome every new owner with a seamless onboarding flow from intake form to portal access.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "New Owner Intake Form"      },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Collects property details"  },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Create owner record"         },
+          output:  { icon: "🤝", label: "Output",              sub: "Welcome email + portal access"}
+        },
+        detail: {
+          what: "When a new owner submits their intake form, UpneX collects all the property and ownership details, creates their record in PropertyWare, sets up their owner portal, and sends a professional welcome email with login credentials and an onboarding checklist — ready from day one.",
+          trigger: "A new owner intake form submission arrives in your management inbox.",
+          aiDoes: [
+            "Extracts owner and property details from the intake form submission",
+            "Creates the owner and property records in PropertyWare",
+            "Sets up owner portal access and prepares login credentials",
+            "Assembles an onboarding checklist with clear next steps for the owner"
+          ],
+          output: "Welcome email to the new owner with their portal login, access credentials, and a step-by-step onboarding checklist.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Owner Ad-Hoc Request Routing",
+        desc: "When an owner emails your team, their request is classified, assigned, and acknowledged in seconds.",
+        complexity: "Simple",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "Owner Email Received"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Classifies request type"    },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Log & assign request"        },
+          output:  { icon: "✅", label: "Output",              sub: "Owner ACK + internal task"  }
+        },
+        detail: {
+          what: "When an owner emails your team — whether it's a financial question, a maintenance concern, or a lease inquiry — UpneX reads it, classifies the request type, routes it to the right team member, and sends the owner a professional acknowledgement so they know their message was received and is being handled.",
+          trigger: "An email from a property owner to your management inbox.",
+          aiDoes: [
+            "Reads and classifies the owner's request (financial, maintenance, leasing, or general)",
+            "Logs the request in PropertyWare with appropriate notes and context",
+            "Assigns the request to the correct team member based on request type",
+            "Drafts a professional acknowledgement for the owner confirming receipt"
+          ],
+          output: "An acknowledgement email to the owner + an internal task created in PropertyWare for the responsible team member.",
+          deploy: "1–2 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: "Resident Communications",
+    icon: "💬",
+    color: "#B45309",
+    bg: "rgba(180,83,9,0.08)",
+    desc: "Rent reminders, late notices, and compliance — on autopilot",
+    open: false,
+    workflows: [
+      {
+        title: "Rent Reminder Sequence",
+        desc: "A friendly reminder goes out to all tenants on the 25th — keeping rent collection smooth and on time.",
+        complexity: "Simple",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "25th of each month"         },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Pulls active tenant list"   },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Log communication"           },
+          output:  { icon: "📧", label: "Output",              sub: "Reminder to all tenants"    }
+        },
+        detail: {
+          what: "On the 25th of every month, UpneX automatically sends a personalized rent reminder to every active tenant, confirms the due date and payment portal link, logs the communication in PropertyWare, and verifies delivery — consistent, professional, zero manual effort.",
+          trigger: "Scheduled — runs automatically on the 25th of each month.",
+          aiDoes: [
+            "Pulls the full list of active tenants from PropertyWare",
+            "Personalizes each reminder with the tenant's name and unit details",
+            "Confirms the rent due date and includes the payment portal link",
+            "Logs the outreach in each tenant's PropertyWare communication record"
+          ],
+          output: "Personalized rent reminder email sent to every active tenant with due date, amount, and payment instructions.",
+          deploy: "1–2 days"
+        }
+      },
+      {
+        title: "Late Payment Notice",
+        desc: "Delinquent tenants receive a professional late notice automatically on the 5th — no awkward manual follow-up.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "5th of each month"          },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Identifies overdue accounts" },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Update ledger notes"         },
+          output:  { icon: "📩", label: "Output",              sub: "Late notice to tenant"      }
+        },
+        detail: {
+          what: "On the 5th of every month, UpneX checks PropertyWare for tenants with outstanding balances, generates a legally compliant late notice for each one, updates their ledger with a late fee notation, and sends the notice — professional, consistent, and fully documented for compliance.",
+          trigger: "Scheduled — runs on the 5th of each month.",
+          aiDoes: [
+            "Queries PropertyWare for all tenants with unpaid balances as of the 5th",
+            "Generates a legally compliant late payment notice for each delinquent tenant",
+            "Adds a late fee notation to the tenant's ledger in PropertyWare",
+            "Records the notice delivery date and method for compliance documentation"
+          ],
+          output: "Late notice email to each delinquent tenant showing their outstanding balance, late fee, and payment instructions.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Renter's Insurance Compliance",
+        desc: "Automatically identify tenants without active coverage and send compliance reminders each month.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "Monthly compliance check"   },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Identifies non-compliant tenants"},
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Log compliance status"       },
+          output:  { icon: "📧", label: "Output",              sub: "Reminder to non-compliant tenants"}
+        },
+        detail: {
+          what: "Every month, UpneX cross-checks your active tenant roster against insurance compliance records. Any tenant with missing or expired renter's insurance automatically receives a polite reminder with instructions — and the non-compliance is logged in PropertyWare for your records.",
+          trigger: "Scheduled — runs monthly on a day you configure.",
+          aiDoes: [
+            "Cross-references the active tenant list with your renter's insurance compliance records",
+            "Identifies tenants whose insurance is missing or has expired",
+            "Updates the compliance status in PropertyWare for each tenant",
+            "Drafts a personalized reminder citing the lease requirement and submission instructions"
+          ],
+          output: "Compliance reminder email to each non-compliant tenant with instructions for uploading or submitting proof of insurance.",
+          deploy: "2–3 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 6,
+    name: "Financial Administration",
+    icon: "💰",
+    color: "#DC2626",
+    bg: "rgba(220,38,38,0.08)",
+    desc: "Delinquency, NSF notices, and deposit accounting — handled",
+    open: false,
+    workflows: [
+      {
+        title: "Delinquency Escalation",
+        desc: "Accounts 10+ days overdue are automatically escalated with formal notices and a management report.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "Daily overdue check"        },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Pulls delinquency list"     },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Flag accounts for escalation"},
+          output:  { icon: "⚠️", label: "Output",              sub: "Report + escalation notices" }
+        },
+        detail: {
+          what: "When a tenant's balance is 10 or more days overdue, UpneX flags the account in PropertyWare, sends a formal escalation notice to the tenant, and delivers a delinquency report to your property manager — creating a documented, professional escalation trail without any manual follow-up.",
+          trigger: "Scheduled daily check; escalates any account 10 or more days past due.",
+          aiDoes: [
+            "Queries PropertyWare daily for all accounts that are 10+ days overdue",
+            "Flags each delinquent account with escalation status in PropertyWare",
+            "Generates a formal escalation notice citing the relevant lease terms",
+            "Compiles a delinquency summary report for property manager review"
+          ],
+          output: "Formal escalation notice sent to each delinquent tenant + a delinquency report delivered to your property manager.",
+          deploy: "3–4 days"
+        }
+      },
+      {
+        title: "NSF / Returned Payment Notice",
+        desc: "When a payment is returned, the tenant gets an NSF notice and the ledger is updated — automatically.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "Payment Returned Alert"     },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Extracts payment details"   },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Reverse payment + add NSF fee"},
+          output:  { icon: "📩", label: "Output",              sub: "NSF notice to tenant"       }
+        },
+        detail: {
+          what: "When PropertyWare sends a 'Payment Returned' notification, UpneX extracts the relevant details, reverses the payment in PropertyWare, applies the NSF fee per your policy, and sends the tenant a professional NSF notice with clear instructions for resubmitting payment — all within minutes of the notification.",
+          trigger: "A 'Payment Returned / NSF' notification email from PropertyWare.",
+          aiDoes: [
+            "Extracts tenant name, unit, payment amount, and return reason from the notification",
+            "Reverses the failed payment entry in PropertyWare",
+            "Applies the NSF fee to the tenant's ledger per your fee schedule",
+            "Prepares an NSF notice with the total balance due and re-submission instructions"
+          ],
+          output: "NSF notice to the tenant showing the returned amount, NSF fee, total balance due, and instructions for resubmitting payment.",
+          deploy: "2–3 days"
+        }
+      },
+      {
+        title: "Move-Out Deposit Accounting",
+        desc: "Calculate and send the deposit disposition letter automatically after every move-out.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "Move-Out Complete"          },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Collects charges & calculates"},
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Process deposit deductions"  },
+          output:  { icon: "📄", label: "Output",              sub: "Deposit disposition letter"  }
+        },
+        detail: {
+          what: "After a tenant moves out, UpneX collects the inspection report and any repair or cleaning charges, runs the deposit calculation in PropertyWare, and generates an itemized deposit disposition letter — delivered within the legally required timeframe so your company stays protected.",
+          trigger: "A move-out completion notification or a finalized move-out inspection report.",
+          aiDoes: [
+            "Collects inspection findings and itemized repair and cleaning costs",
+            "Calculates total deposit deductions against the original deposit amount held",
+            "Checks the state-mandated notice deadline for deposit return",
+            "Generates an itemized disposition letter with clear descriptions of each deduction"
+          ],
+          output: "Itemized security deposit disposition letter sent to the former tenant with all deduction details and any refund amount due.",
+          deploy: "3–5 days"
+        }
+      }
+    ]
+  },
+  {
+    id: 7,
+    name: "Compliance & Inspections",
+    icon: "📋",
+    color: "#475569",
+    bg: "rgba(71,85,105,0.08)",
+    desc: "Stay compliant without manual tracking or missed deadlines",
+    open: false,
+    workflows: [
+      {
+        title: "Routine Inspection Scheduling",
+        desc: "Every unit gets inspected on schedule — tenants notified, inspectors booked, all automatic.",
+        complexity: "Standard",
+        nodes: {
+          trigger: { icon: "🗓️", label: "Scheduled Trigger",   sub: "6-month interval check"     },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Identifies units due"       },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Schedule + notify tenant"   },
+          output:  { icon: "📅", label: "Output",              sub: "Inspector invite + tenant notice"}
+        },
+        detail: {
+          what: "Every six months (or on your preferred interval), UpneX identifies which units are due for a routine inspection, schedules it in PropertyWare, sends the tenant the legally required 24-hour entry notice, and sends the inspector a confirmed calendar invite — all without your team tracking a single date manually.",
+          trigger: "Scheduled check against each unit's last inspection date.",
+          aiDoes: [
+            "Compares each unit's last inspection date against your required inspection interval",
+            "Identifies all units overdue or coming due within the next 30 days",
+            "Schedules the inspection in PropertyWare and confirms inspector availability",
+            "Drafts the 24-hour entry notice required by law and logs it in PropertyWare"
+          ],
+          output: "A calendar invite for the inspector + a legally-required 24-hour entry notice sent to the tenant.",
+          deploy: "3–4 days"
+        }
+      },
+      {
+        title: "Required Notice Automation",
+        desc: "Lease violations, NTVs, and legal events trigger the correct notice — sent automatically, on time.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "📧", label: "Email Trigger",        sub: "Legal Event Detected"       },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Selects correct notice"     },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Log notice delivery"         },
+          output:  { icon: "📩", label: "Output",              sub: "Compliant notice to tenant" }
+        },
+        detail: {
+          what: "When a legal event occurs — a lease violation, notice to vacate, or non-payment situation — UpneX selects the correct notice template based on state law requirements, personalizes it, logs the delivery in PropertyWare, and sends it to the tenant within the required timeframe.",
+          trigger: "A triggering legal event: lease violation, NTV filing, or formal non-payment notice.",
+          aiDoes: [
+            "Identifies the legal event type and determines which notice is required",
+            "Selects the correct state law-compliant notice template for the situation",
+            "Personalizes the notice with tenant details, unit, lease dates, and event specifics",
+            "Records the notice delivery date and method in PropertyWare for compliance documentation"
+          ],
+          output: "The legally-required notice sent to the tenant by email, with delivery confirmation logged in PropertyWare.",
+          deploy: "3–5 days"
+        }
+      },
+      {
+        title: "Habitability Compliance Tracking",
+        desc: "Issues that threaten habitability get escalated immediately — no gaps, no liability exposure.",
+        complexity: "Advanced",
+        nodes: {
+          trigger: { icon: "🔔", label: "Email Trigger",        sub: "Habitability Issue Flagged"  },
+          ai:      { icon: "🤖", label: "UpneX AI Agent",      sub: "Escalates for priority"     },
+          action:  { icon: "🏢", label: "PropertyWare Action", sub: "Create urgent work order"   },
+          output:  { icon: "🚨", label: "Output",              sub: "Emergency dispatch + owner alert"}
+        },
+        detail: {
+          what: "When a maintenance issue contains habitability-level concerns — mold, no heat in winter, structural damage, or pest infestation — UpneX automatically escalates it to a Priority 1 work order, dispatches your emergency vendor, and alerts the property owner, creating a time-stamped record that protects your company.",
+          trigger: "A maintenance request or inspector finding containing habitability-level keywords.",
+          aiDoes: [
+            "Detects habitability keywords (mold, no heat, structural damage, infestation)",
+            "Escalates the request to Priority 1 urgency immediately in PropertyWare",
+            "Creates an urgent work order and routes it to your designated emergency vendor",
+            "Documents the escalation with timestamps for legal protection and compliance"
+          ],
+          output: "Emergency vendor dispatch notification + owner alert describing the issue and confirming escalation.",
+          deploy: "3–4 days"
         }
       }
     ]
