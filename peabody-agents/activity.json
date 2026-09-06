@@ -307,7 +307,7 @@
       "domain": "tenant",
       "description": "Monitors AppFolio applications and emails a full screening report (residential history, income verification, fraud signals, recommendation) within minutes of submission.",
       "liveSince": "2026-06-16T18:09:00-04:00",
-      "lastEventAt": "2026-09-04T11:10:05-04:00"
+      "lastEventAt": "2026-09-05T21:27:05-04:00"
     },
     {
       "name": "Lease Renewal Agent",
@@ -359,6 +359,15 @@
     }
   ],
   "activity": [
+    {
+      "id": "evt-c834172cd04b",
+      "ts": "2026-09-05T21:27:05-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening sent to client",
+      "subject": "Application 409",
+      "outcome": "DECLINE",
+      "status": "Delivered"
+    },
     {
       "id": "evt-0794d428e064",
       "ts": "2026-08-26T23:56:10-04:00",
@@ -799,16 +808,7 @@
       "subject": "Application 266",
       "outcome": "REVIEW",
       "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-66e18ec8ca78",
-      "ts": "2026-07-19T20:31:12-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 264",
-      "outcome": "REVIEW",
-      "status": "DRAFT \u2014 awaiting send approval"
     }
   ],
-  "lastUpdated": "2026-09-05T20:31:59-04:00"
+  "lastUpdated": "2026-09-05T21:27:05-04:00"
 }
