@@ -1,45 +1,45 @@
 {
-  "updated": "2026-08-28T13:51:45.216143+00:00",
-  "data_as_of": "2026-08-17T13:02:54.643Z",
-  "property_count": 209,
+  "updated": "2026-09-21T19:51:16.780672+00:00",
+  "data_as_of": "2026-09-21T19:30:14.233Z",
+  "property_count": 208,
   "leasing": {
-    "total_units": 209,
+    "total_units": 208,
     "occupied_units": 181,
-    "vacant_units": 28,
-    "pre_leased": 2,
-    "rent_ready_units": 180,
+    "vacant_units": 27,
+    "pre_leased": 1,
+    "rent_ready_units": 179,
     "not_ready_units": 29,
-    "occupancy_pct": 86.6,
-    "leads": 137,
+    "occupancy_pct": 87.0,
+    "leads": 138,
     "tours": 0,
-    "applications": 12,
+    "applications": 18,
     "signed_leases": 0,
-    "move_ins": 4
+    "move_ins": 6
   },
   "finance": {
-    "market_rent": 619849.3,
-    "scheduled_rent": 550448.39,
-    "collected": 2514438.1,
-    "amount_receivable": 38009.04,
-    "good_debt": 38009.04,
+    "market_rent": 618862.3,
+    "scheduled_rent": 559678.39,
+    "collected": 2672100.65,
+    "amount_receivable": 4945.0,
+    "good_debt": 4945.0,
     "bad_debt": 0.0,
     "concessions": 0.0,
-    "collection_rate": 456.8,
-    "delinquency_rate": 6.9,
-    "gap_to_market": 69400.91
+    "collection_rate": 99.1,
+    "delinquency_rate": 0.9,
+    "gap_to_market": 59183.91
   },
   "maintenance": {
-    "total_requests": 60,
-    "open_requests": 28,
-    "closed_requests": 0,
+    "total_requests": 61,
+    "open_requests": 30,
+    "closed_requests": 31,
     "avg_completion_hours": 0,
-    "completion_rate": 0.0
+    "completion_rate": 50.8
   },
   "renewal": {
-    "total_offers": 37,
-    "renewed": 20,
+    "total_offers": 32,
+    "renewed": 14,
     "not_renewed": 7,
     "month_to_month": 0,
-    "renewal_rate": 54.1
+    "renewal_rate": 43.8
   }
 }

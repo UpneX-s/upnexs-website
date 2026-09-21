@@ -258,6 +258,28 @@
         <div class="stat accent"><div class="n" id="stat-days">—</div><div class="l">Days Live</div></div>
       </div>
 
+      <!-- VALUE DELIVERED -->
+      <div class="sec-head">⏱ Value Delivered — what the agents have taken off the team</div>
+      <div class="sec-sub">Volume figures are counts of delivered outputs: emails sent to Peabody, reports generated, records tracked. The time-per-task column shows the manual effort each one replaces, so every number below can be checked.</div>
+      <div class="stats" style="margin-top:14px">
+        <div class="stat green"><div class="n" id="v-hours">—</div><div class="l">Staff-Hours Returned</div></div>
+        <div class="stat accent"><div class="n" id="v-outputs">—</div><div class="l">Agent Outputs Delivered</div></div>
+        <div class="stat"><div class="n" id="v-props">—</div><div class="l">Properties Covered</div></div>
+        <div class="stat"><div class="n" id="v-owners">—</div><div class="l">Owners Monitored</div></div>
+      </div>
+      <div style="overflow-x:auto;margin-top:16px">
+        <table id="v-table" style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#0f2d56;color:#fff;text-align:left">
+            <th style="padding:9px 12px">Agent</th>
+            <th style="padding:9px 12px">Delivered</th>
+            <th style="padding:9px 12px">Manual equivalent</th>
+            <th style="padding:9px 12px;text-align:right">Hours saved</th>
+          </tr></thead>
+          <tbody id="v-rows"></tbody>
+        </table>
+      </div>
+      <div class="sec-sub" id="v-method" style="margin-top:10px;font-style:italic"></div>
+
       <!-- KANBAN -->
       <div class="sec-head">🗂 Agent Pipeline — where each agent is today</div>
       <div class="sec-sub">Every agent moves left → right through its lifecycle. The colored bar on each card shows the phases it has already crossed.</div>
@@ -588,8 +610,17 @@ function renderActivity(data){
   var latest={};
   acts.forEach(function(e){var k=e.subject||e.id;if(!latest[k]||(e.ts||'')>(latest[k].ts||''))latest[k]=e;});
   var screened=Object.keys(latest).length;
-  set('stat-screened',screened);
-  var ac=document.getElementById('act-count'); if(ac) ac.textContent=screened+' total';
+  // The activity feed only retains the most recent events, so counting it
+  // under-reports lifetime volume. Prefer the verified delivered total from
+  // value.basis when present. — 2026-09-22
+  var lifetime=screened;
+  try{
+    (data.value&&data.value.basis||[]).forEach(function(b){
+      if(b.agent&&b.agent.toLowerCase().indexOf('screen')>-1) lifetime=b.volume;
+    });
+  }catch(e){}
+  set('stat-screened',lifetime);
+  var ac=document.getElementById('act-count'); if(ac) ac.textContent=screened+' shown';
   var body=document.getElementById('act-body');
   var top=acts.slice(0,10);
   if(body&&top.length){
@@ -685,10 +716,49 @@ function renderPortfolio(d){
   if(renewBar) renewBar.style.width=Math.min(rr,100)+'%';
 }
 
+
+// ---------- VALUE DELIVERED ----------
+function renderValue(v){
+  if(!v) return;
+  set('v-hours', (v.hoursSaved!=null? v.hoursSaved : '—'));
+  var outputs = 0;
+  (v.basis||[]).forEach(function(b){ outputs += (b.volume||0); });
+  set('v-outputs', outputs);
+  if(v.coverage){ set('v-props', v.coverage.properties); set('v-owners', v.coverage.owners); }
+  var tb=document.getElementById('v-rows'); if(!tb) return;
+  tb.innerHTML='';
+  (v.basis||[]).forEach(function(b,i){
+    var tr=document.createElement('tr');
+    tr.style.background = (i%2? '#f8fafc':'#fff');
+    tr.style.borderBottom='1px solid #e5e7eb';
+    tr.innerHTML =
+      '<td style="padding:9px 12px;font-weight:600">'+b.agent+'</td>'+
+      '<td style="padding:9px 12px">'+b.volume+' '+b.unit+'</td>'+
+      '<td style="padding:9px 12px;color:#6b7280">'+b.savedMinutesEach+' min each — '+(b.note||'')+'</td>'+
+      '<td style="padding:9px 12px;text-align:right;font-weight:700">'+b.hoursSaved+' h</td>';
+    tb.appendChild(tr);
+  });
+  var tot=document.createElement('tr');
+  tot.style.background='#0f2d56'; tot.style.color='#fff';
+  tot.innerHTML='<td style="padding:10px 12px;font-weight:800" colspan="3">Total since '+(v.since||'')+'</td>'+
+                '<td style="padding:10px 12px;text-align:right;font-weight:800">'+v.hoursSaved+' h</td>';
+  tb.appendChild(tot);
+  if(v.revenue){
+    var rv=document.createElement('tr');
+    rv.style.background='#fffbeb'; rv.style.borderTop='2px solid #fcd34d';
+    rv.innerHTML='<td style="padding:9px 12px;font-weight:600">Revenue Leakage — items flagged</td>'+
+      '<td style="padding:9px 12px">'+v.revenue.flagged+' items</td>'+
+      '<td style="padding:9px 12px;color:#6b7280">'+(v.revenue.note||'')+'</td>'+
+      '<td style="padding:9px 12px;text-align:right;font-weight:700">$'+Number(v.revenue.valueUnderReview).toLocaleString()+'</td>';
+    tb.appendChild(rv);
+  }
+  set('v-method', v.method||'');
+}
+
 // ---------- LOAD DATA ----------
 fetch('activity.json?_='+Date.now())
   .then(function(r){return r.json();})
-  .then(renderAgents)
+  .then(function(d){ renderAgents(d); renderValue(d.value); })
   .catch(function(){renderAgents(FALLBACK);});
 
 fetch('portfolio.json?_='+Date.now())
