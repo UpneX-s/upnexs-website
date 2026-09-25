@@ -500,9 +500,6 @@ We are a small, execution-focused team: if you ship consistently and take owners
 </div>
 
 <script>
-var SUPABASE_URL = "https://ogclreqdhtoxxdwmmkkd.supabase.co";
-var SUPABASE_KEY = "sb_publishable_Ii1knhjS6Hi7wtfzAuAseQ_JsY4xkEY";
-
 // scroll reveals (elements stay visible when JS is off)
 try {
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
@@ -552,7 +549,7 @@ function sendEntry(ev, type) {
     return false;
   }
 
-  var row = type === 'registration' ? {} : { entry_type: type };
+  var row = {};
   var checkboxes = ['age_confirmed', 'available_oct', 'agreed_terms', 'agreed_asset_use'];
   fd.forEach(function (v, k) {
     if (k === 'website') return;
@@ -562,22 +559,14 @@ function sendEntry(ev, type) {
   btn.disabled = true;
   btn.textContent = 'Sending…';
 
-  var req = type === 'registration'
-    ? fetch('https://tenantnex.com/api/creator-challenge/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(row)
-      })
-    : fetch(SUPABASE_URL + '/rest/v1/challenge_entries', {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(row)
-      });
+  var endpoint = type === 'registration'
+    ? 'https://tenantnex.com/api/creator-challenge/register'
+    : 'https://tenantnex.com/api/creator-challenge/submit';
+  var req = fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(row)
+  });
   req.then(function (r) {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     msg.className = 'form-msg ok';
