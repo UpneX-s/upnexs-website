@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="UpneX Creator Challenge 2026 — make two short videos in your own 48 hours and win a paid social media internship. Freshers and recent graduates only. ₹10,000 prize pool."/>
+<title>UpneX Creator Challenge — 48-Hour Internship Challenge</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0b1216;
+    --surface: #111c22;
+    --surface2: #16242c;
+    --line: #223540;
+    --text: #f2ede4;
+    --muted: #93a29b;
+    --gold: #e8b64c;
+    --coral: #ff6b57;
+    --grad: linear-gradient(96deg, #e8b64c 10%, #ff6b57 90%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Instrument Sans', sans-serif; font-weight: 400; line-height: 1.7;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--gold); color: #0b1216; }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .page { max-width: 880px; margin: 0 auto; padding: 0 24px 90px; }
+
+  /* ── Hero ─────────────────────────────────────────────── */
+  .hero { position: relative; padding: 92px 0 56px; }
+  .hero-glow {
+    position: absolute; inset: -40% -30% auto; height: 130%; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(38% 45% at 22% 30%, rgba(232,182,76,.16), transparent 70%),
+      radial-gradient(34% 40% at 78% 22%, rgba(255,107,87,.13), transparent 70%);
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate3d(-2%, 0, 0) scale(1); }
+    to   { transform: translate3d(3%, 4%, 0) scale(1.06); }
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .kicker {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 26px;
+  }
+  .kicker::before { content: ""; width: 34px; height: 1px; background: var(--grad); }
+
+  h1 {
+    font-family: 'Unbounded', sans-serif; font-weight: 900;
+    font-size: clamp(34px, 7vw, 68px); line-height: 1.04; letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  h1 .line { display: block; overflow: hidden; }
+  h1 .line > span { display: inline-block; animation: rise .8s cubic-bezier(.2,.8,.2,1) both; }
+  h1 .line:nth-child(2) > span { animation-delay: .12s; }
+  h1 .line:nth-child(3) > span { animation-delay: .24s; }
+  @keyframes rise { from { transform: translateY(110%); } to { transform: translateY(0); } }
+  .grad-text {
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .subtitle { font-size: 16.5px; color: var(--muted); margin-top: 22px; max-width: 56ch; animation: fadeup .9s .4s both; }
+  @keyframes fadeup { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+  .hero-cta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 34px; animation: fadeup .9s .55s both; }
+  .btn {
+    position: relative; display: inline-block; overflow: hidden; cursor: pointer;
+    font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 13.5px; letter-spacing: .04em;
+    color: #14100a; background: var(--grad); border: none; border-radius: 999px;
+    padding: 17px 38px; text-decoration: none; transition: transform .25s, box-shadow .25s;
+  }
+  .btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 12px 34px rgba(232,182,76,.35); }
+  .btn::after {
+    content: ""; position: absolute; top: 0; left: -80%; width: 45%; height: 100%;
+    background: linear-gradient(105deg, transparent, rgba(255,255,255,.55), transparent);
+    transform: skewX(-20deg); animation: shine 3.4s ease-in-out infinite;
+  }
+  @keyframes shine { 0%, 55% { left: -80%; } 80%, 100% { left: 130%; } }
+  .hero-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .hero-note b { color: var(--coral); font-weight: 500; }
+
+  .clock {
+    margin-top: 46px; display: inline-flex; align-items: baseline; gap: 14px; animation: fadeup .9s .7s both;
+  }
+  .clock-num {
+    font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(38px, 7vw, 60px);
+    color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: .02em;
+  }
+  .clock-num .colon { color: var(--coral); animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: .15; } }
+  .clock-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); max-width: 180px; line-height: 1.6; }
+
+  /* ── Marquee ──────────────────────────────────────────── */
+  .marquee {
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    overflow: hidden; white-space: nowrap; padding: 15px 0; margin: 30px 0 70px;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track { display: inline-flex; gap: 0; animation: scrollx 22s linear infinite; }
+  .marquee span {
+    font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--muted); padding: 0 20px;
+  }
+  .marquee span b { color: var(--gold); font-weight: 700; }
+  .marquee .dot { color: var(--coral); padding: 0; }
+  @keyframes scrollx { to { transform: translateX(-50%); } }
+
+  /* ── Stats ────────────────────────────────────────────── */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 84px; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    padding: 24px 22px; position: relative; overflow: hidden; transition: transform .3s, border-color .3s;
+  }
+  .stat:hover { transform: translateY(-4px); border-color: rgba(232,182,76,.5); }
+  .stat-number { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 30px; line-height: 1.1; }
+  .stat:nth-child(odd) .stat-number { color: var(--gold); }
+  .stat:nth-child(even) .stat-number { color: var(--coral); }
+  .stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+
+  /* ── Sections ─────────────────────────────────────────── */
+  section { margin-bottom: 92px; }
+  h2 {
+    font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(22px, 3.6vw, 30px);
+    line-height: 1.2; margin-bottom: 22px; text-wrap: balance;
+  }
+  h2 .idx { font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 13px; color: var(--coral); vertical-align: super; letter-spacing: .1em; margin-right: 10px; }
+  p { font-size: 15.5px; color: #c9cec7; margin-bottom: 13px; max-width: 66ch; }
+  p strong { color: var(--text); font-weight: 600; }
+  .small { font-size: 13px; color: var(--muted); }
+
+  /* reveal-on-scroll */
+  .anim .rv { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .anim .rv.in { opacity: 1; transform: none; }
+  .anim .rv:nth-child(2) { transition-delay: .08s; }
+  .anim .rv:nth-child(3) { transition-delay: .16s; }
+
+  /* ── Brief cards ──────────────────────────────────────── */
+  .brief-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+  .brief-card {
+    position: relative; background: var(--surface); border-radius: 20px; padding: 28px 26px;
+    border: 1px solid var(--line); overflow: hidden; transition: transform .35s;
+  }
+  .brief-card::before {
+    content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 1px;
+    background: var(--grad); opacity: 0; transition: opacity .35s;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+  }
+  .brief-card:hover { transform: translateY(-6px); }
+  .brief-card:hover::before { opacity: 1; }
+  .brief-tag {
+    display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; color: #14100a; background: var(--grad); border-radius: 999px;
+    padding: 4px 12px; font-weight: 500;
+  }
+  .brief-title { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 19px; margin: 14px 0 10px; }
+  .brief-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+
+  /* ── Timeline ─────────────────────────────────────────── */
+  .timeline { margin-top: 28px; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 12px; bottom: 12px; width: 2px; background: linear-gradient(var(--gold), var(--coral)); opacity: .35; border-radius: 2px; }
+  .tl-row { position: relative; padding: 0 0 30px 42px; }
+  .tl-row:last-child { padding-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--gold);
+  }
+  .tl-row:nth-child(even) .tl-dot { border-color: var(--coral); }
+  .tl-dot::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--gold); animation: pulse 2.2s ease-in-out infinite; }
+  .tl-row:nth-child(even) .tl-dot::after { background: var(--coral); }
+  @keyframes pulse { 50% { transform: scale(.5); opacity: .5; } }
+  .tl-day { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .tl-row:nth-child(even) .tl-day { color: var(--coral); }
+  .tl-title { font-weight: 700; font-size: 16px; color: var(--text); }
+  .tl-desc { font-size: 13.5px; color: var(--muted); margin-top: 3px; max-width: 60ch; }
+
+  /* ── Scoring ──────────────────────────────────────────── */
+  .score-list { margin-top: 26px; display: flex; flex-direction: column; gap: 12px; }
+  .score-item {
+    display: grid; grid-template-columns: 64px 1fr; gap: 18px; align-items: start;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px;
+    transition: border-color .3s, transform .3s;
+  }
+  .score-item:hover { border-color: rgba(255,107,87,.45); transform: translateX(6px); }
+  .score-pct { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 22px; color: var(--gold); }
+  .score-item:nth-child(even) .score-pct { color: var(--coral); }
+  .score-dim { font-weight: 700; font-size: 15px; }
+  .score-desc { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+  .score-bar { grid-column: 1 / -1; height: 4px; border-radius: 4px; background: var(--surface2); overflow: hidden; }
+  .score-bar i { display: block; height: 100%; background: var(--grad); border-radius: 4px; width: 0; transition: width 1.1s cubic-bezier(.2,.8,.2,1) .2s; }
+  .in .score-bar i, .no-anim .score-bar i { width: var(--w); }
+
+  /* ── Prizes ───────────────────────────────────────────── */
+  .reward-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 26px; }
+  .reward-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 26px 24px;
+    text-align: left; transition: transform .3s, border-color .3s;
+  }
+  .reward-card:hover { transform: translateY(-6px) rotate(-.5deg); }
+  .reward-card.winner { border-color: rgba(232,182,76,.6); box-shadow: 0 0 44px rgba(232,182,76,.12); }
+  .reward-amount { font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 30px; }
+  .reward-card.winner .reward-amount { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .reward-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+  .reward-note { font-size: 12.5px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+
+  /* ── Job card ─────────────────────────────────────────── */
+  .job-card {
+    position: relative; border-radius: 24px; padding: 34px 32px; margin-top: 26px; overflow: hidden;
+    background:
+      radial-gradient(60% 90% at 85% 0%, rgba(255,107,87,.14), transparent 60%),
+      radial-gradient(50% 80% at 10% 100%, rgba(232,182,76,.12), transparent 60%),
+      var(--surface);
+    border: 1px solid var(--line);
+  }
+  .job-amount { font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 40px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .job-amount small { font-size: 16px; -webkit-text-fill-color: var(--muted); }
+  .job-body { font-size: 14.5px; color: #c9cec7; margin-top: 16px; line-height: 1.75; max-width: 64ch; }
+  .job-body strong { color: var(--text); }
+  .path { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+  .path span {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; color: var(--muted);
+  }
+  .path span.hot { border-color: rgba(232,182,76,.6); color: var(--gold); }
+  .path .arrow { color: var(--coral); border: none; padding: 0; }
+
+  /* ── Lists / rules ────────────────────────────────────── */
+  .check-list { list-style: none; margin-top: 20px; }
+  .check-list li { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; color: #c9cec7; }
+  .check-list li:last-child { border-bottom: none; }
+  .li-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--gold); padding-top: 3px; flex-shrink: 0; width: 24px; }
+  .fine-print { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px 26px; font-size: 13px; color: var(--muted); line-height: 1.75; margin-top: 22px; }
+  .fine-print strong { color: var(--text); }
+
+  /* ── Forms ────────────────────────────────────────────── */
+  .form-tabs { display: flex; gap: 10px; margin: 26px 0 0; }
+  .form-tab {
+    flex: 1; padding: 15px 10px; text-align: center; cursor: pointer;
+    font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .06em;
+    color: var(--muted); background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px 14px 0 0; border-bottom: none; transition: color .25s, background .25s;
+  }
+  .form-tab.active { color: #14100a; background: var(--grad); border-color: transparent; }
+  .form-body { background: var(--surface); border: 1px solid var(--line); border-radius: 0 0 18px 18px; padding: 30px 28px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .field input, .field select, .field textarea {
+    font-family: 'Instrument Sans', sans-serif; font-size: 14.5px; padding: 12px 14px;
+    border: 1px solid var(--line); background: var(--bg); color: var(--text); border-radius: 10px;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(232,182,76,.18);
+  }
+  .agree { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.6; grid-column: 1 / -1; }
+  .agree input { margin-top: 3px; flex-shrink: 0; accent-color: var(--gold); width: 16px; height: 16px; }
+  .form-msg { margin-top: 16px; font-size: 14px; font-weight: 500; display: none; padding: 14px 18px; border-radius: 12px; }
+  .form-msg.ok { display: block; background: rgba(93,190,120,.12); color: #7fd89a; border: 1px solid rgba(93,190,120,.35); }
+  .form-msg.err { display: block; background: rgba(255,107,87,.1); color: #ff9a8b; border: 1px solid rgba(255,107,87,.35); }
+  .hp { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+
+  /* ── Footer ───────────────────────────────────────────── */
+  .footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 28px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .footer-brand { font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; }
+  .footer-brand em { font-style: normal; color: var(--gold); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  @media (max-width: 680px) {
+    .page { padding: 0 16px 70px; }
+    .hero { padding-top: 64px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .brief-cards, .reward-cards, .form-grid { grid-template-columns: 1fr; }
+    .clock { flex-direction: column; gap: 6px; align-items: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .anim .rv { opacity: 1; transform: none; }
+    .score-bar i { width: var(--w) !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HERO ── -->
+<div class="hero">
+<div class="hero-glow"></div>
+<span class="kicker">UpneX Creator Challenge · 2026 · Freshers & Graduates</span>
+<h1>
+<span class="line"><span>Two shorts.</span></span>
+<span class="line"><span>48 hours.</span></span>
+<span class="line"><span class="grad-text">Win the job.</span></span>
+</h1>
+<p class="subtitle">Make two short videos in your own 48 hours and win a paid Social Media Internship at UpneX Solutions — for freshers, students and recent graduates only. Any AI tools. Any style. Real growth path.</p>
+<div class="hero-cta">
+<a class="btn" href="#enter">Register Now</a>
+<span class="hero-note">Your personal 48-hour clock starts <b>the moment you register</b></span>
+</div>
+<div class="clock">
+<span class="clock-num">48<span class="colon">:</span>00<span class="colon">:</span>00</span>
+<span class="clock-label">Your own clock — registration to your personal deadline</span>
+</div>
+</div>
+
+<div class="marquee"><div class="marquee-track">
+<span>Two shorts</span><span class="dot">✦</span><span><b>Your own 48 hours</b></span><span class="dot">✦</span><span>₹10,000 prize pool</span><span class="dot">✦</span><span><b>Freshers only</b></span><span class="dot">✦</span><span>Any AI tools</span><span class="dot">✦</span>
+<span>Two shorts</span><span class="dot">✦</span><span><b>Your own 48 hours</b></span><span class="dot">✦</span><span>₹10,000 prize pool</span><span class="dot">✦</span><span><b>Freshers only</b></span><span class="dot">✦</span><span>Any AI tools</span><span class="dot">✦</span>
+</div></div>
+
+<div class="stats">
+<div class="stat rv"><div class="stat-number">2</div><div class="stat-label">Shorts to make</div></div>
+<div class="stat rv"><div class="stat-number">48h</div><div class="stat-label">Your personal clock</div></div>
+<div class="stat rv"><div class="stat-number">₹10K</div><div class="stat-label">Prize pool</div></div>
+<div class="stat rv"><div class="stat-number">1</div><div class="stat-label">Paid internship</div></div>
+</div>
+
+<!-- ── CHALLENGE ── -->
+<section>
+<h2 class="rv"><span class="idx">01</span>The Challenge</h2>
+<p class="rv"><strong>UpneX Solutions</strong> is hiring its first Social Media Intern — a freshers-only, remote, paid role. The challenge: make two shorts for <strong>TenantNex</strong> (tenantnex.com), our consumer product that prepares state-specific documents for US tenants. Our brands grow on one engine: short, honest, genuinely useful video.</p>
+<p class="rv"><strong>Your clock is your own: the moment you register, the full brief lands in your inbox and your personal 48 hours begin.</strong> Two 30–40 second vertical shorts, submitted before your own deadline. We remind you at 24 hours and again in your final hour.</p>
+<p class="rv">Use <strong>any AI tools and any style</strong> — talking-head, faceless captions, animation, screen-record, skit, explainer. Every entry must have <strong>a hook in the first 2 seconds, real substance, and one soft CTA</strong>. And keep it evergreen — no prices, no dates, nothing time-specific. Speed and judgment are part of the test, because that's the actual job.</p>
+<p class="rv">The best entries get published on our official channels — some while the contest is still running. The best <em>creator</em> gets hired.</p>
+</section>
+
+<!-- ── BRIEFS ── -->
+<section>
+<h2 class="rv"><span class="idx">02</span>The Two Briefs</h2>
+<div class="brief-cards">
+<div class="brief-card rv">
+<span class="brief-tag">Short A</span>
+<div class="brief-title">The Security Deposit</div>
+<div class="brief-desc">A US tenant moved out weeks ago and the landlord hasn't returned their deposit. Teach them one genuinely useful thing about getting it back. Educational, plain English, no legal citations, no promises.</div>
+</div>
+<div class="brief-card rv">
+<span class="brief-tag">Short B</span>
+<div class="brief-title">The Lease Exit</div>
+<div class="brief-desc">A US tenant needs to leave their lease early and is afraid of what it will cost. Give them one clear, honest piece of guidance. Same rules: useful first, truthful always.</div>
+</div>
+</div>
+<p class="small rv" style="margin-top:18px;">The full brief pack — audience notes, approved fact sheet, and the do/don't claims rules — lands in your inbox the moment the sprint starts. Every claim in your video must be provable. That's not a formality; it's the house rule.</p>
+</section>
+
+<!-- ── ROUND 2 ── -->
+<section>
+<h2 class="rv"><span class="idx">03</span>Round 2 — The Real Job</h2>
+<p class="rv">The <strong>top 10</strong> from Round 1 advance. You'll receive one raw, unedited founder video and 72 hours to deliver:</p>
+<ul class="check-list rv">
+<li><span class="li-num">01</span>Two short clips cut from the raw footage — hooks found, captions added, ready to post</li>
+<li><span class="li-num">02</span>A one-week content calendar for our channels — what you'd post, where, and why</li>
+</ul>
+<p class="rv" style="margin-top:14px;">This is the actual job: taking one recording and turning it into a week of content. The top 3 interview. One gets the offer.</p>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section>
+<h2 class="rv"><span class="idx">04</span>How It Runs</h2>
+<div class="timeline">
+<div class="tl-row rv"><div class="tl-dot"></div><div class="tl-day">Step 01</div><div class="tl-title">Register — your clock starts</div><div class="tl-desc">The full brief (both video briefs, fact sheet, content rules, submission steps) lands in your inbox instantly, with your exact personal deadline.</div></div>
+<div class="tl-row rv"><div class="tl-dot"></div><div class="tl-day">+24 hours</div><div class="tl-title">Halfway reminder</div><div class="tl-desc">We email you at your 24-hour mark, and again in your final hour.</div></div>
+<div class="tl-row rv"><div class="tl-dot"></div><div class="tl-day">+48 hours</div><div class="tl-title">Your personal deadline</div><div class="tl-desc">Both shorts submitted as unlisted YouTube or Google Drive links through this page. Late entries are not judged. Technical trouble? Email both links to hari@upnexs.com before your deadline — the timestamp counts.</div></div>
+<div class="tl-row rv"><div class="tl-dot"></div><div class="tl-day">Round 2</div><div class="tl-title">Top 10 · 72 hours</div><div class="tl-desc">Finalists receive one raw founder video and 72 hours to deliver two cut shorts + a one-week content calendar. This is the actual job.</div></div>
+<div class="tl-row rv"><div class="tl-dot"></div><div class="tl-day">Finals</div><div class="tl-title">Top 3 interviews → winner announced</div><div class="tl-desc">30 minutes with the founder, online. Prizes paid within 7 days of the announcement. The internship starts shortly after.</div></div>
+</div>
+</section>
+
+<!-- ── SCORING ── -->
+<section>
+<h2 class="rv"><span class="idx">05</span>How Entries Are Scored</h2>
+<div class="score-list">
+<div class="score-item rv" style="--w:30%"><div class="score-pct">30%</div><div><div class="score-dim">The Hook</div><div class="score-desc">Do the first two seconds stop the scroll? We judge like the algorithm does.</div></div><div class="score-bar"><i></i></div></div>
+<div class="score-item rv" style="--w:25%"><div class="score-pct">25%</div><div><div class="score-dim">Structure &amp; Retention</div><div class="score-desc">Does the video earn every second? Hook → point → example → close, nothing wasted.</div></div><div class="score-bar"><i></i></div></div>
+<div class="score-item rv" style="--w:25%"><div class="score-pct">25%</div><div><div class="score-dim">Brief &amp; Truth Adherence</div><div class="score-desc">On-brief, plain English, US-audience fit — and every claim provable. A brilliant video that overpromises scores zero here.</div></div><div class="score-bar"><i></i></div></div>
+<div class="score-item rv" style="--w:20%"><div class="score-pct">20%</div><div><div class="score-dim">Craft</div><div class="score-desc">Captions, pacing, sound, edit quality. Phone-shot is fine; sloppy is not.</div></div><div class="score-bar"><i></i></div></div>
+</div>
+<p class="small rv" style="margin-top:18px;">Tie-breaker: Brief &amp; Truth Adherence. We would rather publish an honest good video than a viral dishonest one — that is the company, not just the rubric.</p>
+</section>
+
+<!-- ── PRIZES ── -->
+<section>
+<h2 class="rv"><span class="idx">06</span>Prizes</h2>
+<div class="reward-cards">
+<div class="reward-card winner rv"><div class="reward-amount">₹5,000</div><div class="reward-label">1st Place</div><div class="reward-note">Plus the internship offer.</div></div>
+<div class="reward-card rv"><div class="reward-amount">₹3,000</div><div class="reward-label">2nd Place</div><div class="reward-note">And a standing invitation if a second seat opens.</div></div>
+<div class="reward-card rv"><div class="reward-amount">₹2,000</div><div class="reward-label">3rd Place</div><div class="reward-note">Same standing invitation.</div></div>
+</div>
+<p class="small rv" style="margin-top:18px;">Selected entries — not only the winners' — are published on our official channels, some during the contest itself. Your work runs on a real brand, and you keep the right to show it in your portfolio.</p>
+</section>
+
+<!-- ── THE JOB ── -->
+<section>
+<h2 class="rv"><span class="idx">07</span>The Job</h2>
+<div class="job-card rv">
+<div class="job-amount">₹10,000<small>/month</small></div>
+<div class="reward-label">Social Media Intern · Remote · 3-month probation</div>
+<div class="job-body">
+You own TenantNex's short-form content end-to-end — and turn the founder's weekly recordings into a full week of content across YouTube, LinkedIn, and Facebook. You get the tools — including an AI (Claude) subscription — the strategy playbook, and direct access to the founder.
+<br/><br/>
+<strong>After probation, a performance revenue share is added on top of the stipend</strong> — agreed in writing before you start, tied to results your content actually produces.
+</div>
+<div class="path">
+<span class="hot">Intern</span><span class="arrow">→</span><span>Owns the channels</span><span class="arrow">→</span><span>Owns the revenue function</span>
+</div>
+<div class="job-body" style="margin-top:16px;">
+We are a small, execution-focused team: if you ship consistently and take ownership, the ceiling is genuinely high.
+</div>
+</div>
+</section>
+
+<!-- ── ELIGIBILITY ── -->
+<section>
+<h2 class="rv"><span class="idx">08</span>Who Can Enter</h2>
+<ul class="check-list rv">
+<li><span class="li-num">01</span><b>Freshers, students and recent graduates ONLY</b> — this is an internship; experienced professionals should not apply</li>
+<li><span class="li-num">02</span>Based in India, 18 or older</li>
+<li><span class="li-num">03</span>Fluent written and spoken English — the audience is American</li>
+<li><span class="li-num">04</span>Able to make vertical video with any tools — phone, free editors, AI generators, all welcome</li>
+<li><span class="li-num">05</span>Available for a remote internship starting within two weeks of results</li>
+</ul>
+</section>
+
+<!-- ── RULES ── -->
+<section>
+<h2 class="rv"><span class="idx">09</span>Ground Rules</h2>
+<div class="fine-print rv">
+<strong>Truth first:</strong> every factual claim in your video must be provable and consistent with the fact sheet in the brief. No guarantees, no invented statistics, no legal citations, no advice framed as legal counsel.<br/><br/><strong>Evergreen only:</strong> never mention any price, date, month, season or news event — entries must stay reusable years from now, exactly as they are.<br/><br/>
+<strong>Original work:</strong> everything must be your own. AI tools may assist — encouraged, even — but no stock-template rip-offs and no reused client work.<br/><br/>
+<strong>Publishing licence:</strong> by submitting, you grant UpneX Solutions OPC Pvt Ltd a perpetual, royalty-free licence to publish, adapt and use your submissions as the company's digital assets, effective immediately — <b>including strong entries that do not win</b>. This is a competition: only one person gets the internship, but good work may run on our channels either way. You keep the right to show your entries in your own portfolio. Do not post contest entries publicly on your own accounts before results are announced.<br/><br/>
+<strong>Submissions:</strong> through this page, as unlisted YouTube or Google Drive links. Technical trouble? Email both links to hari@upnexs.com before your personal deadline — the email timestamp counts as your submission time.<br/><br/>
+<strong>Prizes &amp; selection:</strong> prizes are paid within 7 days of the announcement. Judges' decisions are final. Nothing in this competition is a promise of employment beyond the one internship offer described above.
+</div>
+</section>
+
+<!-- ── ENTER ── -->
+<section id="enter">
+<h2 class="rv"><span class="idx">10</span>Enter</h2>
+<div class="form-tabs rv">
+<button class="form-tab active" id="tab-reg" onclick="showTab('reg')">1 · Register</button>
+<button class="form-tab" id="tab-sub" onclick="showTab('sub')">2 · Submit Your Shorts</button>
+</div>
+
+<div class="form-body" id="panel-reg">
+<form id="form-reg" onsubmit="return sendEntry(event,'registration')">
+<div class="form-grid">
+<div class="field"><label for="r-name">Full name *</label><input id="r-name" name="name" required maxlength="120"/></div>
+<div class="field"><label for="r-email">Email *</label><input id="r-email" name="email" type="email" required maxlength="200"/></div>
+<div class="field"><label for="r-wa">WhatsApp number *</label><input id="r-wa" name="whatsapp" required maxlength="30"/></div>
+<div class="field"><label for="r-city">City &amp; state *</label><input id="r-city" name="city" required maxlength="120"/></div>
+<div class="field"><label for="r-status">Current status</label>
+<select id="r-status" name="current_status"><option>Student</option><option>Recent graduate</option><option>Working</option><option>Freelancer</option></select></div>
+<div class="field"><label for="r-hours">Hours/week you can commit</label>
+<select id="r-hours" name="hours_per_week"><option>&lt;10</option><option selected>10–20</option><option>20–30</option><option>30+</option></select></div>
+<div class="field full"><label for="r-college">College / organisation (optional)</label><input id="r-college" name="college" maxlength="200"/></div>
+<div class="field full"><label for="r-portfolio">Portfolio or social links — anything you've made (optional)</label><input id="r-portfolio" name="portfolio" maxlength="500"/></div>
+<div class="field"><label for="r-heard">How did you hear about this?</label>
+<select id="r-heard" name="heard_from"><option>WhatsApp</option><option>LinkedIn</option><option>Internshala</option><option>Friend</option><option>College</option><option>Other</option></select></div>
+<div class="field hp"><label>Website</label><input name="website" tabindex="-1" autocomplete="off"/></div>
+<label class="agree"><input type="checkbox" required name="age_confirmed"/> I confirm I am 18 or older and based in India.</label>
+<label class="agree"><input type="checkbox" required name="available_oct"/> I am available for a remote internship starting within two weeks of the sprint.</label>
+<label class="agree"><input type="checkbox" required name="agreed_terms"/> I agree to the Ground Rules above, including the truth-first claims rules.</label>
+<label class="agree"><input type="checkbox" required name="agreed_asset_use"/> <b>I understand and agree that anything I submit may be published and used by UpneX Solutions as its digital asset — including good entries that do not win</b> — and I keep the right to show my work in my own portfolio.</label>
+<p style="grid-column:1/-1; font-size:14px; color:var(--coral); font-weight:600; margin-top:4px;">⚠ Registering starts your personal 48-hour clock immediately — the brief and your exact deadline arrive by email the moment you submit this form.</p>
+</div>
+<div style="margin-top:24px;"><button class="btn" type="submit" id="btn-reg">Register & Start My 48 Hours</button></div>
+<div class="form-msg" id="msg-reg"></div>
+</form>
+</div>
+
+<div class="form-body" id="panel-sub" style="display:none;">
+<form id="form-sub" onsubmit="return sendEntry(event,'submission')">
+<div class="form-grid">
+<div class="field"><label for="s-name">Full name *</label><input id="s-name" name="name" required maxlength="120"/></div>
+<div class="field"><label for="s-email">Email (same as registration) *</label><input id="s-email" name="email" type="email" required maxlength="200"/></div>
+<div class="field full"><label for="s-va">Short A — Security Deposit · unlisted YouTube or Drive link *</label><input id="s-va" name="video_a_url" type="url" required maxlength="500" placeholder="https://…"/></div>
+<div class="field full"><label for="s-vb">Short B — Lease Exit · unlisted YouTube or Drive link *</label><input id="s-vb" name="video_b_url" type="url" required maxlength="500" placeholder="https://…"/></div>
+<div class="field full"><label for="s-hook">One line: which of your two hooks is stronger, and why?</label><textarea id="s-hook" name="stronger_hook" rows="2" maxlength="500"></textarea></div>
+<div class="field hp"><label>Website</label><input name="website" tabindex="-1" autocomplete="off"/></div>
+<label class="agree"><input type="checkbox" required name="agreed_terms"/> Both videos are my own original work, follow the claims rules in the brief pack, and I grant the publishing licence described in the Ground Rules, effective now.</label>
+</div>
+<div style="margin-top:24px;"><button class="btn" type="submit" id="btn-sub">Submit Entry</button></div>
+<div class="form-msg" id="msg-sub"></div>
+</form>
+</div>
+</section>
+
+<div class="footer">
+<span class="footer-brand">Upne<em>X</em> · Creator Challenge 2026</span>
+<span class="footer-note">upnexs.com · tenantnex.com · questions: hari@upnexs.com</span>
+</div>
+</div>
+
+<script>
+var SUPABASE_URL = "https://ogclreqdhtoxxdwmmkkd.supabase.co";
+var SUPABASE_KEY = "sb_publishable_Ii1knhjS6Hi7wtfzAuAseQ_JsY4xkEY";
+
+// scroll reveals (elements stay visible when JS is off)
+try {
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    document.body.classList.add('anim');
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    window.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+    });
+  } else {
+    document.body.classList.add('no-anim');
+  }
+} catch (e) { document.body.classList.add('no-anim'); }
+
+window.addEventListener('DOMContentLoaded', function () {
+  try {
+    var qEmail = new URLSearchParams(location.search).get('email');
+    if (qEmail) {
+      showTab('sub');
+      var f = document.getElementById('s-email');
+      if (f) f.value = qEmail;
+      document.getElementById('enter').scrollIntoView();
+    }
+  } catch (e) {}
+});
+
+function showTab(which) {
+  document.getElementById('panel-reg').style.display = which === 'reg' ? '' : 'none';
+  document.getElementById('panel-sub').style.display = which === 'sub' ? '' : 'none';
+  document.getElementById('tab-reg').className = 'form-tab' + (which === 'reg' ? ' active' : '');
+  document.getElementById('tab-sub').className = 'form-tab' + (which === 'sub' ? ' active' : '');
+}
+
+function sendEntry(ev, type) {
+  ev.preventDefault();
+  var form = ev.target;
+  var short_ = type === 'registration' ? 'reg' : 'sub';
+  var btn = document.getElementById('btn-' + short_);
+  var msg = document.getElementById('msg-' + short_);
+  msg.className = 'form-msg';
+
+  var fd = new FormData(form);
+  if (fd.get('website')) { // honeypot: pretend success
+    msg.className = 'form-msg ok';
+    msg.textContent = 'Received.';
+    return false;
+  }
+
+  var row = type === 'registration' ? {} : { entry_type: type };
+  var checkboxes = ['age_confirmed', 'available_oct', 'agreed_terms', 'agreed_asset_use'];
+  fd.forEach(function (v, k) {
+    if (k === 'website') return;
+    row[k] = checkboxes.indexOf(k) >= 0 ? true : v;
+  });
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  var req = type === 'registration'
+    ? fetch('https://tenantnex.com/api/creator-challenge/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(row)
+      })
+    : fetch(SUPABASE_URL + '/rest/v1/challenge_entries', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(row)
+      });
+  req.then(function (r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    msg.className = 'form-msg ok';
+    msg.textContent = type === 'registration'
+      ? "You're in — your 48-hour clock has started. Full instructions and your exact deadline are in your inbox (check spam if it isn't there in 2 minutes)."Entry received. Results follow within days — good luck.";
+    form.reset();
+  }).catch(function () {
+    msg.className = 'form-msg err';
+    msg.textContent = 'Something went wrong sending your entry. Please try again in a minute, or email hari@upnexs.com with a screenshot.';
+  }).finally(function () {
+    btn.disabled = false;
+    btn.textContent = type === 'registration' ? 'Register & Start My 48 Hours' : 'Submit Entry';
+  });
+  return false;
+}
+</script>
+</body>
+</html>
