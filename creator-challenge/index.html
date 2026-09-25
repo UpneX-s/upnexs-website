@@ -582,7 +582,8 @@ function sendEntry(ev, type) {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     msg.className = 'form-msg ok';
     msg.textContent = type === 'registration'
-      ? "You're in — your 48-hour clock has started. Full instructions and your exact deadline are in your inbox (check spam if it isn't there in 2 minutes)."Entry received. Results follow within days — good luck.";
+      ? "You're in — your 48-hour clock has started. Full instructions and your exact deadline are in your inbox (check spam if it isn't there in 2 minutes)."
+      : "Entry received. Results follow within days — good luck.";
     form.reset();
   }).catch(function () {
     msg.className = 'form-msg err';
