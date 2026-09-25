@@ -1,0 +1,29 @@
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Claude-Web
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+User-Agent: *
+Allow: /
+Disallow: /peabody-owner-portal/
+Disallow: /ramp-dashboard/
+Disallow: /raut/
+Disallow: /raut-agents/
+Disallow: /peabody-agents/
+Disallow: /demo-agents/
+Disallow: /experience-staging/
+
+Sitemap: https://upnexs.com/sitemap.xml

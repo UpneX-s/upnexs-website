@@ -1,0 +1,27 @@
+# UpneX Solutions
+
+> UpneX builds AI employees for property management companies — software that plugs into a PM's existing stack (AppFolio, Buildium, Rent Manager, Rentvine, DoorLoop, and others) to handle maintenance coordination, leasing, tenant support, and back-office work. No platform migration; no new software for the team to learn.
+
+## What UpneX does
+- AI Maintenance Coordinator: receives requests, creates work orders, dispatches vendors, and keeps tenants updated end-to-end, 24/7.
+- AI Leasing Assistant: responds to inquiries in seconds, qualifies leads, books showings, and follows up automatically.
+- AI Tenant Support: answers common tenant questions, sends rent reminders, and looks up lease info around the clock.
+- AI Back Office Assistant: handles documents, data entry, reports, and follow-ups.
+- Each AI employee is built for the specific PM company's portfolio, voice, and existing tools — not a generic template.
+
+## Who it's for
+Property management companies of any size running AppFolio, Buildium, Rent Manager, Rentvine, DoorLoop, Innago, Yardi Breeze, Propertyware, TenantCloud, Hemlane, or any platform with an API or email integration.
+
+## Key pages
+- [AI Employees for Property Management](https://upnexs.com/ai/): the core product — what each AI employee does, an ROI calculator, and platform compatibility.
+- [Book a demo](https://upnexs.com/book/): schedule a free AI operations audit.
+- [Client results](https://upnexs.com/clients/): outcomes from property managers running UpneX AI employees.
+- [Workflow template library](https://upnexs.com/workflow-templates/): example automations across maintenance, leasing, and back-office work.
+
+## Pricing
+Per-unit pricing based on portfolio size and scope; contact via https://upnexs.com/book/ for a quote.
+
+## About
+- UpneX Solutions OPC Pvt Ltd also operates TenantNex (tenantnex.com), a consumer product for U.S. renters.
+- Contact: hari@upnexs.com
+- Service area: United States property management companies.
