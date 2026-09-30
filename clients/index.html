@@ -940,34 +940,80 @@ footer p { font-size:14px; color:var(--muted); }
           <thead>
             <tr>
               <th>Units</th>
-              <th>AI Ops Only</th>
-              <th>AI Ops + VA</th>
+              <th>Full-Stack</th>
+              <th>Single-Problem</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>0–200</td><td>$10/unit/mo</td><td>$13/unit/mo</td></tr>
-            <tr><td>201–500</td><td>$9/unit/mo</td><td>$12/unit/mo</td></tr>
-            <tr><td>501–1,000</td><td>$8/unit/mo</td><td>$11/unit/mo</td></tr>
-            <tr><td>1,001–2,000</td><td>$7/unit/mo</td><td>$10/unit/mo</td></tr>
-            <tr class="hl-row"><td>2,000+ units</td><td>$6/unit/mo</td><td>$9/unit/mo</td></tr>
+            <tr><td>Under 50</td><td>$200 flat/mo</td><td>$150 flat/mo</td></tr>
+            <tr><td>50–149</td><td>$6/unit/mo</td><td>$3/unit/mo</td></tr>
+            <tr class="hl-row"><td>150–299</td><td>$8/unit/mo</td><td>$4/unit/mo</td></tr>
+            <tr><td>300–499</td><td>$10/unit/mo</td><td>$5/unit/mo</td></tr>
+            <tr><td>500+</td><td colspan="2" style="text-align:center; color:var(--green);">Custom quote</td></tr>
           </tbody>
         </table>
       </div>
       <div style="padding:14px 16px; background:rgba(167,139,250,0.06); border:1px solid rgba(167,139,250,0.15); border-radius:10px;">
-        <div style="font-size:13px; color:var(--muted); line-height:1.65;">A typical VA costs $800–1,500/month and manages 100–200 units. At the AI Ops + VA tier, you get AI-powered operations plus dedicated human support at the same cost — or less — than a single traditional VA.</div>
+        <div style="font-size:13px; color:var(--muted); line-height:1.65;"><strong style="color:#fff;">Full-Stack</strong> — all 7 operations covered (tenant lifecycle, maintenance, leasing, owner reporting, communications, financial/admin, compliance). <strong style="color:#fff;">Single-Problem</strong> — scoped to your highest-impact bottleneck. Natural upsell to full-stack when you're ready.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ ROI CALCULATOR -->
+<!-- ═══════════════════════════════════════════════════ PRICING CALCULATOR -->
 <div class="sep">
 <section id="roi" style="max-width:1200px; margin:0 auto;">
-  <div class="eyebrow">ROI Calculator</div>
-  <h2>See What UpneX Saves<br><span>Your Team Every Month</span></h2>
+  <div class="eyebrow">Pricing Calculator</div>
+  <h2>See Your Exact Price —<br><span>And What You Save</span></h2>
   <div class="divider"></div>
-  <p class="lead" style="margin-bottom:40px;">Enter your current numbers. See time saved, money recovered, and how fast your team responds to leads.</p>
+  <p class="lead" style="margin-bottom:40px;">Move the sliders. Your price and ROI update instantly. No hidden tiers — the number you see is what you pay.</p>
 
+  <!-- UNIT COUNT + TIER TOGGLE -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:28px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+      <div>
+        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;">Your Portfolio Size</div>
+        <div class="calc-input-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;">
+            <div class="calc-label">Units Under Management</div>
+            <div class="calc-val-display"><span id="vUnits">100</span> units</div>
+          </div>
+          <input type="range" class="calc-slider" id="sUnits" min="1" max="500" step="1" value="100">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>1</span><span>500+</span></div>
+        </div>
+        <div style="margin-top:20px;">
+          <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Scope</div>
+          <div style="display:flex;gap:8px;">
+            <button id="btnFullStack" onclick="setTier('full')" style="flex:1;padding:10px 12px;border-radius:10px;border:2px solid var(--green);background:rgba(34,197,94,0.15);color:var(--green);font-weight:700;font-size:13px;cursor:pointer;transition:all 0.15s;">Full-Stack</button>
+            <button id="btnSingle" onclick="setTier('single')" style="flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.15s;">Single-Problem</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRICE OUTPUT -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="background:rgba(34,197,94,0.07);border:2px solid rgba(34,197,94,0.3);border-radius:16px;padding:24px;text-align:center;">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;" id="pTierLabel">Full-Stack — All 7 Operations</div>
+          <div style="font-size:48px;font-weight:800;color:var(--green);line-height:1;" id="pMonthly">$600</div>
+          <div style="font-size:14px;color:var(--muted);margin-top:6px;">per month</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px;" id="pPerUnit">$6/unit · 100 units</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;">
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Annual</div>
+            <div style="font-size:22px;font-weight:700;color:#fff;" id="pAnnual">$7,200</div>
+          </div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;">
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">vs. 1 Coordinator</div>
+            <div style="font-size:22px;font-weight:700;color:var(--amber);" id="pVsCoord">Save $37k/yr</div>
+          </div>
+        </div>
+        <div id="pCustomNote" style="display:none;background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:14px;text-align:center;font-size:14px;color:var(--amber);">500+ units — <a href="mailto:hari@upnexs.com" style="color:var(--amber);">Get a custom quote →</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI SECTION -->
   <div class="two-col" style="align-items:start;">
     <div>
       <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;">Your Current Operation</div>
@@ -1075,6 +1121,23 @@ footer p { font-size:14px; color:var(--muted); }
         <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;padding-top:12px;margin-top:4px;border-top:1px solid var(--border);">
           <span style="color:var(--text);">Total hours freed / month</span>
           <span style="color:var(--green);" id="bTotal">0 hrs</span>
+        </div>
+      </div>
+
+      <!-- NET ROI SUMMARY -->
+      <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:20px;margin-bottom:14px;">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;font-weight:700;">Net ROI vs UpneX Cost</div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+          <span>UpneX monthly cost</span>
+          <span style="color:var(--coral);font-weight:600;" id="nCost">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+          <span>Labor savings</span>
+          <span style="color:var(--green);font-weight:600;" id="nSavings">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:700;padding-top:10px;margin-top:4px;border-top:1px solid rgba(255,255,255,0.1);">
+          <span style="color:var(--text);">Net monthly gain</span>
+          <span style="color:var(--green);" id="nNet">—</span>
         </div>
       </div>
 
@@ -1364,7 +1427,33 @@ window.addEventListener('load', () => {
   ctx.parentElement.insertBefore(legend, ctx);
 });
 
-/* ROI CALCULATOR */
+/* PRICING CALCULATOR */
+var _tier = 'full';
+
+function setTier(t) {
+  _tier = t;
+  const btnF = document.getElementById('btnFullStack');
+  const btnS = document.getElementById('btnSingle');
+  if (t === 'full') {
+    btnF.style.cssText = 'flex:1;padding:10px 12px;border-radius:10px;border:2px solid var(--green);background:rgba(34,197,94,0.15);color:var(--green);font-weight:700;font-size:13px;cursor:pointer;transition:all 0.15s;';
+    btnS.style.cssText = 'flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.15s;';
+  } else {
+    btnS.style.cssText = 'flex:1;padding:10px 12px;border-radius:10px;border:2px solid var(--green);background:rgba(34,197,94,0.15);color:var(--green);font-weight:700;font-size:13px;cursor:pointer;transition:all 0.15s;';
+    btnF.style.cssText = 'flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.15s;';
+  }
+  calcAll();
+}
+
+function upnexMonthlyPrice(units, tier) {
+  if (units >= 500) return null; // custom
+  var full, single;
+  if (units < 50)       { full = 200;         single = 150; }
+  else if (units < 150) { full = units * 6;   single = units * 3; }
+  else if (units < 300) { full = units * 8;   single = units * 4; }
+  else                  { full = units * 10;  single = units * 5; }
+  return tier === 'full' ? full : single;
+}
+
 (function() {
   function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
   function fmtHrs(h) { const r = Math.round(h); return r + ' hr' + (r !== 1 ? 's' : ''); }
@@ -1374,13 +1463,52 @@ window.addEventListener('load', () => {
     return hrs % 1 === 0 ? hrs + ' hrs' : hrs.toFixed(1) + ' hrs';
   }
 
-  function calc() {
+  window.calcAll = function() {
+    const units = parseInt(document.getElementById('sUnits').value);
     const maint = parseInt(document.getElementById('sMaint').value);
     const rate  = parseFloat(document.getElementById('sRate').value);
     const apps  = parseInt(document.getElementById('sApps').value);
     const guest = parseInt(document.getElementById('sGuest').value);
     const speed = parseFloat(document.getElementById('sSpeed').value);
 
+    // Pricing panel
+    document.getElementById('vUnits').textContent = units >= 500 ? '500+' : units;
+    const price = upnexMonthlyPrice(units, _tier);
+    const isCustom = (price === null);
+    const pricingPanel = document.getElementById('pMonthly');
+    const customNote   = document.getElementById('pCustomNote');
+
+    document.getElementById('pTierLabel').textContent = _tier === 'full'
+      ? 'Full-Stack — All 7 Operations'
+      : 'Single-Problem — Scoped Engagement';
+
+    if (isCustom) {
+      pricingPanel.textContent = '—';
+      document.getElementById('pPerUnit').textContent = 'Contact us for a custom quote';
+      document.getElementById('pAnnual').textContent  = '—';
+      document.getElementById('pVsCoord').textContent = '—';
+      customNote.style.display = 'block';
+      document.getElementById('nCost').textContent    = 'Custom';
+    } else {
+      pricingPanel.textContent = '$' + fmt(price);
+      customNote.style.display = 'none';
+      if (units < 50) {
+        document.getElementById('pPerUnit').textContent = (_tier === 'full' ? '$200' : '$150') + ' flat — portfolio under 50 units';
+      } else {
+        const rateLabel = _tier === 'full'
+          ? (units < 150 ? '$6' : units < 300 ? '$8' : '$10')
+          : (units < 150 ? '$3' : units < 300 ? '$4' : '$5');
+        document.getElementById('pPerUnit').textContent = rateLabel + '/unit · ' + units + ' units';
+      }
+      const annual = price * 12;
+      document.getElementById('pAnnual').textContent = '$' + fmt(annual);
+      const coordCost = 44000; // $44k/yr for a US coordinator
+      const saving = coordCost - annual;
+      document.getElementById('pVsCoord').textContent = saving > 0 ? 'Save $' + fmt(saving/1000) + 'k/yr' : '$' + fmt(annual/1000) + 'k/yr';
+      document.getElementById('nCost').textContent = '$' + fmt(price) + '/mo';
+    }
+
+    // ROI panel
     document.getElementById('vMaint').textContent = maint;
     document.getElementById('vRate').textContent  = Math.round(rate);
     document.getElementById('vApps').textContent  = apps;
@@ -1391,7 +1519,6 @@ window.addEventListener('load', () => {
     const tApps  = apps  * 0.75;
     const tGuest = guest * 0.35;
     const tTotal = tMaint + tApps + tGuest;
-
     const monthlySavings = tTotal * rate;
     const annualSavings  = monthlySavings * 12;
     const leadMulti = speed >= 4 ? '3×' : speed >= 2 ? '2×' : '1.5×';
@@ -1406,12 +1533,21 @@ window.addEventListener('load', () => {
     document.getElementById('bApps').textContent  = fmtHrs(tApps);
     document.getElementById('bGuest').textContent = fmtHrs(tGuest);
     document.getElementById('bTotal').textContent = fmtHrs(tTotal);
-  }
 
-  ['sMaint','sRate','sApps','sGuest','sSpeed'].forEach(id => {
-    document.getElementById(id).addEventListener('input', calc);
+    document.getElementById('nSavings').textContent = '$' + fmt(monthlySavings) + '/mo';
+    if (!isCustom) {
+      const net = monthlySavings - price;
+      document.getElementById('nNet').textContent = (net >= 0 ? '+' : '') + '$' + fmt(net) + '/mo';
+      document.getElementById('nNet').style.color = net >= 0 ? 'var(--green)' : 'var(--coral)';
+    } else {
+      document.getElementById('nNet').textContent = '—';
+    }
+  };
+
+  ['sUnits','sMaint','sRate','sApps','sGuest','sSpeed'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calcAll);
   });
-  calc();
+  calcAll();
 })();
 </script>
 </body>
