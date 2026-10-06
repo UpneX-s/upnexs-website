@@ -1,48 +1,48 @@
 {
-  "updated": "2026-10-04",
-  "screened": 127,
-  "approved": 60,
-  "review": 6,
-  "declined": 62,
+  "updated": "2026-10-06",
+  "screened": 133,
+  "approved": 62,
+  "review": 8,
+  "declined": 64,
   "avg_turnaround": "Minutes from submission",
   "recent": [
     {
-      "date": "Oct 04, 2026",
+      "date": "Oct 06, 2026",
       "outcome": "APPROVE",
       "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
     },
     {
-      "date": "Oct 04, 2026",
-      "outcome": "APPROVE",
-      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
-    },
-    {
-      "date": "Oct 02, 2026",
-      "outcome": "REVIEW",
-      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
-    },
-    {
-      "date": "Sep 30, 2026",
-      "outcome": "REVIEW",
-      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
-    },
-    {
-      "date": "Sep 29, 2026",
-      "outcome": "APPROVE",
-      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
-    },
-    {
-      "date": "Sep 29, 2026",
-      "outcome": "APPROVE",
-      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
-    },
-    {
-      "date": "Sep 21, 2026",
+      "date": "Oct 05, 2026",
       "outcome": "DECLINE",
       "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
     },
     {
-      "date": "Sep 20, 2026",
+      "date": "Oct 05, 2026",
+      "outcome": "APPROVE",
+      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
+    },
+    {
+      "date": "Oct 05, 2026",
+      "outcome": "REVIEW",
+      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
+    },
+    {
+      "date": "Oct 04, 2026",
+      "outcome": "DECLINE",
+      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
+    },
+    {
+      "date": "Oct 04, 2026",
+      "outcome": "REVIEW",
+      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
+    },
+    {
+      "date": "Oct 04, 2026",
+      "outcome": "APPROVE",
+      "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
+    },
+    {
+      "date": "Oct 04, 2026",
       "outcome": "APPROVE",
       "recipients": "Kelly, Leasing, Tino \u00b7 Hari CC"
     }
