@@ -328,7 +328,7 @@
       "domain": "tenant",
       "description": "Monitors AppFolio applications and emails a full screening report \u2014 residential history, income verification, fraud signals and a recommendation \u2014 within minutes of submission.",
       "liveSince": "2026-06-16T18:09:00-04:00",
-      "lastEventAt": "2026-10-05T20:16:40-04:00",
+      "lastEventAt": "2026-10-06T01:04:32-04:00",
       "metric": "164 screening reports delivered since Jun 16"
     },
     {
@@ -423,6 +423,15 @@
     }
   ],
   "activity": [
+    {
+      "id": "evt-13f014714157",
+      "ts": "2026-10-06T01:04:32-04:00",
+      "agent": "Tenant Screening Agent",
+      "action": "Screening sent to client",
+      "subject": "Application 459",
+      "outcome": "APPROVE",
+      "status": "Delivered"
+    },
     {
       "id": "evt-14723973d4bf",
       "ts": "2026-10-05T20:16:40-04:00",
@@ -863,18 +872,9 @@
       "subject": "Application 289",
       "outcome": "DECLINE",
       "status": "DRAFT \u2014 awaiting send approval"
-    },
-    {
-      "id": "evt-5e10533fd9c0",
-      "ts": "2026-07-19T20:31:12-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 285",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
     }
   ],
-  "lastUpdated": "2026-10-05T20:30:27-04:00",
+  "lastUpdated": "2026-10-06T01:04:32-04:00",
   "value": {
     "asOf": "2026-09-22",
     "since": "2026-06-16",
