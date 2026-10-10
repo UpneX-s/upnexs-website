@@ -23,6 +23,7 @@ Disallow: /ramp-dashboard/
 Disallow: /raut/
 Disallow: /raut-agents/
 Disallow: /peabody-agents/
+Disallow: /zavala/
 Disallow: /demo-agents/
 Disallow: /experience-staging/
 
