@@ -756,12 +756,12 @@ function renderValue(v){
 }
 
 // ---------- LOAD DATA ----------
-fetch('activity.json?_='+Date.now())
+fetch('/peabody-agents/activity.json?_='+Date.now())
   .then(function(r){return r.json();})
   .then(function(d){ renderAgents(d); renderValue(d.value); })
   .catch(function(){renderAgents(FALLBACK);});
 
-fetch('portfolio.json?_='+Date.now())
+fetch('/peabody-agents/portfolio.json?_='+Date.now())
   .then(function(r){return r.json();})
   .then(renderPortfolio)
   .catch(function(e){console.warn('portfolio.json not available',e);});

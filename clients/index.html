@@ -909,7 +909,7 @@ footer p { font-size:14px; color:var(--muted); }
   <div class="eyebrow purple">Future Scope — Informational Only</div>
   <h2>Full Property Operations AI —<br><span>When You're Ready</span></h2>
   <div class="divider purple"></div>
-  <p style="font-size:16px; color:var(--muted); line-height:1.7; margin-bottom:32px; max-width:800px;">The following describes the full UpneX engagement model if you choose to expand beyond BD into full property operations. This is informational only — nothing below creates any obligation.</p>
+  <p style="font-size:16px; color:var(--muted); line-height:1.7; margin-bottom:32px; max-width:800px;">The following describes the full UpneX engagement model if you choose to expand beyond BD into full property operations. This is informational only — nothing below creates any obligation. And you can try it first: we offer a <strong style="color:var(--green);">7-day free trial</strong> of the operations AI before any commitment.</p>
 
   <div class="two-col" style="align-items:start;">
     <div>
@@ -958,6 +958,16 @@ footer p { font-size:14px; color:var(--muted); }
       </div>
     </div>
   </div>
+
+  <div class="card green-hl" style="padding:24px; margin-top:28px;">
+    <div style="display:flex; align-items:flex-start; gap:16px;">
+      <div style="font-size:28px; flex-shrink:0;">🎁</div>
+      <div>
+        <div style="font-size:17px; font-weight:700; color:#fff; margin-bottom:6px;">7-Day Free Trial — Operations AI</div>
+        <div style="font-size:14px; color:var(--muted); line-height:1.6;">Zero cost, zero commitment. We deploy one AI agent on your #1 pain point (typically maintenance triage) in a sandbox for 7 days, so you see it work against real tenant messages. If you love it, we move into the full multi-agent pilot. If not, we shake hands and part ways. <a href="mailto:hari@upnexs.com?subject=7-day%20free%20trial" style="color:var(--green);">Start your 7-day trial →</a></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════ PRICING CALCULATOR -->
@@ -978,8 +988,8 @@ footer p { font-size:14px; color:var(--muted); }
             <div class="calc-label">Units Under Management</div>
             <div class="calc-val-display"><span id="vUnits">100</span> units</div>
           </div>
-          <input type="range" class="calc-slider" id="sUnits" min="1" max="500" step="1" value="100">
-          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>1</span><span>500+</span></div>
+          <input type="range" class="calc-slider" id="sUnits" min="1" max="1000" step="1" value="100">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:5px;color:rgba(255,255,255,0.2);"><span>1</span><span>500</span><span>5,000</span></div>
         </div>
         <div style="margin-top:20px;">
           <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">Scope</div>
@@ -1141,6 +1151,7 @@ footer p { font-size:14px; color:var(--muted); }
         </div>
       </div>
 
+      <div style="text-align:center;font-size:13px;color:var(--green);margin-bottom:12px;">Try it first — 7-day free trial, no cost and no commitment.</div>
       <a href="mailto:hari@upnexs.com" class="btn-primary" style="width:100%;text-align:center;padding:16px;font-size:15px;border-radius:12px;display:block;">
         Get a Custom Quote Based on Your Numbers →
       </a>
@@ -1464,7 +1475,8 @@ function upnexMonthlyPrice(units, tier) {
   }
 
   window.calcAll = function() {
-    const units = parseInt(document.getElementById('sUnits').value);
+    const unitPos = parseInt(document.getElementById('sUnits').value);
+    const units = unitPos <= 500 ? unitPos : 500 + (unitPos - 500) * 9; // left half 1-500, right half 500-5,000
     const maint = parseInt(document.getElementById('sMaint').value);
     const rate  = parseFloat(document.getElementById('sRate').value);
     const apps  = parseInt(document.getElementById('sApps').value);
@@ -1472,7 +1484,7 @@ function upnexMonthlyPrice(units, tier) {
     const speed = parseFloat(document.getElementById('sSpeed').value);
 
     // Pricing panel
-    document.getElementById('vUnits').textContent = units >= 500 ? '500+' : units;
+    document.getElementById('vUnits').textContent = fmt(units);
     const price = upnexMonthlyPrice(units, _tier);
     const isCustom = (price === null);
     const pricingPanel = document.getElementById('pMonthly');
@@ -1537,7 +1549,7 @@ function upnexMonthlyPrice(units, tier) {
     document.getElementById('nSavings').textContent = '$' + fmt(monthlySavings) + '/mo';
     if (!isCustom) {
       const net = monthlySavings - price;
-      document.getElementById('nNet').textContent = (net >= 0 ? '+' : '') + '$' + fmt(net) + '/mo';
+      document.getElementById('nNet').textContent = (net >= 0 ? '+$' + fmt(net) : '-$' + fmt(-net)) + '/mo';
       document.getElementById('nNet').style.color = net >= 0 ? 'var(--green)' : 'var(--coral)';
     } else {
       document.getElementById('nNet').textContent = '—';

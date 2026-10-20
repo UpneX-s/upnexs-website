@@ -975,7 +975,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
       </div>
       <div class="faq-item">
         <button class="faq-trigger"><span>How much does it cost?</span><svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg></button>
-        <div class="faq-content"><div class="faq-body">Flat per-unit pricing that scales with your portfolio. Operations agents start at $10/unit/month (down to $6 at 2,000+ units). BD agents are custom-priced. We'll walk you through pricing that fits your ops on the demo call.</div></div>
+        <div class="faq-content"><div class="faq-body">Simple per-unit pricing, no hidden fees: under 50 units is a flat $200/month, 50–149 units is $6/unit/month, 150–299 units is $8/unit/month, 300–499 units is $10/unit/month. 500+ units gets a custom quote. Unlimited automation at every level — as many workflows as your portfolio needs.</div></div>
       </div>
     </div>
   </div>
@@ -992,8 +992,8 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
         <div class="text-sm text-muted mt-2">your team spends on tasks AI handles overnight — coordination, follow-ups, data entry</div>
       </div>
       <div style="background:#fff;border-radius:14px;padding:20px;border:1.5px solid #FCA5A5">
-        <div style="font-size:32px;font-weight:800;color:#7F1D1D;letter-spacing:-0.03em;line-height:1">$42,000/yr</div>
-        <div class="text-sm text-muted mt-2">the average gap between a coordinator's fully-loaded cost and what UpneX runs at 150 units</div>
+        <div style="font-size:32px;font-weight:800;color:#7F1D1D;letter-spacing:-0.03em;line-height:1">$45,600/yr</div>
+        <div class="text-sm text-muted mt-2">the average gap between a coordinator's fully-loaded cost ($60K/yr) and what UpneX runs at 150 units ($8/unit, $14,400/yr)</div>
       </div>
       <div style="background:#fff;border-radius:14px;padding:20px;border:1.5px solid #FCA5A5">
         <div style="font-size:32px;font-weight:800;color:#7F1D1D;letter-spacing:-0.03em;line-height:1">$50/day</div>
@@ -1115,7 +1115,7 @@ fbq('init', '946905738177488');fbq('track', 'PageView');
           <svg class="w-5 h-5" style="color:#EF4444" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </div>
         <h3 class="font-bold text-lg mb-2 group-hover:text-brand transition-colors">Staffing &amp; Cost</h3>
-        <p class="text-muted text-sm leading-relaxed">A coordinator costs $60K+/yr — AI handles the same routine work at $8–12/unit/month.</p>
+        <p class="text-muted text-sm leading-relaxed">A coordinator costs $60K+/yr — AI handles the same routine work from $6/unit/month.</p>
         <div class="mt-4 text-brand text-sm font-semibold flex items-center gap-1">See how it works <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg></div>
       </a>
       <div class="card p-6 flex flex-col justify-center items-center text-center" style="background:linear-gradient(155deg,#111827 0%,#1F2937 100%);border-color:#374151">
@@ -1344,21 +1344,35 @@ document.querySelectorAll('.faq-trigger').forEach(btn => {
 });
 
 // ============ ROI CALCULATIONS ============
-// Refined model — conservative & defensible:
-//   UpneX cost:  $10/unit/month
+// Pricing model — locked 2026-09-26 (see upnex_pricing_model memory):
+//   Under 50 units: $200/mo flat minimum
+//   50-149 units:   $6/unit/mo
+//   150-299 units:  $8/unit/mo  (Peabody benchmark: 200 units = $1,600/mo)
+//   300-499 units:  $10/unit/mo
+//   500+ units:     custom quote — no self-serve number shown
 //   Payroll savings: 30% of ops payroll (repeatable-task offload)
 //   Hours saved: 0.4 hrs/maint call + 1.2 hrs/unit/mo tenant/leasing/admin
 //   Tasks automated: maint calls + ~2 admin tasks/unit/mo
 const nf = new Intl.NumberFormat('en-US');
 
+function upnexMonthlyCost(units) {
+  if (units < 50)  return 200;
+  if (units < 150) return units * 6;
+  if (units < 300) return units * 8;
+  if (units < 500) return units * 10;
+  return null; // custom quote territory
+}
+
 function calc(units, staff, payroll, calls) {
-  const upnexAnnual   = units * 10 * 12;
+  const monthlyCost   = upnexMonthlyCost(units);
+  const isCustom      = monthlyCost === null;
+  const upnexAnnual   = isCustom ? null : monthlyCost * 12;
   const grossSavings  = payroll * 12 * 0.30;
-  const netSavings    = Math.max(0, Math.round(grossSavings - upnexAnnual));
+  const netSavings    = isCustom ? null : Math.max(0, Math.round(grossSavings - upnexAnnual));
   const hoursSaved    = Math.round(calls * 0.4 + units * 1.2);
-  const roi           = upnexAnnual > 0 ? Math.round((netSavings / upnexAnnual) * 100) : 0;
+  const roi           = (!isCustom && upnexAnnual > 0) ? Math.round((netSavings / upnexAnnual) * 100) : null;
   const tasksAuto     = calls + Math.round(units * 2);
-  return { upnexAnnual, netSavings, hoursSaved, roi, tasksAuto };
+  return { monthlyCost, isCustom, upnexAnnual, netSavings, hoursSaved, roi, tasksAuto };
 }
 
 function calcHero() {
@@ -1369,8 +1383,10 @@ function calcHero() {
   document.getElementById('heroUnitsVal').textContent   = nf.format(units);
   document.getElementById('heroPayrollVal').textContent = nf.format(payroll);
   document.getElementById('heroCallsVal').textContent   = nf.format(calls);
-  document.getElementById('heroSavings').textContent    = nf.format(r.netSavings);
+  document.getElementById('heroSavings').textContent    = r.isCustom ? 'Custom' : nf.format(r.netSavings);
   document.getElementById('heroHours').textContent      = nf.format(r.hoursSaved);
+  const heroDetailEl = document.getElementById('heroDetail');
+  if (heroDetailEl) heroDetailEl.textContent = r.isCustom ? 'Book a call for a 500+ unit quote' : ('$' + nf.format(r.monthlyCost) + '/mo · net of savings');
 }
 ['heroUnits','heroPayroll','heroCalls'].forEach(id => document.getElementById(id).addEventListener('input', calcHero));
 calcHero();
@@ -1385,9 +1401,9 @@ function calcFull() {
   document.getElementById('staffVal').textContent   = staff;
   document.getElementById('payrollVal').textContent = nf.format(payroll);
   document.getElementById('callsVal').textContent   = nf.format(calls);
-  document.getElementById('outSavings').textContent = nf.format(r.netSavings);
+  document.getElementById('outSavings').textContent = r.isCustom ? 'Custom' : nf.format(r.netSavings);
   document.getElementById('outHours').textContent   = nf.format(r.hoursSaved);
-  document.getElementById('outROI').textContent     = nf.format(r.roi);
+  document.getElementById('outROI').textContent      = r.isCustom ? '—' : nf.format(r.roi);
   document.getElementById('outTasks').textContent   = nf.format(r.tasksAuto);
 }
 ['units','staff','payroll','calls'].forEach(id => document.getElementById(id).addEventListener('input', calcFull));
