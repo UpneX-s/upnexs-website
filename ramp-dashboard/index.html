@@ -267,7 +267,7 @@
         <div class="cb-row">Username: <strong>raut</strong></div>
         <div class="cb-row">Password: <strong>Raut@2026!</strong></div>
         <div class="cb-row">2FA: <strong>Google Authenticator app</strong></div>
-        <div class="cb-row">Secret: <strong>MFRGG33EMVTCAYLE</strong></div>
+        <div class="cb-row">Secret: <strong>(disabled)</strong></div>
       </div>
     </div>
 
@@ -275,10 +275,10 @@
     <div id="screen-setup" class="auth-screen">
       <div style="font-size:14px;font-weight:600;color:var(--navy);margin-bottom:12px;">Set up Google Authenticator</div>
       <div class="qr-wrap">
-        <img src="https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/UpneX:amit%40raut.com?secret=MFRGG33EMVTCAYLE%26issuer=UpneX%20Raut%20Properties" alt="Scan QR Code" />
+        <img src="https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/UpneX:amit%40raut.com?secret=(disabled)%26issuer=UpneX%20Raut%20Properties" alt="Scan QR Code" />
       </div>
       <div style="font-size:12px;color:var(--text-muted);margin:8px 0 4px;">Or enter this key manually:</div>
-      <div class="secret-box">MFRGG33EMVTCAYLE</div>
+      <div class="secret-box">(disabled)</div>
       <ol class="setup-steps">
         <li>Open <strong>Google Authenticator</strong> on your phone</li>
         <li>Tap <strong>+</strong> → "Scan a QR code"</li>
@@ -594,7 +594,7 @@ const LIVE_DATA = {
 /* ════════════════════════════════════════════
    TOTP IMPLEMENTATION — RFC 6238 / WebCrypto
 ════════════════════════════════════════════ */
-const TOTP_SECRET = "MFRGG33EMVTCAYLE";
+const TOTP_SECRET = ""; // 2FA disabled 2026-10-20: secret was exposed in page source; needs server-side auth
 
 function base32Decode(s) {
   const ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
