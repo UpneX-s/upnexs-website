@@ -879,21 +879,21 @@
       "status": "Delivered"
     }
   ],
-  "lastUpdated": "2026-10-27T14:55:06-04:00",
+  "lastUpdated": "2026-10-28T10:00:00-04:00",
   "value": {
     "asOf": "2026-10-28",
     "since": "2026-06-16",
-    "hoursSaved": 154.2,
-    "headline": "154.2 staff-hours returned to the Peabody team since 16 June",
+    "hoursSaved": 301.1,
+    "headline": "301.1 staff-hours returned to the Peabody team since 16 June",
     "basis": [
       {
         "agent": "Tenant Screening",
-        "volume": 164,
+        "volume": 189,
         "unit": "reports",
         "manualMinutes": 40,
         "automatedMinutes": 14.5,
         "savedMinutesEach": 25.5,
-        "hoursSaved": 69.7,
+        "hoursSaved": 80.3,
         "note": "Measured during pilot: 40 min manual vs 14.5 min automated"
       },
       {
@@ -907,44 +907,84 @@
         "note": "Notice prep, market check and follow-up tracking per lease"
       },
       {
+        "agent": "Lease Renewal (daily runs)",
+        "volume": 67,
+        "unit": "daily audit runs",
+        "manualMinutes": 15,
+        "automatedMinutes": 0,
+        "savedMinutesEach": 15,
+        "hoursSaved": 16.8,
+        "note": "Daily check of every lease in the 120-day window, countersign tracking, reminders"
+      },
+      {
         "agent": "Owner Attrition",
-        "volume": 16,
+        "volume": 21,
         "unit": "weekly runs",
         "manualMinutes": 90,
         "automatedMinutes": 0,
         "savedMinutesEach": 90,
-        "hoursSaved": 24.0,
+        "hoursSaved": 31.5,
         "note": "Reconstructing risk across 295 owners by hand, per run"
       },
       {
+        "agent": "Vacancy & Marketing",
+        "volume": 143,
+        "unit": "owner reports",
+        "manualMinutes": 15,
+        "automatedMinutes": 0,
+        "savedMinutesEach": 15,
+        "hoursSaved": 35.8,
+        "note": "11 weekly runs x 13 owner reports; days on market, showings, pricing"
+      },
+      {
         "agent": "Revenue Leakage",
-        "volume": 3,
+        "volume": 8,
         "unit": "audit runs",
         "manualMinutes": 180,
         "automatedMinutes": 0,
         "savedMinutesEach": 180,
-        "hoursSaved": 9.0,
+        "hoursSaved": 24.0,
         "note": "Fee-by-fee reconciliation across the portfolio, per run"
-      },
-      {
-        "agent": "Vacancy & Marketing",
-        "volume": 6,
-        "unit": "weekly runs",
-        "manualMinutes": 45,
-        "automatedMinutes": 0,
-        "savedMinutesEach": 45,
-        "hoursSaved": 4.5,
-        "note": "Compiling per-owner vacancy, showings and comps, per run"
       },
       {
         "agent": "Owner Onboarding",
         "volume": 7,
         "unit": "onboardings",
-        "manualMinutes": 30,
+        "manualMinutes": 90,
         "automatedMinutes": 0,
-        "savedMinutesEach": 30,
-        "hoursSaved": 3.5,
-        "note": "Chasing a 21-item checklist per new property"
+        "savedMinutesEach": 90,
+        "hoursSaved": 10.5,
+        "note": "21-item, 7-phase checklist per property"
+      },
+      {
+        "agent": "Executive Dashboard",
+        "volume": 93,
+        "unit": "daily refreshes",
+        "manualMinutes": 15,
+        "automatedMinutes": 0,
+        "savedMinutesEach": 15,
+        "hoursSaved": 23.2,
+        "note": "Compiling portfolio KPIs by hand, per day"
+      },
+      {
+        "agent": "Lead Sourcing (absentee owners)",
+        "volume": 188,
+        "unit": "qualified leads",
+        "manualMinutes": 10,
+        "automatedMinutes": 0,
+        "savedMinutesEach": 10,
+        "hoursSaved": 31.3,
+        "note": "County records, owner match and contact enrichment per lead"
+      },
+      {
+        "agent": "Owner Newsletter pilot",
+        "volume": 17,
+        "unit": "owner newsletters",
+        "manualMinutes": 15,
+        "automatedMinutes": 0,
+        "savedMinutesEach": 15,
+        "hoursSaved": 4.2,
+        "note": "Drafting and personalising per owner"
       },
       {
         "agent": "Maintenance Escalation",
@@ -967,6 +1007,121 @@
       "owners": 295,
       "unitsTracked": 208
     },
-    "method": "Volume figures are counts of delivered outputs \u2014 emails sent to Peabody, generated reports, and tracked records. Time-per-task is UpneX's estimate of the equivalent manual effort; the screening figure was measured during the June pilot."
+    "method": "Volume figures are counts of delivered outputs: reports generated, emails and letters sent, records tracked. Time-per-task is UpneX's estimate of the equivalent manual effort; the screening figure was measured during the June pilot. Counts as of 28 October.",
+    "achievements": {
+      "intro": "What has been built and delivered in each part of the business since 16 June.",
+      "departments": [
+        {
+          "name": "Leasing & Applications",
+          "icon": "\ud83c\udfe0",
+          "color": "#0066cc",
+          "big": "189 screenings",
+          "headline": "Application to screening report in minutes, every one reviewed before it reaches the team.",
+          "bars": [
+            {
+              "label": "Screening reports delivered",
+              "pct": 100,
+              "text": "189"
+            },
+            {
+              "label": "Time per report",
+              "pct": 36,
+              "text": "14.5 min vs 40 min"
+            }
+          ]
+        },
+        {
+          "name": "Lease Renewals",
+          "icon": "\ud83d\udd01",
+          "color": "#1faa59",
+          "big": "126 notices & offers",
+          "headline": "Full 120-day cycle: owner check-in, tenant offer, reminders, countersign chase. Now sent through AppFolio.",
+          "bars": [
+            {
+              "label": "Daily renewal audit",
+              "pct": 100,
+              "text": "67 runs"
+            },
+            {
+              "label": "Owner replies acknowledged to the team",
+              "pct": 100,
+              "text": "automatic"
+            }
+          ]
+        },
+        {
+          "name": "Owner Relations",
+          "icon": "\ud83e\udd1d",
+          "color": "#7c4dff",
+          "big": "295 owners watched",
+          "headline": "Weekly risk scoring and per-owner vacancy reports, plus a 7-property onboarding checklist.",
+          "bars": [
+            {
+              "label": "Properties onboarded",
+              "pct": 100,
+              "text": "7 of 7 complete"
+            },
+            {
+              "label": "Weekly risk runs",
+              "pct": 100,
+              "text": "21"
+            }
+          ]
+        },
+        {
+          "name": "Finance & Revenue",
+          "icon": "\ud83d\udcb0",
+          "color": "#e0951b",
+          "big": "$67,829 flagged",
+          "headline": "102 fee items flagged for review, each citing its source record. Weekly audit.",
+          "bars": [
+            {
+              "label": "Audit runs",
+              "pct": 100,
+              "text": "8"
+            },
+            {
+              "label": "Items with source record attached",
+              "pct": 100,
+              "text": "102 of 102"
+            }
+          ]
+        },
+        {
+          "name": "Growth & Leads",
+          "icon": "\ud83d\udcc8",
+          "color": "#14a0a0",
+          "big": "188 qualified leads",
+          "headline": "Absentee-owner pipeline from county records to contact details. One pipeline, 3 leads a day, being built.",
+          "bars": [
+            {
+              "label": "Pipeline build",
+              "pct": 60,
+              "text": "in build"
+            }
+          ]
+        },
+        {
+          "name": "Operations",
+          "icon": "\u2699\ufe0f",
+          "color": "#3d8bff",
+          "big": "93 daily refreshes",
+          "headline": "Executive dashboard, maintenance escalation and the AI receptionist test line.",
+          "bars": [
+            {
+              "label": "AI receptionist",
+              "pct": 75,
+              "text": "test line live"
+            },
+            {
+              "label": "Maintenance orchestrator",
+              "pct": 35,
+              "text": "Phase 1"
+            }
+          ]
+        }
+      ],
+      "quality": "Every agent ships with an audit step before anything goes out, and the team's feedback so far has been small tweaks, not rebuilds."
+    }
   }
 }

@@ -280,6 +280,12 @@
       </div>
       <div class="sec-sub" id="v-method" style="margin-top:10px;font-style:italic"></div>
 
+      <!-- ACHIEVEMENTS BY DEPARTMENT -->
+      <div class="sec-head">🏆 Achievements by department</div>
+      <div class="sec-sub" id="a-sub"></div>
+      <div id="a-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px"></div>
+      <div id="a-quality" style="margin-top:14px;padding:14px 16px;border-radius:12px;background:linear-gradient(90deg,#ecfdf5,#eff6ff);border:1px solid #bbf7d0;font-size:13px"></div>
+
       <!-- KANBAN -->
       <div class="sec-head">🗂 Agent Pipeline — where each agent is today</div>
       <div class="sec-sub">Every agent moves left → right through its lifecycle. The colored bar on each card shows the phases it has already crossed.</div>
@@ -755,10 +761,31 @@ function renderValue(v){
   set('v-method', v.method||'');
 }
 
+function renderAchievements(v){
+  if(!v||!v.achievements) return;
+  var A=v.achievements, g=document.getElementById('a-grid'); if(!g) return;
+  set('a-sub', A.intro||'');
+  g.innerHTML='';
+  (A.departments||[]).forEach(function(d){
+    var c=document.createElement('div');
+    c.style.cssText='background:#fff;border-radius:12px;border:1px solid #e5e7eb;border-top:5px solid '+d.color+';padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.06)';
+    var bars=(d.bars||[]).map(function(b){
+      return '<div style="margin-top:9px"><div style="display:flex;justify-content:space-between;font-size:12px;color:#374151"><span>'+b.label+'</span><b>'+b.text+'</b></div>'+
+        '<div style="height:9px;border-radius:6px;background:#eef2f7;margin-top:3px;overflow:hidden"><div style="height:100%;width:'+b.pct+'%;background:'+d.color+';border-radius:6px"></div></div></div>';
+    }).join('');
+    c.innerHTML='<div style="font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:'+d.color+'">'+d.icon+' '+d.name+'</div>'+
+      '<div style="font-size:26px;font-weight:800;margin-top:4px;color:#0f2d56">'+d.big+'</div>'+
+      '<div style="font-size:13px;color:#4b5563;margin-top:2px">'+d.headline+'</div>'+bars;
+    g.appendChild(c);
+  });
+  var q=document.getElementById('a-quality');
+  if(q&&A.quality) q.innerHTML='<b style="color:#047857">Build quality.</b> '+A.quality;
+}
+
 // ---------- LOAD DATA ----------
 fetch('/peabody-agents/activity.json?_='+Date.now())
   .then(function(r){return r.json();})
-  .then(function(d){ renderAgents(d); renderValue(d.value); })
+  .then(function(d){ renderAgents(d); renderValue(d.value); renderAchievements(d.value); })
   .catch(function(){renderAgents(FALLBACK);});
 
 fetch('/peabody-agents/portfolio.json?_='+Date.now())
