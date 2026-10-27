@@ -110,7 +110,7 @@
         "update",
         "upgrade"
       ],
-      "blurb": "Full 120-day renewal cycle, owner-approval gated. 118 notices prepared.",
+      "blurb": "Full 120-day renewal cycle, owner-approval gated. Now sent through AppFolio, with owner replies acknowledged to the team.",
       "when": "Live since Jun 24"
     },
     {
@@ -319,6 +319,11 @@
       "date": "2026-10-20",
       "phase": "prod",
       "title": "Full 8-agent program in production"
+    },
+    {
+      "date": "2026-10-27",
+      "phase": "update",
+      "title": "Renewals sent via AppFolio; owner replies acknowledged to team"
     }
   ],
   "agents": [
@@ -337,7 +342,7 @@
       "domain": "lease",
       "description": "Runs the full renewal cycle daily \u2014 120-day owner check-in, market analysis, tenant offer, follow-up cadence and escalation. Draft-gated: nothing sends without approval.",
       "liveSince": "2026-06-24T00:00:00-04:00",
-      "lastEventAt": "2026-09-22T09:00:00-04:00",
+      "lastEventAt": "2026-10-27T14:55:00-04:00",
       "metric": "118 owner notices prepared \u00b7 48 daily runs \u00b7 renewal risk scoring folded in"
     },
     {
@@ -423,6 +428,15 @@
     }
   ],
   "activity": [
+    {
+      "id": "evt-55257616f5e3",
+      "ts": "2026-10-27T14:55:00-04:00",
+      "agent": "Lease Renewal Agent",
+      "action": "Owner renewal check-ins sent via AppFolio (delivered)",
+      "subject": "New application",
+      "outcome": "REVIEW",
+      "status": "Delivered"
+    },
     {
       "id": "evt-ae1f4f5a0856",
       "ts": "2026-10-26T12:58:04-04:00",
@@ -863,23 +877,14 @@
       "subject": "Application 305",
       "outcome": "DECLINE",
       "status": "Delivered"
-    },
-    {
-      "id": "evt-129b23d503c1",
-      "ts": "2026-07-19T20:31:12-04:00",
-      "agent": "Tenant Screening Agent",
-      "action": "Screening recorded (daily sync)",
-      "subject": "Application 304",
-      "outcome": "DECLINE",
-      "status": "DRAFT \u2014 awaiting send approval"
     }
   ],
-  "lastUpdated": "2026-10-26T20:30:38-04:00",
+  "lastUpdated": "2026-10-27T14:55:00-04:00",
   "value": {
-    "asOf": "2026-09-22",
+    "asOf": "2026-10-28",
     "since": "2026-06-16",
-    "hoursSaved": 151.5,
-    "headline": "151.5 staff-hours returned to the Peabody team since 16 June",
+    "hoursSaved": 154.2,
+    "headline": "154.2 staff-hours returned to the Peabody team since 16 June",
     "basis": [
       {
         "agent": "Tenant Screening",
@@ -893,12 +898,12 @@
       },
       {
         "agent": "Lease Renewal",
-        "volume": 118,
-        "unit": "owner notices",
+        "volume": 126,
+        "unit": "owner notices and tenant offers",
         "manualMinutes": 20,
         "automatedMinutes": 0,
         "savedMinutesEach": 20,
-        "hoursSaved": 39.3,
+        "hoursSaved": 42.0,
         "note": "Notice prep, market check and follow-up tracking per lease"
       },
       {
