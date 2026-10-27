@@ -342,7 +342,7 @@
       "domain": "lease",
       "description": "Runs the full renewal cycle daily \u2014 120-day owner check-in, market analysis, tenant offer, follow-up cadence and escalation. Draft-gated: nothing sends without approval.",
       "liveSince": "2026-06-24T00:00:00-04:00",
-      "lastEventAt": "2026-10-27T14:55:00-04:00",
+      "lastEventAt": "2026-10-27T14:55:03-04:00",
       "metric": "118 owner notices prepared \u00b7 48 daily runs \u00b7 renewal risk scoring folded in"
     },
     {
@@ -879,7 +879,7 @@
       "status": "Delivered"
     }
   ],
-  "lastUpdated": "2026-10-27T14:55:00-04:00",
+  "lastUpdated": "2026-10-27T14:55:03-04:00",
   "value": {
     "asOf": "2026-10-28",
     "since": "2026-06-16",
