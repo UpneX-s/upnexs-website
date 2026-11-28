@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-27T00:30:33.319893+00:00",
-  "data_as_of": "2026-11-26T23:39:44.350Z",
+  "updated": "2026-11-28T00:30:37.739320+00:00",
+  "data_as_of": "2026-11-27T23:39:44.987Z",
   "property_count": 218,
   "leasing": {
     "total_units": 217,
@@ -12,7 +12,7 @@
     "occupancy_pct": 86.2,
     "leads": 198,
     "tours": 0,
-    "applications": 13,
+    "applications": 12,
     "signed_leases": 0,
     "move_ins": 3
   },
